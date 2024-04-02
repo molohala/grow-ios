@@ -39,6 +39,7 @@ struct SeugiButtonStyle: ButtonStyle {
             .font(.body)
             .frame(height: 58)
             .frame(maxWidth: .infinity)
+            .foregroundStyle(.white)
             .background(Color.blue)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .addPressAnimation(configuration.isPressed)
