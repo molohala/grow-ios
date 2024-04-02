@@ -31,7 +31,7 @@ public extension ModulePaths {
     
     enum Service: String, CaseIterable {
         case BaseService
-        case ExampleService
+        case AuthService
     }
     
     enum Shared: String, CaseIterable {

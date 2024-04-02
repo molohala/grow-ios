@@ -1,12 +1,12 @@
 import SwiftUI
-import ChatDetailFeature
+import SignInFeature
 
 @main
-struct ChatDetailViewExample: App {
+struct SignInViewExample: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                ChatDetailView()
+                SignInView()
             }
         }
     }
