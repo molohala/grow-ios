@@ -1,9 +1,9 @@
 import SwiftUI
 import DesignSystem
 
-public struct RankView: View {
+public struct GithubRankView: View {
     
-    @ObservedObject private var viewModel = RankViewModel()
+    @ObservedObject private var viewModel = GithubRankViewModel()
     
     public init() {}
     
@@ -42,6 +42,5 @@ public struct RankView: View {
                 }
             }
         }
-        .navigationTitle("Github 랭킹")
     }
 }

@@ -1,12 +1,12 @@
 import SwiftUI
-import RankFeature
+import GithubRankFeature
 
 @main
-struct RankViewExample: App {
+struct GithubRankViewExample: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                RankView()
+                GithubRankView()
             }
         }
     }

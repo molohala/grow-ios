@@ -26,7 +26,9 @@ public extension ModulePaths {
         case SignInFeature
         case MainFeature
         case HomeFeature
-        case RankFeature
+        case CommunityFeature
+        case GithubRankFeature
+        case BaekjoonRankFeature
         case ProfileFeature
     }
     
