@@ -18,9 +18,7 @@ public struct MainView: View {
     public var body: some View {
         NavigationStack(path: $navController.navigationPath) {
             content
-                .background(viewModel.selectedView.backgroundColor)
-                .toolbarBackground(viewModel.selectedView.backgroundColor, for: .navigationBar)
-                .toolbarBackground(.visible, for: .navigationBar)
+                .backgroundColor(viewModel.selectedView.backgroundColor)
                 .navigationDestination(for: ViewType.Main.self) { viewType in
                     switch viewType {
                     case .profileEdit: ProfileEditView()

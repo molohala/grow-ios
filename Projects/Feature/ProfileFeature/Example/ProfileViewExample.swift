@@ -6,7 +6,7 @@ struct ProfileViewExample: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                ProfileView()
+                ProfileView {}
                     .background(Color.backgroundColor)
             }
         }

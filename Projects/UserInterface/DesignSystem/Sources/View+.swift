@@ -70,3 +70,12 @@ public extension View {
             .shadow(color: Color(0x000000, alpha: 0.04), radius: 8, y: 3)
      }
 }
+
+public extension View {
+    func backgroundColor(_ color: Color) -> some View {
+        self
+            .background(color)
+            .toolbarBackground(color, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+    }
+}
