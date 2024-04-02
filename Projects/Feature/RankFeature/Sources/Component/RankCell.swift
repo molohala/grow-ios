@@ -24,6 +24,20 @@ struct RankCell: View {
                 Rectangle()
                     .frame(width: 50, height: 50)
                     .clipShape(Circle())
+                    .overlay {
+                        VStack {
+                            Group {
+                                switch rank {
+                                case 1: DesignSystemAsset.firstMedal.swiftUIImage.resizable()
+                                case 2: DesignSystemAsset.secondMedal.swiftUIImage.resizable()
+                                case 3: DesignSystemAsset.thirdMedal.swiftUIImage.resizable()
+                                default: EmptyView()
+                                }
+                            }
+                            .frame(width: 28, height: 28)
+                            Spacer()
+                        }
+                    }
                 VStack(alignment: .leading) {
                     Text("노영재")
                         .font(.body)
@@ -33,6 +47,8 @@ struct RankCell: View {
                 }
                 Spacer()
                 Text("10 커밋")
+                    .font(.callout)
+                    .fontWeight(.semibold)
             }
             .background(.background)
             .frame(minHeight: 50)
