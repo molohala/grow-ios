@@ -14,5 +14,5 @@ public let env = ProjectEnvironment(
     organizationName: "molohala",
     destinations: [.iPhone, .iPad],
     deploymentTargets: .iOS("16.4"),
-    baseSetting: ["DEVELOPMENT_TEAM": ""]
+    baseSetting: ["DEVELOPMENT_TEAM": "\(teamId)"]
 )
