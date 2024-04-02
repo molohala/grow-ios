@@ -8,13 +8,16 @@ public struct InfinityButton: View {
     // MARK: - Parameters
     var text: String
     var asyncAction: () async -> Void
+    var height: CGFloat
     
     public init(_ text: String,
                 isLoading: Bool = false,
+                height: CGFloat = 58,
                 asyncAction: @escaping () async -> Void) {
         self.text = text
         self.isLoading = isLoading
         self.asyncAction = asyncAction
+        self.height = height
     }
     
     public var body: some View {
@@ -33,18 +36,19 @@ public struct InfinityButton: View {
                 }
         }
         .disabled(isLoading)
-        .buttonStyle(SeugiButtonStyle(isLoading: isLoading))
+        .buttonStyle(SeugiButtonStyle(height: height, isLoading: isLoading))
     }
 }
 struct SeugiButtonStyle: ButtonStyle {
     
     @Environment(\.isEnabled) var isEnabled
+    var height: CGFloat
     var isLoading: Bool
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.body)
-            .frame(height: 58)
+            .frame(height: height)
             .frame(maxWidth: .infinity)
             .foregroundStyle(.white)
             .background(Color.blue)
