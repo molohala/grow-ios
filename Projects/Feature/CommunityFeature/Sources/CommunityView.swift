@@ -14,7 +14,6 @@ public struct CommunityView: View {
                 LazyVStack(spacing: 12) {
                     ForEach(communityList, id: \.self) { _ in
                         Button {
-                            
                         } label: {
                             CommunityCell()
                                 .padding(.horizontal, 16)

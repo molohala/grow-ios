@@ -10,6 +10,7 @@ public struct ProfileView: View {
             VStack {
                 profile
             }
+            .padding(.top, 16)
             .padding(.horizontal, 12)
         }
     }

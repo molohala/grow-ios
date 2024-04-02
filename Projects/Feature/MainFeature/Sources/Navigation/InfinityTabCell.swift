@@ -27,7 +27,7 @@ struct InfinityTabCell: View {
                 .padding(.top, 4)
                 .foregroundStyle(isSelected ? .blue : .gray.opacity(0.6))
             Text(type.name)
-                .font(.caption)
+                .font(.caption2)
                 .foregroundStyle(isSelected ? .blue : .gray.opacity(0.6))
         }
         .padding(.horizontal, 4)
