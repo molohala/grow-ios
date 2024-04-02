@@ -13,6 +13,7 @@ public struct ProfileDetailView: View {
                 InfinityBaekjoonCell {}
             }
             .padding(.horizontal, 16)
+            .padding(.top, 16)
         }
         .backgroundColor(.backgroundColor)
         .navigationTitle("노영재님의 프로필")
