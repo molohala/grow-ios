@@ -19,17 +19,16 @@ struct InfinityTabCell: View {
     }
     
     var body: some View {
-        
         VStack {
             type.image
                 .renderingMode(.template)
                 .resizable()
                 .frame(width: 28, height: 28)
                 .padding(.top, 4)
-                .foregroundStyle(.blue)
+                .foregroundStyle(isSelected ? .blue : .gray.opacity(0.6))
             Text(type.name)
                 .font(.caption)
-                .foregroundStyle(.black)
+                .foregroundStyle(isSelected ? .blue : .gray.opacity(0.6))
         }
         .padding(.horizontal, 4)
     }

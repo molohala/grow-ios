@@ -9,7 +9,9 @@ public struct ProfileView: View {
         ScrollView {
             VStack {
                 profile
+                
             }
+            .padding(.horizontal, 12)
         }
     }
     
@@ -17,13 +19,25 @@ public struct ProfileView: View {
     private var profile: some View {
         HStack {
             Rectangle()
-                .frame(width: 64, height: 64)
+                .frame(width: 72, height: 72)
                 .clipShape(Circle())
                 .foregroundStyle(.gray)
             Text("노영재")
                 .font(.callout)
+                .fontWeight(.semibold)
                 .foregroundStyle(.black)
+                .padding(.leading, 8)
             Spacer()
         }
+    }
+    
+    @ViewBuilder
+    private var github: some View {
+        EmptyView()
+    }
+    
+    @ViewBuilder
+    private var baekjoon: some View {
+        EmptyView()
     }
 }
