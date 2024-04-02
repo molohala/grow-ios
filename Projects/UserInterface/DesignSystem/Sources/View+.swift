@@ -33,7 +33,6 @@ public extension View {
 }
 
 
-
 public extension View {
     func hideKeyboardWhenTap() -> some View {
         onAppear(perform: UIApplication.shared.hideKeyboard)
@@ -43,7 +42,7 @@ public extension View {
 public extension UIApplication {
     func hideKeyboard() {
         guard let scene = connectedScenes.first as? UIWindowScene,
-                      let window = scene.windows.first else { return }
+              let window = scene.windows.first else { return }
         let tapRecognizer = UITapGestureRecognizer(target: window, action: #selector(UIView.endEditing))
         tapRecognizer.cancelsTouchesInView = false
         tapRecognizer.delegate = self
@@ -57,5 +56,17 @@ extension UIApplication: UIGestureRecognizerDelegate {
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
     ) -> Bool {
         return false
+    }
+}
+
+public extension View {
+    
+    func applyCardView() -> some View {
+        self
+            .padding(.vertical, 12)
+            .padding(.horizontal, 12)
+            .background(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .shadow(color: Color(0x000000, alpha: 0.04), radius: 8, y: 3)
     }
 }

@@ -7,8 +7,10 @@ public struct ProfileView: View {
     
     public var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 12) {
                 profile
+                github
+                baekjoon
             }
             .padding(.top, 16)
             .padding(.horizontal, 12)
@@ -29,15 +31,62 @@ public struct ProfileView: View {
                 .padding(.leading, 8)
             Spacer()
         }
+        .applyCardView()
     }
     
     @ViewBuilder
     private var github: some View {
-        EmptyView()
+        Button {
+        } label: {
+            VStack {
+                HStack {
+                    DesignSystemAsset.github.swiftUIImage
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(Color(0x24292e))
+                    Text("nohjason")
+                        .font(.body)
+                        .foregroundStyle(.black)
+                    Spacer()
+                    Image(systemName: "chevron.forward")
+                        .resizable()
+                        .foregroundStyle(.gray)
+                        .frame(width: 16, height: 16)
+                }
+                Text("대충 여기 그래프")
+                    .padding(.vertical, 40)
+            }
+            .applyCardView()
+        }
+        .applyAnimation()
     }
     
     @ViewBuilder
     private var baekjoon: some View {
-        EmptyView()
+        Button {
+        } label: {
+            VStack {
+                HStack {
+                    DesignSystemAsset.baekjoon.swiftUIImage
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 28, height: 28)
+                        .foregroundStyle(Color(0x0076C0))
+                    Text("nohjason")
+                        .font(.body)
+                        .foregroundStyle(.black)
+                    Spacer()
+                    Image(systemName: "chevron.forward")
+                        .resizable()
+                        .foregroundStyle(.gray)
+                        .frame(width: 16, height: 16)
+                }
+                Text("대충 여기 그래프")
+                    .padding(.vertical, 40)
+            }
+            .applyCardView()
+        }
+        .applyAnimation()
     }
 }

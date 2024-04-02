@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 struct CommunityCell: View {
     var body: some View {
@@ -30,9 +31,6 @@ struct CommunityCell: View {
                 .font(.body)
                 .fontWeight(.medium)
         }
-        .padding(.vertical, 12)
-        .padding(.horizontal, 12)
-        .background(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .applyCardView()
     }
 }
