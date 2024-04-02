@@ -11,9 +11,13 @@ import ProjectDescriptionHelpers
 let project = Project.makeApp(
     target: .App,
     targets: [
-        .makeApp(target: .App, dependenceis: [
-            .feature(target: .SignInFeature),
-            .feature(target: .MainFeature)
-        ], infoPlist: .file(path: "Support/Info.plist"))
+        .makeApp(
+            target: .App,
+            
+            dependenceis: [
+                .feature(target: .SignInFeature),
+                .feature(target: .MainFeature)
+            ],
+            infoPlist: .file(path: "Support/Info.plist"))
     ]
 )
