@@ -2,21 +2,28 @@ import SwiftUI
 
 public struct InfinityButton: View {
     
+    // MARK: - State
+    @State private var isLoading: Bool
+    
+    // MARK: - Parameters
     var text: String
-    var isLoading: Bool
-    var callback: () -> Void
+    var asyncAction: () async -> Void
     
     public init(_ text: String,
                 isLoading: Bool = false,
-                callback: @escaping () -> Void) {
+                asyncAction: @escaping () async -> Void) {
         self.text = text
         self.isLoading = isLoading
-        self.callback = callback
+        self.asyncAction = asyncAction
     }
     
     public var body: some View {
         Button {
-            callback()
+            isLoading = true
+            Task {
+                await asyncAction()
+                isLoading = false
+            }
         } label: {
             Text(!isLoading ? text : "")
                 .overlay {

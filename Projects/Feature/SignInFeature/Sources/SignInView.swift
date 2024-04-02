@@ -14,12 +14,11 @@ public struct SignInView: View {
             InfinityTextField("비밀번호를 입력해 주세요", text: $viewModel.pw)
             Spacer()
             InfinityButton("도담도담 로그인") {
-                Task {
-                    await viewModel.signIn()
-                }
+                await viewModel.signIn()
             }
         }
         .padding(.horizontal, 16)
         .navigationTitle("로그인")
+        .hideKeyboardWhenTap()
     }
 }

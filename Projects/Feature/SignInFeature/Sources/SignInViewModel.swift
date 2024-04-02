@@ -23,6 +23,7 @@ final class SignInViewModel: ObservableObject {
             let url = URL(string: response.location)!
             print(url.absoluteString)
         } catch {
+            print(error)
         }
     }
 }

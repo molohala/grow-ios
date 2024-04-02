@@ -21,7 +21,7 @@ public struct InfinityTextField: View {
     public var body: some View {
     
         TextField(hint, text: $text)
-            .padding(8)
+            .padding(15)
             .overlay {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(lineWidth: 1.0)
