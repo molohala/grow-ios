@@ -20,19 +20,27 @@ public struct ProfileView: View {
     
     @ViewBuilder
     private var profile: some View {
-        HStack {
-            Rectangle()
-                .frame(width: 72, height: 72)
-                .clipShape(Circle())
-                .foregroundStyle(.gray)
-            Text("노영재")
-                .font(.callout)
-                .fontWeight(.semibold)
-                .foregroundStyle(.black)
-                .padding(.leading, 8)
-            Spacer()
+        Button {
+        } label: {
+            HStack {
+                Rectangle()
+                    .frame(width: 64, height: 64)
+                    .clipShape(Circle())
+                    .foregroundStyle(.gray)
+                Text("노영재")
+                    .font(.callout)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.black)
+                    .padding(.leading, 8)
+                
+                Spacer()
+                Image(systemName: "chevron.forward")
+                    .foregroundStyle(.gray)
+                    .font(.body)
+            }
+            .applyCardView()
         }
-        .applyCardView()
+        .applyAnimation()
     }
     
     @ViewBuilder

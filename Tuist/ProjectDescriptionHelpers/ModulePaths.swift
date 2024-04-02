@@ -30,6 +30,7 @@ public extension ModulePaths {
         case GithubRankFeature
         case BaekjoonRankFeature
         case ProfileFeature
+        case ProfileEditFeature
     }
     
     enum Service: String, CaseIterable {

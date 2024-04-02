@@ -10,7 +10,8 @@ let project = Project.makeFeature(
             .feature(target: .GithubRankFeature),
             .feature(target: .BaekjoonRankFeature),
             .feature(target: .ProfileFeature),
-            .feature(target: .CommunityFeature)
+            .feature(target: .CommunityFeature),
+            .feature(target: .ProfileEditFeature)
         ]),
         .makeFeatureExample(target: .MainFeature, dependencies: [
             .feature(target: .MainFeature)

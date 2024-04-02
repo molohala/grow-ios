@@ -51,7 +51,7 @@ struct SeugiButtonStyle: ButtonStyle {
             .frame(height: height)
             .frame(maxWidth: .infinity)
             .foregroundStyle(.white)
-            .background(Color.blue)
+            .background(isEnabled ? Color.blue : Color.blue.opacity(0.5))
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .addPressAnimation(configuration.isPressed)
     }
