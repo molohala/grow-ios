@@ -63,9 +63,7 @@ public struct ProfileView: View {
                     .fontWeight(.medium)
                     .padding(4)
                 Spacer()
-                Image(systemName: "rectangle.portrait.and.arrow.right")
-                    .font(.body)
-                    .foregroundStyle(.red)
+                Icon.logoutIcon
             }
             .applyCardView()
         }

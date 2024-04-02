@@ -1,5 +1,5 @@
 //
-//  InfinityGithubCell.swift
+//  InfinityBaekjoonCell.swift
 //  DesignSystem
 //
 //  Created by dgsw8th71 on 4/2/24.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct InfinityGithubCell: View {
+public struct InfinityBaekjoonCell: View {
     
     var tapped: () -> Void
     
@@ -24,18 +24,17 @@ public struct InfinityGithubCell: View {
         } label: {
             VStack {
                 HStack {
-                    DesignSystemAsset.github.swiftUIImage
+                    DesignSystemAsset.baekjoon.swiftUIImage
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: 20, height: 20)
-                        .foregroundStyle(Color(0x24292e))
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 28)
+                        .foregroundStyle(Color(0x0076C0))
                     Text("nohjason")
                         .font(.body)
                         .foregroundStyle(.black)
                     Spacer()
-                    Image(systemName: "chevron.forward")
-                        .foregroundStyle(.gray)
-                        .font(.body)
+                    Icon.rightArrorIcon
                 }
                 Text("대충 여기 그래프")
                     .padding(.vertical, 40)
