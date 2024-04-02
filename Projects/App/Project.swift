@@ -13,9 +13,7 @@ let project = Project.makeApp(
     targets: [
         .makeApp(target: .App, dependenceis: [
             .feature(target: .SignInFeature),
-            .feature(target: .HomeFeature),
-            .feature(target: .ProfileFeature),
-            .feature(target: .RankFeature)
+            .feature(target: .MainFeature)
         ], infoPlist: .file(path: "Support/Info.plist"))
     ]
 )

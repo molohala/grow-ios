@@ -23,7 +23,7 @@ public struct RankView: View {
                             // mv register view
                         }
                         .font(.callout)
-                        .frame(width: 200)
+                        .frame(width: 150)
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 24)
