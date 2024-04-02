@@ -20,9 +20,9 @@ final class SignInViewModel: ObservableObject {
     func signIn() async {
         do {
             let response = try await AuthService.shared.dodamSignIn(.init(id: id, pw: pw, clientId: "", redirectUrl: "")).data
+            let url = URL(string: response.location)!
+            print(url.absoluteString)
         } catch {
-            
         }
     }
-    
 }

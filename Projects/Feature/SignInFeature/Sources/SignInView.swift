@@ -1,4 +1,5 @@
 import SwiftUI
+import DesignSystem
 
 public struct SignInView: View {
     
@@ -11,7 +12,11 @@ public struct SignInView: View {
             TextField("아이디를 입력해 주세요", text: $viewModel.id)
             TextField("비밀번호를 입력해 주세요", text: $viewModel.pw)
             Spacer()
-            
+            InfinityButton("로그인") {
+                Task {
+                    await viewModel.signIn()
+                }
+            }
         }
     }
 }

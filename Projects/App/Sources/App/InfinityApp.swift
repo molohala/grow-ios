@@ -1,8 +1,7 @@
 import SwiftUI
-import BaseFeature
 
 @main
-struct TemplateApp: App {
+struct InfinityApp: App {
     
     var body: some Scene {
         WindowGroup {

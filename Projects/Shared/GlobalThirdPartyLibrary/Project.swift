@@ -7,10 +7,13 @@
 
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
 let project = Project.makeShared(
     target: .GlobalThirdPartyLibrary,
     targets: [
-        .makeShared(target: .GlobalThirdPartyLibrary, dependencies: [])
+        .makeShared(target: .GlobalThirdPartyLibrary, dependencies: [
+            .SPM.Alamofire
+        ])
     ]
 )
