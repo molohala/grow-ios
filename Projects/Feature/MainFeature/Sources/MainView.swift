@@ -7,6 +7,7 @@ import BaekjoonRankFeature
 import ProfileFeature
 import ProfileEditFeature
 import CommunityFeature
+import ProfileDetailFeature
 
 public struct MainView: View {
     
@@ -22,6 +23,7 @@ public struct MainView: View {
                 .navigationDestination(for: ViewType.Main.self) { viewType in
                     switch viewType {
                     case .profileEdit: ProfileEditView()
+                    case .profileDetail: ProfileDetailView()
                     default: Text("")
                     }
                 }
@@ -35,7 +37,11 @@ public struct MainView: View {
                 switch viewModel.selectedView {
                 case .Home: HomeView()
                 case .Community: CommunityView()
-                case .GithubRank: GithubRankView()
+                case .GithubRank: GithubRankView {
+                    navController.navigationPath.append(.profileEdit)
+                } navigateToProfileDetail: {
+                    navController.navigationPath.append(.profileDetail)
+                }
                 case .BaekjoonRank: BaekjoonRankView()
                 case .Profile: ProfileView { navController.navigationPath.append(.profileEdit) }
                 }

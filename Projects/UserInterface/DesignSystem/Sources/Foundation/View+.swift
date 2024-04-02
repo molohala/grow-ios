@@ -32,7 +32,6 @@ public extension View {
     }
 }
 
-
 public extension View {
     func hideKeyboardWhenTap() -> some View {
         onAppear(perform: UIApplication.shared.hideKeyboard)

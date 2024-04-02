@@ -5,7 +5,16 @@ public struct GithubRankView: View {
     
     @ObservedObject private var viewModel = GithubRankViewModel()
     
-    public init() {}
+    var navigateToProfileEdit: () -> Void
+    var navigateToProfileDetail: () -> Void
+    
+    public init(
+        navigateToProfileEdit: @escaping () -> Void,
+        navigateToProfileDetail: @escaping () -> Void
+    ) {
+        self.navigateToProfileEdit = navigateToProfileEdit
+        self.navigateToProfileDetail = navigateToProfileDetail
+    }
     
     public var body: some View {
         ZStack {
@@ -20,7 +29,7 @@ public struct GithubRankView: View {
                             .multilineTextAlignment(.center)
                             .lineLimit(1)
                         InfinityButton("설정하기", height: 40) {
-                            // mv register view
+                            navigateToProfileEdit()
                         }
                         .font(.callout)
                         .frame(width: 150)
@@ -35,7 +44,7 @@ public struct GithubRankView: View {
                     .padding(.horizontal, 8)
                     ForEach(viewModel.rank, id: \.self) { i in
                         RankCell(rank: i + 1) {
-                            print("tapped")
+                            navigateToProfileDetail()
                         }
                         .padding(.horizontal, 16)
                     }
