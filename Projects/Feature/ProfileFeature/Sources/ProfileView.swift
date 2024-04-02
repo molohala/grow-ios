@@ -11,6 +11,7 @@ public struct ProfileView: View {
                 profile
                 github
                 baekjoon
+                info
             }
             .padding(.top, 16)
             .padding(.horizontal, 12)
@@ -50,9 +51,8 @@ public struct ProfileView: View {
                         .foregroundStyle(.black)
                     Spacer()
                     Image(systemName: "chevron.forward")
-                        .resizable()
                         .foregroundStyle(.gray)
-                        .frame(width: 16, height: 16)
+                        .font(.body)
                 }
                 Text("대충 여기 그래프")
                     .padding(.vertical, 40)
@@ -71,16 +71,16 @@ public struct ProfileView: View {
                     DesignSystemAsset.baekjoon.swiftUIImage
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: 28, height: 28)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 28)
                         .foregroundStyle(Color(0x0076C0))
                     Text("nohjason")
                         .font(.body)
                         .foregroundStyle(.black)
                     Spacer()
                     Image(systemName: "chevron.forward")
-                        .resizable()
                         .foregroundStyle(.gray)
-                        .frame(width: 16, height: 16)
+                        .font(.body)
                 }
                 Text("대충 여기 그래프")
                     .padding(.vertical, 40)
@@ -88,5 +88,28 @@ public struct ProfileView: View {
             .applyCardView()
         }
         .applyAnimation()
+    }
+    
+    @ViewBuilder
+    private var info: some View {
+        VStack {
+            Button {
+            } label: {
+                HStack {
+                    Text("로그아웃")
+                        .font(.body)
+                        .foregroundStyle(.red)
+                        .fontWeight(.medium)
+                        .padding(4)
+                    Spacer()
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                        .font(.body)
+                        .foregroundStyle(.red)
+                }
+                .background(Color.white)
+            }
+            .applyAnimation()
+        }
+        .applyCardView()
     }
 }
