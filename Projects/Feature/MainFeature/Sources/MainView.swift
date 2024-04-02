@@ -16,6 +16,8 @@ public struct MainView: View {
     public var body: some View {
         NavigationStack(path: $navController.navigationPath) {
             content
+                .toolbarBackground(viewModel.selectedView.toolbarColor, for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
                 .navigationDestination(for: ViewType.Main.self) { viewType in
                     switch viewType {
                     default: Text("")

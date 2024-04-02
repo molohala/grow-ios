@@ -64,4 +64,14 @@ public enum MainViewType: CaseIterable {
         case .Profile: "프로필"
         }
     }
+    
+    var toolbarColor: Color {
+        switch self {
+        case .Home: .backgroundColor
+        case .Community: .backgroundColor
+        case .GithubRank: .white
+        case .BaekjoonRank: .white
+        case .Profile: .backgroundColor
+        }
+    }
 }
