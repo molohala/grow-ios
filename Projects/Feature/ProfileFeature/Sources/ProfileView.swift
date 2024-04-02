@@ -11,7 +11,7 @@ public struct ProfileView: View {
                 profile
                 github
                 baekjoon
-                info
+                logout
             }
             .padding(.top, 16)
             .padding(.horizontal, 12)
@@ -91,25 +91,22 @@ public struct ProfileView: View {
     }
     
     @ViewBuilder
-    private var info: some View {
-        VStack {
-            Button {
-            } label: {
-                HStack {
-                    Text("로그아웃")
-                        .font(.body)
-                        .foregroundStyle(.red)
-                        .fontWeight(.medium)
-                        .padding(4)
-                    Spacer()
-                    Image(systemName: "rectangle.portrait.and.arrow.right")
-                        .font(.body)
-                        .foregroundStyle(.red)
-                }
-                .background(Color.white)
+    private var logout: some View {
+        Button {
+        } label: {
+            HStack {
+                Text("로그아웃")
+                    .font(.body)
+                    .foregroundStyle(.red)
+                    .fontWeight(.medium)
+                    .padding(4)
+                Spacer()
+                Image(systemName: "rectangle.portrait.and.arrow.right")
+                    .font(.body)
+                    .foregroundStyle(.red)
             }
-            .applyAnimation()
+            .applyCardView()
         }
-        .applyCardView()
+        .applyAnimation()
     }
 }
