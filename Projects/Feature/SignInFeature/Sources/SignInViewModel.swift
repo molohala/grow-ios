@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AuthService
 
 final class SignInViewModel: ObservableObject {
     
@@ -14,12 +15,11 @@ final class SignInViewModel: ObservableObject {
     @Published var id = ""
     @Published var pw = ""
     
-    
     // MARK: - Method
     @MainActor
     func signIn() async {
         do {
-            
+            let response = try await AuthService.shared.dodamSignIn(.init(id: id, pw: pw, clientId: "", redirectUrl: "")).data
         } catch {
             
         }
