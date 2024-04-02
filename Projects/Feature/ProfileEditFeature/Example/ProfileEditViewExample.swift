@@ -5,7 +5,9 @@ import ProfileEditFeature
 struct ProfileEditViewExample: App {
     var body: some Scene {
         WindowGroup {
-            ProfileEditView()
+            NavigationStack {
+                ProfileEditView()
+            }
         }
     }
 }

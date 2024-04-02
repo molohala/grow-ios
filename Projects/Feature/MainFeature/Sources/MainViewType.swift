@@ -23,18 +23,6 @@ public enum MainViewType: CaseIterable {
     case BaekjoonRank
     case Profile
     
-    var view: some View {
-        Group {
-            switch self {
-            case .Home: HomeView()
-            case .Community: CommunityView()
-            case .GithubRank: GithubRankView()
-            case .BaekjoonRank: BaekjoonRankView()
-            case .Profile: ProfileView()
-            }
-        }
-    }
-    
     var image: Image {
         switch self {
         case .Home: DesignSystemAsset.home.swiftUIImage

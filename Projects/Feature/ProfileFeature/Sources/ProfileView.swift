@@ -3,7 +3,13 @@ import DesignSystem
 
 public struct ProfileView: View {
     
-    public init() {}
+    var navigateToProfileEdit: () -> Void
+    
+    public init(
+        navigateToProfileEdit: @escaping () -> Void
+    ) {
+        self.navigateToProfileEdit = navigateToProfileEdit
+    }
     
     public var body: some View {
         ScrollView {
@@ -21,6 +27,7 @@ public struct ProfileView: View {
     @ViewBuilder
     private var profile: some View {
         Button {
+            navigateToProfileEdit()
         } label: {
             HStack {
                 Rectangle()
