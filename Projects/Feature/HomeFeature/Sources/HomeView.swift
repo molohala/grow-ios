@@ -11,6 +11,5 @@ public struct HomeView: View {
                 Text("갱")
             }
         }
-        .background()
     }
 }

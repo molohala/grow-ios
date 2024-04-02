@@ -9,7 +9,6 @@ public struct ProfileView: View {
         ScrollView {
             VStack {
                 profile
-                
             }
             .padding(.horizontal, 12)
         }

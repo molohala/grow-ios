@@ -65,7 +65,7 @@ public enum MainViewType: CaseIterable {
         }
     }
     
-    var toolbarColor: Color {
+    var backgroundColor: Color {
         switch self {
         case .Home: .backgroundColor
         case .Community: .backgroundColor
