@@ -30,7 +30,7 @@ public struct ProfileView: View {
     @ViewBuilder
     private var profile: some View {
         VStack {
-            HStack {
+            HStack(spacing: 0) {
                 Rectangle()
                     .frame(width: 48, height: 48)
                     .clipShape(Circle())
