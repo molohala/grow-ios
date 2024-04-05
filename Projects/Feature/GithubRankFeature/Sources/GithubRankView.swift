@@ -42,6 +42,17 @@ public struct GithubRankView: View {
                             .foregroundStyle(.gray.opacity(0.3))
                     }
                     .padding(.horizontal, 8)
+                    HStack {
+                        InfinitySelector(text: "이번 주", isSelected: true) {
+                            //
+                        }
+                        InfinitySelector(text: "전체", isSelected: false) {
+                            //
+                        }
+                        Spacer()
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 8)
                     ForEach(viewModel.rank, id: \.self) { i in
                         RankCell(rank: i + 1) {
                             navigateToProfileDetail()
