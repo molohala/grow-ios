@@ -10,5 +10,5 @@ import Foundation
 import BaseFeature
 
 public final class NavController: ObservableObject {
-    @Published public var navigationPath: [ViewType.Main] = []
+    @Published public var path: [ViewType.Main] = []
 }

@@ -29,7 +29,7 @@ public struct InfinityBaekjoonCell: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 28)
-                        .foregroundStyle(Color(0x0076C0))
+                        .foregroundStyle(Color.baekjoon)
                     Text("nohjason")
                         .font(.body)
                         .foregroundStyle(.black)

@@ -10,32 +10,36 @@ import SwiftUI
 
 public struct InfinityTabView: View {
     @Binding var selectedTab: MainViewType
+    private let proxy: GeometryProxy
     
-    public init(selectedTab: Binding<MainViewType>) {
+    public init(
+        selectedTab: Binding<MainViewType>,
+        proxy: GeometryProxy
+    ) {
         self._selectedTab = selectedTab
+        self.proxy = proxy
     }
     
     public var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             let mainViews = MainViewType.allCases
             ForEach(mainViews, id: \.self) { tab in
-                Spacer()
                 Button {
                     selectedTab = tab
                 } label: {
                     InfinityTabCell(type: tab, isSelected: selectedTab == tab)
+                        .frame(width: proxy.size.width / 5)
                 }
                 .applyAnimation()
             }
-            Spacer()
         }
         .padding(.vertical, 10)
         .background(Color.white)
-//        .cornerRadius(12, corners: .allCorners)
+        //        .cornerRadius(12, corners: .allCorners)
         .onChange(of: selectedTab) { _ in
             let impactMed = UIImpactFeedbackGenerator(style: .rigid)
             impactMed.impactOccurred()
         }
-//        .shadow(.bottomNavigation(.default))
+        //        .shadow(.bottomNavigation(.default))
     }
 }

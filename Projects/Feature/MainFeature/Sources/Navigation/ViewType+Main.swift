@@ -2,8 +2,10 @@ import BaseFeature
 
 public extension ViewType {
     enum Main {
-        case profileEdit
+        case setting
         case writeBoard
         case profileDetail
+        case profileEditGithub
+        case profileEditBaekjoon
     }
 }

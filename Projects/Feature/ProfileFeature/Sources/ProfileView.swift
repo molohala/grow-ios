@@ -3,12 +3,12 @@ import DesignSystem
 
 public struct ProfileView: View {
     
-    var navigateToProfileEdit: () -> Void
+    var navigateToSetting: () -> Void
     
     public init(
         navigateToProfileEdit: @escaping () -> Void
     ) {
-        self.navigateToProfileEdit = navigateToProfileEdit
+        self.navigateToSetting = navigateToProfileEdit
     }
     
     public var body: some View {
@@ -23,17 +23,16 @@ public struct ProfileView: View {
             }
             .padding(.top, 16)
             .padding(.horizontal, 16)
+            .padding(.bottom, 24)
         }
     }
     
     @ViewBuilder
     private var profile: some View {
-        Button {
-            navigateToProfileEdit()
-        } label: {
+        VStack {
             HStack {
                 Rectangle()
-                    .frame(width: 64, height: 64)
+                    .frame(width: 48, height: 48)
                     .clipShape(Circle())
                     .foregroundStyle(.gray)
                 Text("노영재")
@@ -43,13 +42,25 @@ public struct ProfileView: View {
                     .padding(.leading, 8)
                 
                 Spacer()
-                Image(systemName: "chevron.forward")
-                    .foregroundStyle(.gray)
-                    .font(.body)
+                Button {
+                    navigateToSetting()
+                } label: {
+                    Text("설정")
+                        .font(.callout)
+                        .foregroundStyle(.gray)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 12)
+                        .background(Color.backgroundColor)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                .applyAnimation()
             }
-            .applyCardView()
+            Text("\"뚝딱뚝딱.\"")
+                .padding(.vertical, 16)
+                .font(.callout)
+                .foregroundStyle(.gray)
         }
-        .applyAnimation()
+        .applyCardView()
     }
     
     @ViewBuilder

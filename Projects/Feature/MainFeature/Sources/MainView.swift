@@ -5,9 +5,11 @@ import HomeFeature
 import GithubRankFeature
 import BaekjoonRankFeature
 import ProfileFeature
-import ProfileEditFeature
+import SettingFeature
 import CommunityFeature
 import ProfileDetailFeature
+import GithubSettingFeature
+import BaekjoonSettingFeature
 
 public struct MainView: View {
     
@@ -17,13 +19,23 @@ public struct MainView: View {
     public init() {}
     
     public var body: some View {
-        NavigationStack(path: $navController.navigationPath) {
+        NavigationStack(path: $navController.path) {
             content
                 .backgroundColor(viewModel.selectedView.backgroundColor)
                 .navigationDestination(for: ViewType.Main.self) { viewType in
                     switch viewType {
-                    case .profileEdit: ProfileEditView()
+                    case .setting: SettingView(
+                        navigateToProfileEditGithub: {
+                            navController.path.append(.profileEditGithub)
+                        }, navigateToProfileEditBaekjoon: {
+                            navController.path.append(.profileEditBaekjoon)
+                        }, navigateToProfileEditJob: {
+                            navController.path.append(.profileEditGithub)
+                        }
+                    )
                     case .profileDetail: ProfileDetailView()
+                    case .profileEditGithub: GithubSettingView()
+                    case .profileEditBaekjoon: BaekjoonSettingView()
                     default: Text("")
                     }
                 }
@@ -38,18 +50,18 @@ public struct MainView: View {
                 case .Home: HomeView()
                 case .Community: CommunityView()
                 case .GithubRank: GithubRankView {
-                    navController.navigationPath.append(.profileEdit)
+                    navController.path.append(.profileEditGithub)
                 } navigateToProfileDetail: {
-                    navController.navigationPath.append(.profileDetail)
+                    navController.path.append(.profileDetail)
                 }
                 case .BaekjoonRank: BaekjoonRankView()
-                case .Profile: ProfileView { navController.navigationPath.append(.profileEdit) }
+                case .Profile: ProfileView { navController.path.append(.setting) }
                 }
             }
             .navigationTitle(viewModel.selectedView.title)
             GeometryReader { reader in
                 ZStack(alignment: .bottom) {
-                    InfinityTabView(selectedTab: $viewModel.selectedView)
+                    InfinityTabView(selectedTab: $viewModel.selectedView, proxy: reader)
                         .shadow(color: Color.black.opacity(0.04), radius: 12)
                     VStack {
                         Color.white

@@ -29,8 +29,10 @@ public extension ModulePaths {
         case CommunityFeature
         case GithubRankFeature
         case BaekjoonRankFeature
+        case BaekjoonSettingFeature
+        case GithubSettingFeature
         case ProfileFeature
-        case ProfileEditFeature
+        case SettingFeature
         case ProfileDetailFeature
     }
     

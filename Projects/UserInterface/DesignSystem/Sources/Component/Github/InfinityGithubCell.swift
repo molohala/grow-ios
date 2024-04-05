@@ -28,7 +28,7 @@ public struct InfinityGithubCell: View {
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 20, height: 20)
-                        .foregroundStyle(Color(0x24292e))
+                        .foregroundStyle(Color.github)
                     Text("nohjason")
                         .font(.body)
                         .foregroundStyle(.black)

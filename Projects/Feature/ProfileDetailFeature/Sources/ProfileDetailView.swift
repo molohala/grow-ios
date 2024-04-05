@@ -18,4 +18,15 @@ public struct ProfileDetailView: View {
         .backgroundColor(.backgroundColor)
         .navigationTitle("노영재님의 프로필")
     }
+    
+    @ViewBuilder
+    private var profile: some View {
+        VStack {
+            Text("\"뚝딱뚝딱.\"")
+                .padding(.vertical, 16)
+                .font(.callout)
+                .foregroundStyle(.gray)
+        }
+        .applyCardView()
+    }
 }

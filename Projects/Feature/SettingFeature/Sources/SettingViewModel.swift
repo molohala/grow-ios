@@ -8,9 +8,8 @@
 
 import Foundation
 
-final class ProfileEditViewModel: ObservableObject {
+final class SettingViewModel: ObservableObject {
     
     @Published var githubId = ""
     @Published var baekjoonId = ""
-    
 }
