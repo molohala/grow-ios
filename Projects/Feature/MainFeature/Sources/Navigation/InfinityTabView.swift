@@ -27,8 +27,9 @@ public struct InfinityTabView: View {
                 Button {
                     selectedTab = tab
                 } label: {
+                    let width = proxy.size.width / 5 - 4
                     InfinityTabCell(type: tab, isSelected: selectedTab == tab)
-                        .frame(width: proxy.size.width / 5)
+                        .frame(width: width > 0 ? width : 0)
                 }
                 .applyAnimation()
             }

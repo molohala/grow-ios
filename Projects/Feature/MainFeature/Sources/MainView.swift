@@ -10,6 +10,7 @@ import CommunityFeature
 import ProfileDetailFeature
 import GithubSettingFeature
 import BaekjoonSettingFeature
+import ProfileEditFeature
 
 public struct MainView: View {
     
@@ -25,17 +26,22 @@ public struct MainView: View {
                 .navigationDestination(for: ViewType.Main.self) { viewType in
                     switch viewType {
                     case .setting: SettingView(
-                        navigateToProfileEditGithub: {
-                            navController.path.append(.profileEditGithub)
-                        }, navigateToProfileEditBaekjoon: {
-                            navController.path.append(.profileEditBaekjoon)
-                        }, navigateToProfileEditJob: {
-                            navController.path.append(.profileEditGithub)
+                        navigateToProfileEdit: {
+                            navController.path.append(.profileEdit)
+                        },
+                        navigateToGithubSetting: {
+                            navController.path.append(.githubSetting)
+                        }, navigateToBaekjoonSetting: {
+                            navController.path.append(.baekjoonSetting)
+                        }, navigateToJobSetting: {
+                            navController.path.append(.jobSetting)
                         }
                     )
+                    case .profileEdit: ProfileEditView()
                     case .profileDetail: ProfileDetailView()
-                    case .profileEditGithub: GithubSettingView()
-                    case .profileEditBaekjoon: BaekjoonSettingView()
+                    case .githubSetting: GithubSettingView()
+                    case .baekjoonSetting: BaekjoonSettingView()
+                    case .jobSetting: EmptyView()
                     default: Text("")
                     }
                 }
@@ -50,7 +56,7 @@ public struct MainView: View {
                 case .Home: HomeView()
                 case .Community: CommunityView()
                 case .GithubRank: GithubRankView {
-                    navController.path.append(.profileEditGithub)
+                    navController.path.append(.githubSetting)
                 } navigateToProfileDetail: {
                     navController.path.append(.profileDetail)
                 }

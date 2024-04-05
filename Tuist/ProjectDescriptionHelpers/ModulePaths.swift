@@ -33,6 +33,7 @@ public extension ModulePaths {
         case GithubSettingFeature
         case ProfileFeature
         case SettingFeature
+        case ProfileEditFeature
         case ProfileDetailFeature
     }
     

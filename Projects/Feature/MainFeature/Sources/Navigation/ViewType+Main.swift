@@ -5,7 +5,9 @@ public extension ViewType {
         case setting
         case writeBoard
         case profileDetail
-        case profileEditGithub
-        case profileEditBaekjoon
+        case githubSetting
+        case baekjoonSetting
+        case jobSetting
+        case profileEdit
     }
 }

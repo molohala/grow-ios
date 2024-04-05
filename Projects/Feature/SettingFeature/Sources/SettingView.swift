@@ -8,36 +8,45 @@ public struct SettingView: View {
     
     @ObservedObject private var viewModel = SettingViewModel()
     
-    private var navigateToProfileEditGithub: () -> Void
-    private var navigateToProfileEditBaekjoon: () -> Void
-    private var navigateToProfileEditJob: () -> Void
+    private var navigateToProfileEdit: () -> Void
+    private var navigateToGithubSetting: () -> Void
+    private var navigateToBaekjoonSetting: () -> Void
+    private var navigateToJobSetting: () -> Void
     
     public init(
-        navigateToProfileEditGithub: @escaping () -> Void,
-        navigateToProfileEditBaekjoon: @escaping () -> Void,
-        navigateToProfileEditJob: @escaping () -> Void
+        navigateToProfileEdit: @escaping () -> Void,
+        navigateToGithubSetting: @escaping () -> Void,
+        navigateToBaekjoonSetting: @escaping () -> Void,
+        navigateToJobSetting: @escaping () -> Void
     ) {
-        self.navigateToProfileEditGithub = navigateToProfileEditGithub
-        self.navigateToProfileEditBaekjoon = navigateToProfileEditBaekjoon
-        self.navigateToProfileEditJob = navigateToProfileEditJob
+        self.navigateToProfileEdit = navigateToProfileEdit
+        self.navigateToGithubSetting = navigateToGithubSetting
+        self.navigateToBaekjoonSetting = navigateToBaekjoonSetting
+        self.navigateToJobSetting = navigateToJobSetting
     }
     
     public var body: some View {
         ScrollView {
             VStack {
                 SettingCell(
+                    icon: Image(systemName: "person.fill"),
+                    iconColor: .gray,
+                    text: "프로필 설정") {
+                        navigateToProfileEdit()
+                    }
+                SettingCell(
                     icon: DesignSystemAsset.github.swiftUIImage,
                     iconColor: .github,
                     text: "Github 설정",
                     description: "bestswlkh0310") {
-                        navigateToProfileEditGithub()
+                        navigateToGithubSetting()
                     }
                 SettingCell(
                     icon: DesignSystemAsset.baekjoon.swiftUIImage,
                     iconColor: .baekjoon,
                     text: "백준 설정",
                     description: "hhhello0507") {
-                        navigateToProfileEditBaekjoon()
+                        navigateToBaekjoonSetting()
                     }
                 Spacer()
             }
