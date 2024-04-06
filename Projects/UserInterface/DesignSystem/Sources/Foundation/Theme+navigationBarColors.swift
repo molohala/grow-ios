@@ -12,7 +12,11 @@ public struct Theme {
     
     private init() {}
     
-    public static func navigationBarColors(background: Color?, titleColor: Color? = nil, tintColor: Color? = nil ){
+    public static func navigationBarColors(
+        background: Color?,
+        titleColor: Color? = nil,
+        tintColor: Color? = nil
+    ) {
         
         let background = UIColor(background ?? .black)
         let titleColor = UIColor(titleColor ?? .black)

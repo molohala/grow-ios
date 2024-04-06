@@ -20,7 +20,7 @@ final class SignInViewModel: ObservableObject {
     @MainActor
     func signIn() async {
         do {
-            let response = try await AuthService.shared.dodamSignIn(id: id, pw: pw).data
+            let response = try await DAuthService.shared.dodamSignIn(id: id, pw: pw).data
             guard let url = URL(string: response.location) else { 
                 showErrorDialog = true
                 return
@@ -31,12 +31,12 @@ final class SignInViewModel: ObservableObject {
                 return
             }
             
-            guard let code = components.queryItems?.first(where: { $0.name == "code" }) else {
+            guard let code = components.queryItems?.first(where: { $0.name == "code" })?.value else {
                 showErrorDialog = true
                 return
             }
             
-            // handle sign in with dauth code
+            _ = try await AuthService.shared.signIn(code: code)
         } catch {
             showErrorDialog = true
             print(error)

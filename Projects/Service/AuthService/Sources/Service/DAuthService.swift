@@ -2,14 +2,14 @@ import BaseService
 import Foundation
 import Crypto
 
-public final class AuthService: BaseService<AuthService> {
+public final class DAuthService: BaseService<DAuthService> {
     
     override init() {}
+    
+    public static let shared = DAuthService()
 }
 
-public extension AuthService {
-    
-    static let shared = AuthService()
+public extension DAuthService {
     
     func dodamSignIn(id: String, pw: String) async throws -> BaseResponse<DodamSignInResponse> {
         
@@ -18,9 +18,9 @@ public extension AuthService {
         
         let req = DodamSignInRequest(id: id,
                                      pw: hashedPw,
-                                     clientId: Dodam.clientId,
-                                     redirectUrl: Dodam.redirectUrl)
+                                     clientId: DAuth.clientId,
+                                     redirectUrl: DAuth.redirectUrl)
         
-        return try await requestPost(url: "https://dauth.b1nd.com/api/auth/login/", req, BaseResponse<DodamSignInResponse>.self)
+        return try await requestPost(url: "https://dauth.b1nd.com/api/auth/login/", req: req, res: BaseResponse<DodamSignInResponse>.self)
     }
 }
