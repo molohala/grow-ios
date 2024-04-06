@@ -23,6 +23,7 @@ public struct SubTitle: View {
             Text(text)
                 .font(.title2)
                 .fontWeight(.semibold)
+                .padding(.leading, 4)
             Spacer()
         }
     }
