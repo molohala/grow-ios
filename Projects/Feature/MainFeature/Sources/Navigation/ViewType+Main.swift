@@ -9,5 +9,7 @@ public extension ViewType {
         case baekjoonSetting
         case jobSetting
         case profileEdit
+        case communityCreate
+        case communityDetail
     }
 }

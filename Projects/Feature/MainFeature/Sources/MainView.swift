@@ -11,6 +11,7 @@ import ProfileDetailFeature
 import GithubSettingFeature
 import BaekjoonSettingFeature
 import ProfileEditFeature
+import CommunityCreateFeature
 
 public struct MainView: View {
     
@@ -42,6 +43,7 @@ public struct MainView: View {
                     case .githubSetting: GithubSettingView()
                     case .baekjoonSetting: BaekjoonSettingView()
                     case .jobSetting: EmptyView()
+                    case .communityCreate: CommunityCreateView()
                     default: Text("")
                     }
                 }
@@ -54,7 +56,13 @@ public struct MainView: View {
             Group {
                 switch viewModel.selectedView {
                 case .Home: HomeView()
-                case .Community: CommunityView()
+                case .Community: CommunityView(
+                    navigateToCommunityCreate: {
+                        navController.path.append(.communityCreate)
+                    }, navigateToCommunityDetail: {
+                        navController.path.append(.communityDetail)
+                    }
+                )
                 case .GithubRank: GithubRankView {
                     navController.path.append(.githubSetting)
                 } navigateToProfileDetail: {
