@@ -15,7 +15,9 @@ let project = Project.makeFeature(
             .feature(target: .ProfileDetailFeature),
             .feature(target: .GithubSettingFeature),
             .feature(target: .BaekjoonSettingFeature),
-            .feature(target: .ProfileEditFeature)
+            .feature(target: .ProfileEditFeature),
+            .feature(target: .CommunityCreateFeature),
+            .feature(target: .CommunityDetailFeature)
         ]),
         .makeFeatureExample(target: .MainFeature, dependencies: [
             .feature(target: .MainFeature)

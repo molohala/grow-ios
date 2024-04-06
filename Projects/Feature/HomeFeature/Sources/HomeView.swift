@@ -25,14 +25,9 @@ public struct HomeView: View {
             
             VStack(spacing: 12) {
                 ForEach(0..<3, id: \.self) { _ in
-                    Button {
+                    InfinityCommunityCell {
                         //
-                    } label: {
-                        InfinityCommunityCell {
-                            //
-                        }
                     }
-                    .applyAnimation()
                 }
             }
         }

@@ -53,7 +53,6 @@ public struct InfinityGithubRankCell: View {
             } else {
                 label
             }
-            
         }
         .applyAnimation()
     }
@@ -64,7 +63,8 @@ public struct InfinityGithubRankCell: View {
             Text("\(rank)")
                 .font(.caption)
             Rectangle()
-                .frame(width: 50, height: 50)
+                .frame(width: 48, height: 48)
+                .foregroundStyle(.gray)
                 .clipShape(Circle())
                 .overlay {
                     VStack {

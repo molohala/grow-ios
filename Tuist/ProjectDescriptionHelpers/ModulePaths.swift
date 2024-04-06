@@ -35,6 +35,8 @@ public extension ModulePaths {
         case SettingFeature
         case ProfileEditFeature
         case ProfileDetailFeature
+        case CommunityCreateFeature
+        case CommunityDetailFeature
     }
     
     enum Service: String, CaseIterable {
