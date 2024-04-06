@@ -43,10 +43,13 @@ public struct InfinityTextEditor: View {
                 }
         
             if text.isEmpty {
-                HStack {
-                    Text(hint)
-                        .foregroundColor(Color.gray.opacity(0.6))
-                        .padding(15)
+                VStack {
+                    HStack {
+                        Text(hint)
+                            .foregroundColor(Color.gray.opacity(0.6))
+                            .padding(15)
+                        Spacer()
+                    }
                     Spacer()
                 }
             }

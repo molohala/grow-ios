@@ -5,7 +5,9 @@ import CommunityCreateFeature
 struct CommunityCreateViewExample: App {
     var body: some Scene {
         WindowGroup {
-            CommunityCreateView()
+            NavigationStack {
+                CommunityCreateView()
+            }
         }
     }
 }
