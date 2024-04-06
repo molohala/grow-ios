@@ -1,16 +1,34 @@
 //
-//  CommunityCell.swift
-//  CommunityFeature
+//  InfinityCommunityCell.swift
+//  DesignSystem
 //
-//  Created by dgsw8th71 on 4/2/24.
+//  Created by dgsw8th71 on 4/6/24.
 //  Copyright © 2024 molohala. All rights reserved.
 //
 
 import SwiftUI
-import DesignSystem
 
-struct CommunityCell: View {
-    var body: some View {
+public struct InfinityCommunityCell: View {
+    
+    private let action: () -> Void
+    
+    public init(
+        action: @escaping () -> Void
+    ) {
+        self.action = action
+    }
+    
+    public var body: some View {
+        Button {
+            action()
+        } label: {
+            label
+        }
+        .applyAnimation()
+    }
+    
+    @ViewBuilder
+    private var label: some View {
         VStack(spacing: 8) {
             HStack(spacing: 0) {
                 Circle()
