@@ -54,7 +54,7 @@ public struct GithubRankView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     ForEach(viewModel.rank, id: \.self) { i in
-                        RankCell(rank: i + 1) {
+                        InfinityGithubRankCell(rank: i + 1) {
                             navigateToProfileDetail()
                         }
                         .padding(.horizontal, 16)

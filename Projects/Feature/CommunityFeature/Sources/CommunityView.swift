@@ -13,12 +13,10 @@ public struct CommunityView: View {
             ScrollView {
                 LazyVStack(spacing: 12) {
                     ForEach(communityList, id: \.self) { _ in
-                        Button {
-                        } label: {
-                            CommunityCell()
-                                .padding(.horizontal, 16)
+                        InfinityCommunityCell {
+                            //
                         }
-                        .applyAnimation()
+                        .padding(.horizontal, 16)
                     }
                 }
                 .padding(.top, 16)
