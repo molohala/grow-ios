@@ -10,12 +10,17 @@ import DesignSystem
 
 @main
 struct DesignSystemExample: App {
+    
+    @State private var t = ""
+    
     var body: some Scene {
         WindowGroup {
             ScrollView {
                 VStack {
                     InfinitySelector(text: "전체", isSelected: true) {}
                     InfinitySelector(text: "이번주", isSelected: false) {}
+                    InfinityTextField("id", text: $t)
+                    InfinityTextEditor("id", text: $t)
                 }
             }
         }
