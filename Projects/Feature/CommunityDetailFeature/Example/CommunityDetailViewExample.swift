@@ -5,7 +5,9 @@ import SwiftUI
 struct CommunityDetailViewExample: App {
     var body: some Scene {
         WindowGroup {
-            CommunityDetailView()
+            NavigationStack {
+                CommunityDetailView()
+            }
         }
     }
 }

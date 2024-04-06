@@ -12,6 +12,7 @@ import GithubSettingFeature
 import BaekjoonSettingFeature
 import ProfileEditFeature
 import CommunityCreateFeature
+import CommunityDetailFeature
 
 public struct MainView: View {
     
@@ -44,6 +45,7 @@ public struct MainView: View {
                     case .baekjoonSetting: BaekjoonSettingView()
                     case .jobSetting: EmptyView()
                     case .communityCreate: CommunityCreateView()
+                    case .communityDetail: CommunityDetailView()
                     default: Text("")
                     }
                 }
@@ -55,7 +57,14 @@ public struct MainView: View {
         ZStack {
             Group {
                 switch viewModel.selectedView {
-                case .Home: HomeView()
+                case .Home: HomeView(
+                    navigateToCommunityDetail: {
+                        navController.path.append(.communityDetail)
+                    },
+                    navigateToProfileDetail: {
+                        navController.path.append(.profileDetail)
+                    }
+                )
                 case .Community: CommunityView(
                     navigateToCommunityCreate: {
                         navController.path.append(.communityCreate)
