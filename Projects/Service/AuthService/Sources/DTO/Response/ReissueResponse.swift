@@ -9,8 +9,8 @@
 import Foundation
 
 public struct ReissueResponse: Decodable {
-    let refreshToken: String
-    public init(refreshToken: String) {
-        self.refreshToken = refreshToken
+    let accessToken: String
+    public init(accessToken: String) {
+        self.accessToken = accessToken
     }
 }
