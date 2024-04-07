@@ -3,14 +3,6 @@ import DesignSystem
 
 public struct ProfileView: View {
     
-    var navigateToSetting: () -> Void
-    
-    public init(
-        navigateToProfileEdit: @escaping () -> Void
-    ) {
-        self.navigateToSetting = navigateToProfileEdit
-    }
-    
     public var body: some View {
         ScrollView {
             VStack(spacing: 12) {
@@ -44,7 +36,7 @@ public struct ProfileView: View {
                 
                 Spacer()
                 Button {
-                    navigateToSetting()
+//                    navigateToSetting()
                 } label: {
                     Text("설정")
                         .font(.callout)

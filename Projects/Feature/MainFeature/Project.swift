@@ -17,7 +17,8 @@ let project = Project.makeFeature(
             .interface(target: .BaekjoonSettingFeature),
             .interface(target: .ProfileEditFeature),
             .interface(target: .CommunityCreateFeature),
-            .interface(target: .CommunityDetailFeature)
+            .interface(target: .CommunityDetailFeature),
+            .interface(target: .MainFeature)
         ]),
         .makeInterface(target: .MainFeature, dependencies: []),
         .makeFeatureExample(target: .MainFeature, dependencies: [

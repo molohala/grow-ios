@@ -5,16 +5,6 @@ import DesignSystem
 public struct CommunityView: View {
     
     private var communityList = Array(0..<10)
-    private let navigateToCommunityCreate: () -> Void
-    private let navigateToCommunityDetail: () -> Void
-    
-    public init(
-        navigateToCommunityCreate: @escaping () -> Void,
-        navigateToCommunityDetail: @escaping () -> Void
-    ) {
-        self.navigateToCommunityCreate = navigateToCommunityCreate
-        self.navigateToCommunityDetail = navigateToCommunityDetail
-    }
     
     public var body: some View {
         ZStack {
@@ -22,7 +12,7 @@ public struct CommunityView: View {
                 LazyVStack(spacing: 12) {
                     ForEach(communityList, id: \.self) { _ in
                         InfinityCommunityCell {
-                            navigateToCommunityDetail()
+//                            navigateToCommunityDetail()
                         }
                         .padding(.horizontal, 16)
                     }
@@ -35,7 +25,7 @@ public struct CommunityView: View {
                 VStack {
                     Spacer()
                     Button {
-                        navigateToCommunityCreate()
+//                        navigateToCommunityCreate()
                     } label: {
                         Circle()
                             .frame(width: 64, height: 64)

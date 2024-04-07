@@ -5,17 +5,6 @@ public struct GithubRankView: View {
     
     @ObservedObject private var viewModel = GithubRankViewModel()
     
-    var navigateToProfileEdit: () -> Void
-    var navigateToProfileDetail: () -> Void
-    
-    public init(
-        navigateToProfileEdit: @escaping () -> Void,
-        navigateToProfileDetail: @escaping () -> Void
-    ) {
-        self.navigateToProfileEdit = navigateToProfileEdit
-        self.navigateToProfileDetail = navigateToProfileDetail
-    }
-    
     public var body: some View {
         ZStack {
             ScrollView {
@@ -29,7 +18,7 @@ public struct GithubRankView: View {
                             .multilineTextAlignment(.center)
                             .lineLimit(1)
                         InfinityButton("설정하기", height: 40) {
-                            navigateToProfileEdit()
+//                            navigateToProfileEdit()
                         }
                         .font(.callout)
                         .frame(width: 150)
@@ -55,7 +44,7 @@ public struct GithubRankView: View {
                     .padding(.vertical, 8)
                     ForEach(viewModel.rank, id: \.self) { i in
                         InfinityGithubRankCell(rank: i + 1) {
-                            navigateToProfileDetail()
+//                            navigateToProfileDetail()
                         }
                         .padding(.horizontal, 16)
                     }

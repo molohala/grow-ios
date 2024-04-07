@@ -3,17 +3,6 @@ import DesignSystem
 
 public struct HomeView: View {
     
-    private let navigateToCommunityDetail: () -> Void
-    private let navigateToProfileDetail: () -> Void
-    
-    public init(
-        navigateToCommunityDetail: @escaping () -> Void,
-        navigateToProfileDetail: @escaping () -> Void
-    ) {
-        self.navigateToCommunityDetail = navigateToCommunityDetail
-        self.navigateToProfileDetail = navigateToProfileDetail
-    }
-    
     public var body: some View {
         ScrollView {
             LazyVStack(spacing: 32) {
@@ -36,7 +25,7 @@ public struct HomeView: View {
             VStack(spacing: 12) {
                 ForEach(0..<3, id: \.self) { _ in
                     InfinityCommunityCell {
-                        navigateToCommunityDetail()
+//                        navigateToCommunityDetail()
                     }
                 }
             }
@@ -50,7 +39,7 @@ public struct HomeView: View {
             VStack(spacing: 8) {
                 ForEach(0..<3, id: \.self) { i in
                     InfinityGithubRankCell(rank: i + 1) {
-                        navigateToProfileDetail()
+//                        navigateToProfileDetail()
                     }
                     .cardView()
                 }
@@ -65,7 +54,7 @@ public struct HomeView: View {
             VStack(spacing: 8) {
                 ForEach(0..<3, id: \.self) { i in
                     InfinityGithubRankCell(rank: i + 1) {
-                        navigateToProfileDetail()
+//                        navigateToProfileDetail()
                     }
                     .cardView()
                 }
