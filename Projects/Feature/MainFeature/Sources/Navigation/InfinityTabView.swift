@@ -38,11 +38,9 @@ public struct InfinityTabView: View {
         }
         .padding(.vertical, 10)
         .background(Color.white)
-        //        .cornerRadius(12, corners: .allCorners)
         .onChange(of: selectedTab) { _ in
             let impactMed = UIImpactFeedbackGenerator(style: .rigid)
             impactMed.impactOccurred()
         }
-        //        .shadow(.bottomNavigation(.default))
     }
 }
