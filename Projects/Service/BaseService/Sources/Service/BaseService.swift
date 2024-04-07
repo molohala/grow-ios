@@ -10,7 +10,7 @@ open class BaseService<Service> {
         req: Parameters, _ res: Res.Type
     ) async throws -> Res {
         try await AF.request(
-            URL(string: url)!,
+            url,
             method: .get,
             parameters: req,
             encoding: URLEncoding.default
@@ -24,7 +24,7 @@ open class BaseService<Service> {
         res: Res.Type
     ) async throws -> Res {
         try await AF.request(
-            URL(string: url)!,
+            url,
             method: .post
         )
         .validate()
