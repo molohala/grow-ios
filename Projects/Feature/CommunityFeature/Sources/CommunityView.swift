@@ -51,5 +51,6 @@ public struct CommunityView: View {
                 }
             }
         }
+        .background(Color.backgroundColor)
     }
 }

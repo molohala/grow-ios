@@ -12,6 +12,7 @@ public struct CommunityDetailView: View {
                 content
             }
         }
+        .background(Color.white)
         .navigationTitle("노영재님의 글")
     }
     

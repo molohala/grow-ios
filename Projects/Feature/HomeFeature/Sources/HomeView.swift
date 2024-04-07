@@ -24,6 +24,7 @@ public struct HomeView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 108)
         }
+        .background(Color.backgroundColor)
     }
     
     @ViewBuilder

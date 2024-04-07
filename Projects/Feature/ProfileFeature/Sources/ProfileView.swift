@@ -25,6 +25,7 @@ public struct ProfileView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 64)
         }
+        .background(Color.backgroundColor)
     }
     
     @ViewBuilder

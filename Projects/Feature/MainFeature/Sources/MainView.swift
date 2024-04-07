@@ -25,7 +25,6 @@ public struct MainView: View {
         NavigationStack(path: $navController.path) {
             content
                 .navigationTitle(viewModel.selectedView.title)
-                .background(viewModel.selectedView.backgroundColor)
                 .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
                 .navigationDestination(for: ViewType.Main.self) { viewType in
                     switch viewType {
