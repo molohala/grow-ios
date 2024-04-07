@@ -15,7 +15,7 @@ public struct ProfileDetailView: View {
             .padding(.horizontal, 16)
             .padding(.top, 16)
         }
-        .backgroundColor(.backgroundColor)
+        .background(Color.backgroundColor)
         .navigationTitle("노영재님의 프로필")
     }
     

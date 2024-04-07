@@ -24,7 +24,6 @@ public struct MainView: View {
     public var body: some View {
         NavigationStack(path: $navController.path) {
             content
-                .backgroundColor(viewModel.selectedView.backgroundColor)
                 .navigationDestination(for: ViewType.Main.self) { viewType in
                     switch viewType {
                     case .setting: SettingView(
@@ -50,6 +49,7 @@ public struct MainView: View {
                     }
                 }
         }
+        .background(viewModel.selectedView.backgroundColor)
     }
     
     @ViewBuilder
