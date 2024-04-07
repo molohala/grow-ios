@@ -23,6 +23,7 @@ public extension ModulePaths {
     
     enum Feature: String, CaseIterable {
         case BaseFeature
+        case RootFeature
         case SignInFeature
         case MainFeature
         case HomeFeature

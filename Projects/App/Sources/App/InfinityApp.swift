@@ -6,6 +6,10 @@ import DesignSystem
 struct InfinityApp: App {
     
     init() {
+        // needle
+        registerProviderFactories()
+        
+        // top bar
         let appearance = UINavigationBarAppearance()
 
         let backItemAppearance = UIBarButtonItemAppearance()
@@ -24,7 +28,7 @@ struct InfinityApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            AppComponent().makeRootView()
         }
     }
 }

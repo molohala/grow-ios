@@ -6,10 +6,12 @@ let project = Project.makeFeature(
     targets: [
         .makeFeature(target: .SignInFeature, dependencies: [
             .feature(target: .BaseFeature),
-            .service(target: .AuthService)
+            .service(target: .AuthService),
+            .interface(target: .SignInFeature)
         ]),
         .makeFeatureExample(target: .SignInFeature, dependencies: [
             .feature(target: .SignInFeature)
-        ])
+        ]),
+        .makeInterface(target: .SignInFeature, dependencies: [])
     ]
 )

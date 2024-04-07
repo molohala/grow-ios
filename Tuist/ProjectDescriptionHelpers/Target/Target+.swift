@@ -21,7 +21,7 @@ public extension Target {
                     infoPlist: infoPlist,
                     sources: ["Sources/**"],
                     resources: ["Resources/**"],
-                    scripts: [.swiftLint],
+                    scripts: [.swiftLint, .needle],
                     dependencies: dependenceis)
     }
     
@@ -38,11 +38,11 @@ public extension Target {
                     dependencies: dependencies)
     }
     
-    static func makeInteface(
+    static func makeInterface(
         target: ModulePaths.Feature,
         dependencies: [TargetDependency]
     ) -> Self {
-        .makeTarget(name: target.rawValue,
+        .makeTarget(name: "\(target.rawValue)Interface",
                     product: .framework,
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)Interface",
                     infoPlist: .default,

@@ -14,7 +14,8 @@ let project = Project.makeShared(
     targets: [
         .makeShared(target: .GlobalThirdPartyLibrary, dependencies: [
             .SPM.Alamofire,
-            .SPM.SwiftCrypto
+            .SPM.SwiftCrypto,
+            .SPM.Needle
         ])
     ]
 )

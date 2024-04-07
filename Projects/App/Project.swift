@@ -13,11 +13,11 @@ let project = Project.makeApp(
     targets: [
         .makeApp(
             target: .App,
-            
-            dependenceis: [
-                .feature(target: .SignInFeature),
-                .feature(target: .MainFeature)
+            dependenceis: ModulePaths.Feature.allCases.map { TargetDependency.feature(target: $0) } + 
+            [
+                .shared(target: .GlobalThirdPartyLibrary)
             ],
-            infoPlist: .file(path: "Support/Info.plist"))
+            infoPlist: .file(path: "Support/Info.plist")
+        )
     ]
 )
