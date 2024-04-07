@@ -31,7 +31,7 @@ import SettingFeature
 import SettingFeatureInterface
 import SwiftUI
 
-final class AppComponent: BootstrapComponent {
+public final class AppComponent: BootstrapComponent {
     
     public func makeRootView() -> some View {
         rootView.makeView()
@@ -40,60 +40,62 @@ final class AppComponent: BootstrapComponent {
     public var rootView: RootComponent {
         RootComponent(parent: self)
     }
-    
-    public var singInBuildable: any SignInBuildable {
+}
+
+public extension AppComponent {
+    var singInBuildable: any SignInBuildable {
         SignInComponent(parent: self)
     }
     
-    public var baekjoonRankBuildable: any BaekjoonRankBuildable {
+    var baekjoonRankBuildable: any BaekjoonRankBuildable {
         BaekjoonRankComponent(parent: self)
     }
     
-    public var baekjoonSettingBuildable: any BaekjoonSettingBuildable {
+    var baekjoonSettingBuildable: any BaekjoonSettingBuildable {
         BaekjoonSettingComponent(parent: self)
     }
     
-    public var communityCreateBuildable: any CommunityCreateBuildable {
+    var communityCreateBuildable: any CommunityCreateBuildable {
         CommunityCreateComponent(parent: self)
     }
     
-    public var communityDetailBuildable: any CommunityDetailBuildable {
+    var communityDetailBuildable: any CommunityDetailBuildable {
         CommunityDetailComponent(parent: self)
     }
     
-    public var communityBuildable: any CommunityBuildable {
+    var communityBuildable: any CommunityBuildable {
         CommunityComponent(parent: self)
     }
     
-    public var githubRankBuildable: any GithubRankBuildable {
+    var githubRankBuildable: any GithubRankBuildable {
         GithubRankComponent(parent: self)
     }
     
-    public var githubSettingBuildable: any GithubSettingBuildable {
+    var githubSettingBuildable: any GithubSettingBuildable {
         GithubSettingComponent(parent: self)
     }
     
-    public var homeBuildable: any HomeBuildable {
+    var homeBuildable: any HomeBuildable {
         HomeComponent(parent: self)
     }
     
-    public var mainBuildable: any MainBuildable {
+    var mainBuildable: any MainBuildable {
         MainComponent(parent: self)
     }
     
-    public var profileDetailBuildable: any ProfileDetailBuildable {
+    var profileDetailBuildable: any ProfileDetailBuildable {
         ProfileDetailComponent(parent: self)
     }
     
-    public var profileEditBuildable: any ProfileEditBuildable {
+    var profileEditBuildable: any ProfileEditBuildable {
         ProfileEditComponent(parent: self)
     }
     
-    public var profileBuildable: any ProfileBuildable {
+    var profileBuildable: any ProfileBuildable {
         ProfileComponent(parent: self)
     }
     
-    public var settingBuildable: any SettingBuildable {
+    var settingBuildable: any SettingBuildable {
         SettingComponent(parent: self)
     }
 }

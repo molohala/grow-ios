@@ -23,6 +23,43 @@ public struct MainView: View {
     private let profileEditBuilable: any ProfileEditBuildable
     private let profileDetailBuildable: any ProfileDetailBuildable
     private let githubSettingBuildable: any GithubSettingBuildable
+    private let baekjoonSettingBuildable: any BaekjoonSettingBuildable
+    private let communityCreateBuildable: any CommunityCreateBuildable
+    private let communityDetailBuildable: any CommunityDetailBuildable
+    
+    private let homeBuildable: any HomeBuildable
+    private let communityBuildable: any CommunityBuildable
+    private let githubRankBuildable: any GithubRankBuildable
+    private let baekjoonRankBuildable: any BaekjoonRankBuildable
+    private let profileBuildable: any ProfileBuildable
+    
+    public init(
+        settingBuildable: any SettingBuildable,
+        profileEditBuilable: any ProfileEditBuildable,
+        profileDetailBuildable: any ProfileDetailBuildable,
+        githubSettingBuildable: any GithubSettingBuildable,
+        baekjoonSettingBuildable: any BaekjoonSettingBuildable,
+        communityCreateBuildable: any CommunityCreateBuildable,
+        communityDetailBuildable: any CommunityDetailBuildable,
+        homeBuildable: any HomeBuildable,
+        communityBuildable: any CommunityBuildable,
+        githubRankBuildable: any GithubRankBuildable,
+        baekjoonRankBuildable: any BaekjoonRankBuildable,
+        profileBuildable: any ProfileBuildable
+    ) {
+        self.settingBuildable = settingBuildable
+        self.profileEditBuilable = profileEditBuilable
+        self.profileDetailBuildable = profileDetailBuildable
+        self.githubSettingBuildable = githubSettingBuildable
+        self.baekjoonSettingBuildable = baekjoonSettingBuildable
+        self.communityCreateBuildable = communityCreateBuildable
+        self.communityDetailBuildable = communityDetailBuildable
+        self.homeBuildable = homeBuildable
+        self.communityBuildable = communityBuildable
+        self.githubRankBuildable = githubRankBuildable
+        self.baekjoonRankBuildable = baekjoonRankBuildable
+        self.profileBuildable = profileBuildable
+    }
     
     public var body: some View {
         NavigationStack(path: $navController.path) {
@@ -31,17 +68,17 @@ public struct MainView: View {
                 .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
                 .navigationDestination(for: ViewType.Main.self) { viewType in
 //                    switch viewType {
-//                    case .setting: SettingView(
-//                    case .profileEdit: ProfileEditView()
-//                    case .profileDetail: ProfileDetailView()
-//                    case .githubSetting: GithubSettingView()
-//                    case .baekjoonSetting: BaekjoonSettingView()
+//                    case .setting: settingBuildable.makeView().eraseToAnyView()
+//                    case .profileEdit: profileEditBuilable.makeView().eraseToAnyView()
+//                    case .profileDetail: profileDetailBuildable.makeView().eraseToAnyView()
+//                    case .githubSetting: githubSettingBuildable.makeView().eraseToAnyView()
+//                    case .baekjoonSetting: baekjoonSettingBuildable.makeView().eraseToAnyView()
 //                    case .jobSetting: EmptyView()
-//                    case .communityCreate: CommunityCreateView()
-//                    case .communityDetail: CommunityDetailView()
+//                    case .communityCreate: communityCreateBuildable.makeView().eraseToAnyView()
+//                    case .communityDetail: communityDetailBuildable.makeView().eraseToAnyView()
 //                    default: Text("")
 //                    }
-                    Text("HElo")
+                    Text("")
                 }
         }
     }
@@ -51,28 +88,11 @@ public struct MainView: View {
         GeometryReader { proxy in
             ZStack {
 //                switch viewModel.selectedView {
-//                case .Home: HomeView(
-//                    navigateToCommunityDetail: {
-//                        navController.path.append(.communityDetail)
-//                    },
-//                    navigateToProfileDetail: {
-//                        navController.path.append(.profileDetail)
-//                    }
-//                )
-//                case .Community: CommunityView(
-//                    navigateToCommunityCreate: {
-//                        navController.path.append(.communityCreate)
-//                    }, navigateToCommunityDetail: {
-//                        navController.path.append(.communityDetail)
-//                    }
-//                )
-//                case .GithubRank: GithubRankView {
-//                    navController.path.append(.githubSetting)
-//                } navigateToProfileDetail: {
-//                    navController.path.append(.profileDetail)
-//                }
-//                case .BaekjoonRank: BaekjoonRankView()
-//                case .Profile: ProfileView { navController.path.append(.setting) }
+//                case .Home: homeBuildable.makeView().eraseToAnyView()
+//                case .Community: communityBuildable.makeView().eraseToAnyView()
+//                case .GithubRank: githubRankBuildable.makeView().eraseToAnyView()
+//                case .BaekjoonRank: baekjoonRankBuildable.makeView().eraseToAnyView()
+//                case .Profile: profileBuildable.makeView().eraseToAnyView()
 //                }
                 VStack {
                     Spacer()
