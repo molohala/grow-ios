@@ -15,6 +15,13 @@ public extension TargetDependency {
                  path: .relativeToFeature(target.rawValue))
     }
     
+    static func interface(
+        target: ModulePaths.Feature
+    ) -> TargetDependency {
+        .project(target: "\(target.rawValue)Interface",
+                 path: .relativeToFeature(target.rawValue))
+    }
+    
     static func service(
         target: ModulePaths.Service
     ) -> TargetDependency {

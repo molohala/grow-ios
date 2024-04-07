@@ -38,6 +38,19 @@ public extension Target {
                     dependencies: dependencies)
     }
     
+    static func makeInteface(
+        target: ModulePaths.Feature,
+        dependencies: [TargetDependency]
+    ) -> Self {
+        .makeTarget(name: target.rawValue,
+                    product: .framework,
+                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)Interface",
+                    infoPlist: .default,
+                    sources: ["Interface/**"],
+                    scripts: [.swiftLint],
+                    dependencies: dependencies)
+    }
+    
     static func makeFeatureExample(
         target: ModulePaths.Feature,
         dependencies: [TargetDependency] = []

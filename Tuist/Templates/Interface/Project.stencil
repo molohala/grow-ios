@@ -1,0 +1,9 @@
+import ProjectDescription
+import ProjectDescriptionHelpers
+
+let project = Project.makeInterface(
+    target: .{{ name }},
+    targets: [
+        .makeInterface(target: .{{ name }}, dependencies: [])
+    ]
+)
