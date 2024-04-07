@@ -38,7 +38,7 @@ open class BaseService<Service> {
         encoder: ParameterEncoder = JSONParameterEncoder.default
     ) async throws -> Res {
         try await AF.request(
-            URL(string: url)!,
+            url,
             method: .post,
             parameters: req,
             encoder: encoder
