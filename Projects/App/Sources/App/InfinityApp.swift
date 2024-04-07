@@ -1,5 +1,6 @@
 import SwiftUI
 import MainFeature
+import DesignSystem
 
 @main
 struct InfinityApp: App {
