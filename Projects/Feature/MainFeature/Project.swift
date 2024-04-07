@@ -6,19 +6,20 @@ let project = Project.makeFeature(
     targets: [
         .makeFeature(target: .MainFeature, dependencies: [
             .feature(target: .BaseFeature),
-            .feature(target: .HomeFeature),
-            .feature(target: .GithubRankFeature),
-            .feature(target: .BaekjoonRankFeature),
-            .feature(target: .ProfileFeature),
-            .feature(target: .CommunityFeature),
-            .feature(target: .SettingFeature),
-            .feature(target: .ProfileDetailFeature),
-            .feature(target: .GithubSettingFeature),
-            .feature(target: .BaekjoonSettingFeature),
-            .feature(target: .ProfileEditFeature),
-            .feature(target: .CommunityCreateFeature),
-            .feature(target: .CommunityDetailFeature)
+            .interface(target: .HomeFeature),
+            .interface(target: .GithubRankFeature),
+            .interface(target: .BaekjoonRankFeature),
+            .interface(target: .ProfileFeature),
+            .interface(target: .CommunityFeature),
+            .interface(target: .SettingFeature),
+            .interface(target: .ProfileDetailFeature),
+            .interface(target: .GithubSettingFeature),
+            .interface(target: .BaekjoonSettingFeature),
+            .interface(target: .ProfileEditFeature),
+            .interface(target: .CommunityCreateFeature),
+            .interface(target: .CommunityDetailFeature)
         ]),
+        .makeInterface(target: .MainFeature, dependencies: []),
         .makeFeatureExample(target: .MainFeature, dependencies: [
             .feature(target: .MainFeature)
         ])
