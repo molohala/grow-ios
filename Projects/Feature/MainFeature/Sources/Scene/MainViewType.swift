@@ -36,7 +36,7 @@ public enum MainViewType: CaseIterable {
     var name: String {
         switch self {
         case .Home: "홈"
-        case .Community: "커뮤니티"
+        case .Community: "포럼"
         case .GithubRank: "Github"
         case .BaekjoonRank: "백준"
         case .Profile: "프로필"
@@ -46,7 +46,7 @@ public enum MainViewType: CaseIterable {
     var title: String {
         switch self {
         case .Home: "홈"
-        case .Community: "커뮤니티"
+        case .Community: "포럼"
         case .GithubRank: "Github 랭킹"
         case .BaekjoonRank: "백준 랭킹"
         case .Profile: "프로필"
