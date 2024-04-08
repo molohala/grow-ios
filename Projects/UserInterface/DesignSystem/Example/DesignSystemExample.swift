@@ -15,14 +15,14 @@ struct DesignSystemExample: App {
     
     var body: some Scene {
         WindowGroup {
-            ScrollView {
-                VStack {
-                    InfinitySelector(text: "전체", isSelected: true) {}
-                    InfinitySelector(text: "이번주", isSelected: false) {}
-                    InfinityTextField("id", text: $t)
-                    InfinityTextEditor("id", text: $t)
-                }
+            //            ScrollView {
+            VStack {
+                InfinitySelector(text: "전체", isSelected: true) {}
+                InfinitySelector(text: "이번주", isSelected: false) {}
+                InfinityTextField("id", text: $t)
             }
+            //            }
+            .infinityTopBar("디자인 시스템")
         }
     }
 }
