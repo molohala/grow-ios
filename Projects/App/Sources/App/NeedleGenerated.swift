@@ -58,15 +58,23 @@ private func factoryaee7dbde9cc3e483a958e3b0c44298fc1c149afb(_ component: Needle
     return ProfileDetailDependencyac839c257b41fa6ce526Provider()
 }
 private class SettingDependency792c9caceb5cb097fbecProvider: SettingDependency {
-
-
-    init() {
-
+    var profileEditBuildable: any ProfileEditBuildable {
+        return appComponent.profileEditBuildable
+    }
+    var githubSettingBuildable: any GithubSettingBuildable {
+        return appComponent.githubSettingBuildable
+    }
+    var baekjoonSettingBuildable: any BaekjoonSettingBuildable {
+        return appComponent.baekjoonSettingBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->SettingComponent
-private func factoryee0bbc0b920a7007e1a9e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return SettingDependency792c9caceb5cb097fbecProvider()
+private func factoryee0bbc0b920a7007e1a9f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return SettingDependency792c9caceb5cb097fbecProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class ProfileDependencydc1f16da12774bc5c202Provider: ProfileDependency {
     var settingBuildable: any SettingBuildable {
@@ -276,7 +284,9 @@ extension ProfileDetailComponent: Registration {
 }
 extension SettingComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\SettingDependency.profileEditBuildable] = "profileEditBuildable-any ProfileEditBuildable"
+        keyPathToName[\SettingDependency.githubSettingBuildable] = "githubSettingBuildable-any GithubSettingBuildable"
+        keyPathToName[\SettingDependency.baekjoonSettingBuildable] = "baekjoonSettingBuildable-any BaekjoonSettingBuildable"
     }
 }
 extension ProfileComponent: Registration {
@@ -370,7 +380,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
 @inline(never) private func register1() {
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->ProfileDetailComponent", factoryaee7dbde9cc3e483a958e3b0c44298fc1c149afb)
-    registerProviderFactory("^->AppComponent->SettingComponent", factoryee0bbc0b920a7007e1a9e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->SettingComponent", factoryee0bbc0b920a7007e1a9f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ProfileComponent", factory823eb350c729b9705904f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MainComponent", factoryc9274e46e78e70f29c54f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->GithubRankComponent", factoryb50de2dec37458c48a12f47b58f8f304c97af4d5)
