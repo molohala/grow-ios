@@ -16,16 +16,19 @@ public struct InfinityTopBar<C>: View where C: View {
     private let background: Color
     private let content: () -> C
     private let hideBackButton: Bool
+    private let completeAction: (() -> Void)?
     
     public init(
         title: String,
         background: Color,
         hideBackButton: Bool,
+        completeAction: (() -> Void)? = nil,
         @ViewBuilder content: @escaping () -> C
     ) {
         self.title = title
         self.background = background
         self.hideBackButton = hideBackButton
+        self.completeAction = completeAction
         self.content = content
     }
     
@@ -50,6 +53,12 @@ public struct InfinityTopBar<C>: View where C: View {
                         .fontWeight(.heavy)
                         .padding(.leading, hideBackButton ? 16 : 4)
                     Spacer()
+                    if let completeAction {
+                        Button("완료") {
+                            completeAction()
+                        }
+                        .padding(.trailing, 20)
+                    }
                 }
                 .frame(height: 58)
                 .background(background)
@@ -61,8 +70,18 @@ public struct InfinityTopBar<C>: View where C: View {
 }
 
 public extension View {
-    func infinityTopBar(_ title: String, background: Color = .white, hideBackButton: Bool = false) -> some View {
-        InfinityTopBar(title: title, background: background, hideBackButton: hideBackButton) {
+    func infinityTopBar(
+        _ title: String,
+        background: Color = .white,
+        hideBackButton: Bool = false,
+        completeAction: (() -> Void)? = nil
+    ) -> some View {
+        InfinityTopBar(
+            title: title,
+            background: background,
+            hideBackButton: hideBackButton,
+            completeAction: completeAction
+        ) {
             self
         }
     }

@@ -4,6 +4,8 @@ import DesignSystem
 
 public struct ProfileDetailView: View {
     
+    @Environment(\.dismiss) private var dismiss
+    
     public init() {}
     
     public var body: some View {
@@ -16,7 +18,10 @@ public struct ProfileDetailView: View {
             .padding(.top, 16)
         }
         .background(Color.backgroundColor)
-        .infinityTopBar("노영재님의 프로필", background: .backgroundColor)
+        .infinityTopBar(
+            "노영재님의 프로필",
+            background: .backgroundColor
+        )
     }
     
     @ViewBuilder

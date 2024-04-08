@@ -18,13 +18,11 @@ public struct CommunityCreateView: View {
             .padding(.horizontal, 16)
         }
         .hideKeyboardWhenTap()
-        .infinityTopBar("글쓰기")
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("완료") {
-                    dismiss()
-                }
+        .infinityTopBar(
+            "글쓰기",
+            completeAction: {
+                dismiss()
             }
-        }
+        )
     }
 }
