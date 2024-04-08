@@ -29,6 +29,6 @@ public struct GithubSettingView: View {
             .padding(.top, 16)
             .padding(.horizontal, 16)
         }
-        .navigationTitle("Github 설정")
+        .infinityTopBar("Github 설정")
     }
 }

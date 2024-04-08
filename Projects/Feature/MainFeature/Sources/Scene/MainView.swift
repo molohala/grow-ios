@@ -35,7 +35,7 @@ public struct MainView: View {
     public var body: some View {
         NavigationStack(path: $router.navPath) {
             content
-                .infinityTopBar(viewModel.selectedView.title, background: viewModel.selectedView.backgroundColor)
+                .infinityTopBar(viewModel.selectedView.title, background: viewModel.selectedView.backgroundColor, hideBackButton: true)
                 .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
         }
     }

@@ -21,6 +21,6 @@ public struct BaekjoonSettingView: View {
             .padding(.top, 16)
             .padding(.horizontal, 16)
         }
-        .navigationTitle("백준 설정")
+        .infinityTopBar("백준 설정")
     }
 }

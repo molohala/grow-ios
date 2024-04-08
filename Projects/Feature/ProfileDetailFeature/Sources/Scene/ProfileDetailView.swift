@@ -16,7 +16,7 @@ public struct ProfileDetailView: View {
             .padding(.top, 16)
         }
         .background(Color.backgroundColor)
-        .navigationTitle("노영재님의 프로필")
+        .infinityTopBar("노영재님의 프로필", background: .backgroundColor)
     }
     
     @ViewBuilder

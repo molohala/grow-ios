@@ -13,7 +13,7 @@ public struct CommunityDetailView: View {
             }
         }
         .background(Color.white)
-        .navigationTitle("노영재님의 글")
+        .infinityTopBar("노영재님의 글")
     }
     
     @ViewBuilder
