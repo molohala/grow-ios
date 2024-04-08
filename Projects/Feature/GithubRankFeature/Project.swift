@@ -6,7 +6,8 @@ let project = Project.makeFeature(
     targets: [
         .makeFeature(target: .GithubRankFeature, dependencies: [
             .feature(target: .BaseFeature),
-            .interface(target: .GithubRankFeature)
+            .interface(target: .GithubRankFeature),
+            .interface(target: .ProfileDetailFeature)
         ]),
         .makeInterface(target: .GithubRankFeature, dependencies: []),
         .makeFeatureExample(target: .GithubRankFeature, dependencies: [

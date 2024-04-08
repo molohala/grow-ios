@@ -24,13 +24,6 @@ import CommunityCreateFeatureInterface
 import CommunityDetailFeatureInterface
 
 public protocol MainDependency: Dependency {
-    var settingBuildable: any SettingBuildable { get }
-    var profileEditBuildable: any ProfileEditBuildable { get }
-    var profileDetailBuildable: any ProfileDetailBuildable { get }
-    var githubSettingBuildable: any GithubSettingBuildable { get }
-    var baekjoonSettingBuildable: any BaekjoonSettingBuildable { get }
-    var communityCreateBuildable: any CommunityCreateBuildable { get }
-    var communityDetailBuildable: any CommunityDetailBuildable { get }
     var homeBuildable: any HomeBuildable { get }
     var communityBuildable: any CommunityBuildable { get }
     var githubRankBuildable: any GithubRankBuildable { get }
@@ -40,14 +33,7 @@ public protocol MainDependency: Dependency {
 
 public final class MainComponent: Component<MainDependency>, MainBuildable {
     public func makeView() -> some View {
-        MainView(settingBuildable: dependency.settingBuildable,
-                 profileEditBuilable: dependency.profileEditBuildable,
-                 profileDetailBuildable: dependency.profileDetailBuildable,
-                 githubSettingBuildable: dependency.githubSettingBuildable,
-                 baekjoonSettingBuildable: dependency.baekjoonSettingBuildable,
-                 communityCreateBuildable: dependency.communityCreateBuildable,
-                 communityDetailBuildable: dependency.communityDetailBuildable,
-                 homeBuildable: dependency.homeBuildable,
+        MainView(homeBuildable: dependency.homeBuildable,
                  communityBuildable: dependency.communityBuildable, 
                  githubRankBuildable: dependency.githubRankBuildable,
                  baekjoonRankBuildable: dependency.baekjoonRankBuildable,

@@ -5,19 +5,15 @@ let project = Project.makeFeature(
     target: .MainFeature,
     targets: [
         .makeFeature(target: .MainFeature, dependencies: [
+            // base
             .feature(target: .BaseFeature),
+            // features
             .interface(target: .HomeFeature),
             .interface(target: .GithubRankFeature),
             .interface(target: .BaekjoonRankFeature),
             .interface(target: .ProfileFeature),
             .interface(target: .CommunityFeature),
-            .interface(target: .SettingFeature),
-            .interface(target: .ProfileDetailFeature),
-            .interface(target: .GithubSettingFeature),
-            .interface(target: .BaekjoonSettingFeature),
-            .interface(target: .ProfileEditFeature),
-            .interface(target: .CommunityCreateFeature),
-            .interface(target: .CommunityDetailFeature),
+            // itself interface
             .interface(target: .MainFeature)
         ]),
         .makeInterface(target: .MainFeature, dependencies: []),

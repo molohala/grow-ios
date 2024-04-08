@@ -6,7 +6,9 @@ let project = Project.makeFeature(
     targets: [
         .makeFeature(target: .CommunityFeature, dependencies: [
             .feature(target: .BaseFeature),
-            .interface(target: .CommunityFeature)
+            .interface(target: .CommunityFeature),
+            .interface(target: .CommunityDetailFeature),
+            .interface(target: .CommunityCreateFeature)
         ]),
         .makeInterface(target: .CommunityFeature, dependencies: []),
         .makeFeatureExample(target: .CommunityFeature, dependencies: [

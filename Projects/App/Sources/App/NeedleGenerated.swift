@@ -80,27 +80,6 @@ private func factory823eb350c729b9705904e3b0c44298fc1c149afb(_ component: Needle
     return ProfileDependencydc1f16da12774bc5c202Provider()
 }
 private class MainDependency7c6a5b4738b211b8e155Provider: MainDependency {
-    var settingBuildable: any SettingBuildable {
-        return appComponent.settingBuildable
-    }
-    var profileEditBuildable: any ProfileEditBuildable {
-        return appComponent.profileEditBuildable
-    }
-    var profileDetailBuildable: any ProfileDetailBuildable {
-        return appComponent.profileDetailBuildable
-    }
-    var githubSettingBuildable: any GithubSettingBuildable {
-        return appComponent.githubSettingBuildable
-    }
-    var baekjoonSettingBuildable: any BaekjoonSettingBuildable {
-        return appComponent.baekjoonSettingBuildable
-    }
-    var communityCreateBuildable: any CommunityCreateBuildable {
-        return appComponent.communityCreateBuildable
-    }
-    var communityDetailBuildable: any CommunityDetailBuildable {
-        return appComponent.communityDetailBuildable
-    }
     var homeBuildable: any HomeBuildable {
         return appComponent.homeBuildable
     }
@@ -186,15 +165,20 @@ private func factoryda2925fd76da866a652ae3b0c44298fc1c149afb(_ component: Needle
     return SignInDependency5dda0dd015447272446cProvider()
 }
 private class CommunityDependency704c8bb629388d37b98dProvider: CommunityDependency {
-
-
-    init() {
-
+    var communityCreateBuildable: any CommunityCreateBuildable {
+        return appComponent.communityCreateBuildable
+    }
+    var communityDetailBuildable: any CommunityDetailBuildable {
+        return appComponent.communityDetailBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->CommunityComponent
-private func factorya680b0f614045d42b1ade3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return CommunityDependency704c8bb629388d37b98dProvider()
+private func factorya680b0f614045d42b1adf47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return CommunityDependency704c8bb629388d37b98dProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
 
@@ -290,13 +274,6 @@ extension ProfileComponent: Registration {
 }
 extension MainComponent: Registration {
     public func registerItems() {
-        keyPathToName[\MainDependency.settingBuildable] = "settingBuildable-any SettingBuildable"
-        keyPathToName[\MainDependency.profileEditBuildable] = "profileEditBuildable-any ProfileEditBuildable"
-        keyPathToName[\MainDependency.profileDetailBuildable] = "profileDetailBuildable-any ProfileDetailBuildable"
-        keyPathToName[\MainDependency.githubSettingBuildable] = "githubSettingBuildable-any GithubSettingBuildable"
-        keyPathToName[\MainDependency.baekjoonSettingBuildable] = "baekjoonSettingBuildable-any BaekjoonSettingBuildable"
-        keyPathToName[\MainDependency.communityCreateBuildable] = "communityCreateBuildable-any CommunityCreateBuildable"
-        keyPathToName[\MainDependency.communityDetailBuildable] = "communityDetailBuildable-any CommunityDetailBuildable"
         keyPathToName[\MainDependency.homeBuildable] = "homeBuildable-any HomeBuildable"
         keyPathToName[\MainDependency.communityBuildable] = "communityBuildable-any CommunityBuildable"
         keyPathToName[\MainDependency.githubRankBuildable] = "githubRankBuildable-any GithubRankBuildable"
@@ -332,7 +309,8 @@ extension SignInComponent: Registration {
 }
 extension CommunityComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\CommunityDependency.communityCreateBuildable] = "communityCreateBuildable-any CommunityCreateBuildable"
+        keyPathToName[\CommunityDependency.communityDetailBuildable] = "communityDetailBuildable-any CommunityDetailBuildable"
     }
 }
 extension HomeComponent: Registration {
@@ -386,7 +364,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->CommunityCreateComponent", factoryff448a1abf8354e355e3e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityDetailComponent", factory3462e9b95264febd1513e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652ae3b0c44298fc1c149afb)
-    registerProviderFactory("^->AppComponent->CommunityComponent", factorya680b0f614045d42b1ade3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->CommunityComponent", factorya680b0f614045d42b1adf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->GithubSettingComponent", factorybe58855116216af426a2e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->ProfileEditComponent", factoryff80df4e3e21c6a49df9e3b0c44298fc1c149afb)

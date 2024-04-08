@@ -6,7 +6,10 @@ let project = Project.makeFeature(
     targets: [
         .makeFeature(target: .SettingFeature, dependencies: [
             .feature(target: .BaseFeature),
-            .interface(target: .SettingFeature)
+            .interface(target: .SettingFeature),
+            .interface(target: .ProfileEditFeature),
+            .interface(target: .BaekjoonSettingFeature),
+            .interface(target: .GithubSettingFeature)
         ]),
         .makeInterface(target: .SettingFeature, dependencies: []),
         .makeFeatureExample(target: .SettingFeature, dependencies: [

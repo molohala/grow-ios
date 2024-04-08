@@ -1,7 +1,11 @@
 import SwiftUI
 import DesignSystem
+import BaseFeature
+import HomeFeatureInterface
 
 public struct HomeView: View {
+    
+    @EnvironmentObject private var router: Router
     
     public var body: some View {
         ScrollView {
@@ -25,7 +29,7 @@ public struct HomeView: View {
             VStack(spacing: 12) {
                 ForEach(0..<3, id: \.self) { _ in
                     InfinityCommunityCell {
-//                        navigateToCommunityDetail()
+                        router.navigate(to: HomeDestination.communityDetail)
                     }
                 }
             }
@@ -39,7 +43,7 @@ public struct HomeView: View {
             VStack(spacing: 8) {
                 ForEach(0..<3, id: \.self) { i in
                     InfinityGithubRankCell(rank: i + 1) {
-//                        navigateToProfileDetail()
+                        router.navigate(to: HomeDestination.profileDetail)
                     }
                     .cardView()
                 }
@@ -54,7 +58,7 @@ public struct HomeView: View {
             VStack(spacing: 8) {
                 ForEach(0..<3, id: \.self) { i in
                     InfinityGithubRankCell(rank: i + 1) {
-//                        navigateToProfileDetail()
+                        router.navigate(to: HomeDestination.profileDetail)
                     }
                     .cardView()
                 }

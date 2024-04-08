@@ -5,6 +5,8 @@ import SignInFeatureInterface
 
 public struct RootView: View {
     
+    @StateObject private var router = Router()
+    
     private let mainBuildable: any MainBuildable
     private let signInBuildable: any SignInBuildable
     
@@ -18,5 +20,6 @@ public struct RootView: View {
     
     public var body: some View {
         mainBuildable.makeView().eraseToAnyView()
+            .environmentObject(router)
     }
 }
