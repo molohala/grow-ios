@@ -80,15 +80,50 @@ private func factory823eb350c729b9705904e3b0c44298fc1c149afb(_ component: Needle
     return ProfileDependencydc1f16da12774bc5c202Provider()
 }
 private class MainDependency7c6a5b4738b211b8e155Provider: MainDependency {
-
-
-    init() {
-
+    var settingBuildable: any SettingBuildable {
+        return appComponent.settingBuildable
+    }
+    var profileEditBuildable: any ProfileEditBuildable {
+        return appComponent.profileEditBuildable
+    }
+    var profileDetailBuildable: any ProfileDetailBuildable {
+        return appComponent.profileDetailBuildable
+    }
+    var githubSettingBuildable: any GithubSettingBuildable {
+        return appComponent.githubSettingBuildable
+    }
+    var baekjoonSettingBuildable: any BaekjoonSettingBuildable {
+        return appComponent.baekjoonSettingBuildable
+    }
+    var communityCreateBuildable: any CommunityCreateBuildable {
+        return appComponent.communityCreateBuildable
+    }
+    var communityDetailBuildable: any CommunityDetailBuildable {
+        return appComponent.communityDetailBuildable
+    }
+    var homeBuildable: any HomeBuildable {
+        return appComponent.homeBuildable
+    }
+    var communityBuildable: any CommunityBuildable {
+        return appComponent.communityBuildable
+    }
+    var githubRankBuildable: any GithubRankBuildable {
+        return appComponent.githubRankBuildable
+    }
+    var baekjoonRankBuildable: any BaekjoonRankBuildable {
+        return appComponent.baekjoonRankBuildable
+    }
+    var profileBuildable: any ProfileBuildable {
+        return appComponent.profileBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->MainComponent
-private func factoryc9274e46e78e70f29c54e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return MainDependency7c6a5b4738b211b8e155Provider()
+private func factoryc9274e46e78e70f29c54f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return MainDependency7c6a5b4738b211b8e155Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class GithubRankDependency2a656f8c1300149b0745Provider: GithubRankDependency {
 
@@ -255,7 +290,18 @@ extension ProfileComponent: Registration {
 }
 extension MainComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\MainDependency.settingBuildable] = "settingBuildable-any SettingBuildable"
+        keyPathToName[\MainDependency.profileEditBuildable] = "profileEditBuildable-any ProfileEditBuildable"
+        keyPathToName[\MainDependency.profileDetailBuildable] = "profileDetailBuildable-any ProfileDetailBuildable"
+        keyPathToName[\MainDependency.githubSettingBuildable] = "githubSettingBuildable-any GithubSettingBuildable"
+        keyPathToName[\MainDependency.baekjoonSettingBuildable] = "baekjoonSettingBuildable-any BaekjoonSettingBuildable"
+        keyPathToName[\MainDependency.communityCreateBuildable] = "communityCreateBuildable-any CommunityCreateBuildable"
+        keyPathToName[\MainDependency.communityDetailBuildable] = "communityDetailBuildable-any CommunityDetailBuildable"
+        keyPathToName[\MainDependency.homeBuildable] = "homeBuildable-any HomeBuildable"
+        keyPathToName[\MainDependency.communityBuildable] = "communityBuildable-any CommunityBuildable"
+        keyPathToName[\MainDependency.githubRankBuildable] = "githubRankBuildable-any GithubRankBuildable"
+        keyPathToName[\MainDependency.baekjoonRankBuildable] = "baekjoonRankBuildable-any BaekjoonRankBuildable"
+        keyPathToName[\MainDependency.profileBuildable] = "profileBuildable-any ProfileBuildable"
     }
 }
 extension GithubRankComponent: Registration {
@@ -334,7 +380,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->ProfileDetailComponent", factoryaee7dbde9cc3e483a958e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SettingComponent", factoryee0bbc0b920a7007e1a9e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->ProfileComponent", factory823eb350c729b9705904e3b0c44298fc1c149afb)
-    registerProviderFactory("^->AppComponent->MainComponent", factoryc9274e46e78e70f29c54e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->MainComponent", factoryc9274e46e78e70f29c54f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->GithubRankComponent", factoryb50de2dec37458c48a12e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->CommunityCreateComponent", factoryff448a1abf8354e355e3e3b0c44298fc1c149afb)
