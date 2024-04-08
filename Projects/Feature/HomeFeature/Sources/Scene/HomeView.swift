@@ -2,10 +2,21 @@ import SwiftUI
 import DesignSystem
 import BaseFeature
 import HomeFeatureInterface
+import CommunityDetailFeatureInterface
+import ProfileDetailFeatureInterface
 
 public struct HomeView: View {
     
     @EnvironmentObject private var router: Router
+    
+    private let communityDetailBuildable: any CommunityDetailBuildable
+    private let profileDetailBuildable: any ProfileDetailBuildable
+    
+    public init(communityDetailBuildable: any CommunityDetailBuildable,
+                profileDetailBuildable: any ProfileDetailBuildable) {
+        self.communityDetailBuildable = communityDetailBuildable
+        self.profileDetailBuildable = profileDetailBuildable
+    }
     
     public var body: some View {
         ScrollView {
@@ -18,6 +29,12 @@ public struct HomeView: View {
             .padding(.bottom, 108)
         }
         .background(Color.backgroundColor)
+        .navigationDestination(for: HomeDestination.self) {
+            switch $0 {
+            case .communityDetail: communityDetailBuildable.makeView().eraseToAnyView()
+            case .profileDetail: profileDetailBuildable.makeView().eraseToAnyView()
+            }
+        }
     }
     
     @ViewBuilder

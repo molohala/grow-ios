@@ -181,15 +181,20 @@ private func factorya680b0f614045d42b1adf47b58f8f304c97af4d5(_ component: Needle
     return CommunityDependency704c8bb629388d37b98dProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
-
-
-    init() {
-
+    var profileDetailBuildable: any ProfileDetailBuildable {
+        return appComponent.profileDetailBuildable
+    }
+    var communityDetailBuildable: any CommunityDetailBuildable {
+        return appComponent.communityDetailBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->HomeComponent
-private func factory67229cdf0f755562b2b1e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return HomeDependency443c4e1871277bd8432aProvider()
+private func factory67229cdf0f755562b2b1f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return HomeDependency443c4e1871277bd8432aProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class GithubSettingDependency47eb9ae61eeb8f68ab76Provider: GithubSettingDependency {
 
@@ -315,7 +320,8 @@ extension CommunityComponent: Registration {
 }
 extension HomeComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\HomeDependency.profileDetailBuildable] = "profileDetailBuildable-any ProfileDetailBuildable"
+        keyPathToName[\HomeDependency.communityDetailBuildable] = "communityDetailBuildable-any CommunityDetailBuildable"
     }
 }
 extension GithubSettingComponent: Registration {
@@ -365,7 +371,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->CommunityDetailComponent", factory3462e9b95264febd1513e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652ae3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityComponent", factorya680b0f614045d42b1adf47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->GithubSettingComponent", factorybe58855116216af426a2e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->ProfileEditComponent", factoryff80df4e3e21c6a49df9e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BaekjoonRankComponent", factoryf8ddad049da0deefda19e3b0c44298fc1c149afb)
