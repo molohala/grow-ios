@@ -53,7 +53,7 @@ public struct SettingView: View {
             .padding(.horizontal, 16)
         }
         .background(Color.backgroundColor)
-        .navigationTitle("설정")
+        .infinityTopBar("설정", background: .backgroundColor)
         .navigationDestination(for: SettingDestination.self) {
             switch $0 {
             case .baekjoonSetting: baekjoonSettingBuildable.makeView().eraseToAnyView()

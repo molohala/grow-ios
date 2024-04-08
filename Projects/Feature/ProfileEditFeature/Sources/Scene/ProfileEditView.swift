@@ -19,6 +19,6 @@ public struct ProfileEditView: View {
         }
         .padding(.top, 16)
         .padding(.horizontal, 16)
-        .navigationTitle("프로필 설정")
+        .infinityTopBar("프로필 설정")
     }
 }
