@@ -105,15 +105,20 @@ private func factoryc9274e46e78e70f29c54f47b58f8f304c97af4d5(_ component: Needle
     return MainDependency7c6a5b4738b211b8e155Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class GithubRankDependency2a656f8c1300149b0745Provider: GithubRankDependency {
-
-
-    init() {
-
+    var profileDetailBuildable: any ProfileDetailBuildable {
+        return appComponent.profileDetailBuildable
+    }
+    var githubSettingBuildable: any GithubSettingBuildable {
+        return appComponent.githubSettingBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->GithubRankComponent
-private func factoryb50de2dec37458c48a12e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return GithubRankDependency2a656f8c1300149b0745Provider()
+private func factoryb50de2dec37458c48a12f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return GithubRankDependency2a656f8c1300149b0745Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class RootDependency3944cc797a4a88956fb5Provider: RootDependency {
     var mainBuildable: any MainBuildable {
@@ -288,7 +293,8 @@ extension MainComponent: Registration {
 }
 extension GithubRankComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\GithubRankDependency.profileDetailBuildable] = "profileDetailBuildable-any ProfileDetailBuildable"
+        keyPathToName[\GithubRankDependency.githubSettingBuildable] = "githubSettingBuildable-any GithubSettingBuildable"
     }
 }
 extension RootComponent: Registration {
@@ -365,7 +371,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->SettingComponent", factoryee0bbc0b920a7007e1a9e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->ProfileComponent", factory823eb350c729b9705904e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->MainComponent", factoryc9274e46e78e70f29c54f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->GithubRankComponent", factoryb50de2dec37458c48a12e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->GithubRankComponent", factoryb50de2dec37458c48a12f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->CommunityCreateComponent", factoryff448a1abf8354e355e3e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityDetailComponent", factory3462e9b95264febd1513e3b0c44298fc1c149afb)

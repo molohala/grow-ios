@@ -10,13 +10,19 @@ import Foundation
 import NeedleFoundation
 import SwiftUI
 import GithubRankFeatureInterface
+import ProfileDetailFeatureInterface
+import GithubSettingFeatureInterface
 
 public protocol GithubRankDependency: Dependency {
-    
+    var profileDetailBuildable: any ProfileDetailBuildable { get }
+    var githubSettingBuildable: any GithubSettingBuildable { get }
 }
 
 public final class GithubRankComponent: Component<GithubRankDependency>, GithubRankBuildable {
     public func makeView() -> some View {
-        GithubRankView()
+        GithubRankView(
+            profileDetailBuildable: dependency.profileDetailBuildable,
+            githubSettingBuildable: dependency.githubSettingBuildable
+        )
     }
 }

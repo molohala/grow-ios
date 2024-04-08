@@ -1,9 +1,26 @@
 import SwiftUI
 import DesignSystem
+import BaseFeature
+import ProfileDetailFeatureInterface
+import GithubRankFeatureInterface
+import GithubSettingFeatureInterface
 
 public struct GithubRankView: View {
     
     @ObservedObject private var viewModel = GithubRankViewModel()
+    
+    @EnvironmentObject private var router: Router
+    
+    private let profileDetailBuildable: any ProfileDetailBuildable
+    private let githubSettingBuildable: any GithubSettingBuildable
+    
+    public init(
+        profileDetailBuildable: any ProfileDetailBuildable,
+        githubSettingBuildable: any GithubSettingBuildable
+    ) {
+        self.profileDetailBuildable = profileDetailBuildable
+        self.githubSettingBuildable = githubSettingBuildable
+    }
     
     public var body: some View {
         ZStack {
@@ -18,19 +35,20 @@ public struct GithubRankView: View {
                             .multilineTextAlignment(.center)
                             .lineLimit(1)
                         InfinityButton("설정하기", height: 40) {
-//                            navigateToProfileEdit()
+                            router.navigate(to: GithubRankDestination.githubSetting)
                         }
-                        .font(.callout)
                         .frame(width: 150)
+                        .font(.callout)
                     }
-                    .padding(.horizontal, 12)
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, 24)
                     .padding(.vertical, 24)
                     .overlay {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(lineWidth: 1)
                             .foregroundStyle(.gray.opacity(0.3))
                     }
-                    .padding(.horizontal, 8)
+                    .padding(.horizontal, 32)
                     HStack {
                         InfinitySelector(text: "이번 주", isSelected: true) {
                             //
@@ -44,13 +62,19 @@ public struct GithubRankView: View {
                     .padding(.vertical, 8)
                     ForEach(viewModel.rank, id: \.self) { i in
                         InfinityGithubRankCell(rank: i + 1) {
-//                            navigateToProfileDetail()
+                            router.navigate(to: GithubRankDestination.profileDetail)
                         }
                         .padding(.horizontal, 16)
                     }
                 }
                 .padding(.top, 16)
                 .padding(.bottom, 128)
+            }
+        }
+        .navigationDestination(for: GithubRankDestination.self) {
+            switch $0 {
+            case .profileDetail: profileDetailBuildable.makeView().eraseToAnyView()
+            case .githubSetting: githubSettingBuildable.makeView().eraseToAnyView()
             }
         }
     }
