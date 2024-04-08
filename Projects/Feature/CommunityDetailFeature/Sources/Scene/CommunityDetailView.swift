@@ -21,6 +21,7 @@ public struct CommunityDetailView: View {
         VStack(spacing: 16) {
             Text("지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존")
                 .font(.body)
+                .lineSpacing(.infinityLineSpacing)
                 .fontWeight(.medium)
             Divider()
         }

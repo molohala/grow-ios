@@ -22,7 +22,7 @@ public struct SubTitle: View {
         HStack {
             Text(text)
                 .font(.title2)
-                .fontWeight(.semibold)
+                .fontWeight(.bold)
                 .padding(.leading, 4)
             Spacer()
         }

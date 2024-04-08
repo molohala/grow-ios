@@ -46,6 +46,7 @@ public struct InfinityCommunityCell: View {
                     .padding(.leading, 4)
             }
             Text("지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존")
+                .lineSpacing(.infinityLineSpacing)
                 .font(.body)
                 .fontWeight(.medium)
         }
