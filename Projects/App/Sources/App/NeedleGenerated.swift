@@ -69,15 +69,17 @@ private func factoryee0bbc0b920a7007e1a9e3b0c44298fc1c149afb(_ component: Needle
     return SettingDependency792c9caceb5cb097fbecProvider()
 }
 private class ProfileDependencydc1f16da12774bc5c202Provider: ProfileDependency {
-
-
-    init() {
-
+    var settingBuildable: any SettingBuildable {
+        return appComponent.settingBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->ProfileComponent
-private func factory823eb350c729b9705904e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return ProfileDependencydc1f16da12774bc5c202Provider()
+private func factory823eb350c729b9705904f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ProfileDependencydc1f16da12774bc5c202Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class MainDependency7c6a5b4738b211b8e155Provider: MainDependency {
     var homeBuildable: any HomeBuildable {
@@ -279,7 +281,7 @@ extension SettingComponent: Registration {
 }
 extension ProfileComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\ProfileDependency.settingBuildable] = "settingBuildable-any SettingBuildable"
     }
 }
 extension MainComponent: Registration {
@@ -369,7 +371,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->ProfileDetailComponent", factoryaee7dbde9cc3e483a958e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SettingComponent", factoryee0bbc0b920a7007e1a9e3b0c44298fc1c149afb)
-    registerProviderFactory("^->AppComponent->ProfileComponent", factory823eb350c729b9705904e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->ProfileComponent", factory823eb350c729b9705904f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MainComponent", factoryc9274e46e78e70f29c54f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->GithubRankComponent", factoryb50de2dec37458c48a12f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
