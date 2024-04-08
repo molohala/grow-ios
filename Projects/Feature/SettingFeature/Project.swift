@@ -4,15 +4,15 @@ import ProjectDescriptionHelpers
 let project = Project.makeFeature(
     target: .Setting,
     targets: [
-        .makeFeature(target: .Setting, dependencies: [
+        .feature(target: .Setting, dependencies: [
             .feature(target: .Base),
-            .interface(target: .Setting),
-            .interface(target: .ProfileEdit),
-            .interface(target: .BaekjoonSetting),
-            .interface(target: .GithubSetting)
+            .featureInterface(target: .Setting),
+            .featureInterface(target: .ProfileEdit),
+            .featureInterface(target: .BaekjoonSetting),
+            .featureInterface(target: .GithubSetting)
         ]),
-        .makeInterface(target: .Setting, dependencies: []),
-        .makeFeatureExample(target: .Setting, dependencies: [
+        .featureInterface(target: .Setting, dependencies: []),
+        .featureExample(target: .Setting, dependencies: [
             .feature(target: .Setting)
         ])
     ]

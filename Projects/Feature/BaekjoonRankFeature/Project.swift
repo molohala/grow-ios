@@ -4,13 +4,13 @@ import ProjectDescriptionHelpers
 let project = Project.makeFeature(
     target: .BaekjoonRank,
     targets: [
-        .makeFeature(target: .BaekjoonRank, dependencies: [
+        .feature(target: .BaekjoonRank, dependencies: [
             .feature(target: .Base),
-            .interface(target: .BaekjoonRank),
-            .interface(target: .ProfileDetail)
+            .featureInterface(target: .BaekjoonRank),
+            .featureInterface(target: .ProfileDetail)
         ]),
-        .makeInterface(target: .BaekjoonRank, dependencies: []),
-        .makeFeatureExample(target: .BaekjoonRank, dependencies: [
+        .featureInterface(target: .BaekjoonRank, dependencies: []),
+        .featureExample(target: .BaekjoonRank, dependencies: [
             .feature(target: .BaekjoonRank)
         ])
     ]

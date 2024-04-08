@@ -1,7 +1,7 @@
 import Alamofire
 import Foundation
 
-open class BaseService<Service> {
+open class BaseRemoteDataSource<Service> {
     
     public init() {}
     

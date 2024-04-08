@@ -4,14 +4,14 @@ import ProjectDescriptionHelpers
 let project = Project.makeFeature(
     target: .SignIn,
     targets: [
-        .makeFeature(target: .SignIn, dependencies: [
+        .feature(target: .SignIn, dependencies: [
             .feature(target: .Base),
-            .service(target: .Auth),
-            .interface(target: .SignIn)
+            .serviceInterface(target: .Auth),
+            .featureInterface(target: .SignIn)
         ]),
-        .makeFeatureExample(target: .SignIn, dependencies: [
+        .featureExample(target: .SignIn, dependencies: [
             .feature(target: .SignIn)
         ]),
-        .makeInterface(target: .SignIn, dependencies: [])
+        .featureInterface(target: .SignIn, dependencies: [])
     ]
 )

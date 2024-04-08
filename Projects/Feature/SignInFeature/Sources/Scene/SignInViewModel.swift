@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import AuthService
+import AuthServiceInterface
 
 final class SignInViewModel: ObservableObject {
     
@@ -16,12 +16,23 @@ final class SignInViewModel: ObservableObject {
     @Published var pw = ""
     @Published var showErrorDialog = false
     
+    private let signInUseCase: any SignInUseCase
+    private let dAuthSignInUseCase: any DAuthSignInUseCase
+    
+    init(
+        signInUseCase: any SignInUseCase,
+        dAuthSignInUseCase: any DAuthSignInUseCase
+    ) {
+        self.signInUseCase = signInUseCase
+        self.dAuthSignInUseCase = dAuthSignInUseCase
+    }
+    
     // MARK: - Method
     @MainActor
     func signIn() async {
         do {
-            let response = try await DAuthService.shared.dodamSignIn(id: id, pw: pw).data
-            guard let url = URL(string: response.location) else { 
+            let response = try await dAuthSignInUseCase.excute(id: id, pw: pw)
+            guard let url = URL(string: response.location) else {
                 showErrorDialog = true
                 return
             }
@@ -36,7 +47,7 @@ final class SignInViewModel: ObservableObject {
                 return
             }
             
-            _ = try await AuthService.shared.signIn(code: code)
+            _ = try await signInUseCase.excute(code: code)
         } catch {
             showErrorDialog = true
             print(error)

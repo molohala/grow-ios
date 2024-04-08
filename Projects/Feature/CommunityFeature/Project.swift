@@ -4,14 +4,14 @@ import ProjectDescriptionHelpers
 let project = Project.makeFeature(
     target: .Community,
     targets: [
-        .makeFeature(target: .Community, dependencies: [
+        .feature(target: .Community, dependencies: [
             .feature(target: .Base),
-            .interface(target: .Community),
-            .interface(target: .CommunityDetail),
-            .interface(target: .CommunityCreate)
+            .featureInterface(target: .Community),
+            .featureInterface(target: .CommunityDetail),
+            .featureInterface(target: .CommunityCreate)
         ]),
-        .makeInterface(target: .Community, dependencies: []),
-        .makeFeatureExample(target: .Community, dependencies: [
+        .featureInterface(target: .Community, dependencies: []),
+        .featureExample(target: .Community, dependencies: [
             .feature(target: .Community)
         ])
     ]

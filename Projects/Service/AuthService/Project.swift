@@ -4,7 +4,11 @@ import ProjectDescriptionHelpers
 let project = Project.makeService(
     target: .Auth,
     targets: [
-        .makeService(target: .Auth, dependencies: [
+        .service(target: .Auth, dependencies: [
+            .service(target: .Base),
+            .serviceInterface(target: .Auth)
+        ]),
+        .serviceInterface(target: .Auth, dependencies: [
             .service(target: .Base)
         ])
     ]

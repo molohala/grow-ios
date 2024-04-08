@@ -12,7 +12,7 @@ import DependencyPlugin
 let project = Project.makeShared(
     target: .GlobalThirdPartyLibrary,
     targets: [
-        .makeShared(target: .GlobalThirdPartyLibrary, dependencies: [
+        .shared(target: .GlobalThirdPartyLibrary, dependencies: [
             .SPM.Alamofire,
             .SPM.SwiftCrypto,
             .SPM.Needle

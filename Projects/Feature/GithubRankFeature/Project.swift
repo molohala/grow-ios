@@ -4,14 +4,14 @@ import ProjectDescriptionHelpers
 let project = Project.makeFeature(
     target: .GithubRank,
     targets: [
-        .makeFeature(target: .GithubRank, dependencies: [
+        .feature(target: .GithubRank, dependencies: [
             .feature(target: .Base),
-            .interface(target: .GithubRank),
-            .interface(target: .ProfileDetail),
-            .interface(target: .GithubSetting)
+            .featureInterface(target: .GithubRank),
+            .featureInterface(target: .ProfileDetail),
+            .featureInterface(target: .GithubSetting)
         ]),
-        .makeInterface(target: .GithubRank, dependencies: []),
-        .makeFeatureExample(target: .GithubRank, dependencies: [
+        .featureInterface(target: .GithubRank, dependencies: []),
+        .featureExample(target: .GithubRank, dependencies: [
             .feature(target: .GithubRank)
         ])
     ]

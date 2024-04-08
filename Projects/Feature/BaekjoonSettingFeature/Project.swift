@@ -4,12 +4,12 @@ import ProjectDescriptionHelpers
 let project = Project.makeFeature(
     target: .BaekjoonSetting,
     targets: [
-        .makeFeature(target: .BaekjoonSetting, dependencies: [
+        .feature(target: .BaekjoonSetting, dependencies: [
             .feature(target: .Base),
-            .interface(target: .BaekjoonSetting)
+            .featureInterface(target: .BaekjoonSetting)
         ]),
-        .makeInterface(target: .BaekjoonSetting, dependencies: []),
-        .makeFeatureExample(target: .BaekjoonSetting, dependencies: [
+        .featureInterface(target: .BaekjoonSetting, dependencies: []),
+        .featureExample(target: .BaekjoonSetting, dependencies: [
             .feature(target: .BaekjoonSetting)
         ])
     ]

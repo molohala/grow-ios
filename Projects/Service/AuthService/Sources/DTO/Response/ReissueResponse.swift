@@ -6,11 +6,14 @@
 //  Copyright © 2024 molohala. All rights reserved.
 //
 
-import Foundation
+import AuthServiceInterface
 
 public struct ReissueResponse: Decodable {
     let accessToken: String
-    public init(accessToken: String) {
-        self.accessToken = accessToken
+}
+
+extension ReissueResponse {
+    func toDomain() -> RessiueDomain {
+        RessiueDomain(accessToken: accessToken)
     }
 }

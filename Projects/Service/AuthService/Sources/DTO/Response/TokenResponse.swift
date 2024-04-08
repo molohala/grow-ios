@@ -6,17 +6,18 @@
 //  Copyright © 2024 molohala. All rights reserved.
 //
 
-import Foundation
+import AuthServiceInterface
 
 public struct TokenResponse: Decodable {
     let accessToken: String
     let refreshToken: String
-    
-    public init(
-        accessToken: String,
-        refreshToken: String
-    ) {
-        self.accessToken = accessToken
-        self.refreshToken = refreshToken
+}
+
+extension TokenResponse {
+    func toDomain() -> TokenDomain {
+        TokenDomain(
+            refreshToken: refreshToken,
+            accessToken: accessToken
+        )
     }
 }

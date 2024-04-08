@@ -15,17 +15,24 @@ public extension TargetDependency {
                  path: .relativeToFeature("\(target.rawValue)Feature"))
     }
     
-    static func interface(
+    static func featureInterface(
         target: ModulePaths.Feature
     ) -> TargetDependency {
-        .project(target: "\(target.rawValue)Interface",
-                 path: .relativeToFeature("\(target.rawValue)Interface"))
+        .project(target: "\(target.rawValue)FeatureInterface",
+                 path: .relativeToFeature("\(target.rawValue)Feature"))
     }
     
     static func service(
         target: ModulePaths.Service
     ) -> TargetDependency {
         .project(target: "\(target.rawValue)Service",
+                 path: .relativeToSerivce("\(target.rawValue)Service"))
+    }
+    
+    static func serviceInterface(
+        target: ModulePaths.Service
+    ) -> TargetDependency {
+        .project(target: "\(target.rawValue)ServiceInterface",
                  path: .relativeToSerivce("\(target.rawValue)Service"))
     }
     

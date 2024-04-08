@@ -1,12 +1,18 @@
 import SwiftUI
 import DesignSystem
+import AuthServiceInterface
 
 public struct SignInView: View {
     
-    @ObservedObject private var viewModel = SignInViewModel()
+    @ObservedObject private var viewModel: SignInViewModel
     @State private var isSecured = true
     
-    public init() {}
+    init(
+        viewModel: SignInViewModel
+    ) {
+        _viewModel = ObservedObject(wrappedValue: viewModel)
+        self.isSecured = isSecured
+    }
     
     public var body: some View {
         VStack {

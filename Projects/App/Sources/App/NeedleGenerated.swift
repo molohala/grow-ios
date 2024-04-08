@@ -1,5 +1,7 @@
 
 
+import AuthService
+import AuthServiceInterface
 import BaekjoonRankFeature
 import BaekjoonRankFeatureInterface
 import BaekjoonSettingFeature
@@ -169,15 +171,17 @@ private func factory3462e9b95264febd1513e3b0c44298fc1c149afb(_ component: Needle
     return CommunityDetailDependencyddffd27390310f096b6cProvider()
 }
 private class SignInDependency5dda0dd015447272446cProvider: SignInDependency {
-
-
-    init() {
-
+    var authDomainBuildable: any AuthDomainBuildable {
+        return appComponent.authDomainBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->SignInComponent
-private func factoryda2925fd76da866a652ae3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return SignInDependency5dda0dd015447272446cProvider()
+private func factoryda2925fd76da866a652af47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return SignInDependency5dda0dd015447272446cProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class CommunityDependency704c8bb629388d37b98dProvider: CommunityDependency {
     var communityCreateBuildable: any CommunityCreateBuildable {
@@ -255,6 +259,17 @@ private class BaekjoonSettingDependencyce5bee460baf327a3c82Provider: BaekjoonSet
 private func factorycbb61afc845cf58732dbe3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BaekjoonSettingDependencyce5bee460baf327a3c82Provider()
 }
+private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->AuthDomainComponent
+private func factoryc9b20c320bb79402d4c1e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return AuthDomainDependency4518b8977185a5c9ff71Provider()
+}
 
 #else
 extension AppComponent: Registration {
@@ -327,7 +342,7 @@ extension CommunityDetailComponent: Registration {
 }
 extension SignInComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\SignInDependency.authDomainBuildable] = "authDomainBuildable-any AuthDomainBuildable"
     }
 }
 extension CommunityComponent: Registration {
@@ -362,6 +377,11 @@ extension BaekjoonSettingComponent: Registration {
 
     }
 }
+extension AuthDomainComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 
 
 #endif
@@ -387,13 +407,14 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->CommunityCreateComponent", factoryff448a1abf8354e355e3e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityDetailComponent", factory3462e9b95264febd1513e3b0c44298fc1c149afb)
-    registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652ae3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652af47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->CommunityComponent", factorya680b0f614045d42b1adf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->GithubSettingComponent", factorybe58855116216af426a2e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->ProfileEditComponent", factoryff80df4e3e21c6a49df9e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BaekjoonRankComponent", factoryf8ddad049da0deefda19e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BaekjoonSettingComponent", factorycbb61afc845cf58732dbe3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1e3b0c44298fc1c149afb)
 }
 #endif
 

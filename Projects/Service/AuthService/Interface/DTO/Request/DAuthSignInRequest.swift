@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DodamSignInRequest: Encodable {
+public struct DAuthSignInRequest: Encodable {
     public let id: String
     public let pw: String
     public let clientId: String

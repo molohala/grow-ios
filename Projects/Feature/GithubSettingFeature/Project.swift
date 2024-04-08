@@ -4,12 +4,12 @@ import ProjectDescriptionHelpers
 let project = Project.makeFeature(
     target: .GithubSetting,
     targets: [
-        .makeFeature(target: .GithubSetting, dependencies: [
+        .feature(target: .GithubSetting, dependencies: [
             .feature(target: .Base),
-            .interface(target: .GithubSetting)
+            .featureInterface(target: .GithubSetting)
         ]),
-        .makeInterface(target: .GithubSetting, dependencies: []),
-        .makeFeatureExample(target: .GithubSetting, dependencies: [
+        .featureInterface(target: .GithubSetting, dependencies: []),
+        .featureExample(target: .GithubSetting, dependencies: [
             .feature(target: .GithubSetting)
         ])
     ]
