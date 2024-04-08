@@ -8,11 +8,11 @@
 
 import SwiftUI
 
-import HomeFeature
-import CommunityFeature
-import GithubRankFeature
-import BaekjoonRankFeature
-import ProfileFeature
+import HomeFeatureInterface
+import CommunityFeatureInterface
+import GithubRankFeatureInterface
+import BaekjoonRankFeatureInterface
+import ProfileFeatureInterface
 
 import DesignSystem
 

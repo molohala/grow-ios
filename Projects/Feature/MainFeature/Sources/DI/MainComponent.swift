@@ -24,24 +24,23 @@ import CommunityCreateFeatureInterface
 import CommunityDetailFeatureInterface
 
 public protocol MainDependency: Dependency {
-    var settingBuildable: any SettingBuildable { get }
-    var profileEditBuilable: any ProfileEditBuildable { get }
-    var profileDetailBuildable: any ProfileDetailBuildable { get }
-    var githubSettingBuildable: any GithubSettingBuildable { get }
-    var baekjoonSettingBuildable: any BaekjoonSettingBuildable { get }
-    var communityCreateBuildable: any CommunityCreateBuildable { get }
-    var communityDetailBuildable: any CommunityDetailBuildable { get }
-    
-    var homeBuildable: any HomeBuildable { get }
-    var communityBuildable: any CommunityBuildable { get }
-    var githubRankBuildable: any GithubRankBuildable { get }
-    var baekjoonRankBuildable: any BaekjoonRankBuildable { get }
-    var profileBuildable: any ProfileBuildable { get }
+//    var settingBuildable: any SettingBuildable { get }
+//    var profileEditBuilable: any ProfileEditBuildable { get }
+//    var profileDetailBuildable: any ProfileDetailBuildable { get }
+//    var githubSettingBuildable: any GithubSettingBuildable { get }
+//    var baekjoonSettingBuildable: any BaekjoonSettingBuildable { get }
+//    var communityCreateBuildable: any CommunityCreateBuildable { get }
+//    var communityDetailBuildable: any CommunityDetailBuildable { get }
+//    var homeBuildable: any HomeBuildable { get }
+//    var communityBuildable: any CommunityBuildable { get }
+//    var githubRankBuildable: any GithubRankBuildable { get }
+//    var baekjoonRankBuildable: any BaekjoonRankBuildable { get }
+//    var profileBuildable: any ProfileBuildable { get }
 }
 
 public final class MainComponent: Component<MainDependency>, MainBuildable {
     public func makeView() -> some View {
-        MainView(settingBuildable: dependency.settingBuildable,
+        MainView(/*settingBuildable: dependency.settingBuildable,
                  profileEditBuilable: dependency.profileEditBuilable,
                  profileDetailBuildable: dependency.profileDetailBuildable,
                  githubSettingBuildable: dependency.githubSettingBuildable,
@@ -52,6 +51,6 @@ public final class MainComponent: Component<MainDependency>, MainBuildable {
                  communityBuildable: dependency.communityBuildable, 
                  githubRankBuildable: dependency.githubRankBuildable,
                  baekjoonRankBuildable: dependency.baekjoonRankBuildable,
-                 profileBuildable: dependency.profileBuildable)
+                 profileBuildable: dependency.profileBuildable*/)
     }
 }

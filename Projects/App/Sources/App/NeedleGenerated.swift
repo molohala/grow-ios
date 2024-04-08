@@ -1,3 +1,5 @@
+
+
 import BaekjoonRankFeature
 import BaekjoonRankFeatureInterface
 import BaekjoonSettingFeature
@@ -25,7 +27,6 @@ import ProfileEditFeatureInterface
 import ProfileFeature
 import ProfileFeatureInterface
 import RootFeature
-import RootFeatureInterface
 import SettingFeature
 import SettingFeatureInterface
 import SignInFeature
@@ -101,15 +102,20 @@ private func factoryb50de2dec37458c48a12e3b0c44298fc1c149afb(_ component: Needle
     return GithubRankDependency2a656f8c1300149b0745Provider()
 }
 private class RootDependency3944cc797a4a88956fb5Provider: RootDependency {
-
-
-    init() {
-
+    var mainBuildable: any MainBuildable {
+        return appComponent.mainBuildable
+    }
+    var signInBuildable: any SignInBuildable {
+        return appComponent.signInBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->RootComponent
-private func factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return RootDependency3944cc797a4a88956fb5Provider()
+private func factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return RootDependency3944cc797a4a88956fb5Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class CommunityCreateDependency4cbbd0754f80ca35ed27Provider: CommunityCreateDependency {
 
@@ -216,7 +222,8 @@ extension AppComponent: Registration {
     public func registerItems() {
 
         localTable["rootView-RootComponent"] = { [unowned self] in self.rootView as Any }
-        localTable["singInBuildable-any SignInBuildable"] = { [unowned self] in self.singInBuildable as Any }
+        localTable["mainBuildable-any MainBuildable"] = { [unowned self] in self.mainBuildable as Any }
+        localTable["signInBuildable-any SignInBuildable"] = { [unowned self] in self.signInBuildable as Any }
         localTable["baekjoonRankBuildable-any BaekjoonRankBuildable"] = { [unowned self] in self.baekjoonRankBuildable as Any }
         localTable["baekjoonSettingBuildable-any BaekjoonSettingBuildable"] = { [unowned self] in self.baekjoonSettingBuildable as Any }
         localTable["communityCreateBuildable-any CommunityCreateBuildable"] = { [unowned self] in self.communityCreateBuildable as Any }
@@ -225,7 +232,6 @@ extension AppComponent: Registration {
         localTable["githubRankBuildable-any GithubRankBuildable"] = { [unowned self] in self.githubRankBuildable as Any }
         localTable["githubSettingBuildable-any GithubSettingBuildable"] = { [unowned self] in self.githubSettingBuildable as Any }
         localTable["homeBuildable-any HomeBuildable"] = { [unowned self] in self.homeBuildable as Any }
-        localTable["mainBuildable-any MainBuildable"] = { [unowned self] in self.mainBuildable as Any }
         localTable["profileDetailBuildable-any ProfileDetailBuildable"] = { [unowned self] in self.profileDetailBuildable as Any }
         localTable["profileEditBuildable-any ProfileEditBuildable"] = { [unowned self] in self.profileEditBuildable as Any }
         localTable["profileBuildable-any ProfileBuildable"] = { [unowned self] in self.profileBuildable as Any }
@@ -259,7 +265,8 @@ extension GithubRankComponent: Registration {
 }
 extension RootComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\RootDependency.mainBuildable] = "mainBuildable-any MainBuildable"
+        keyPathToName[\RootDependency.signInBuildable] = "signInBuildable-any SignInBuildable"
     }
 }
 extension CommunityCreateComponent: Registration {
@@ -329,7 +336,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->ProfileComponent", factory823eb350c729b9705904e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->MainComponent", factoryc9274e46e78e70f29c54e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->GithubRankComponent", factoryb50de2dec37458c48a12e3b0c44298fc1c149afb)
-    registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->CommunityCreateComponent", factoryff448a1abf8354e355e3e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityDetailComponent", factory3462e9b95264febd1513e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652ae3b0c44298fc1c149afb)

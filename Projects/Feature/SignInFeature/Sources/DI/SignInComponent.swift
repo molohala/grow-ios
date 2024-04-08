@@ -6,7 +6,6 @@
 //  Copyright © 2024 molohala. All rights reserved.
 //
 
-import Foundation
 import NeedleFoundation
 import SignInFeatureInterface
 import SwiftUI

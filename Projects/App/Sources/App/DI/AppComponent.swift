@@ -20,7 +20,6 @@ import HomeFeatureInterface
 import MainFeature
 import MainFeatureInterface
 import RootFeature
-import RootFeatureInterface
 import ProfileDetailFeature
 import ProfileDetailFeatureInterface
 import ProfileEditFeature
@@ -43,7 +42,12 @@ public final class AppComponent: BootstrapComponent {
 }
 
 public extension AppComponent {
-    var singInBuildable: any SignInBuildable {
+    
+    var mainBuildable: any MainBuildable {
+        MainComponent(parent: self)
+    }
+    
+    var signInBuildable: any SignInBuildable {
         SignInComponent(parent: self)
     }
     
@@ -77,10 +81,6 @@ public extension AppComponent {
     
     var homeBuildable: any HomeBuildable {
         HomeComponent(parent: self)
-    }
-    
-    var mainBuildable: any MainBuildable {
-        MainComponent(parent: self)
     }
     
     var profileDetailBuildable: any ProfileDetailBuildable {

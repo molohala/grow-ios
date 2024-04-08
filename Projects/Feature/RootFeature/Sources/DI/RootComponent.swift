@@ -9,14 +9,17 @@
 import Foundation
 import SwiftUI
 import NeedleFoundation
-import RootFeatureInterface
+import MainFeatureInterface
+import SignInFeatureInterface
 
 public protocol RootDependency: Dependency {
-    
+    var mainBuildable: any MainBuildable { get }
+    var signInBuildable: any SignInBuildable { get }
 }
 
-public final class RootComponent: Component<RootDependency>, RootBuildable {
+public final class RootComponent: Component<RootDependency> {
     public func makeView() -> some View {
-        RootView()
+        RootView(mainBuildable: dependency.mainBuildable,
+                 signInBuildable: dependency.signInBuildable)
     }
 }

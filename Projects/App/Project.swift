@@ -13,10 +13,7 @@ let project = Project.makeApp(
     targets: [
         .makeApp(
             target: .App,
-            dependenceis: ModulePaths.Feature.allCases.map { TargetDependency.feature(target: $0) } + 
-            [
-                .shared(target: .GlobalThirdPartyLibrary)
-            ],
+            dependenceis: ModulePaths.Feature.allCases.map { TargetDependency.feature(target: $0) },
             infoPlist: .file(path: "Support/Info.plist")
         )
     ]
