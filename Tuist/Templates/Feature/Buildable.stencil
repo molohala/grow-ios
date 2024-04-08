@@ -1,4 +1,6 @@
 import SwiftUI
+import {{ name }}Feature
+import NeedleFoundation
 
 public protocol {{ name }}Buildable {
     associatedtype ViewType: View

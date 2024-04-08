@@ -38,12 +38,12 @@ public struct InfinityCommunityCell: View {
                     .font(.callout)
                     .fontWeight(.semibold)
                     .padding(.leading, 8)
+                Spacer()
                 Text("1시간 전")
                     .font(.caption)
                     .fontWeight(.regular)
                     .foregroundStyle(.gray)
                     .padding(.leading, 4)
-                Spacer()
             }
             Text("지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존")
                 .font(.body)

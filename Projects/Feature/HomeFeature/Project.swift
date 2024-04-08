@@ -2,17 +2,17 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .HomeFeature,
+    target: .Home,
     targets: [
-        .makeFeature(target: .HomeFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .interface(target: .HomeFeature),
-            .interface(target: .CommunityDetailFeature),
-            .interface(target: .ProfileDetailFeature)
+        .makeFeature(target: .Home, dependencies: [
+            .feature(target: .Base),
+            .interface(target: .Home),
+            .interface(target: .CommunityDetail),
+            .interface(target: .ProfileDetail)
         ]),
-        .makeInterface(target: .HomeFeature, dependencies: []),
-        .makeFeatureExample(target: .HomeFeature, dependencies: [
-            .feature(target: .HomeFeature)
+        .makeInterface(target: .Home, dependencies: []),
+        .makeFeatureExample(target: .Home, dependencies: [
+            .feature(target: .Home)
         ])
     ]
 )

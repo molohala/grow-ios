@@ -19,6 +19,10 @@ private let template = Template(
         .file(
             path: "Projects/Feature/\(nameAttribute)Feature/Project.swift",
             templatePath: "Project.stencil"
+        ),
+        .file(
+            path: "Projects/Feature/\(nameAttribute)Feature/Interface/\(nameAttribute)Buildable.swift",
+            templatePath: "Buildable.stencil"
         )
     ]
 )

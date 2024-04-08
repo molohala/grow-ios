@@ -13,7 +13,7 @@ public extension Color {
     static let baekjoon = Color(0x0076C0)
     static let github = Color(0x24292e)
     
-    static let backgroundColor = Color(0xFFF4F5F9)
+    static let backgroundColor = Color(0xFFF7FAFF)
     
     // hex to color
     init(_ hex: UInt, alpha: Double = 1) {

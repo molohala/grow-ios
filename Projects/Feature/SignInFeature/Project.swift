@@ -2,16 +2,16 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .SignInFeature,
+    target: .SignIn,
     targets: [
-        .makeFeature(target: .SignInFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .service(target: .AuthService),
-            .interface(target: .SignInFeature)
+        .makeFeature(target: .SignIn, dependencies: [
+            .feature(target: .Base),
+            .service(target: .Auth),
+            .interface(target: .SignIn)
         ]),
-        .makeFeatureExample(target: .SignInFeature, dependencies: [
-            .feature(target: .SignInFeature)
+        .makeFeatureExample(target: .SignIn, dependencies: [
+            .feature(target: .SignIn)
         ]),
-        .makeInterface(target: .SignInFeature, dependencies: [])
+        .makeInterface(target: .SignIn, dependencies: [])
     ]
 )

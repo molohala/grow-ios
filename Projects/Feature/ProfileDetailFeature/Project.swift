@@ -2,15 +2,15 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .ProfileDetailFeature,
+    target: .ProfileDetail,
     targets: [
-        .makeFeature(target: .ProfileDetailFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .interface(target: .ProfileDetailFeature)
+        .makeFeature(target: .ProfileDetail, dependencies: [
+            .feature(target: .Base),
+            .interface(target: .ProfileDetail)
         ]),
-        .makeInterface(target: .ProfileDetailFeature, dependencies: []),
-        .makeFeatureExample(target: .ProfileDetailFeature, dependencies: [
-            .feature(target: .ProfileDetailFeature)
+        .makeInterface(target: .ProfileDetail, dependencies: []),
+        .makeFeatureExample(target: .ProfileDetail, dependencies: [
+            .feature(target: .ProfileDetail)
         ])
     ]
 )

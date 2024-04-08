@@ -29,9 +29,9 @@ public extension Target {
         target: ModulePaths.Feature,
         dependencies: [TargetDependency]
     ) -> Self {
-        .makeTarget(name: target.rawValue,
+        .makeTarget(name: "\(target.rawValue)Feature",
                     product: .staticLibrary,
-                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
+                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)Feature",
                     infoPlist: .default,
                     sources: ["Sources/**"],
                     scripts: [.swiftLint],
@@ -74,7 +74,7 @@ public extension Target {
         target: ModulePaths.Service,
         dependencies: [TargetDependency]
     ) -> Self {
-        .makeTarget(name: target.rawValue,
+        .makeTarget(name: "\(target.rawValue)Service",
                     product: .staticLibrary,
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
                     infoPlist: .default,

@@ -2,16 +2,16 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .BaekjoonRankFeature,
+    target: .BaekjoonRank,
     targets: [
-        .makeFeature(target: .BaekjoonRankFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .interface(target: .BaekjoonRankFeature),
-            .interface(target: .ProfileDetailFeature)
+        .makeFeature(target: .BaekjoonRank, dependencies: [
+            .feature(target: .Base),
+            .interface(target: .BaekjoonRank),
+            .interface(target: .ProfileDetail)
         ]),
-        .makeInterface(target: .BaekjoonRankFeature, dependencies: []),
-        .makeFeatureExample(target: .BaekjoonRankFeature, dependencies: [
-            .feature(target: .BaekjoonRankFeature)
+        .makeInterface(target: .BaekjoonRank, dependencies: []),
+        .makeFeatureExample(target: .BaekjoonRank, dependencies: [
+            .feature(target: .BaekjoonRank)
         ])
     ]
 )

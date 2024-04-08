@@ -61,7 +61,7 @@ public struct InfinityGithubRankCell: View {
     private var label: some View {
         HStack(spacing: 12) {
             Text("\(rank)")
-                .font(.caption)
+                .font(.callout)
             Rectangle()
                 .frame(width: 48, height: 48)
                 .foregroundStyle(.gray)

@@ -2,23 +2,23 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .MainFeature,
+    target: .Main,
     targets: [
-        .makeFeature(target: .MainFeature, dependencies: [
+        .makeFeature(target: .Main, dependencies: [
             // base
-            .feature(target: .BaseFeature),
+            .feature(target: .Base),
             // features
-            .interface(target: .HomeFeature),
-            .interface(target: .GithubRankFeature),
-            .interface(target: .BaekjoonRankFeature),
-            .interface(target: .ProfileFeature),
-            .interface(target: .CommunityFeature),
+            .interface(target: .Home),
+            .interface(target: .GithubRank),
+            .interface(target: .BaekjoonRank),
+            .interface(target: .Profile),
+            .interface(target: .Community),
             // itself interface
-            .interface(target: .MainFeature)
+            .interface(target: .Main)
         ]),
-        .makeInterface(target: .MainFeature, dependencies: []),
-        .makeFeatureExample(target: .MainFeature, dependencies: [
-            .feature(target: .MainFeature)
+        .makeInterface(target: .Main, dependencies: []),
+        .makeFeatureExample(target: .Main, dependencies: [
+            .feature(target: .Main)
         ])
     ]
 )

@@ -2,15 +2,15 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .GithubSettingFeature,
+    target: .GithubSetting,
     targets: [
-        .makeFeature(target: .GithubSettingFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .interface(target: .GithubSettingFeature)
+        .makeFeature(target: .GithubSetting, dependencies: [
+            .feature(target: .Base),
+            .interface(target: .GithubSetting)
         ]),
-        .makeInterface(target: .GithubSettingFeature, dependencies: []),
-        .makeFeatureExample(target: .GithubSettingFeature, dependencies: [
-            .feature(target: .GithubSettingFeature)
+        .makeInterface(target: .GithubSetting, dependencies: []),
+        .makeFeatureExample(target: .GithubSetting, dependencies: [
+            .feature(target: .GithubSetting)
         ])
     ]
 )

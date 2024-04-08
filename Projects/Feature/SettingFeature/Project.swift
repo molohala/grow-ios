@@ -2,18 +2,18 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .SettingFeature,
+    target: .Setting,
     targets: [
-        .makeFeature(target: .SettingFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .interface(target: .SettingFeature),
-            .interface(target: .ProfileEditFeature),
-            .interface(target: .BaekjoonSettingFeature),
-            .interface(target: .GithubSettingFeature)
+        .makeFeature(target: .Setting, dependencies: [
+            .feature(target: .Base),
+            .interface(target: .Setting),
+            .interface(target: .ProfileEdit),
+            .interface(target: .BaekjoonSetting),
+            .interface(target: .GithubSetting)
         ]),
-        .makeInterface(target: .SettingFeature, dependencies: []),
-        .makeFeatureExample(target: .SettingFeature, dependencies: [
-            .feature(target: .SettingFeature)
+        .makeInterface(target: .Setting, dependencies: []),
+        .makeFeatureExample(target: .Setting, dependencies: [
+            .feature(target: .Setting)
         ])
     ]
 )

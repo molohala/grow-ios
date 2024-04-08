@@ -2,17 +2,17 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .GithubRankFeature,
+    target: .GithubRank,
     targets: [
-        .makeFeature(target: .GithubRankFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .interface(target: .GithubRankFeature),
-            .interface(target: .ProfileDetailFeature),
-            .interface(target: .GithubSettingFeature)
+        .makeFeature(target: .GithubRank, dependencies: [
+            .feature(target: .Base),
+            .interface(target: .GithubRank),
+            .interface(target: .ProfileDetail),
+            .interface(target: .GithubSetting)
         ]),
-        .makeInterface(target: .GithubRankFeature, dependencies: []),
-        .makeFeatureExample(target: .GithubRankFeature, dependencies: [
-            .feature(target: .GithubRankFeature)
+        .makeInterface(target: .GithubRank, dependencies: []),
+        .makeFeatureExample(target: .GithubRank, dependencies: [
+            .feature(target: .GithubRank)
         ])
     ]
 )

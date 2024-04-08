@@ -2,15 +2,15 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .BaekjoonSettingFeature,
+    target: .BaekjoonSetting,
     targets: [
-        .makeFeature(target: .BaekjoonSettingFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .interface(target: .BaekjoonSettingFeature)
+        .makeFeature(target: .BaekjoonSetting, dependencies: [
+            .feature(target: .Base),
+            .interface(target: .BaekjoonSetting)
         ]),
-        .makeInterface(target: .BaekjoonSettingFeature, dependencies: []),
-        .makeFeatureExample(target: .BaekjoonSettingFeature, dependencies: [
-            .feature(target: .BaekjoonSettingFeature)
+        .makeInterface(target: .BaekjoonSetting, dependencies: []),
+        .makeFeatureExample(target: .BaekjoonSetting, dependencies: [
+            .feature(target: .BaekjoonSetting)
         ])
     ]
 )

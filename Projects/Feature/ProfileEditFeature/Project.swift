@@ -2,15 +2,15 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .ProfileEditFeature,
+    target: .ProfileEdit,
     targets: [
-        .makeFeature(target: .ProfileEditFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .interface(target: .ProfileEditFeature)
+        .makeFeature(target: .ProfileEdit, dependencies: [
+            .feature(target: .Base),
+            .interface(target: .ProfileEdit)
         ]),
-        .makeInterface(target: .ProfileEditFeature, dependencies: []),
-        .makeFeatureExample(target: .ProfileEditFeature, dependencies: [
-            .feature(target: .ProfileEditFeature)
+        .makeInterface(target: .ProfileEdit, dependencies: []),
+        .makeFeatureExample(target: .ProfileEdit, dependencies: [
+            .feature(target: .ProfileEdit)
         ])
     ]
 )

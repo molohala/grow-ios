@@ -22,27 +22,27 @@ public extension ModulePaths {
     }
     
     enum Feature: String, CaseIterable {
-        case BaseFeature
-        case RootFeature
-        case SignInFeature
-        case MainFeature
-        case HomeFeature
-        case CommunityFeature
-        case GithubRankFeature
-        case BaekjoonRankFeature
-        case BaekjoonSettingFeature
-        case GithubSettingFeature
-        case ProfileFeature
-        case SettingFeature
-        case ProfileEditFeature
-        case ProfileDetailFeature
-        case CommunityCreateFeature
-        case CommunityDetailFeature
+        case Base
+        case Root
+        case SignIn
+        case Main
+        case Home
+        case Community
+        case GithubRank
+        case BaekjoonRank
+        case BaekjoonSetting
+        case GithubSetting
+        case Profile
+        case Setting
+        case ProfileEdit
+        case ProfileDetail
+        case CommunityCreate
+        case CommunityDetail
     }
     
     enum Service: String, CaseIterable {
-        case BaseService
-        case AuthService
+        case Base
+        case Auth
     }
     
     enum Shared: String, CaseIterable {

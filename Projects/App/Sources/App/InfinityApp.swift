@@ -19,7 +19,6 @@ struct InfinityApp: App {
         appearance.setBackIndicatorImage(image, transitionMaskImage: image)
          
         UINavigationBar.appearance().tintColor = .clear // probably not needed
-         
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
         UINavigationBar.appearance().compactScrollEdgeAppearance = appearance
