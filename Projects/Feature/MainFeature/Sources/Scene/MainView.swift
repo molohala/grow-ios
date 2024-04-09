@@ -9,7 +9,7 @@ import CommunityFeatureInterface
 
 public struct MainView: View {
     
-    @StateObject private var viewModel = MainViewModel()
+    @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     
     private let homeBuildable: any HomeBuildable
@@ -35,7 +35,7 @@ public struct MainView: View {
     public var body: some View {
         NavigationStack(path: $router.navPath) {
             content
-                .infinityTopBar(viewModel.selectedView.title, background: viewModel.selectedView.backgroundColor, hideBackButton: true)
+                .infinityTopBar(appState.selectedView.title, background: appState.selectedView.backgroundColor, hideBackButton: true)
                 .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
         }
     }
@@ -44,7 +44,7 @@ public struct MainView: View {
     private var content: some View {
         GeometryReader { proxy in
             ZStack {
-                switch viewModel.selectedView {
+                switch appState.selectedView {
                 case .Home: homeBuildable.makeView().eraseToAnyView()
                 case .Community: communityBuildable.makeView().eraseToAnyView()
                 case .GithubRank: githubRankBuildable.makeView().eraseToAnyView()
@@ -53,7 +53,7 @@ public struct MainView: View {
                 }
                 VStack {
                     Spacer()
-                    InfinityTabView(selectedTab: $viewModel.selectedView, proxy: proxy)
+                    InfinityTabView(selectedTab: $appState.selectedView, proxy: proxy)
                         .shadow(color: Color.black.opacity(0.04), radius: 12)
                 }
                 VStack {

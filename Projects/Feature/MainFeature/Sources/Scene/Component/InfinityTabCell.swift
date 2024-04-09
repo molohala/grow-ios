@@ -7,13 +7,14 @@
 //
 
 import SwiftUI
+import BaseFeature
 
 struct InfinityTabCell: View {
     
-    let type: MainViewType
+    let type: MainFlow
     let isSelected: Bool
     
-    init(type: MainViewType, isSelected: Bool) {
+    init(type: MainFlow, isSelected: Bool) {
         self.type = type
         self.isSelected = isSelected
     }

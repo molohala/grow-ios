@@ -34,7 +34,7 @@ public struct InfinityTextEditor: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .overlay {
-                    RoundedRectangle(cornerRadius: 10)
+                    RoundedRectangle(cornerRadius: 12)
                         .stroke(lineWidth: 1.0)
                         .foregroundStyle(.gray.opacity(0.3))
                 }

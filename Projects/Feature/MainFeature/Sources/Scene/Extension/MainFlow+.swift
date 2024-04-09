@@ -13,15 +13,10 @@ import CommunityFeatureInterface
 import GithubRankFeatureInterface
 import BaekjoonRankFeatureInterface
 import ProfileFeatureInterface
-
+import BaseFeature
 import DesignSystem
 
-public enum MainViewType: CaseIterable {
-    case Home
-    case Community
-    case GithubRank
-    case BaekjoonRank
-    case Profile
+extension MainFlow {
     
     var image: Image {
         switch self {

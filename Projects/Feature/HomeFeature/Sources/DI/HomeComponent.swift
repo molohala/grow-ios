@@ -12,10 +12,12 @@ import NeedleFoundation
 import HomeFeatureInterface
 import ProfileDetailFeatureInterface
 import CommunityDetailFeatureInterface
+import ProfileFeatureInterface
 
 public protocol HomeDependency: Dependency {
     var profileDetailBuildable: any ProfileDetailBuildable { get }
     var communityDetailBuildable: any CommunityDetailBuildable { get }
+    var profileBuildable: any ProfileBuildable { get }
 }
 
 public final class HomeComponent: Component<HomeDependency>, HomeBuildable {

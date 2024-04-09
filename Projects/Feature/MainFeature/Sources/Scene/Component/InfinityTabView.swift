@@ -7,13 +7,14 @@
 //
 
 import SwiftUI
+import BaseFeature
 
 public struct InfinityTabView: View {
-    @Binding var selectedTab: MainViewType
+    @Binding var selectedTab: MainFlow
     private let proxy: GeometryProxy
     
     public init(
-        selectedTab: Binding<MainViewType>,
+        selectedTab: Binding<MainFlow>,
         proxy: GeometryProxy
     ) {
         self._selectedTab = selectedTab
@@ -22,7 +23,7 @@ public struct InfinityTabView: View {
     
     public var body: some View {
         HStack(spacing: 0) {
-            let mainViews = MainViewType.allCases
+            let mainViews = MainFlow.allCases
             Spacer()
             ForEach(mainViews, id: \.self) { tab in
                 Button {

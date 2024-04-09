@@ -206,6 +206,9 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var communityDetailBuildable: any CommunityDetailBuildable {
         return appComponent.communityDetailBuildable
     }
+    var profileBuildable: any ProfileBuildable {
+        return appComponent.profileBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -355,6 +358,7 @@ extension HomeComponent: Registration {
     public func registerItems() {
         keyPathToName[\HomeDependency.profileDetailBuildable] = "profileDetailBuildable-any ProfileDetailBuildable"
         keyPathToName[\HomeDependency.communityDetailBuildable] = "communityDetailBuildable-any CommunityDetailBuildable"
+        keyPathToName[\HomeDependency.profileBuildable] = "profileBuildable-any ProfileBuildable"
     }
 }
 extension GithubSettingComponent: Registration {

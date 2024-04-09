@@ -65,7 +65,7 @@ public extension View {
             .padding(.vertical, 12)
             .padding(.horizontal, 12)
             .background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(color: Color(0x000000, alpha: 0.04), radius: 8, y: 3)
      }
 }

@@ -17,7 +17,8 @@ public struct HomeCoordinator: View {
     private let profileDetailBuildable: any ProfileDetailBuildable
     
     public init(communityDetailBuildable: any CommunityDetailBuildable,
-                profileDetailBuildable: any ProfileDetailBuildable) {
+                profileDetailBuildable: any ProfileDetailBuildable
+    ) {
         self.communityDetailBuildable = communityDetailBuildable
         self.profileDetailBuildable = profileDetailBuildable
     }

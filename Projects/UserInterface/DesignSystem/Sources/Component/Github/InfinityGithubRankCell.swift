@@ -61,25 +61,25 @@ public struct InfinityGithubRankCell: View {
     private var label: some View {
         HStack(spacing: 12) {
             Text("\(rank)")
-                .font(.callout)
-            Rectangle()
-                .frame(width: 48, height: 48)
-                .foregroundStyle(.gray)
-                .clipShape(Circle())
-                .overlay {
-                    VStack {
-                        Group {
-                            switch rank {
-                            case 1: DesignSystemAsset.firstMedal.swiftUIImage.resizable()
-                            case 2: DesignSystemAsset.secondMedal.swiftUIImage.resizable()
-                            case 3: DesignSystemAsset.thirdMedal.swiftUIImage.resizable()
-                            default: EmptyView()
-                            }
+                .font(.body)
+            ZStack {
+                Rectangle()
+                    .foregroundStyle(.gray)
+                VStack {
+                    Group {
+                        switch rank {
+                        case 1: DesignSystemAsset.firstMedal.swiftUIImage.resizable()
+                        case 2: DesignSystemAsset.secondMedal.swiftUIImage.resizable()
+                        case 3: DesignSystemAsset.thirdMedal.swiftUIImage.resizable()
+                        default: EmptyView()
                         }
-                        .frame(width: 28, height: 28)
-                        Spacer()
                     }
+                    .frame(width: 28, height: 28)
+                    Spacer()
                 }
+            }
+            .frame(width: 48, height: 48)
+            .clipShape(Circle())
             VStack(alignment: .leading) {
                 Text("노영재")
                     .font(.body)
@@ -89,7 +89,7 @@ public struct InfinityGithubRankCell: View {
             }
             Spacer()
             Text("10 커밋")
-                .font(.callout)
+                .font(.body)
                 .fontWeight(.semibold)
         }
         .background(.background)
