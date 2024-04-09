@@ -11,6 +11,8 @@ import AuthServiceInterface
 
 extension AppComponent {
     var authDomainBuildable: any AuthDomainBuildable {
-        AuthDomainComponent(parent: self)
+        shared {
+            AuthDomainComponent(parent: self)
+        }
     }
 }

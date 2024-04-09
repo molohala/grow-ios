@@ -9,6 +9,8 @@ public final class AppComponent: BootstrapComponent {
     }
     
     public var rootView: RootComponent {
-        RootComponent(parent: self)
+        shared {
+            RootComponent(parent: self)
+        }
     }
 }
