@@ -8,6 +8,6 @@
 
 import Foundation
 
-final class MainViewModel: ObservableObject {
+public final class MainViewModel: ObservableObject {
     @Published public var selectedView: MainViewType = .Home
 }

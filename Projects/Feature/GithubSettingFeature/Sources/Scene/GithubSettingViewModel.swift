@@ -8,6 +8,6 @@
 
 import Foundation
 
-final class GithubSettingViewModel: ObservableObject {
+public final class GithubSettingViewModel: ObservableObject {
     @Published var githubId = ""
 }

@@ -17,6 +17,6 @@ public protocol BaekjoonSettingDependency: Dependency {
 
 public final class BaekjoonSettingComponent: Component<BaekjoonSettingDependency>, BaekjoonSettingBuildable {
     public func makeView() -> some View {
-        BaekjoonSettingView()
+        BaekjoonSettingView(viewModel: .init())
     }
 }

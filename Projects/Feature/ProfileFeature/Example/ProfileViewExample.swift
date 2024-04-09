@@ -3,11 +3,12 @@ import ProfileFeature
 
 @main
 struct ProfileViewExample: App {
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                ProfileView {}
-                    .background(Color.backgroundColor)
+//                ProfileView(settingBuildable: T##SettingBuildable)
+//                    .background(Color.backgroundColor)
             }
         }
     }

@@ -3,9 +3,13 @@ import DesignSystem
 
 public struct BaekjoonSettingView: View {
     
-    @ObservedObject private var viewModel = BaekjoonSettingViewModel()
+    @ObservedObject private var viewModel: BaekjoonSettingViewModel
     
-    public init() {}
+    public init(
+        viewModel: BaekjoonSettingViewModel
+    ) {
+        self._viewModel = ObservedObject(wrappedValue: viewModel)
+    }
     
     public var body: some View {
         ZStack {

@@ -1,18 +1,11 @@
 import SwiftUI
 import DesignSystem
 import BaseFeature
-import SettingFeatureInterface
 import ProfileFeatureInterface
 
 public struct ProfileView: View {
     
     @EnvironmentObject private var router: Router
-    
-    private let settingBuildable: any SettingBuildable
-    
-    public init(settingBuildable: any SettingBuildable) {
-        self.settingBuildable = settingBuildable
-    }
     
     public var body: some View {
         ScrollView {
@@ -29,11 +22,6 @@ public struct ProfileView: View {
             .padding(.bottom, 64)
         }
         .background(Color.backgroundColor)
-        .navigationDestination(for: ProfileDestination.self) {
-            switch $0 {
-            case .setting: settingBuildable.makeView().eraseToAnyView()
-            }
-        }
     }
     
     @ViewBuilder

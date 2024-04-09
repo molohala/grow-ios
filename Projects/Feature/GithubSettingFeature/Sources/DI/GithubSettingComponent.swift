@@ -12,11 +12,13 @@ import NeedleFoundation
 import GithubSettingFeatureInterface
 
 public protocol GithubSettingDependency: Dependency {
-    
+    //
 }
 
 public final class GithubSettingComponent: Component<GithubSettingDependency>, GithubSettingBuildable {
     public func makeView() -> some View {
-        GithubSettingView()
+        GithubSettingView(
+            viewModel: GithubSettingViewModel()
+        )
     }
 }

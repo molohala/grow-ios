@@ -8,6 +8,6 @@
 
 import Foundation
 
-final class BaekjoonSettingViewModel: ObservableObject {
+public final class BaekjoonSettingViewModel: ObservableObject {
     @Published var backjoonId = ""
 }

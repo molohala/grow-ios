@@ -8,6 +8,6 @@
 
 import Foundation
 
-final class CommunityCreateViewModel: ObservableObject {
+public final class CommunityCreateViewModel: ObservableObject {
     @Published var content = ""
 }

@@ -1,25 +1,18 @@
 import SwiftUI
 import DesignSystem
 import BaseFeature
-import ProfileDetailFeatureInterface
 import GithubRankFeatureInterface
-import GithubSettingFeatureInterface
 
 public struct GithubRankView: View {
     
-    @ObservedObject private var viewModel = GithubRankViewModel()
+    @ObservedObject private var viewModel: GithubRankViewModel
     
     @EnvironmentObject private var router: Router
     
-    private let profileDetailBuildable: any ProfileDetailBuildable
-    private let githubSettingBuildable: any GithubSettingBuildable
-    
     public init(
-        profileDetailBuildable: any ProfileDetailBuildable,
-        githubSettingBuildable: any GithubSettingBuildable
+        viewModel: GithubRankViewModel
     ) {
-        self.profileDetailBuildable = profileDetailBuildable
-        self.githubSettingBuildable = githubSettingBuildable
+        self._viewModel = ObservedObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
@@ -69,12 +62,6 @@ public struct GithubRankView: View {
                 }
                 .padding(.top, 16)
                 .padding(.bottom, 128)
-            }
-        }
-        .navigationDestination(for: GithubRankDestination.self) {
-            switch $0 {
-            case .profileDetail: profileDetailBuildable.makeView().eraseToAnyView()
-            case .githubSetting: githubSettingBuildable.makeView().eraseToAnyView()
             }
         }
     }

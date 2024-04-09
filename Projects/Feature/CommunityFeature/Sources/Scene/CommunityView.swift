@@ -2,23 +2,12 @@ import SwiftUI
 import BaseFeature
 import DesignSystem
 import CommunityFeatureInterface
-import CommunityCreateFeatureInterface
-import CommunityDetailFeatureInterface
 
 public struct CommunityView: View {
     
     private var communityList = Array(0..<10)
     
-    private let communityCreateBuildable: any CommunityCreateBuildable
-    private let communityDetailBuildable: any CommunityDetailBuildable
-    
     @EnvironmentObject private var router: Router
-    
-    public init(communityCreateBuildable: any CommunityCreateBuildable,
-                communityDetailBuildable: any CommunityDetailBuildable) {
-        self.communityCreateBuildable = communityCreateBuildable
-        self.communityDetailBuildable = communityDetailBuildable
-    }
     
     public var body: some View {
         ZStack {
@@ -56,11 +45,5 @@ public struct CommunityView: View {
             }
         }
         .background(Color.backgroundColor)
-        .navigationDestination(for: CommunityDestination.self) {
-            switch $0 {
-            case .communityCreate: communityCreateBuildable.makeView().eraseToAnyView()
-            case .communityDetail: communityDetailBuildable.makeView().eraseToAnyView()
-            }
-        }
     }
 }

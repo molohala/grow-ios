@@ -12,7 +12,7 @@ import NeedleFoundation
 import ProfileEditFeatureInterface
 
 public protocol ProfileEditDependency: Dependency {
-    
+    //
 }
 
 public final class ProfileEditComponent: Component<ProfileEditDependency>, ProfileEditBuildable {

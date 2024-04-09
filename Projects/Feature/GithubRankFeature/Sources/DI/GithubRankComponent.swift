@@ -20,9 +20,10 @@ public protocol GithubRankDependency: Dependency {
 
 public final class GithubRankComponent: Component<GithubRankDependency>, GithubRankBuildable {
     public func makeView() -> some View {
-        GithubRankView(
+        GithubRankCoordinator(
             profileDetailBuildable: dependency.profileDetailBuildable,
-            githubSettingBuildable: dependency.githubSettingBuildable
+            githubSettingBuildable: dependency.githubSettingBuildable,
+            viewModel: GithubRankViewModel()
         )
     }
 }

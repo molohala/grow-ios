@@ -20,7 +20,9 @@ public protocol CommunityDependency: Dependency {
 
 public final class CommunityComponent: Component<CommunityDependency>, CommunityBuildable {
     public func makeView() -> some View {
-        CommunityView(communityCreateBuildable: dependency.communityCreateBuildable,
-                      communityDetailBuildable: dependency.communityDetailBuildable)
+        CommunityCoordinator(
+            communityCreateBuildable: dependency.communityCreateBuildable,
+            communityDetailBuildable: dependency.communityDetailBuildable
+        )
     }
 }

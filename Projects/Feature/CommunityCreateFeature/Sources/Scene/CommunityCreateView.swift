@@ -5,9 +5,13 @@ import DesignSystem
 public struct CommunityCreateView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject private var viewModel = CommunityCreateViewModel()
+    @ObservedObject private var viewModel: CommunityCreateViewModel
     
-    public init() {}
+    public init(
+        viewModel: CommunityCreateViewModel
+    ) {
+        self._viewModel = ObservedObject(wrappedValue: viewModel)
+    }
     
     public var body: some View {
         ScrollView {

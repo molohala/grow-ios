@@ -20,7 +20,9 @@ public protocol HomeDependency: Dependency {
 
 public final class HomeComponent: Component<HomeDependency>, HomeBuildable {
     public func makeView() -> some View {
-        HomeView(communityDetailBuildable: dependency.communityDetailBuildable,
-                 profileDetailBuildable: dependency.profileDetailBuildable)
+        HomeCoordinator(
+            communityDetailBuildable: dependency.communityDetailBuildable,
+            profileDetailBuildable: dependency.profileDetailBuildable
+        )
     }
 }

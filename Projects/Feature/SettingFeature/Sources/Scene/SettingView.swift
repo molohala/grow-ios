@@ -1,30 +1,19 @@
 import SwiftUI
+import SettingFeatureInterface
 
 import BaseFeature
-import ProfileEditFeatureInterface
-import GithubSettingFeatureInterface
-import BaekjoonSettingFeatureInterface
-import SettingFeatureInterface
 
 import DesignSystem
 
 public struct SettingView: View {
     
-    @ObservedObject private var viewModel = SettingViewModel()
+    @ObservedObject private var viewModel: SettingViewModel
     @EnvironmentObject private var router: Router
     
-    private let profileEditBuildable: any ProfileEditBuildable
-    private let githubSettingBuildable: any GithubSettingBuildable
-    private let baekjoonSettingBuildable: any BaekjoonSettingBuildable
-    
     public init(
-        profileEditBuildable: any ProfileEditBuildable,
-        githubSettingBuildable: any GithubSettingBuildable,
-        baekjoonSettingBuildable: any BaekjoonSettingBuildable
+        viewModel: SettingViewModel
     ) {
-        self.profileEditBuildable = profileEditBuildable
-        self.githubSettingBuildable = githubSettingBuildable
-        self.baekjoonSettingBuildable = baekjoonSettingBuildable
+        self._viewModel = ObservedObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
@@ -54,12 +43,5 @@ public struct SettingView: View {
         }
         .background(Color.backgroundColor)
         .infinityTopBar("설정", background: .backgroundColor)
-        .navigationDestination(for: SettingDestination.self) {
-            switch $0 {
-            case .baekjoonSetting: baekjoonSettingBuildable.makeView().eraseToAnyView()
-            case .githubSetting: githubSettingBuildable.makeView().eraseToAnyView()
-            case .profileEdit: profileEditBuildable.makeView().eraseToAnyView()
-            }
-        }
     }
 }

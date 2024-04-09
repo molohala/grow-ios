@@ -18,6 +18,8 @@ public protocol ProfileDependency: Dependency {
 
 public final class ProfileComponent: Component<ProfileDependency>, ProfileBuildable {
     public func makeView() -> some View {
-        ProfileView(settingBuildable: dependency.settingBuildable)
+        ProfileCoordinator(
+            settingBuildable: dependency.settingBuildable
+        )
     }
 }

@@ -8,7 +8,11 @@
 
 import Foundation
 
-final class GithubRankViewModel: ObservableObject {
+public final class GithubRankViewModel: ObservableObject {
     
     @Published var rank = Array(0..<10)
+    
+    public init() {
+        self.rank = rank
+    }
 }

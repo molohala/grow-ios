@@ -14,8 +14,11 @@ public protocol SettingDependency: Dependency {
 
 public final class SettingComponent: Component<SettingDependency>, SettingBuildable {
     public func makeView() -> some View {
-        SettingView(profileEditBuildable: dependency.profileEditBuildable,
-                    githubSettingBuildable: dependency.githubSettingBuildable,
-                    baekjoonSettingBuildable: dependency.baekjoonSettingBuildable)
+        SettingCoordinator(
+            profileEditBuildable: dependency.profileEditBuildable,
+            githubSettingBuildable: dependency.githubSettingBuildable,
+            baekjoonSettingBuildable: dependency.baekjoonSettingBuildable,
+            viewModel: .init()
+        )
     }
 }

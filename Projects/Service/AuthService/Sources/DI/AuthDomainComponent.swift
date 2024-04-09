@@ -9,9 +9,7 @@
 import NeedleFoundation
 import AuthServiceInterface
 
-public protocol AuthDomainDependency: Dependency {
-    
-}
+public protocol AuthDomainDependency: Dependency {}
 
 public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDomainBuildable {
     public var signInUseCase: SignInUseCase {

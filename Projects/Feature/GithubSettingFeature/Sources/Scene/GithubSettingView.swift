@@ -11,9 +11,13 @@ import DesignSystem
 
 public struct GithubSettingView: View {
     
-    @ObservedObject private var viewModel = GithubSettingViewModel()
+    @ObservedObject private var viewModel: GithubSettingViewModel
     
-    public init() {}
+    public init(
+        viewModel: GithubSettingViewModel
+    ) {
+        self._viewModel = ObservedObject(wrappedValue: viewModel)
+    }
     
     public var body: some View {
         ZStack {

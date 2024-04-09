@@ -20,4 +20,3 @@ public final class ProfileDetailComponent: Component<ProfileDetailDependency>, P
         ProfileDetailView()
     }
 }
-
