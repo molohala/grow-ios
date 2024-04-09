@@ -8,9 +8,6 @@ let project = Project.makeFeature(
             .feature(target: .Base),
             .featureInterface(target: .GithubSetting)
         ]),
-        .featureInterface(target: .GithubSetting, dependencies: []),
-        .featureExample(target: .GithubSetting, dependencies: [
-            .feature(target: .GithubSetting)
-        ])
+        .featureInterface(target: .GithubSetting, dependencies: [])
     ]
 )

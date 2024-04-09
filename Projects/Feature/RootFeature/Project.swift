@@ -8,9 +8,6 @@ let project = Project.makeFeature(
             .feature(target: .Base),
             .featureInterface(target: .SignIn),
             .featureInterface(target: .Main)
-        ]),
-        .featureExample(target: .Root, dependencies: [
-            .feature(target: .Root)
         ])
     ]
 )

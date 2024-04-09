@@ -8,9 +8,6 @@ let project = Project.makeFeature(
             .feature(target: .Base),
             .featureInterface(target: .BaekjoonSetting)
         ]),
-        .featureInterface(target: .BaekjoonSetting, dependencies: []),
-        .featureExample(target: .BaekjoonSetting, dependencies: [
-            .feature(target: .BaekjoonSetting)
-        ])
+        .featureInterface(target: .BaekjoonSetting, dependencies: [])
     ]
 )

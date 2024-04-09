@@ -11,9 +11,6 @@ let project = Project.makeFeature(
             .featureInterface(target: .BaekjoonSetting),
             .featureInterface(target: .GithubSetting)
         ]),
-        .featureInterface(target: .Setting, dependencies: []),
-        .featureExample(target: .Setting, dependencies: [
-            .feature(target: .Setting)
-        ])
+        .featureInterface(target: .Setting, dependencies: [])
     ]
 )

@@ -27,10 +27,11 @@ public extension Target {
     
     static func feature(
         target: ModulePaths.Feature,
+        product: Product = .staticLibrary,
         dependencies: [TargetDependency]
     ) -> Self {
         .makeTarget(name: "\(target.rawValue)Feature",
-                    product: .staticLibrary,
+                    product: product,
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)feature",
                     infoPlist: .default,
                     sources: ["Sources/**"],
@@ -72,10 +73,11 @@ public extension Target {
     
     static func service(
         target: ModulePaths.Service,
+        product: Product = .staticLibrary,
         dependencies: [TargetDependency]
     ) -> Self {
         .makeTarget(name: "\(target.rawValue)Service",
-                    product: .staticLibrary,
+                    product: product,
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)service",
                     infoPlist: .default,
                     sources: ["Sources/**"],
@@ -101,7 +103,7 @@ public extension Target {
         dependencies: [TargetDependency]
     ) -> Self {
         .makeTarget(name: target.rawValue,
-                    product: .staticFramework,
+                    product: .framework,
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)shared",
                     infoPlist: .default,
                     sources: ["Sources/**"],
@@ -114,7 +116,7 @@ public extension Target {
         dependencies: [TargetDependency] = []
     ) -> Self {
         .makeTarget(name: target.rawValue,
-                    product: .staticFramework,
+                    product: .framework,
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)userinterface",
                     infoPlist: .default,
                     sources: ["Sources/**"],
