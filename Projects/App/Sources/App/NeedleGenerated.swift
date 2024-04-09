@@ -276,8 +276,8 @@ extension AppComponent: Registration {
     public func registerItems() {
 
         localTable["rootView-RootComponent"] = { [unowned self] in self.rootView as Any }
-        localTable["mainBuildable-any MainBuildable"] = { [unowned self] in self.mainBuildable as Any }
         localTable["signInBuildable-any SignInBuildable"] = { [unowned self] in self.signInBuildable as Any }
+        localTable["mainBuildable-any MainBuildable"] = { [unowned self] in self.mainBuildable as Any }
         localTable["baekjoonRankBuildable-any BaekjoonRankBuildable"] = { [unowned self] in self.baekjoonRankBuildable as Any }
         localTable["baekjoonSettingBuildable-any BaekjoonSettingBuildable"] = { [unowned self] in self.baekjoonSettingBuildable as Any }
         localTable["communityCreateBuildable-any CommunityCreateBuildable"] = { [unowned self] in self.communityCreateBuildable as Any }
