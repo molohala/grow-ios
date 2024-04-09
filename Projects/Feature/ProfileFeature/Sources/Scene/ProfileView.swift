@@ -7,9 +7,11 @@ public struct ProfileView: View {
     
     @EnvironmentObject private var router: Router
     
+    public init() {}
+    
     public var body: some View {
         ScrollView {
-            VStack(spacing: 12) {
+            VStack(spacing: 16) {
                 profile
                 stats
                 InfinityGithubCell {
@@ -20,7 +22,7 @@ public struct ProfileView: View {
             }
             .padding(.top, 16)
             .padding(.horizontal, 16)
-            .padding(.bottom, 64)
+            .padding(.bottom, 108)
         }
         .background(Color.backgroundColor)
     }

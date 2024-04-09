@@ -35,8 +35,8 @@ public struct InfinityGithubCell: View {
                     Spacer()
                     Icon.rightArrorIcon
                 }
-                Text("대충 여기 그래프")
-                    .padding(.vertical, 40)
+                InfinityChart()
+                    .frame(height: 200)
             }
             .applyCardView()
         }

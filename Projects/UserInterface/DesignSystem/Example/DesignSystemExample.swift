@@ -20,6 +20,9 @@ struct DesignSystemExample: App {
                 InfinitySelector(text: "전체", isSelected: true) {}
                 InfinitySelector(text: "이번주", isSelected: false) {}
                 InfinityTextField("id", text: $t)
+                ForEach(InfinityJobType.allCases, id: \.self) {
+                    InfinityJob($0)
+                }
             }
             //            }
             .infinityTopBar("디자인 시스템")
