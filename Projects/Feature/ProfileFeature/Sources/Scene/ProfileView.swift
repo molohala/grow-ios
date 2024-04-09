@@ -11,6 +11,7 @@ public struct ProfileView: View {
         ScrollView {
             VStack(spacing: 12) {
                 profile
+                stats
                 InfinityGithubCell {
                 }
                 InfinityBaekjoonCell {
@@ -58,6 +59,18 @@ public struct ProfileView: View {
                 .foregroundStyle(.gray)
         }
         .applyCardView()
+    }
+    
+    @ViewBuilder
+    private var stats: some View {
+        HStack(spacing: 16) {
+            InfinityStatCell("커밋 개수", type: .github(1204)) {
+                // nav
+            }
+            InfinityStatCell("문제 푼 개수", type: .baekjoon(385)) {
+                // nav
+            }
+        }
     }
     
     @ViewBuilder

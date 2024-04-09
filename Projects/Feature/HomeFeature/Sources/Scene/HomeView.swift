@@ -32,10 +32,10 @@ public struct HomeView: View {
                 .lineSpacing(4.0)
                 .font(.title)
             HStack(spacing: 16) {
-                InfinityStatCell(type: .github(7)) {
+                InfinityStatCell("오늘 한 커밋 개수", type: .github(7)) {
                     // nav
                 }
-                InfinityStatCell(type: .baekjoon(3)) {
+                InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon(3)) {
                     // nav
                 }
             }

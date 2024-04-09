@@ -21,20 +21,11 @@ public enum InfinityStatType {
         }
     }
     
-    var title: String {
-        switch self {
-        case .github:
-            "오늘 한 커밋 수"
-        case .baekjoon:
-            "오늘 푼 문제 수"
-        }
-    }
-    
     var iconColor: Color {
         switch self {
-        case .github(let int):
+        case .github:
                 .github
-        case .baekjoon(let int):
+        case .baekjoon:
                 .baekjoon
         }
     }

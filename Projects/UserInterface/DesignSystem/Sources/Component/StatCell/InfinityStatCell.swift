@@ -10,14 +10,17 @@ import SwiftUI
 
 public struct InfinityStatCell: View {
     
+    private let title: String
     private let type: InfinityStatType
     private let action: () -> Void
     
     public init(
+        _ title: String,
         type: InfinityStatType,
         action: @escaping () -> Void
     ) {
         self.type = type
+        self.title = title
         self.action = action
     }
     
@@ -41,9 +44,10 @@ public struct InfinityStatCell: View {
                         .foregroundStyle(type.iconColor)
                         .frame(width: 32, height: 32)
                 }
-                Text(type.title)
+                Text(title)
                     .font(.callout)
             }
+            .padding(4)
             .applyCardView()
         }
         .applyAnimation()
