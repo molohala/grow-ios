@@ -28,47 +28,16 @@ public struct HomeView: View {
     @ViewBuilder
     private var profile: some View {
         VStack(spacing: 16) {
-            SubTitle("iOS 개발자\n이강현님환영합니다")
+            SubTitle("iOS 개발자\n이강현님 환영합니다")
                 .lineSpacing(4.0)
                 .font(.title)
             HStack(spacing: 16) {
-                Button {
-                    // navigate to github detail
-                } label: {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("7")
-                                .font(.largeTitle)
-                            Spacer()
-                            DesignSystemAsset.fire.swiftUIImage
-                                .resizable()
-                                .frame(width: 32, height: 32)
-                        }
-                        Text("오늘 한 커밋 수")
-                            .font(.callout)
-                    }
-                    .applyCardView()
+                InfinityStatCell(type: .github(7)) {
+                    // nav
                 }
-                .applyAnimation()
-                Button {
-                    // navigate to baekjoon detail
-                } label: {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("3")
-                                .font(.largeTitle)
-                            Spacer()
-                            DesignSystemAsset.book.swiftUIImage
-                                .resizable()
-                                .frame(width: 32, height: 32)
-                        }
-                        Text("오늘 푼 문제 수")
-                            .font(.callout)
-                    }
-                    .applyCardView()
+                InfinityStatCell(type: .baekjoon(3)) {
+                    // nav
                 }
-                .applyAnimation()
-                
             }
         }
     }
@@ -92,12 +61,12 @@ public struct HomeView: View {
     private var todayGithub: some View {
         VStack(spacing: 16) {
             HStack(spacing: 0) {
-                DesignSystemAsset.github.swiftUIImage
-                    .resizable()
-                    .renderingMode(.template)
-                    .foregroundStyle(Color.github)
-                    .frame(width: 30, height: 30)
-                    .padding(.leading, 4)
+//                DesignSystemAsset.github.swiftUIImage
+//                    .resizable()
+//                    .renderingMode(.template)
+//                    .foregroundStyle(Color.github)
+//                    .frame(width: 30, height: 30)
+//                    .padding(.leading, 4)
                 SubTitle("오늘의 Github Top 3")
                 Spacer()
             }
@@ -117,12 +86,12 @@ public struct HomeView: View {
     private var todayBaekjoon: some View {
         VStack(spacing: 16) {
             HStack(spacing: 0) {
-                DesignSystemAsset.baekjoon.swiftUIImage
-                    .resizable()
-                    .renderingMode(.template)
-                    .foregroundStyle(Color.baekjoon)
-                    .frame(width: 30, height: 30)
-                    .padding(.leading, 4)
+//                DesignSystemAsset.baekjoon.swiftUIImage
+//                    .resizable()
+//                    .renderingMode(.template)
+//                    .foregroundStyle(Color.baekjoon)
+//                    .frame(width: 30, height: 30)
+//                    .padding(.leading, 4)
                 SubTitle("오늘의 백준 Top 3")
                 Spacer()
             }
