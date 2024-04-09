@@ -32,7 +32,7 @@ public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDom
         }
     }
     
-    var authRepository: AuthRepository {
+    public var authRepository: AuthRepository {
         shared {
             AuthRepositoryImpl(
                 dAuthDataSource: dAuthDataSource,

@@ -32,7 +32,6 @@ public extension AppComponent {
         MainComponent(parent: self)
     }
     
-    
     var baekjoonRankBuildable: any BaekjoonRankBuildable {
         BaekjoonRankComponent(parent: self)
     }
