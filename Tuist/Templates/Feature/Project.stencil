@@ -4,13 +4,10 @@ import ProjectDescriptionHelpers
 let project = Project.makeFeature(
     target: .{{ name }}Feature,
     targets: [
-        .makeFeature(target: .{{ name }}Feature, dependencies: [
+        .feature(target: .{{ name }}Feature, dependencies: [
             .feature(target: .BaseFeature),
             .interface(tergat: .{{ name }}Feature)
         ]),
-        .makeInterface(target: .{{ name }}Feature, dependencies: []),
-        .makeFeatureExample(target: .{{ name }}Feature, dependencies: [
-            .feature(target: .{{ name }}Feature)
-        ])
+        .interface(target: .{{ name }}Feature, dependencies: [])
     ]
 )

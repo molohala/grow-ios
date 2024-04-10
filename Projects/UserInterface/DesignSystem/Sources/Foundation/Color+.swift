@@ -15,6 +15,10 @@ public extension Color {
     
     static let backgroundColor = Color(0xFFF7FAFF)
     
+    static let gray500 = Color(0xAAAAAA)
+    
+    static let red400 = Color(0xFF2B2B)
+    
     // hex to color
     init(_ hex: UInt, alpha: Double = 1) {
         self.init(

@@ -9,6 +9,8 @@ public struct CommunityView: View {
     
     @EnvironmentObject private var router: Router
     
+    public init() {}
+    
     public var body: some View {
         ZStack {
             ScrollView {

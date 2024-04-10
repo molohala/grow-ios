@@ -17,12 +17,8 @@ struct DesignSystemExample: App {
         WindowGroup {
             //            ScrollView {
             VStack {
-                InfinitySelector(text: "전체", isSelected: true) {}
-                InfinitySelector(text: "이번주", isSelected: false) {}
-                InfinityTextField("id", text: $t)
-                ForEach(InfinityJobType.allCases, id: \.self) {
-                    InfinityJob($0)
-                }
+                InfinityCommunityCell {}
+                InfinityCommunityCell {}
             }
             //            }
             .infinityTopBar("디자인 시스템")
