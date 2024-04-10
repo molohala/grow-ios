@@ -4,21 +4,60 @@ import DesignSystem
 
 public struct CommunityDetailView: View {
     
+    @State private var text = ""
+    @State private var reader: ScrollViewProxy?
+    
     public init() {}
     
     public var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                profile
-                Text("지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존")
-                    .font(.body)
-                    .lineSpacing(.infinityLineSpacing)
-                    .fontWeight(.medium)
-                info
+        ZStack {
+            ScrollViewReader { reader in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        profile
+                        Text("지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존")
+                            .font(.body)
+                            .lineSpacing(.infinityLineSpacing)
+                            .fontWeight(.medium)
+                        info
+                        Divider()
+                        comments
+                            .padding(.bottom, 64)
+                    }
+                    .padding(.horizontal, 16)
+                    .onAppear {
+                        self.reader = reader
+                    }
+                }
             }
-            .padding(.horizontal, 16)
+            VStack(spacing: 0) {
+                Spacer()
+                Divider()
+                HStack {
+                    TextField("댓글을 남겨보세요", text: $text)
+                        .padding(8)
+                        .font(.body)
+                    Button {
+                        //
+                        if let reader {
+                            withAnimation {
+                                reader.scrollTo(9, anchor: .top)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "arrow.up.circle.fill")
+                            .renderingMode(.template)
+                            .font(.title)
+                            .foregroundStyle(.blue)
+                    }
+                }
+                .padding(.horizontal, 8)
+                .padding(8)
+                .background(Color.white)
+            }
         }
         .background(Color.white)
+        .hideKeyboardWhenTap()
         .infinityTopBar("")
     }
     
@@ -69,6 +108,15 @@ public struct CommunityDetailView: View {
                 }
             }
             Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    private var comments: some View {
+        LazyVStack(spacing: 20) {
+            ForEach(0..<10, id: \.self) { _ in
+                CommentCell()
+            }
         }
     }
 }
