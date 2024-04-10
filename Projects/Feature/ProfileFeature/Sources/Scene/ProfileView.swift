@@ -18,7 +18,6 @@ public struct ProfileView: View {
                 }
                 InfinityBaekjoonCell {
                 }
-                logout
             }
             .padding(.top, 16)
             .padding(.horizontal, 16)
@@ -73,23 +72,5 @@ public struct ProfileView: View {
                 // nav
             }
         }
-    }
-    
-    @ViewBuilder
-    private var logout: some View {
-        Button {
-        } label: {
-            HStack {
-                Text("로그아웃")
-                    .font(.body)
-                    .foregroundStyle(.red)
-                    .fontWeight(.medium)
-                    .padding(4)
-                Spacer()
-                Icon.logoutIcon
-            }
-            .applyCardView()
-        }
-        .applyAnimation()
     }
 }

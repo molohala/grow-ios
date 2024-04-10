@@ -12,7 +12,7 @@ import NeedleFoundation
 import CommunityCreateFeatureInterface
 
 public protocol CommunityCreateDependency: Dependency {
-    
+    //
 }
 
 public final class CommunityCreateComponent: Component<CommunityCreateDependency>, CommunityCreateBuildable {

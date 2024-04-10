@@ -12,7 +12,7 @@ import NeedleFoundation
 import BaekjoonRankFeatureInterface
 
 public protocol BaekjoonRankDependency: Dependency {
-    
+    //
 }
 
 public final class BaekjoonRankComponent: Component<BaekjoonRankDependency>, BaekjoonRankBuildable {

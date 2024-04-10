@@ -12,7 +12,7 @@ import NeedleFoundation
 import BaekjoonSettingFeatureInterface
 
 public protocol BaekjoonSettingDependency: Dependency {
-    
+    //
 }
 
 public final class BaekjoonSettingComponent: Component<BaekjoonSettingDependency>, BaekjoonSettingBuildable {
