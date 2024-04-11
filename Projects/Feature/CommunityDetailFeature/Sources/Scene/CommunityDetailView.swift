@@ -14,8 +14,9 @@ public struct CommunityDetailView: View {
             ScrollViewReader { reader in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
+                        let text = "지존이dd"
                         profile
-                        Text("지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존")
+                        Text(text)
                             .font(.body)
                             .lineSpacing(.infinityLineSpacing)
                             .fontWeight(.medium)

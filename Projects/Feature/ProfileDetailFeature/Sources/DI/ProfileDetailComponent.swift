@@ -12,7 +12,7 @@ import NeedleFoundation
 import ProfileDetailFeatureInterface
 
 public protocol ProfileDetailDependency: Dependency {
-    
+    //
 }
 
 public final class ProfileDetailComponent: Component<ProfileDetailDependency>, ProfileDetailBuildable {
