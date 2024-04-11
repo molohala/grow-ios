@@ -19,6 +19,12 @@ struct DesignSystemExample: App {
             VStack {
                 InfinityCommunityCell {}
                 InfinityCommunityCell {}
+                InfinityGithubRankCell(rank: 1, isMe: false) {
+                    //
+                }
+                InfinityGithubRankCell(rank: 2, isMe: true) {
+                    //
+                }
             }
             //            }
             .infinityTopBar("디자인 시스템")

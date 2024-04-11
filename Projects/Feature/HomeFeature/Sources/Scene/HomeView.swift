@@ -70,9 +70,10 @@ public struct HomeView: View {
                 SubTitle("오늘의 Github Top 3")
                 Spacer()
             }
+            let dummyProfileId = 2
             VStack(spacing: 12) {
                 ForEach(0..<3, id: \.self) { i in
-                    InfinityGithubRankCell(rank: i + 1) {
+                    InfinityGithubRankCell(rank: i + 1, isMe: i == dummyProfileId) {
                         router.navigate(to: HomeDestination.profileDetail)
                     }
                 }
@@ -95,9 +96,10 @@ public struct HomeView: View {
                 SubTitle("오늘의 백준 Top 3")
                 Spacer()
             }
+            let dummyProfileId = 1
             VStack(spacing: 12) {
                 ForEach(0..<3, id: \.self) { i in
-                    InfinityGithubRankCell(rank: i + 1) {
+                    InfinityGithubRankCell(rank: i + 1, isMe: dummyProfileId == i) {
                         router.navigate(to: HomeDestination.profileDetail)
                     }
                 }

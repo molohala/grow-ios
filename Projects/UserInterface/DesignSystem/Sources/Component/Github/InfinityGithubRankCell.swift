@@ -12,25 +12,30 @@ public struct InfinityGithubRankCell: View {
     
     let rank: Int
     let isCardView: Bool
+    let isMe: Bool
     let action: () -> Void
     
     private init(
         rank: Int,
         isCardView: Bool,
+        isMe: Bool,
         action: @escaping () -> Void
     ) {
         self.rank = rank
         self.isCardView = isCardView
+        self.isMe = isMe
         self.action = action
     }
     
     public init(
         rank: Int,
+        isMe: Bool,
         action: @escaping () -> Void
     ) {
         self.init(
             rank: rank,
             isCardView: false,
+            isMe: isMe,
             action: action
         )
     }
@@ -39,6 +44,7 @@ public struct InfinityGithubRankCell: View {
         Self.init(
             rank: rank,
             isCardView: true,
+            isMe: isMe,
             action: action
         )
     }
@@ -81,8 +87,20 @@ public struct InfinityGithubRankCell: View {
             .frame(width: 48, height: 48)
             .clipShape(Circle())
             VStack(alignment: .leading) {
-                Text("노영재")
-                    .font(.body)
+                HStack {
+                    Text("노영재")
+                        .font(.body)
+                    if isMe {
+                        Text("나")
+                            .font(.footnote)
+                            .foregroundStyle(.white)
+                            .padding(.vertical, 1)
+                            .padding(.horizontal, 3)
+                            .background(Color.gray)
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
+                            .fontWeight(.black)
+                    }
+                }
                 Text("nohjason")
                     .font(.callout)
                     .foregroundStyle(.gray)

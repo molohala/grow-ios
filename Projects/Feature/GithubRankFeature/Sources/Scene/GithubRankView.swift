@@ -53,8 +53,9 @@ public struct GithubRankView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
+                    let dummyProfileId = 0
                     ForEach(viewModel.rank, id: \.self) { i in
-                        InfinityGithubRankCell(rank: i + 1) {
+                        InfinityGithubRankCell(rank: i + 1, isMe: dummyProfileId == i) {
                             router.navigate(to: GithubRankDestination.profileDetail)
                         }
                         .padding(.horizontal, 16)
