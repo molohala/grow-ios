@@ -64,7 +64,7 @@ public struct InfinityCommunityCell: View {
                 DesignSystemAsset.detailVerticalLine.swiftUIImage
                     .resizable()
                     .renderingMode(.template)
-                    .frame(width: 28, height: 28)
+                    .frame(width: 24, height: 24)
                     .foregroundStyle(Color.gray)
             }
         }
