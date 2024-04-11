@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import DesignSystem
 
 final class ProfileEditViewModel: ObservableObject {
-    @Published var jobs: [String] = []
+    @Published var jobs: [InfinityJobType] = [.Android, .Designer]
 }
