@@ -5,25 +5,40 @@ import CommunityFeatureInterface
 
 public struct CommunityView: View {
     
-    private var communityList = Array(0..<10)
-    
     @EnvironmentObject private var router: Router
+    @ObservedObject private var viewModel: CommunityViewModel
     
-    public init() {}
+    public init(
+        viewModel: CommunityViewModel
+    ) {
+        self._viewModel = ObservedObject(wrappedValue: viewModel)
+    }
     
     public var body: some View {
         ZStack {
             ScrollView {
                 LazyVStack(spacing: 12) {
-                    ForEach(communityList, id: \.self) { _ in
+                    ForEach(viewModel.communities, id: \.communityId) { community in
                         InfinityCommunityCell {
                             router.navigate(to: CommunityDestination.communityDetail)
                         }
                         .padding(.horizontal, 16)
+                        .onAppear {
+                            guard let index = viewModel.communities.firstIndex(where: { $0.communityId == community.communityId }) else { return }
+                            
+                            if index % pagingInterval == (pagingInterval - 1) {
+                                Task {
+                                    await viewModel.fetchNextCommunities()
+                                }
+                            }
+                        }
                     }
                 }
                 .padding(.top, 16)
                 .padding(.bottom, 128)
+            }
+            .refreshable {
+                await viewModel.fetchCommunities()
             }
             HStack {
                 Spacer()
@@ -47,5 +62,8 @@ public struct CommunityView: View {
             }
         }
         .background(Color.backgroundColor)
+        .task {
+            await viewModel.fetchCommunities()
+        }
     }
 }

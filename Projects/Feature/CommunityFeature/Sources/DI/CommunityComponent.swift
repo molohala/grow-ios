@@ -12,17 +12,25 @@ import NeedleFoundation
 import CommunityFeatureInterface
 import CommunityCreateFeatureInterface
 import CommunityDetailFeatureInterface
+import CommunityServiceInterface
+import LikeServiceInterface
 
 public protocol CommunityDependency: Dependency {
     var communityCreateBuildable: any CommunityCreateBuildable { get }
     var communityDetailBuildable: any CommunityDetailBuildable { get }
+    var communityDomainBuildable: any CommunityDomainBuildable { get }
+    var likeDomainBuildable: any LikeDomainBuildable { get }
 }
 
 public final class CommunityComponent: Component<CommunityDependency>, CommunityBuildable {
     public func makeView() -> some View {
         CommunityCoordinator(
             communityCreateBuildable: dependency.communityCreateBuildable,
-            communityDetailBuildable: dependency.communityDetailBuildable
+            communityDetailBuildable: dependency.communityDetailBuildable,
+            viewModel: .init(
+                getCommunitesUseCase: dependency.communityDomainBuildable.getCommunitiesUseCase,
+                patchLikeUseCase: dependency.likeDomainBuildable.patchLikeUseCase
+            )
         )
     }
 }

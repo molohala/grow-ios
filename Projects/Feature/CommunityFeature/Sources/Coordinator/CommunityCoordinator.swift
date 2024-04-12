@@ -10,20 +10,27 @@ import SwiftUI
 import CommunityFeatureInterface
 import CommunityCreateFeatureInterface
 import CommunityDetailFeatureInterface
+import CommunityServiceInterface
+import LikeServiceInterface
 
 public struct CommunityCoordinator: View {
     
     private let communityCreateBuildable: any CommunityCreateBuildable
     private let communityDetailBuildable: any CommunityDetailBuildable
+    private let viewModel: CommunityViewModel
     
-    public init(communityCreateBuildable: any CommunityCreateBuildable,
-                communityDetailBuildable: any CommunityDetailBuildable) {
+    public init(
+        communityCreateBuildable: any CommunityCreateBuildable,
+        communityDetailBuildable: any CommunityDetailBuildable,
+        viewModel: CommunityViewModel
+    ) {
         self.communityCreateBuildable = communityCreateBuildable
         self.communityDetailBuildable = communityDetailBuildable
+        self.viewModel = viewModel
     }
     
     public var body: some View {
-        CommunityView()
+        CommunityView(viewModel: viewModel)
             .navigationDestination(for: CommunityDestination.self) {
                 switch $0 {
                 case .communityCreate: communityCreateBuildable.makeView().eraseToAnyView()
