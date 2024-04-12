@@ -43,17 +43,16 @@ public struct CommunityCell: View {
             Circle()
                 .foregroundStyle(.gray)
                 .frame(width: 36, height: 36)
-            VStack(spacing: 2) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(community.writer)
                     .font(.callout)
                     .fontWeight(.semibold)
-                    .padding(.leading, 8)
-                Text("1시간 전")
+                Text(community.createdAt.timeAgo)
                     .font(.caption)
                     .fontWeight(.regular)
                     .foregroundStyle(.gray)
-                    .padding(.leading, 4)
             }
+            .padding(.leading, 8)
             Spacer()
             Button {
                 //

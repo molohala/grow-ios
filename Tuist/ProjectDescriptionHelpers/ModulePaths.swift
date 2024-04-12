@@ -49,6 +49,7 @@ public extension ModulePaths {
     
     enum Shared: String, CaseIterable {
         case GlobalThirdPartyLibrary
+        case DateUtil
     }
     
     enum UserInterface: String, CaseIterable {

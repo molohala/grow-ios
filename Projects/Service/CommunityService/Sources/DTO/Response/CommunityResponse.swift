@@ -10,6 +10,12 @@ struct CommunityResponse: Decodable {
 
 extension CommunityResponse {
     func toDomain() -> Community {
-        Community(communityId: communityId, content: content, createdAt: createdAt, like: like, writer: writer)
+        Community(
+            communityId: communityId,
+            content: content,
+            createdAt: createdAt.date ?? .now,
+            like: like,
+            writer: writer
+        )
     }
 }
