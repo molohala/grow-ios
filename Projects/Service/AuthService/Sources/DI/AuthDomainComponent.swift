@@ -30,11 +30,30 @@ public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDom
         }
     }
     
+    public var getTokenUseCase: GetTokenUseCase {
+        shared {
+            GetTokenUseCaseImpl(authRepository: authRepository)
+        }
+    }
+    
+    public var setTokenUseCase: SetTokenUseCase {
+        shared {
+            SetTokenUseCaseImpl(authRepository: authRepository)
+        }
+    }
+    
+    public var removeTokenUseCase: RemoveTokenUseCase {
+        shared {
+            RemoveTokenUseCaseImpl(authRepository: authRepository)
+        }
+    }
+    
     public var authRepository: AuthRepository {
         shared {
             AuthRepositoryImpl(
                 dAuthDataSource: dAuthDataSource,
-                authDataSource: authDataSource
+                authDataSource: authDataSource,
+                tokenDataSource: tokenDataSource
             )
         }
     }
@@ -48,6 +67,12 @@ public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDom
     var authDataSource: AuthDataSource {
         shared {
             AuthDataSourceImpl()
+        }
+    }
+    
+    var tokenDataSource: TokenDataSource {
+        shared {
+            TokenDataSourceImpl()
         }
     }
 }

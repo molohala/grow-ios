@@ -13,15 +13,19 @@ import SwiftUI
 
 struct AuthRepositoryImpl: AuthRepository {
     
+    
     private let dAuthDataSource: any DAuthDataSource
     private let authDataSource: any AuthDataSource
+    private let tokenDataSource: any TokenDataSource
     
     public init(
         dAuthDataSource: any DAuthDataSource,
-        authDataSource: any AuthDataSource
+        authDataSource: any AuthDataSource,
+        tokenDataSource: any TokenDataSource
     ) {
         self.dAuthDataSource = dAuthDataSource
         self.authDataSource = authDataSource
+        self.tokenDataSource = tokenDataSource
     }
     
     func signIn(code: String) async throws -> TokenDomain {
@@ -42,5 +46,17 @@ struct AuthRepositoryImpl: AuthRepository {
                                      clientId: DAuth.clientId,
                                      redirectUrl: DAuth.redirectUrl)
         return try await dAuthDataSource.dAuthSignIn(req)
+    }
+    
+    func getToken(type: TokenType) -> String? {
+        tokenDataSource.getToken(type: type)
+    }
+    
+    func setToken(_ token: String, type: TokenType) {
+        tokenDataSource.setToken(token, type: type)
+    }
+    
+    func removeToken(type: TokenType) {
+        tokenDataSource.setToken(nil, type: type)
     }
 }

@@ -12,6 +12,8 @@ import CommunityDetailFeature
 import CommunityDetailFeatureInterface
 import CommunityFeature
 import CommunityFeatureInterface
+import CommunityService
+import CommunityServiceInterface
 import Foundation
 import GithubRankFeature
 import GithubRankFeatureInterface
@@ -19,6 +21,8 @@ import GithubSettingFeature
 import GithubSettingFeatureInterface
 import HomeFeature
 import HomeFeatureInterface
+import LikeService
+import LikeServiceInterface
 import MainFeature
 import MainFeatureInterface
 import NeedleFoundation
@@ -262,6 +266,17 @@ private class BaekjoonSettingDependencyce5bee460baf327a3c82Provider: BaekjoonSet
 private func factorycbb61afc845cf58732dbe3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BaekjoonSettingDependencyce5bee460baf327a3c82Provider()
 }
+private class LikeDomainDependencyf63c0c1617be7448fbeeProvider: LikeDomainDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->LikeDomainComponent
+private func factory9270861c93e2286ee142e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return LikeDomainDependencyf63c0c1617be7448fbeeProvider()
+}
 private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
 
 
@@ -272,6 +287,17 @@ private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDepend
 /// ^->AppComponent->AuthDomainComponent
 private func factoryc9b20c320bb79402d4c1e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return AuthDomainDependency4518b8977185a5c9ff71Provider()
+}
+private class CommunityDomainDependency65d739140d7d8d39012bProvider: CommunityDomainDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->CommunityDomainComponent
+private func factoryb1f366c0bb811d91cf77e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return CommunityDomainDependency65d739140d7d8d39012bProvider()
 }
 
 #else
@@ -381,7 +407,17 @@ extension BaekjoonSettingComponent: Registration {
 
     }
 }
+extension LikeDomainComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension AuthDomainComponent: Registration {
+    public func registerItems() {
+
+    }
+}
+extension CommunityDomainComponent: Registration {
     public func registerItems() {
 
     }
@@ -418,7 +454,9 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->ProfileEditComponent", factoryff80df4e3e21c6a49df9e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BaekjoonRankComponent", factoryf8ddad049da0deefda19e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BaekjoonSettingComponent", factorycbb61afc845cf58732dbe3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->LikeDomainComponent", factory9270861c93e2286ee142e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->CommunityDomainComponent", factoryb1f366c0bb811d91cf77e3b0c44298fc1c149afb)
 }
 #endif
 
