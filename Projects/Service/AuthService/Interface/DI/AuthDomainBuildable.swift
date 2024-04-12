@@ -12,4 +12,7 @@ public protocol AuthDomainBuildable {
     var signInUseCase: any SignInUseCase { get }
     var reissueUseCase: any ReissueUseCase { get }
     var dAuthSignInUseCase: any DAuthSignInUseCase { get }
+    var getTokenUseCase: any GetTokenUseCase { get }
+    var setTokenUseCase: any SetTokenUseCase { get }
+    var removeTokenUseCase: any RemoveTokenUseCase { get }
 }

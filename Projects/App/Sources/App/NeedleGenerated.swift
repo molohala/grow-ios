@@ -143,6 +143,9 @@ private class RootDependency3944cc797a4a88956fb5Provider: RootDependency {
     var signInBuildable: any SignInBuildable {
         return appComponent.signInBuildable
     }
+    var authDomainBuildable: any AuthDomainBuildable {
+        return appComponent.authDomainBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -357,6 +360,7 @@ extension RootComponent: Registration {
     public func registerItems() {
         keyPathToName[\RootDependency.mainBuildable] = "mainBuildable-any MainBuildable"
         keyPathToName[\RootDependency.signInBuildable] = "signInBuildable-any SignInBuildable"
+        keyPathToName[\RootDependency.authDomainBuildable] = "authDomainBuildable-any AuthDomainBuildable"
     }
 }
 extension CommunityCreateComponent: Registration {

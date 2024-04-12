@@ -13,7 +13,6 @@ import SwiftUI
 
 struct AuthRepositoryImpl: AuthRepository {
     
-    
     private let dAuthDataSource: any DAuthDataSource
     private let authDataSource: any AuthDataSource
     private let tokenDataSource: any TokenDataSource
@@ -52,7 +51,7 @@ struct AuthRepositoryImpl: AuthRepository {
         tokenDataSource.getToken(type: type)
     }
     
-    func setToken(_ token: String, type: TokenType) {
+    func setToken(_ token: String?, type: TokenType) {
         tokenDataSource.setToken(token, type: type)
     }
     

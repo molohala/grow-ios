@@ -12,43 +12,43 @@ import AuthServiceInterface
 public protocol AuthDomainDependency: Dependency {}
 
 public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDomainBuildable {
-    public var signInUseCase: SignInUseCase {
+    public var signInUseCase: any SignInUseCase {
         shared {
             SignInUseCaseImpl(authRepository: authRepository)
         }
     }
     
-    public var reissueUseCase: ReissueUseCase {
+    public var reissueUseCase: any ReissueUseCase {
         shared {
             RessiueUseCaseImpl(authRepository: authRepository)
         }
     }
     
-    public var dAuthSignInUseCase: DAuthSignInUseCase {
+    public var dAuthSignInUseCase: any DAuthSignInUseCase {
         shared {
             DAuthSignInUseCaseImpl(authRepository: authRepository)
         }
     }
     
-    public var getTokenUseCase: GetTokenUseCase {
+    public var getTokenUseCase: any GetTokenUseCase {
         shared {
             GetTokenUseCaseImpl(authRepository: authRepository)
         }
     }
     
-    public var setTokenUseCase: SetTokenUseCase {
+    public var setTokenUseCase: any SetTokenUseCase {
         shared {
             SetTokenUseCaseImpl(authRepository: authRepository)
         }
     }
     
-    public var removeTokenUseCase: RemoveTokenUseCase {
+    public var removeTokenUseCase: any RemoveTokenUseCase {
         shared {
             RemoveTokenUseCaseImpl(authRepository: authRepository)
         }
     }
     
-    public var authRepository: AuthRepository {
+    public var authRepository: any AuthRepository {
         shared {
             AuthRepositoryImpl(
                 dAuthDataSource: dAuthDataSource,
@@ -58,19 +58,19 @@ public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDom
         }
     }
     
-    var dAuthDataSource: DAuthDataSource {
+    var dAuthDataSource: any DAuthDataSource {
         shared {
             DAuthDataSourceImpl()
         }
     }
     
-    var authDataSource: AuthDataSource {
+    var authDataSource: any AuthDataSource {
         shared {
             AuthDataSourceImpl()
         }
     }
     
-    var tokenDataSource: TokenDataSource {
+    var tokenDataSource: any TokenDataSource {
         shared {
             TokenDataSourceImpl()
         }

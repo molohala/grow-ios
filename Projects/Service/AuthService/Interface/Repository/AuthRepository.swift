@@ -14,6 +14,6 @@ public protocol AuthRepository {
     func ressiue(refreshToken: String) async throws -> RessiueDomain
     func dAuthSignIn(id: String, pw: String) async throws -> DAuthSignInDomain
     func getToken(type: TokenType) -> String?
-    func setToken(_ token: String, type: TokenType)
+    func setToken(_ token: String?, type: TokenType)
     func removeToken(type: TokenType)
 }

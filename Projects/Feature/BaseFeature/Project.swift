@@ -6,7 +6,8 @@ let project = Project.makeFeature(
     targets: [
         .feature(target: .Base, product: .framework, dependencies: [
             .userInterface(target: .DesignSystem),
-            .shared(target: .GlobalThirdPartyLibrary)
+            .shared(target: .GlobalThirdPartyLibrary),
+            .serviceInterface(target: .Auth)
         ])
     ]
 )

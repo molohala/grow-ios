@@ -8,7 +8,7 @@ class SetTokenUseCaseImpl: SetTokenUseCase {
         self.authRepository = authRepository
     }
     
-    func callAsFunction(_ token: String, type: TokenType) {
+    func callAsFunction(_ token: String?, type: TokenType) {
         authRepository.setToken(token, type: type)
     }
 }
