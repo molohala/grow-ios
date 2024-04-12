@@ -1,6 +1,6 @@
 import CommunityServiceInterface
 
-class GetCommunityiesUseCaseImpl: GetCommunityUseCase {
+class GetCommunitiesUseCaseImpl: GetCommunitiesUseCase {
     
     private let repository: CommunityRepository
     
@@ -8,7 +8,7 @@ class GetCommunityiesUseCaseImpl: GetCommunityUseCase {
         self.repository = repository
     }
     
-    func callAsFunction(id: Int) async throws -> Community {
-        try await repository.getCommunity(id: id)
+    func callAsFunction(_ req: PageRequest) async throws -> [Community] {
+        try await repository.getCommunities(req)
     }
 }

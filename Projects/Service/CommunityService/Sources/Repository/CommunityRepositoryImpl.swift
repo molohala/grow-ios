@@ -8,8 +8,8 @@ class CommunityRepositoryImpl: CommunityRepository {
         self.dataSource = dataSource
     }
     
-    func getCommunityies(_ req: PageRequest) async throws -> [Community] {
-        try await dataSource.getCommunityies(req)
+    func getCommunities(_ req: PageRequest) async throws -> [Community] {
+        try await dataSource.getCommunities(req)
     }
     
     func createCommunity(_ req: CreateCommunityRequest) async throws {

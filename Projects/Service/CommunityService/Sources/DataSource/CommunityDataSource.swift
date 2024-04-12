@@ -5,7 +5,7 @@ class CommunityDataSourceImpl: BaseRemoteDataSource<CommunityDataSourceImpl>, Co
     
     private let path = "community"
     
-    func getCommunityies(_ req: PageRequest) async throws -> [Community] {
+    func getCommunities(_ req: PageRequest) async throws -> [Community] {
         try await requestGet(url: "\(Infinity.baseUrl)/\(path)", req: req, BaseResponse<[CommunityResponse]>.self).data.map { $0.toDomain() }
     }
     
