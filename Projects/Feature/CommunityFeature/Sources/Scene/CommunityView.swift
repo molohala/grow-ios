@@ -20,14 +20,8 @@ public struct CommunityView: View {
             ScrollView {
                 LazyVStack(spacing: 12) {
                     if viewModel.isfetchingCommunities {
-                        ForEach(Community.dummy, id: \.communityId) { community in
-                            CommunityCell(
-                                community: community,
-                                likeAction: {},
-                                commentAction: {},
-                                detailAction: {}
-                            ) {
-                            }
+                        ForEach(0..<4, id: \.self) { _ in
+                            ShimmerCommunityCell()
                         }
                     } else {
                         ForEach(viewModel.communities, id: \.communityId) { community in
