@@ -36,6 +36,13 @@ public extension TargetDependency {
                  path: .relativeToSerivce("\(target.rawValue)Service"))
     }
     
+    static func serviceTesting(
+        target: ModulePaths.Service
+    ) -> TargetDependency {
+        .project(target: "\(target.rawValue)ServiceTesting",
+                 path: .relativeToSerivce("\(target.rawValue)Service"))
+    }
+    
     static func userInterface(
         target: ModulePaths.UserInterface
     ) -> TargetDependency {

@@ -10,6 +10,9 @@ let project = Project.makeService(
         ]),
         .serviceInterface(target: .Like, dependencies: [
             .service(target: .Base)
+        ]),
+        .serviceTesting(target: .Like, dependencies: [
+            .service(target: .Like)
         ])
     ]
 )

@@ -7,9 +7,11 @@ public let pagingInterval = 10
 
 public final class CommunityViewModel: ObservableObject {
     
+    // MARK: - Properties
     private let getCommunitesUseCase: any GetCommunitiesUseCase
     private let patchLikeUseCase: any PatchLikeUseCase
     
+    // MARK: - State
     @Published var communities: [Community]
     @Published var isfetchingCommunities = false
     @Published var page = 1
@@ -24,13 +26,7 @@ public final class CommunityViewModel: ObservableObject {
         self.communities = communities
     }
     
-//    func fetchCommunities() async {
-//        
-//        let communities = try await getCommunitesUseCase(PageRequest())
-//    }
-//    
-//
-    
+    @MainActor
     func fetchCommunities() async {
         isfetchingCommunities = true
         defer { isfetchingCommunities = false }
@@ -52,6 +48,7 @@ public final class CommunityViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func fetchNextCommunities() async {
         isfetchingCommunities = true
         defer { isfetchingCommunities = false }

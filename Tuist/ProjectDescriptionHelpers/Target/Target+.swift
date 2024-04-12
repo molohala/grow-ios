@@ -98,6 +98,19 @@ public extension Target {
                     dependencies: dependencies)
     }
     
+    static func serviceTesting(
+        target: ModulePaths.Service,
+        dependencies: [TargetDependency]
+    ) -> Self {
+        .makeTarget(name: "\(target.rawValue)ServiceTesting",
+                    product: .framework,
+                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)servicetesting",
+                    infoPlist: .default,
+                    sources: ["Testing/**"],
+                    scripts: [.swiftLint],
+                    dependencies: dependencies)
+    }
+    
     static func shared(
         target: ModulePaths.Shared,
         dependencies: [TargetDependency]

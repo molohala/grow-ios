@@ -14,7 +14,9 @@ let project = Project.makeFeature(
         ]),
         .featureInterface(target: .Community, dependencies: []),
         .featureExample(target: .Community, dependencies: [
-            .feature(target: .Community)
+            .feature(target: .Community),
+            .serviceTesting(target: .Community),
+            .serviceTesting(target: .Like)
         ])
     ]
 )
