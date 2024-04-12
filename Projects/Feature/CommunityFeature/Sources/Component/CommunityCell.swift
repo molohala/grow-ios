@@ -1,20 +1,17 @@
-//
-//  InfinityCommunityCell.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 4/6/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
+import CommunityServiceInterface
+import DesignSystem
 
-public struct InfinityCommunityCell: View {
+public struct CommunityCell: View {
     
+    private let community: Community
     private let action: () -> Void
     
     public init(
+        community: Community,
         action: @escaping () -> Void
     ) {
+        self.community = community
         self.action = action
     }
     
@@ -31,7 +28,7 @@ public struct InfinityCommunityCell: View {
     private var label: some View {
         VStack(alignment: .leading, spacing: 16) {
             profile
-            Text("지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존지존")
+            Text(community.content)
                 .lineSpacing(.infinityLineSpacing)
                 .font(.callout)
                 .fontWeight(.medium)
@@ -47,7 +44,7 @@ public struct InfinityCommunityCell: View {
                 .foregroundStyle(.gray)
                 .frame(width: 36, height: 36)
             VStack(spacing: 2) {
-                Text("노영재")
+                Text(community.writer)
                     .font(.callout)
                     .fontWeight(.semibold)
                     .padding(.leading, 8)
@@ -80,7 +77,7 @@ public struct InfinityCommunityCell: View {
                     .font(.body)
                     .foregroundStyle(Color.red400)
             }
-            Text("10")
+            Text("\(community.like)")
                 .font(.footnote)
                 .foregroundStyle(.gray)
             Button {

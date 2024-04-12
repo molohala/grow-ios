@@ -23,6 +23,7 @@ public protocol CommunityDependency: Dependency {
 }
 
 public final class CommunityComponent: Component<CommunityDependency>, CommunityBuildable {
+    
     public func makeView() -> some View {
         CommunityCoordinator(
             communityCreateBuildable: dependency.communityCreateBuildable,
@@ -32,5 +33,9 @@ public final class CommunityComponent: Component<CommunityDependency>, Community
                 patchLikeUseCase: dependency.likeDomainBuildable.patchLikeUseCase
             )
         )
+    }
+    
+    public func makeCommunityCell(community: Community, action: @escaping () -> Void) -> some View {
+        CommunityCell(community: community, action: action)
     }
 }

@@ -19,7 +19,7 @@ public struct CommunityView: View {
             ScrollView {
                 LazyVStack(spacing: 12) {
                     ForEach(viewModel.communities, id: \.communityId) { community in
-                        InfinityCommunityCell {
+                        CommunityCell(community: community) {
                             router.navigate(to: CommunityDestination.communityDetail)
                         }
                         .padding(.horizontal, 16)
