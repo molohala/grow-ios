@@ -2,6 +2,7 @@ import Foundation
 import LikeServiceInterface
 import CommunityServiceInterface
 import BaseFeature
+import SwiftUI
 
 public let pagingInterval = 10
 
@@ -27,9 +28,15 @@ public final class CommunityViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchCommunities() async {
-        isfetchingCommunities = true
-        defer { isfetchingCommunities = false }
+    public func fetchCommunities() async {
+        withAnimation {
+            isfetchingCommunities = true
+        }
+        defer {
+            withAnimation {
+                isfetchingCommunities = false
+            }
+        }
         do {
             let nextPage = 1
             print("\(#function) - fetching ... nextPage: \(nextPage)")
@@ -49,9 +56,15 @@ public final class CommunityViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchNextCommunities() async {
-        isfetchingCommunities = true
-        defer { isfetchingCommunities = false }
+    public func fetchNextCommunities() async {
+        withAnimation {
+            isfetchingCommunities = true
+        }
+        defer {
+            withAnimation {
+                isfetchingCommunities = false
+            }
+        }
         do {
             let nextPage = page + 1
             print("\(#function) - fetching ... nextPage: \(nextPage)")
@@ -71,7 +84,7 @@ public final class CommunityViewModel: ObservableObject {
     }
     
     @MainActor
-    func patchLike(communityId: Int) async {
+    public func patchLike(communityId: Int) async {
         do {
             _ = try await patchLikeUseCase(communityId: communityId)
         } catch {

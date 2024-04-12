@@ -16,3 +16,12 @@ public struct Community: Equatable {
         self.writer = writer
     }
 }
+
+public extension Community {
+    static var dummy: [Community] = [
+        .init(communityId: 0, content: "", createdAt: .now, like: 0, writer: ""),
+        .init(communityId: 1, content: "", createdAt: .now, like: 0, writer: ""),
+        .init(communityId: 2, content: "", createdAt: .now, like: 0, writer: ""),
+        .init(communityId: 3, content: "", createdAt: .now, like: 0, writer: "")
+    ]
+}

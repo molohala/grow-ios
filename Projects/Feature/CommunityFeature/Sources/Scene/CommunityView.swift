@@ -2,6 +2,7 @@ import SwiftUI
 import BaseFeature
 import DesignSystem
 import CommunityFeatureInterface
+import CommunityServiceInterface
 
 public struct CommunityView: View {
     
@@ -18,34 +19,47 @@ public struct CommunityView: View {
         ZStack {
             ScrollView {
                 LazyVStack(spacing: 12) {
-                    ForEach(viewModel.communities, id: \.communityId) { community in
-                        CommunityCell(
-                            community: community,
-                            likeAction: {
-                                Task {
-                                    await viewModel.patchLike(communityId: community.communityId)
-                                }
-                            },
-                            commentAction: {},
-                            detailAction: {}
-                        ) {
-                            router.navigate(to: CommunityDestination.communityDetail)
+                    if viewModel.isfetchingCommunities {
+                        ForEach(Community.dummy, id: \.communityId) { community in
+                            CommunityCell(
+                                community: community,
+                                likeAction: {},
+                                commentAction: {},
+                                detailAction: {}
+                            ) {
+                            }
                         }
-                        .padding(.horizontal, 16)
-                        .onAppear {
-                            guard let index = viewModel.communities.firstIndex(where: { $0.communityId == community.communityId }) else { return }
-                            
-                            if index % pagingInterval == (pagingInterval - 1) {
-                                Task {
-                                    await viewModel.fetchNextCommunities()
+                    } else {
+                        ForEach(viewModel.communities, id: \.communityId) { community in
+                            CommunityCell(
+                                community: community,
+                                likeAction: {
+                                    Task {
+                                        await viewModel.patchLike(communityId: community.communityId)
+                                    }
+                                },
+                                commentAction: {},
+                                detailAction: {}
+                            ) {
+                                router.navigate(to: CommunityDestination.communityDetail)
+                            }
+                            .onAppear {
+                                guard let index = viewModel.communities.firstIndex(where: { $0.communityId == community.communityId }) else { return }
+                                
+                                if index % pagingInterval == (pagingInterval - 1) {
+                                    Task {
+                                        await viewModel.fetchNextCommunities()
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                .padding(.horizontal, 16)
                 .padding(.top, 16)
                 .padding(.bottom, 128)
             }
+            .shimmer(viewModel.isfetchingCommunities)
             .refreshable {
                 await viewModel.fetchCommunities()
             }

@@ -17,8 +17,6 @@ struct DesignSystemExample: App {
         WindowGroup {
             //            ScrollView {
             VStack {
-                InfinityCommunityCell {}
-                InfinityCommunityCell {}
                 InfinityGithubRankCell(rank: 1, isMe: false) {
                     //
                 }
