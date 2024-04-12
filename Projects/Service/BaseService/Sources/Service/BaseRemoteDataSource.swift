@@ -59,6 +59,19 @@ open class BaseRemoteDataSource<Service> {
         .serializingDecodable(res).value
     }
     
+    public func requestPatch<Res: Decodable>(
+        url: String,
+        res: Res.Type
+    ) async throws -> Res {
+        try await AF.request(
+            url,
+            method: .patch,
+            encoding: JSONEncoding.default
+        )
+        .validate()
+        .serializingDecodable(res).value
+    }
+    
     public func requestPatch<Req: Encodable, Res: Decodable>(
         url: String,
         req: Req,
