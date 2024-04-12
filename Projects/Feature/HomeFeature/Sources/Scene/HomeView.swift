@@ -2,13 +2,20 @@ import SwiftUI
 import HomeFeatureInterface
 import DesignSystem
 import BaseFeature
+import CommunityFeatureInterface
 
 public struct HomeView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     
-    public init() {}
+    @ObservedObject private var viewModel: HomeViewModel
+    
+    public init(
+        viewModel: HomeViewModel
+    ) {
+        self.viewModel = viewModel
+    }
     
     public var body: some View {
         ScrollView {
@@ -46,10 +53,9 @@ public struct HomeView: View {
     private var weekNiceCommunity: some View {
         VStack(spacing: 12) {
             SubTitle("이번주 인기글")
-            
             VStack(spacing: 12) {
-                ForEach(0..<3, id: \.self) { _ in
-                    InfinityCommunityCell {
+                ForEach(viewModel.weekCommunities, id: \.communityId) { community in
+                    CommunityCell(community: community) {
                         router.navigate(to: HomeDestination.communityDetail)
                     }
                 }

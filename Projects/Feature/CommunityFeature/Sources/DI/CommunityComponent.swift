@@ -34,8 +34,4 @@ public final class CommunityComponent: Component<CommunityDependency>, Community
             )
         )
     }
-    
-    public func makeCommunityCell(community: Community, action: @escaping () -> Void) -> some View {
-        CommunityCell(community: community, action: action)
-    }
 }

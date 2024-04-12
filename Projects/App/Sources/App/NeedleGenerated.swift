@@ -197,6 +197,12 @@ private class CommunityDependency704c8bb629388d37b98dProvider: CommunityDependen
     var communityDetailBuildable: any CommunityDetailBuildable {
         return appComponent.communityDetailBuildable
     }
+    var communityDomainBuildable: any CommunityDomainBuildable {
+        return appComponent.communityDomainBuildable
+    }
+    var likeDomainBuildable: any LikeDomainBuildable {
+        return appComponent.likeDomainBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -215,6 +221,9 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     }
     var profileBuildable: any ProfileBuildable {
         return appComponent.profileBuildable
+    }
+    var communityBuildable: any CommunityBuildable {
+        return appComponent.communityBuildable
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -382,6 +391,8 @@ extension CommunityComponent: Registration {
     public func registerItems() {
         keyPathToName[\CommunityDependency.communityCreateBuildable] = "communityCreateBuildable-any CommunityCreateBuildable"
         keyPathToName[\CommunityDependency.communityDetailBuildable] = "communityDetailBuildable-any CommunityDetailBuildable"
+        keyPathToName[\CommunityDependency.communityDomainBuildable] = "communityDomainBuildable-any CommunityDomainBuildable"
+        keyPathToName[\CommunityDependency.likeDomainBuildable] = "likeDomainBuildable-any LikeDomainBuildable"
     }
 }
 extension HomeComponent: Registration {
@@ -389,6 +400,7 @@ extension HomeComponent: Registration {
         keyPathToName[\HomeDependency.profileDetailBuildable] = "profileDetailBuildable-any ProfileDetailBuildable"
         keyPathToName[\HomeDependency.communityDetailBuildable] = "communityDetailBuildable-any CommunityDetailBuildable"
         keyPathToName[\HomeDependency.profileBuildable] = "profileBuildable-any ProfileBuildable"
+        keyPathToName[\HomeDependency.communityBuildable] = "communityBuildable-any CommunityBuildable"
     }
 }
 extension GithubSettingComponent: Registration {
