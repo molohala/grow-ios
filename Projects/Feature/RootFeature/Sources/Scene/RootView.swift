@@ -25,7 +25,7 @@ public struct RootView: View {
     
     public var body: some View {
         Group {
-            if appState.accessToken == nil {
+            if appState.accessToken.isEmpty {
                 signInBuildable.makeView().eraseToAnyView()
             } else {
                 mainBuildable.makeView().eraseToAnyView()

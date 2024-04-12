@@ -47,7 +47,10 @@ final class SignInViewModel: ObservableObject {
                 return
             }
             
-            _ = try await signInUseCase.excute(code: code)
+            print(code)
+            
+//            let res = try await signInUseCase.excute(code: code)
+//            print(res)
         } catch {
             showErrorDialog = true
             print(error)

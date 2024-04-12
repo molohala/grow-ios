@@ -12,7 +12,7 @@ import AuthServiceInterface
 public final class AppState: ObservableObject {
     
     @Published public var selectedView: MainFlow = .Home
-    @Published public var accessToken: String? {
+    @Published public var accessToken: String {
         didSet {
             setTokenUseCase(accessToken, type: .accessToken)
         }

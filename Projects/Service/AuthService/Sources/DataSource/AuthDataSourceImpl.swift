@@ -15,7 +15,7 @@ final class AuthDataSourceImpl: BaseRemoteDataSource<AuthDataSourceImpl>, AuthDa
     private let url = "auth"
     
     func signIn(code: String) async throws -> TokenDomain {
-        try await requestPost(url: "\(Infinity.baseUrl)/\(url)/sign-in", res: BaseResponse<TokenResponse>.self).data.toDomain()
+        try await requestPost(url: "\(Infinity.baseUrl)/\(url)/sign-in?code=\(code)", res: BaseResponse<TokenResponse>.self).data.toDomain()
     }
     
     func ressiue(refreshToken: String) async throws -> RessiueDomain {

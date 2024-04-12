@@ -14,6 +14,6 @@ import BaseService
 final class DAuthDataSourceImpl: BaseRemoteDataSource<DAuthDataSourceImpl>, DAuthDataSource {
     
     func dAuthSignIn(_ req: DAuthSignInRequest) async throws -> DAuthSignInDomain {
-        return try await requestPost(url: "https://dauth.b1nd.com/api/auth/login/", req: req, res: BaseResponse<DAuthSignInResponse>.self).data.toDomain()
+        try await requestPost(url: "https://dauth.b1nd.com/api/auth/login/", req: req, res: BaseResponse<DAuthSignInResponse>.self).data.toDomain()
     }
 }

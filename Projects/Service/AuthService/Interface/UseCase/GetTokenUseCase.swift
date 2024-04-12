@@ -1,3 +1,3 @@
 public protocol GetTokenUseCase {
-    func callAsFunction(type: TokenType) -> String?
+    func callAsFunction(type: TokenType) -> String
 }
