@@ -2,13 +2,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeService(
-    target: .{{ name }},
+    target: .Like,
     targets: [
-        .service(target: .{{ name }}, dependencies: [
+        .service(target: .Like, dependencies: [
             .service(target: .Base),
-            .serviceInterface(target: .{{ name }})
+            .serviceInterface(target: .Like)
         ]),
-        .serviceInterface(target: .{{ name }}, dependencies: [
+        .serviceInterface(target: .Like, dependencies: [
             .service(target: .Base)
         ])
     ]

@@ -2,13 +2,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeService(
-    target: .{{ name }},
+    target: .Community,
     targets: [
-        .service(target: .{{ name }}, dependencies: [
+        .service(target: .Community, dependencies: [
             .service(target: .Base),
-            .serviceInterface(target: .{{ name }})
+            .serviceInterface(target: .Community)
         ]),
-        .serviceInterface(target: .{{ name }}, dependencies: [
+        .serviceInterface(target: .Community, dependencies: [
             .service(target: .Base)
         ])
     ]

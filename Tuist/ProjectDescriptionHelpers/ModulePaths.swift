@@ -43,6 +43,8 @@ public extension ModulePaths {
     enum Service: String, CaseIterable {
         case Base
         case Auth
+        case Community
+        case Like
     }
     
     enum Shared: String, CaseIterable {

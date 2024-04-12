@@ -8,7 +8,8 @@ let project = Project.makeFeature(
             .feature(target: .Base),
             .featureInterface(target: .Community),
             .featureInterface(target: .CommunityDetail),
-            .featureInterface(target: .CommunityCreate)
+            .featureInterface(target: .CommunityCreate),
+            .serviceInterface(target: .Community)
         ]),
         .featureInterface(target: .Community, dependencies: []),
         .featureExample(target: .Community, dependencies: [
