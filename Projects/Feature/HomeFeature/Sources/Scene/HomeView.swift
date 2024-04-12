@@ -55,7 +55,12 @@ public struct HomeView: View {
             SubTitle("이번주 인기글")
             VStack(spacing: 12) {
                 ForEach(viewModel.weekCommunities, id: \.communityId) { community in
-                    CommunityCell(community: community) {
+                    CommunityCell(
+                        community: community,
+                        likeAction: {},
+                        commentAction: {},
+                        detailAction: {}
+                    ) {
                         router.navigate(to: HomeDestination.communityDetail)
                     }
                 }
@@ -67,12 +72,12 @@ public struct HomeView: View {
     private var todayGithub: some View {
         VStack(spacing: 16) {
             HStack(spacing: 0) {
-//                DesignSystemAsset.github.swiftUIImage
-//                    .resizable()
-//                    .renderingMode(.template)
-//                    .foregroundStyle(Color.github)
-//                    .frame(width: 30, height: 30)
-//                    .padding(.leading, 4)
+                //                DesignSystemAsset.github.swiftUIImage
+                //                    .resizable()
+                //                    .renderingMode(.template)
+                //                    .foregroundStyle(Color.github)
+                //                    .frame(width: 30, height: 30)
+                //                    .padding(.leading, 4)
                 SubTitle("오늘의 Github Top 3")
                 Spacer()
             }
@@ -93,12 +98,12 @@ public struct HomeView: View {
     private var todayBaekjoon: some View {
         VStack(spacing: 16) {
             HStack(spacing: 0) {
-//                DesignSystemAsset.baekjoon.swiftUIImage
-//                    .resizable()
-//                    .renderingMode(.template)
-//                    .foregroundStyle(Color.baekjoon)
-//                    .frame(width: 30, height: 30)
-//                    .padding(.leading, 4)
+                //                DesignSystemAsset.baekjoon.swiftUIImage
+                //                    .resizable()
+                //                    .renderingMode(.template)
+                //                    .foregroundStyle(Color.baekjoon)
+                //                    .frame(width: 30, height: 30)
+                //                    .padding(.leading, 4)
                 SubTitle("오늘의 백준 Top 3")
                 Spacer()
             }

@@ -7,7 +7,8 @@ let project = Project.makeFeature(
         .feature(target: .Root, dependencies: [
             .feature(target: .Base),
             .featureInterface(target: .SignIn),
-            .featureInterface(target: .Main)
+            .featureInterface(target: .Main),
+            .serviceInterface(target: .Auth)
         ])
     ]
 )

@@ -69,4 +69,13 @@ public final class CommunityViewModel: ObservableObject {
             debugPrint(error)
         }
     }
+    
+    @MainActor
+    func patchLike(communityId: Int) async {
+        do {
+            _ = try await patchLikeUseCase(communityId: communityId)
+        } catch {
+            debugPrint(error)
+        }
+    }
 }

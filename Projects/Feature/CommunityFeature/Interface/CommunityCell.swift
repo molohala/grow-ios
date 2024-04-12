@@ -5,13 +5,22 @@ import DesignSystem
 public struct CommunityCell: View {
     
     private let community: Community
+    private let likeAction: () -> Void
+    private let commentAction: () -> Void
+    private let detailAction: () -> Void
     private let action: () -> Void
     
     public init(
         community: Community,
+        likeAction: @escaping () -> Void,
+        commentAction: @escaping () -> Void,
+        detailAction: @escaping () -> Void,
         action: @escaping () -> Void
     ) {
         self.community = community
+        self.likeAction = likeAction
+        self.commentAction = commentAction
+        self.detailAction = detailAction
         self.action = action
     }
     
@@ -55,7 +64,7 @@ public struct CommunityCell: View {
             .padding(.leading, 8)
             Spacer()
             Button {
-                //
+                detailAction()
             } label: {
                 DesignSystemAsset.detailVerticalLine.swiftUIImage
                     .resizable()
@@ -70,7 +79,7 @@ public struct CommunityCell: View {
     private var info: some View {
         HStack(spacing: 0) {
             Button {
-                //
+                likeAction()
             } label: {
                 Image(systemName: "heart.fill")
                     .font(.body)
@@ -80,7 +89,7 @@ public struct CommunityCell: View {
                 .font(.footnote)
                 .foregroundStyle(.gray)
             Button {
-                //
+                commentAction()
             } label: {
                 Image(systemName: "message.fill")
                     .font(.body)

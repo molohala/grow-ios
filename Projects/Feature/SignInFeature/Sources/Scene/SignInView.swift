@@ -38,7 +38,7 @@ public struct SignInView: View {
             }
         }
         .padding(.horizontal, 16)
-        .infinityTopBar("로그인")
+        .infinityTopBar("로그인", hideBackButton: true)
         .hideKeyboardWhenTap()
         .alert("로그인에 실패했습니다", isPresented: $viewModel.showErrorDialog) {
             Button("확인", role: .none) {}

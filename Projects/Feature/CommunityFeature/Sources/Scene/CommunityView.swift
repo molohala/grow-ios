@@ -19,7 +19,16 @@ public struct CommunityView: View {
             ScrollView {
                 LazyVStack(spacing: 12) {
                     ForEach(viewModel.communities, id: \.communityId) { community in
-                        CommunityCell(community: community) {
+                        CommunityCell(
+                            community: community,
+                            likeAction: {
+                                Task {
+                                    await viewModel.patchLike(communityId: community.communityId)
+                                }
+                            },
+                            commentAction: {},
+                            detailAction: {}
+                        ) {
                             router.navigate(to: CommunityDestination.communityDetail)
                         }
                         .padding(.horizontal, 16)
