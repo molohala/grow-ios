@@ -21,6 +21,9 @@ public extension Color {
     
     static let red400 = Color(0xFF2B2B)
     
+    static let blue500 = Color(0x2597FF)
+    static let orange500 = Color(0xFF8125)
+    
     // hex to color
     init(_ hex: UInt, alpha: Double = 1) {
         self.init(

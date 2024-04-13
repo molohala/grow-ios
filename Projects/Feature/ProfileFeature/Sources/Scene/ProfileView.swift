@@ -14,9 +14,8 @@ public struct ProfileView: View {
             VStack(spacing: 16) {
                 profile
                 stats
-                InfinityGithubCell {
-                }
-                InfinityBaekjoonCell {
+                InfinityChartCell(title: "27", subtitle: "이번주에 푼 문제", subject: "백준", chartData: .init(data: InfinityChartData.dummy, color: .orange500)) {
+                    //
                 }
             }
             .padding(.top, 16)

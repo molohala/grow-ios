@@ -20,4 +20,22 @@ public extension Date {
             "방금 전"
         }
     }
+    
+    var monthPerDay: String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd"
+        return dateFormatter.string(from: self)
+    }
+    
+    static var datesForWeek: [Date] {
+        var datesInWeek: [Date] = []
+        let currentDate = Date()
+        let calendar = Calendar.current
+        var startDate = calendar.startOfDay(for: currentDate)
+        for _ in 1...7 {
+            datesInWeek.append(startDate)
+            startDate = calendar.date(byAdding: .day, value: -1, to: startDate) ?? .now
+        }
+        return datesInWeek.reversed()
+    }
 }

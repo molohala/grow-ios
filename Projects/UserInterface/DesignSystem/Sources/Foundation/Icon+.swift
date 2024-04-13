@@ -17,6 +17,10 @@ public extension Icon {
         .foregroundStyle(.gray)
         .font(.body)
     
+    static let downArrorIcon: some View = Image(systemName: "chevron.down")
+        .foregroundStyle(.gray)
+        .font(.body)
+    
     static let logoutIcon: some View = Image(systemName: "rectangle.portrait.and.arrow.right")
         .font(.body)
         .foregroundStyle(.red)
