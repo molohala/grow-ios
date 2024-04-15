@@ -1,15 +1,24 @@
 import Alamofire
 import Foundation
 
+public class InfinitySession {
+    static let session: Session = {
+        let configuration = URLSessionConfiguration.af.default
+        let apiLogger = APIEventLogger()
+        return Session(configuration: configuration, eventMonitors: [apiLogger])
+    }()
+}
+
 open class BaseRemoteDataSource<Service> {
     
-    public init() {}
+    public init() {
+    }
     
     public func requestGet<Res: Decodable>(
         url: String,
         res: Res.Type
     ) async throws -> Res {
-        try await AF.request(
+        try await InfinitySession.session.request(
             url,
             method: .get
         )
@@ -21,7 +30,7 @@ open class BaseRemoteDataSource<Service> {
         url: String,
         req: Req, _ res: Res.Type
     ) async throws -> Res {
-        try await AF.request(
+        try await InfinitySession.session.request(
             url,
             method: .get,
             parameters: req,
@@ -35,7 +44,7 @@ open class BaseRemoteDataSource<Service> {
         url: String,
         res: Res.Type
     ) async throws -> Res {
-        try await AF.request(
+        try await InfinitySession.session.request(
             url,
             method: .post
         )
@@ -49,7 +58,7 @@ open class BaseRemoteDataSource<Service> {
         res: Res.Type,
         encoder: ParameterEncoder = JSONParameterEncoder.default
     ) async throws -> Res {
-        try await AF.request(
+        try await InfinitySession.session.request(
             url,
             method: .post,
             parameters: req,
@@ -63,7 +72,7 @@ open class BaseRemoteDataSource<Service> {
         url: String,
         res: Res.Type
     ) async throws -> Res {
-        try await AF.request(
+        try await InfinitySession.session.request(
             url,
             method: .patch,
             encoding: JSONEncoding.default
@@ -78,7 +87,7 @@ open class BaseRemoteDataSource<Service> {
         res: Res.Type,
         encoder: ParameterEncoder = JSONParameterEncoder.default
     ) async throws -> Res {
-        try await AF.request(
+        try await InfinitySession.session.request(
             url,
             method: .patch,
             parameters: req,
@@ -92,7 +101,7 @@ open class BaseRemoteDataSource<Service> {
         url: String,
         res: Res.Type
     ) async throws -> Res {
-        try await AF.request(
+        try await InfinitySession.session.request(
             url,
             method: .delete,
             encoding: JSONEncoding.default
@@ -107,7 +116,7 @@ open class BaseRemoteDataSource<Service> {
         res: Res.Type,
         encoder: ParameterEncoder = JSONParameterEncoder.default
     ) async throws -> Res {
-        try await AF.request(
+        try await InfinitySession.session.request(
             url,
             method: .delete,
             parameters: req,

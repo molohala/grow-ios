@@ -12,8 +12,8 @@ import AuthServiceInterface
 public final class SignInViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var id = "hhhello"
-    @Published var pw = "*gnpp10285*"
+    @Published var id = ""
+    @Published var pw = ""
     @Published var showErrorDialog = false
     
     private let signInUseCase: any SignInUseCase
