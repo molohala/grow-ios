@@ -9,6 +9,7 @@ public struct AuthInterceptor: RequestInterceptor {
     public init() {}
     
     public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        print("✅ 토큰 장착")
         var modifiedRequest = urlRequest
         let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
         modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
@@ -22,7 +23,8 @@ public struct AuthInterceptor: RequestInterceptor {
             completion(.doNotRetryWithError(error))
             return
         }
-        print("URL String: \(url.absoluteString)")
+        print("✅ URL String: \(url.absoluteString)")
+        print("✅ StatusCode = \((request.task?.response as? HTTPURLResponse)?.statusCode ?? 999)")
         let refreshStatusCode = 401
         guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == refreshStatusCode, !url.absoluteString.contains("reissue") else {
             completion(.doNotRetryWithError(error))
@@ -59,6 +61,7 @@ public struct AuthInterceptor: RequestInterceptor {
                     completion(.doNotRetryWithError(error))
                     return
                 }
+                print("✅ refresh 성공")
                 UserDefaults.standard.setValue(accessToken, forKey: "accessToken")
             case .failure(let error):
                 print("❌ refresh 실패")

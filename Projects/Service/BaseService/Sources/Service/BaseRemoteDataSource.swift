@@ -28,20 +28,6 @@ open class BaseRemoteDataSource<Service> {
         .serializingDecodable(res).value
     }
     
-    public func requestGet<Req: Encodable, Res: Decodable>(
-        url: String,
-        req: Req, _ res: Res.Type
-    ) async throws -> Res {
-        try await InfinitySession.session.request(
-            url,
-            method: .get,
-            parameters: req,
-            encoder: URLEncodedFormParameterEncoder.default
-        )
-        .validate()
-        .serializingDecodable(res).value
-    }
-    
     public func requestPost<Res: Decodable>(
         url: String,
         res: Res.Type

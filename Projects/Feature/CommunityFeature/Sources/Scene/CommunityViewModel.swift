@@ -43,7 +43,6 @@ public final class CommunityViewModel: ObservableObject {
             let request = PageRequest(page: nextPage, size: pagingInterval)
             
             let pagedCommunities = try await getCommunitesUseCase(request)
-            dump(pagedCommunities)
             communities = pagedCommunities
             if !communities.isEmpty {
                 page = nextPage
@@ -71,7 +70,6 @@ public final class CommunityViewModel: ObservableObject {
             let request = PageRequest(page: nextPage, size: pagingInterval)
             
             let pagedCommunities = try await getCommunitesUseCase(request)
-            dump(pagedCommunities)
             communities.append(contentsOf: pagedCommunities)
             if !communities.isEmpty {
                 page = nextPage

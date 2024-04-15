@@ -12,7 +12,6 @@ public class APIEventLogger: EventMonitor {
             + "Method: " + (request.request?.httpMethod ?? "") + "\n"
             + "Headers: " + "\(request.request?.allHTTPHeaderFields ?? [:])" + "\n"
         )
-        print("Authorization: " + (request.request?.headers["Authorization"] ?? ""))
         print("Body: " + (request.request?.httpBody?.toPrettyPrintedString ?? ""))
     }
     
