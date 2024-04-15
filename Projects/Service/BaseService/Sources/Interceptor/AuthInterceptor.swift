@@ -12,7 +12,7 @@ public struct AuthInterceptor: RequestInterceptor {
         print("✅ 토큰 장착")
         var modifiedRequest = urlRequest
         let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
-        modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization") 
+        modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         
         completion(.success(modifiedRequest))
     }
