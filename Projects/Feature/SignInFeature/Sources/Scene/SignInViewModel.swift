@@ -9,17 +9,17 @@
 import Foundation
 import AuthServiceInterface
 
-final class SignInViewModel: ObservableObject {
+public final class SignInViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var id = ""
-    @Published var pw = ""
+    @Published var id = "hhhello"
+    @Published var pw = "*gnpp10285*"
     @Published var showErrorDialog = false
     
     private let signInUseCase: any SignInUseCase
     private let dAuthSignInUseCase: any DAuthSignInUseCase
     
-    init(
+    public init(
         signInUseCase: any SignInUseCase,
         dAuthSignInUseCase: any DAuthSignInUseCase
     ) {
@@ -29,7 +29,7 @@ final class SignInViewModel: ObservableObject {
     
     // MARK: - Method
     @MainActor
-    func signIn() async {
+    func signIn(completion: @escaping (TokenDomain) -> Void) async {
         do {
             let response = try await dAuthSignInUseCase.excute(id: id, pw: pw)
             guard let url = URL(string: response.location) else {
@@ -49,8 +49,8 @@ final class SignInViewModel: ObservableObject {
             
             print(code)
             
-//            let res = try await signInUseCase.excute(code: code)
-//            print(res)
+            let res = try await signInUseCase.excute(code: code)
+            completion(res)
         } catch {
             showErrorDialog = true
             print(error)

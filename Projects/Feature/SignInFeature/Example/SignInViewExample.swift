@@ -5,9 +5,9 @@ import SignInFeature
 struct SignInViewExample: App {
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                SignInView()
-            }
+//            SignInView(
+//                viewModel: .init(signInUseCase: T##SignInUseCase, dAuthSignInUseCase: T##DAuthSignInUseCase)
+//            )
         }
     }
 }

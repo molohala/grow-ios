@@ -39,11 +39,11 @@ struct AuthRepositoryImpl: AuthRepository {
         
         let encryptedPw = SHA512.hash(data: Data(pw.utf8))
         let hashedPw = encryptedPw.compactMap { String(format: "%02x", $0) }.joined()
-        
         let req = DAuthSignInRequest(id: id,
                                      pw: hashedPw,
                                      clientId: DAuth.clientId,
                                      redirectUrl: DAuth.redirectUrl)
+        print(req)
         return try await dAuthDataSource.dAuthSignIn(req)
     }
     

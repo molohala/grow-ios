@@ -1,13 +1,15 @@
 import SwiftUI
 import DesignSystem
 import AuthServiceInterface
+import BaseFeature
 
 public struct SignInView: View {
     
     @ObservedObject private var viewModel: SignInViewModel
+    @EnvironmentObject private var appState: AppState
     @State private var isSecured = true
     
-    init(
+    public init(
         viewModel: SignInViewModel
     ) {
         _viewModel = ObservedObject(wrappedValue: viewModel)
@@ -34,7 +36,12 @@ public struct SignInView: View {
                 }
             Spacer()
             InfinityButton("도담도담 로그인") {
-                await viewModel.signIn()
+                await viewModel.signIn { token in
+                    withAnimation {
+                        appState.accessToken = token.accessToken
+                        appState.refreshToken = token.refreshToken
+                    }
+                }
             }
         }
         .padding(.horizontal, 16)

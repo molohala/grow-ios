@@ -17,6 +17,11 @@ public final class AppState: ObservableObject {
             setTokenUseCase(accessToken, type: .accessToken)
         }
     }
+    @Published public var refreshToken: String {
+        didSet {
+            setTokenUseCase(refreshToken, type: .refreshToken)
+        }
+    }
     
     private let setTokenUseCase: any SetTokenUseCase
     private let getTokenUseCase: any GetTokenUseCase
@@ -28,5 +33,6 @@ public final class AppState: ObservableObject {
         self.setTokenUseCase = setTokenUseCase
         self.getTokenUseCase = getTokenUseCase
         self.accessToken = getTokenUseCase(type: .accessToken)
+        self.refreshToken = getTokenUseCase(type: .refreshToken)
     }
 }
