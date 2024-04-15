@@ -36,8 +36,7 @@ public struct CommunityView: View {
                                 commentAction: {},
                                 detailAction: {}
                             ) {
-                                viewModel.selectedCommunity = community
-                                router.navigate(to: CommunityDestination.communityDetail)
+                                router.navigate(to: CommunityDestination.communityDetail(id: community.communityId))
                             }
                             .onAppear {
                                 guard let index = viewModel.communities.firstIndex(where: { $0.communityId == community.communityId }) else { return }

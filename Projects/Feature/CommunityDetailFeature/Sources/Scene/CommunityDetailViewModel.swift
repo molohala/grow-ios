@@ -5,7 +5,7 @@ public final class CommunityDetailViewModel: ObservableObject {
     
     private let getCommunityUseCase: any GetCommunityUseCase
     
-    @Published var community: Community? = nil
+    @Published var community: Community?
     @Published var flow: Flow = .fetching
     
     enum Flow {

@@ -2,6 +2,7 @@ import BaseFeature
 import SwiftUI
 import CommunityDetailFeatureInterface
 import DesignSystem
+import CommunityServiceInterface
 
 public struct CommunityDetailView: View {
     
@@ -9,6 +10,7 @@ public struct CommunityDetailView: View {
     @State private var reader: ScrollViewProxy?
     
     @StateObject private var viewModel: CommunityDetailViewModel
+    @Environment(\.dismiss) private var dismiss
     private let id: Int
     
     public init(
@@ -23,17 +25,16 @@ public struct CommunityDetailView: View {
         ZStack {
             ScrollViewReader { reader in
                 ScrollView {
-                    if viewModel.flow == .success {
+                    if viewModel.flow == .success, let community = viewModel.community {
                         VStack(alignment: .leading, spacing: 16) {
-                            let text = "지존이dd"
-                            profile
-                            Text(text)
+                            profile(community)
+                            Text(community.content)
                                 .font(.body)
                                 .lineSpacing(.infinityLineSpacing)
                                 .fontWeight(.medium)
-                            info
+                            info(community)
                             Divider()
-                            comments
+                            comments(community)
                                 .padding(.bottom, 64)
                         }
                         .padding(.horizontal, 16)
@@ -78,20 +79,31 @@ public struct CommunityDetailView: View {
         .task {
             await viewModel.fetchCommunity(id: id)
         }
+        .alert(
+            "게시글을 불러올 수 없습니다",
+            isPresented: .init(
+                get: { viewModel.flow == .failure },
+                set: { _ in dismiss() }
+            )
+        ) {
+            Button("확인", role: .cancel) {
+                dismiss()
+            }
+        }
     }
     
     @ViewBuilder
-    private var profile: some View {
+    func profile(_ c: Community) -> some View {
         HStack(spacing: 0) {
             Circle()
                 .foregroundStyle(.gray)
                 .frame(width: 36, height: 36)
             VStack(spacing: 2) {
-                Text("노영재")
+                Text(c.writerName)
                     .font(.callout)
                     .fontWeight(.semibold)
                     .padding(.leading, 8)
-                Text("1시간 전")
+                Text(c.createdAt.timeAgo)
                     .font(.caption)
                     .fontWeight(.regular)
                     .foregroundStyle(.gray)
@@ -111,7 +123,7 @@ public struct CommunityDetailView: View {
     }
     
     @ViewBuilder
-    private var info: some View {
+    private func info(_ c: Community) -> some View {
         HStack {
             Button {
                 //
@@ -121,7 +133,7 @@ public struct CommunityDetailView: View {
                         .font(.headline)
                         .foregroundStyle(Color.red400)
                     
-                    Text("10")
+                    Text("\(c.like)")
                         .font(.callout)
                         .foregroundStyle(.gray)
                 }
@@ -131,7 +143,7 @@ public struct CommunityDetailView: View {
     }
     
     @ViewBuilder
-    private var comments: some View {
+    private func comments(_ c: Community) -> some View {
         LazyVStack(spacing: 20) {
             ForEach(0..<10, id: \.self) { _ in
                 CommentCell()
