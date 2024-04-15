@@ -9,6 +9,7 @@ public struct SettingView: View {
     
     @ObservedObject private var viewModel: SettingViewModel
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var appState: AppState
     
     public init(
         viewModel: SettingViewModel
@@ -48,6 +49,8 @@ public struct SettingView: View {
     @ViewBuilder
     private var logout: some View {
         Button {
+            appState.accessToken = ""
+            appState.refreshToken = ""
         } label: {
             HStack {
                 Text("로그아웃")

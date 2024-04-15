@@ -1,8 +1,11 @@
 import SwiftUI
 import DesignSystem
+import BaseService
 
 @main
 struct InfinityApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     
     init() {
         // needle

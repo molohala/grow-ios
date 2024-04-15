@@ -51,7 +51,7 @@ public final class CommunityViewModel: ObservableObject {
         } catch {
             communities = []
             page = 1
-            debugPrint(error)
+            print("❌ 커뮤니티 불러오기 실패")
         }
     }
     
@@ -79,7 +79,7 @@ public final class CommunityViewModel: ObservableObject {
         } catch {
             communities = []
             page = 1
-            debugPrint(error)
+            print("❌ 커뮤니티 페이징 실패")
         }
     }
     
