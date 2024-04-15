@@ -34,7 +34,7 @@ public struct CommunityCoordinator: View {
             .navigationDestination(for: CommunityDestination.self) {
                 switch $0 {
                 case .communityCreate: communityCreateBuildable.makeView().eraseToAnyView()
-                case .communityDetail: communityDetailBuildable.makeView().eraseToAnyView()
+                case .communityDetail: communityDetailBuildable.makeView(id: viewModel.selectedCommunity?.communityId ?? -1).eraseToAnyView()
                 }
             }
     }

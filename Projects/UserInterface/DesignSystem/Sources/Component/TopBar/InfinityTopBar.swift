@@ -16,19 +16,19 @@ public struct InfinityTopBar<C>: View where C: View {
     private let background: Color
     private let content: () -> C
     private let hideBackButton: Bool
-    private let completeAction: (() -> Void)?
+    private let trailingContent: AnyView
     
     public init(
         title: String,
         background: Color,
         hideBackButton: Bool,
-        completeAction: (() -> Void)? = nil,
+        trailingContent: AnyView = AnyView(EmptyView()),
         @ViewBuilder content: @escaping () -> C
     ) {
         self.title = title
         self.background = background
         self.hideBackButton = hideBackButton
-        self.completeAction = completeAction
+        self.trailingContent = trailingContent
         self.content = content
     }
     
@@ -53,12 +53,8 @@ public struct InfinityTopBar<C>: View where C: View {
                         .fontWeight(.heavy)
                         .padding(.leading, hideBackButton ? 16 : 4)
                     Spacer()
-                    if let completeAction {
-                        Button("완료") {
-                            completeAction()
-                        }
+                    trailingContent
                         .padding(.trailing, 20)
-                    }
                 }
                 .frame(height: 58)
                 .background(background)
@@ -70,17 +66,17 @@ public struct InfinityTopBar<C>: View where C: View {
 }
 
 public extension View {
-    func infinityTopBar(
+    func infinityTopBar<TC>(
         _ title: String,
         background: Color = .white,
         hideBackButton: Bool = false,
-        completeAction: (() -> Void)? = nil
-    ) -> some View {
+        @ViewBuilder trailingContent: @escaping () -> TC = { EmptyView() }
+    ) -> some View where TC: View {
         InfinityTopBar(
             title: title,
             background: background,
             hideBackButton: hideBackButton,
-            completeAction: completeAction
+            trailingContent: AnyView(trailingContent())
         ) {
             self
         }

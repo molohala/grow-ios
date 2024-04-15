@@ -12,7 +12,7 @@ public struct AuthInterceptor: RequestInterceptor {
         print("✅ 토큰 장착")
         var modifiedRequest = urlRequest
         let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
-        modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization") 
+        modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         
         completion(.success(modifiedRequest))
     }
@@ -40,13 +40,11 @@ public struct AuthInterceptor: RequestInterceptor {
         
         print("✅ refresh 시도")
         
-        let session = Session()
-        session.sessionConfiguration.timeoutIntervalForRequest = 10
-        
-        session.request(
+        AF.request(
             "\(Infinity.baseUrl)/auth/reissue",
             method: .post,
-            parameters: ["refreshToken": refreshToken]
+            parameters: ["refreshToken": refreshToken],
+            encoding: JSONEncoding.default
         )
         .responseJSON {
             switch $0.result {
@@ -64,6 +62,7 @@ public struct AuthInterceptor: RequestInterceptor {
                 print("✅ refresh 성공")
                 UserDefaults.standard.setValue(accessToken, forKey: "accessToken")
             case .failure(let error):
+                print("❌ \(error.localizedDescription)")
                 print("❌ refresh 실패")
                 failureReissue()
                 completion(.doNotRetryWithError(error))

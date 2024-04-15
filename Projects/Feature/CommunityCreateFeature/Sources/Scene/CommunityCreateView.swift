@@ -5,12 +5,12 @@ import DesignSystem
 public struct CommunityCreateView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject private var viewModel: CommunityCreateViewModel
+    @StateObject private var viewModel: CommunityCreateViewModel
     
     public init(
         viewModel: CommunityCreateViewModel
     ) {
-        self._viewModel = ObservedObject(wrappedValue: viewModel)
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
@@ -22,11 +22,29 @@ public struct CommunityCreateView: View {
             .padding(.horizontal, 16)
         }
         .hideKeyboardWhenTap()
-        .infinityTopBar(
-            "글쓰기",
-            completeAction: {
+        .infinityTopBar("글쓰기") {
+            if viewModel.flow == .fetching {
+                ProgressView()
+            } else {
+                Button("완료") {
+                    Task {
+                        await viewModel.createCommunity()
+                    }
+                }
+            }
+        }
+        .onChange(of: viewModel.flow) {
+            if $0 == .success {
                 dismiss()
             }
-        )
+        }
+        .alert(
+            viewModel.flow.rawValue,
+            isPresented: .init(
+                get: { viewModel.flow == .failure || viewModel.flow == .empty },
+                set: { _ in viewModel.flow = .idle })
+        ) {
+            Button("확인", role: .cancel) {}
+        }
     }
 }

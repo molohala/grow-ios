@@ -9,7 +9,7 @@ class CommunityRepositoryImpl: CommunityRepository {
     }
     
     func getCommunities(_ req: PageRequest) async throws -> [Community] {
-        try await dataSource.getCommunities(req)
+        try await dataSource.getCommunities(req).sorted { $0.createdAt > $1.createdAt }
     }
     
     func createCommunity(_ req: CreateCommunityRequest) async throws {

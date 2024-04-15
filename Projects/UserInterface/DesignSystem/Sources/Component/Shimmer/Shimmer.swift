@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 public struct Shimmer<C: View>: View {

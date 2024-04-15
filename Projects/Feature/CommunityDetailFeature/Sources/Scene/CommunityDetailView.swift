@@ -1,5 +1,6 @@
 import BaseFeature
 import SwiftUI
+import CommunityDetailFeatureInterface
 import DesignSystem
 
 public struct CommunityDetailView: View {
@@ -7,27 +8,41 @@ public struct CommunityDetailView: View {
     @State private var text = ""
     @State private var reader: ScrollViewProxy?
     
-    public init() {}
+    @StateObject private var viewModel: CommunityDetailViewModel
+    private let id: Int
+    
+    public init(
+        viewModel: CommunityDetailViewModel,
+        id: Int
+    ) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self.id = id
+    }
     
     public var body: some View {
         ZStack {
             ScrollViewReader { reader in
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 16) {
-                        let text = "지존이dd"
-                        profile
-                        Text(text)
-                            .font(.body)
-                            .lineSpacing(.infinityLineSpacing)
-                            .fontWeight(.medium)
-                        info
-                        Divider()
-                        comments
-                            .padding(.bottom, 64)
-                    }
-                    .padding(.horizontal, 16)
-                    .onAppear {
-                        self.reader = reader
+                    if viewModel.flow == .success {
+                        VStack(alignment: .leading, spacing: 16) {
+                            let text = "지존이dd"
+                            profile
+                            Text(text)
+                                .font(.body)
+                                .lineSpacing(.infinityLineSpacing)
+                                .fontWeight(.medium)
+                            info
+                            Divider()
+                            comments
+                                .padding(.bottom, 64)
+                        }
+                        .padding(.horizontal, 16)
+                        .onAppear {
+                            self.reader = reader
+                        }
+                    } else {
+                        ShimmerCommunityDetailCell()
+                            .shimmer()
                     }
                 }
             }
@@ -60,6 +75,9 @@ public struct CommunityDetailView: View {
         .background(Color.white)
         .hideKeyboardWhenTap()
         .infinityTopBar("")
+        .task {
+            await viewModel.fetchCommunity(id: id)
+        }
     }
     
     @ViewBuilder

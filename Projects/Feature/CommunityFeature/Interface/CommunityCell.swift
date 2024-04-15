@@ -53,7 +53,7 @@ public struct CommunityCell: View {
                 .foregroundStyle(.gray)
                 .frame(width: 36, height: 36)
             VStack(alignment: .leading, spacing: 2) {
-                Text(community.writer)
+                Text(community.writerName)
                     .font(.callout)
                     .fontWeight(.semibold)
                 Text(community.createdAt.timeAgo)

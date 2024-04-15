@@ -156,26 +156,30 @@ private func factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5(_ component: Needle
     return RootDependency3944cc797a4a88956fb5Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class CommunityCreateDependency4cbbd0754f80ca35ed27Provider: CommunityCreateDependency {
-
-
-    init() {
-
+    var communityDomainBuildable: any CommunityDomainBuildable {
+        return appComponent.communityDomainBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->CommunityCreateComponent
-private func factoryff448a1abf8354e355e3e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return CommunityCreateDependency4cbbd0754f80ca35ed27Provider()
+private func factoryff448a1abf8354e355e3f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return CommunityCreateDependency4cbbd0754f80ca35ed27Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class CommunityDetailDependencyddffd27390310f096b6cProvider: CommunityDetailDependency {
-
-
-    init() {
-
+    var communityDomainBuildable: any CommunityDomainBuildable {
+        return appComponent.communityDomainBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->CommunityDetailComponent
-private func factory3462e9b95264febd1513e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return CommunityDetailDependencyddffd27390310f096b6cProvider()
+private func factory3462e9b95264febd1513f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return CommunityDetailDependencyddffd27390310f096b6cProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class SignInDependency5dda0dd015447272446cProvider: SignInDependency {
     var authDomainBuildable: any AuthDomainBuildable {
@@ -374,12 +378,12 @@ extension RootComponent: Registration {
 }
 extension CommunityCreateComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\CommunityCreateDependency.communityDomainBuildable] = "communityDomainBuildable-any CommunityDomainBuildable"
     }
 }
 extension CommunityDetailComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\CommunityDetailDependency.communityDomainBuildable] = "communityDomainBuildable-any CommunityDomainBuildable"
     }
 }
 extension SignInComponent: Registration {
@@ -461,8 +465,8 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->MainComponent", factoryc9274e46e78e70f29c54f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->GithubRankComponent", factoryb50de2dec37458c48a12f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->CommunityCreateComponent", factoryff448a1abf8354e355e3e3b0c44298fc1c149afb)
-    registerProviderFactory("^->AppComponent->CommunityDetailComponent", factory3462e9b95264febd1513e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->CommunityCreateComponent", factoryff448a1abf8354e355e3f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->CommunityDetailComponent", factory3462e9b95264febd1513f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652af47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->CommunityComponent", factorya680b0f614045d42b1adf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)

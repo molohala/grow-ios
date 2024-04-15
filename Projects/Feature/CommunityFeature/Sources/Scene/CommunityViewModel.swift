@@ -16,6 +16,7 @@ public final class CommunityViewModel: ObservableObject {
     @Published var communities: [Community]
     @Published var isfetchingCommunities = false
     @Published var page = 1
+    @Published var selectedCommunity: Community?
     
     public init(
         getCommunitesUseCase: any GetCommunitiesUseCase,

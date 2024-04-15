@@ -7,12 +7,12 @@ import CommunityServiceInterface
 public struct CommunityView: View {
     
     @EnvironmentObject private var router: Router
-    @ObservedObject private var viewModel: CommunityViewModel
+    @StateObject private var viewModel: CommunityViewModel
     
     public init(
         viewModel: CommunityViewModel
     ) {
-        self._viewModel = ObservedObject(wrappedValue: viewModel)
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
@@ -22,6 +22,7 @@ public struct CommunityView: View {
                     if viewModel.isfetchingCommunities {
                         ForEach(0..<4, id: \.self) { _ in
                             ShimmerCommunityCell()
+                                .shimmer()
                         }
                     } else {
                         ForEach(viewModel.communities, id: \.communityId) { community in
@@ -35,6 +36,7 @@ public struct CommunityView: View {
                                 commentAction: {},
                                 detailAction: {}
                             ) {
+                                viewModel.selectedCommunity = community
                                 router.navigate(to: CommunityDestination.communityDetail)
                             }
                             .onAppear {
@@ -53,7 +55,6 @@ public struct CommunityView: View {
                 .padding(.top, 16)
                 .padding(.bottom, 128)
             }
-            .shimmer(viewModel.isfetchingCommunities)
             .refreshable {
                 await viewModel.fetchCommunities()
             }
@@ -81,6 +82,9 @@ public struct CommunityView: View {
         .background(Color.backgroundColor)
         .task {
             await viewModel.fetchCommunities()
+        }
+        .onChange(of: viewModel.communities) {
+            print($0.count)
         }
     }
 }
