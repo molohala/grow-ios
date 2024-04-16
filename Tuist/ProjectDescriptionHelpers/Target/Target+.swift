@@ -103,7 +103,7 @@ public extension Target {
         dependencies: [TargetDependency]
     ) -> Self {
         .makeTarget(name: "\(target.rawValue)ServiceTesting",
-                    product: .framework,
+                    product: .unitTests,
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)servicetesting",
                     infoPlist: .default,
                     sources: ["Testing/**"],
