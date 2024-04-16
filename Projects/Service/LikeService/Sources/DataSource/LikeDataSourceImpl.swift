@@ -10,6 +10,6 @@ class LikeDataSourceImpl: BaseRemoteDataSource<LikeDataSourceImpl>, LikeDataSour
     }
     
     func patchLike(communityId: Int) async throws {
-        _ = try await requestPatch(url: "\(Infinity.baseUrl)", res: BaseVoidResponse.self)
+        _ = try await requestPatch(url: "\(Infinity.baseUrl)/\(path)/\(communityId)", res: BaseVoidResponse.self)
     }
 }

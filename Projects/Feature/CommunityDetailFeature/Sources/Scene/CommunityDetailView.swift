@@ -23,7 +23,7 @@ public struct CommunityDetailView: View {
             ScrollViewReader { reader in
                 ScrollView {
                     if viewModel.communityFlow == .success,
-                        let community = viewModel.community,
+                       let community = viewModel.community,
                        viewModel.commentFlow == .success,
                        let comments = viewModel.comments {
                         VStack(alignment: .leading, spacing: 16) {
@@ -57,12 +57,11 @@ public struct CommunityDetailView: View {
                     Button {
                         Task {
                             await viewModel.createComment()
-                            if let reader {
-                                if let last = viewModel.comments?.last {
-                                    withAnimation {
-                                        reader.scrollTo(last.commentId, anchor: .top)
-                                    }
-                                }
+                            guard let reader else { return }
+                            guard let last = viewModel.comments?.last else { return }
+                            
+                            withAnimation {
+                                reader.scrollTo(last.commentId, anchor: .top)
                             }
                         }
                     } label: {
@@ -133,12 +132,15 @@ public struct CommunityDetailView: View {
     private func info(_ c: Community) -> some View {
         HStack {
             Button {
-                //
+                Task {
+                    await viewModel.patchLike()
+                }
             } label: {
                 HStack(spacing: 4) {
+                    let liked = viewModel.community?.liked ?? false
                     Image(systemName: "heart.fill")
                         .font(.headline)
-                        .foregroundStyle(Color.red400)
+                        .foregroundStyle(liked ? Color.red400 : Color.gray500)
                     
                     Text("\(c.like)")
                         .font(.callout)

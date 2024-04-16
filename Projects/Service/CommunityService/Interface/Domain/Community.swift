@@ -8,6 +8,7 @@ public struct Community: Equatable {
     public let like: Int
     public let writerId: Int
     public let writerName: String
+    public var liked: Bool
     
     public init(
         communityId: Int,
@@ -15,7 +16,8 @@ public struct Community: Equatable {
         createdAt: Date,
         like: Int,
         writerId: Int,
-        writerName: String
+        writerName: String,
+        liked: Bool
     ) {
         self.communityId = communityId
         self.content = content
@@ -23,14 +25,15 @@ public struct Community: Equatable {
         self.like = like
         self.writerId = writerId
         self.writerName = writerName
+        self.liked = liked
     }
 }
 
 public extension Community {
     static var dummy: [Community] = [
-        .init(communityId: 0, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재"),
-        .init(communityId: 1, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재"),
-        .init(communityId: 2, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재"),
-        .init(communityId: 3, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재")
+        .init(communityId: 0, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재", liked: true),
+        .init(communityId: 1, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재", liked: true),
+        .init(communityId: 2, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재", liked: false),
+        .init(communityId: 3, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재", liked: true)
     ]
 }

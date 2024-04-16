@@ -1,4 +1,5 @@
 import Foundation
+import LikeServiceInterface
 import CommentServiceInterface
 import CommunityServiceInterface
 
@@ -7,6 +8,7 @@ public final class CommunityDetailViewModel: ObservableObject {
     private let getCommunityUseCase: any GetCommunityUseCase
     private let getCommentUseCase: any GetCommentsUseCase
     private let createCommentUseCase: any CreateCommentUseCase
+    private let patchLikeUseCase: any PatchLikeUseCase
     
     // MARK: - Properties
     // community
@@ -41,11 +43,13 @@ public final class CommunityDetailViewModel: ObservableObject {
         getCommunityUseCase: any GetCommunityUseCase,
         getCommentUseCase: any GetCommentsUseCase,
         createCommentUseCase: any CreateCommentUseCase,
+        patchLikeUseCase: any PatchLikeUseCase,
         communityId: Int
     ) {
         self.getCommunityUseCase = getCommunityUseCase
         self.getCommentUseCase = getCommentUseCase
         self.createCommentUseCase = createCommentUseCase
+        self.patchLikeUseCase = patchLikeUseCase
         self.communityId = communityId
     }
     
@@ -79,5 +83,16 @@ public final class CommunityDetailViewModel: ObservableObject {
             createCommentFlow = .failure
         }
         comments = try? await getCommentUseCase(id: communityId)
+    }
+    
+    @MainActor
+    func patchLike() async {
+        do {
+            try await patchLikeUseCase(communityId: communityId)
+            guard var community = community else { return }
+            community.liked.toggle()
+        } catch {
+            //
+        }
     }
 }

@@ -7,6 +7,7 @@ struct CommunityResponse: Decodable {
     let like: Int
     let writerId: Int
     let writerName: String
+    let liked: Bool
 }
 
 extension CommunityResponse {
@@ -17,7 +18,8 @@ extension CommunityResponse {
             createdAt: createdAt.date ?? .now,
             like: like,
             writerId: writerId,
-            writerName: writerName
+            writerName: writerName,
+            liked: liked
         )
     }
 }

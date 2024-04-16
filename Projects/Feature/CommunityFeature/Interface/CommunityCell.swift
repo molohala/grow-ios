@@ -83,20 +83,9 @@ public struct CommunityCell: View {
             } label: {
                 Image(systemName: "heart.fill")
                     .font(.body)
-                    .foregroundStyle(Color.red400)
+                    .foregroundStyle(community.liked ? Color.red400 : Color.gray500)
             }
             Text("\(community.like)")
-                .font(.footnote)
-                .foregroundStyle(.gray)
-            Button {
-                commentAction()
-            } label: {
-                Image(systemName: "message.fill")
-                    .font(.body)
-                    .foregroundStyle(Color.gray500)
-            }
-            .padding(.leading, 8)
-            Text("32")
                 .font(.footnote)
                 .foregroundStyle(.gray)
             Spacer()

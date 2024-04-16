@@ -12,10 +12,12 @@ import NeedleFoundation
 import CommunityDetailFeatureInterface
 import CommunityServiceInterface
 import CommentServiceInterface
+import LikeServiceInterface
 
 public protocol CommunityDetailDependency: Dependency {
     var communityDomainBuildable: any CommunityDomainBuildable { get }
     var commentDomainBuildable: any CommentDomainBuildable { get }
+    var likeDomainBuildable: any LikeDomainBuildable { get }
 }
 
 public final class CommunityDetailComponent: Component<CommunityDetailDependency>, CommunityDetailBuildable {
@@ -25,6 +27,7 @@ public final class CommunityDetailComponent: Component<CommunityDetailDependency
                 getCommunityUseCase: dependency.communityDomainBuildable.getCommunityUseCase,
                 getCommentUseCase: dependency.commentDomainBuildable.getCommentsUseCase,
                 createCommentUseCase: dependency.commentDomainBuildable.createCommentUseCase,
+                patchLikeUseCase: dependency.likeDomainBuildable.patchLikeUseCase,
                 communityId: id
             )
         )

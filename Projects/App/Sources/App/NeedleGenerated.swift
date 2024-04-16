@@ -177,6 +177,9 @@ private class CommunityDetailDependencyddffd27390310f096b6cProvider: CommunityDe
     var commentDomainBuildable: any CommentDomainBuildable {
         return appComponent.commentDomainBuildable
     }
+    var likeDomainBuildable: any LikeDomainBuildable {
+        return appComponent.likeDomainBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -401,6 +404,7 @@ extension CommunityDetailComponent: Registration {
     public func registerItems() {
         keyPathToName[\CommunityDetailDependency.communityDomainBuildable] = "communityDomainBuildable-any CommunityDomainBuildable"
         keyPathToName[\CommunityDetailDependency.commentDomainBuildable] = "commentDomainBuildable-any CommentDomainBuildable"
+        keyPathToName[\CommunityDetailDependency.likeDomainBuildable] = "likeDomainBuildable-any LikeDomainBuildable"
     }
 }
 extension SignInComponent: Registration {
