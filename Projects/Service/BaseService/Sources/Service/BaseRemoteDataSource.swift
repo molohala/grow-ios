@@ -6,7 +6,6 @@ public class InfinitySession {
         let configuration = URLSessionConfiguration.af.default
         let apiLogger = APIEventLogger()
         let session = Session(configuration: configuration, interceptor: AuthInterceptor(), eventMonitors: [apiLogger])
-        session.sessionConfiguration.timeoutIntervalForRequest = 150
         return session
     }()
 }

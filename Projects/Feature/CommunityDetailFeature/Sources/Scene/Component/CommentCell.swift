@@ -8,8 +8,16 @@
 
 import SwiftUI
 import DesignSystem
+import CommentServiceInterface
 
 struct CommentCell: View {
+    
+    private let comment: Comment
+    
+    init(comment: Comment) {
+        self.comment = comment
+    }
+    
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
             Circle()
@@ -17,7 +25,7 @@ struct CommentCell: View {
                 .frame(width: 36, height: 36)
             VStack(alignment: .leading, spacing: 0) {
                 profile
-                Text("이야 짱이다")
+                Text(comment.content)
                     .font(.callout)
             }
         }
@@ -26,10 +34,10 @@ struct CommentCell: View {
     @ViewBuilder
     private var profile: some View {
         HStack(spacing: 0) {
-            Text("노영재")
+            Text(comment.name)
                 .font(.callout)
                 .fontWeight(.semibold)
-            Text("1시간 전")
+            Text(comment.createdAt.timeAgo)
                 .font(.caption)
                 .fontWeight(.regular)
                 .foregroundStyle(.gray)

@@ -3,29 +3,30 @@ import SwiftUI
 import CommunityDetailFeatureInterface
 import DesignSystem
 import CommunityServiceInterface
+import CommentServiceInterface
 
 public struct CommunityDetailView: View {
     
-    @State private var text = ""
     @State private var reader: ScrollViewProxy?
     
     @StateObject private var viewModel: CommunityDetailViewModel
+    @State private var showEmptyAlert = false
     @Environment(\.dismiss) private var dismiss
-    private let id: Int
     
     public init(
-        viewModel: CommunityDetailViewModel,
-        id: Int
+        viewModel: CommunityDetailViewModel
     ) {
         self._viewModel = StateObject(wrappedValue: viewModel)
-        self.id = id
     }
     
     public var body: some View {
         ZStack {
             ScrollViewReader { reader in
                 ScrollView {
-                    if viewModel.flow == .success, let community = viewModel.community {
+                    if viewModel.communityFlow == .success,
+                        let community = viewModel.community,
+                       viewModel.commentFlow == .success,
+                       let comments = viewModel.comments {
                         VStack(alignment: .leading, spacing: 16) {
                             profile(community)
                             Text(community.content)
@@ -34,7 +35,7 @@ public struct CommunityDetailView: View {
                                 .fontWeight(.medium)
                             info(community)
                             Divider()
-                            comments(community)
+                            self.makeComments(comments)
                                 .padding(.bottom, 64)
                         }
                         .padding(.horizontal, 16)
@@ -51,14 +52,22 @@ public struct CommunityDetailView: View {
                 Spacer()
                 Divider()
                 HStack {
-                    TextField("댓글을 남겨보세요", text: $text)
+                    TextField("댓글을 남겨보세요", text: $viewModel.comment)
                         .padding(8)
                         .font(.body)
                     Button {
-                        //
-                        if let reader {
-                            withAnimation {
-                                reader.scrollTo(9, anchor: .top)
+                        guard !viewModel.comment.isEmpty else {
+                            showEmptyAlert = true
+                            return
+                        }
+                        Task {
+                            await viewModel.createComment()
+                            if let reader {
+                                if let last = viewModel.comments?.last {
+                                    withAnimation {
+                                        reader.scrollTo(last.commentId, anchor: .top)
+                                    }
+                                }
                             }
                         }
                     } label: {
@@ -77,12 +86,14 @@ public struct CommunityDetailView: View {
         .hideKeyboardWhenTap()
         .infinityTopBar("")
         .task {
-            await viewModel.fetchCommunity(id: id)
+            async let fetchCommunity: () = viewModel.fetchCommunity()
+            async let fetchComment: () = viewModel.fetchComments()
+            _ = await (fetchCommunity, fetchComment)
         }
         .alert(
             "게시글을 불러올 수 없습니다",
             isPresented: .init(
-                get: { viewModel.flow == .failure },
+                get: { viewModel.commentFlow == .failure || viewModel.commentFlow == .failure },
                 set: { _ in dismiss() }
             )
         ) {
@@ -143,10 +154,10 @@ public struct CommunityDetailView: View {
     }
     
     @ViewBuilder
-    private func comments(_ c: Community) -> some View {
+    private func makeComments(_ comments: [Comment]) -> some View {
         LazyVStack(spacing: 20) {
-            ForEach(0..<10, id: \.self) { _ in
-                CommentCell()
+            ForEach(comments, id: \.commentId) { comment in
+                CommentCell(comment: comment)
             }
         }
     }

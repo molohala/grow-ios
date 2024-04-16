@@ -2,25 +2,25 @@ import CommentServiceInterface
 
 class CommentRepositoryImpl: CommentRepository {
     
-    private let dataSource: any CommentDataSource
+    private let commentDataSource: CommentDataSource
     
-    init(dataSource: any CommentDataSource) {
-        self.dataSource = dataSource
+    init(commentDataSource: CommentDataSource) {
+        self.commentDataSource = commentDataSource
     }
     
     func getComments(id: Int) async throws -> [Comment] {
-        try await dataSource.getComments(id: id)
+        try await commentDataSource.getComments(id: id)
     }
     
     func createComment(_ req: CreateCommentRequest) async throws {
-        try await dataSource.createComment(req)
+        try await commentDataSource.createComment(req)
     }
     
     func patchComment(_ req: PatchCommentRequest) async throws {
-        try await dataSource.patchComment(req)
+        try await commentDataSource.patchComment(req)
     }
     
     func removeComment(id: Int) async throws {
-        try await dataSource.removeComment(id: id)
+        try await commentDataSource.removeComment(id: id)
     }
 }

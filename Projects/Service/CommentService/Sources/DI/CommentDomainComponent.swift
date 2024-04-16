@@ -1,36 +1,36 @@
 import NeedleFoundation
 import CommentServiceInterface
 
-public protocol CommentDomainDependency {}
+public protocol CommentDomainDependency: Dependency {}
 
 public class CommentDomainComponent: Component<CommentDomainDependency>, CommentDomainBuildable {
     public var getCommentsUseCase: GetCommentsUseCase {
         shared {
-            GetCommentsUseCaseImpl(repository: commentRepository)
+            GetCommentsUseCaseImpl(commentRepository: commentRepository)
         }
     }
     
     public var createCommentUseCase: CreateCommentUseCase {
         shared {
-            CreateCommentUseCaseImpl(repository: commentRepository)
+            CreateCommentUseCaseImpl(commentRepository: commentRepository)
         }
     }
     
     public var patchCommentUseCase: PatchCommentUseCase {
         shared {
-            PatchCommentUseCaseImpl(repository: commentRepository)
+            PatchCommentUseCaseImpl(commentRepository: commentRepository)
         }
     }
     
     public var removeCommentUseCase: RemoveCommentUseCase {
         shared {
-            RemoveCommentUseCaseImpl(repository: commentRepository)
+            RemoveCommentUseCaseImpl(commentRepository: commentRepository)
         }
     }
     
     public var commentRepository: CommentRepository {
         shared {
-            CommentRepositoryImpl(dataSource: commentDataSource)
+            CommentRepositoryImpl(commentDataSource: commentDataSource)
         }
     }
     

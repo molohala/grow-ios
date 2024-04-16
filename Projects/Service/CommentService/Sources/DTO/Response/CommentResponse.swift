@@ -5,7 +5,7 @@ import DateUtil
 struct CommentResponse: Decodable {
     let commentId: Int
     let content: String
-    let createAt: String
+    let createdAt: String
     let memberId: Int
     let name: String
 }
@@ -15,7 +15,7 @@ extension CommentResponse {
         Comment(
             commentId: commentId,
             content: content,
-            createAt: createAt.date ?? .now,
+            createAt: createdAt.date ?? .now,
             memberId: memberId,
             name: name
         )

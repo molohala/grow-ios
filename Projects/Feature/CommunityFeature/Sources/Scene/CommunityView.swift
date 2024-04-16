@@ -7,6 +7,7 @@ import CommunityServiceInterface
 public struct CommunityView: View {
     
     @EnvironmentObject private var router: Router
+    @State private var reader: ScrollViewProxy?
     @StateObject private var viewModel: CommunityViewModel
     
     public init(
@@ -17,45 +18,48 @@ public struct CommunityView: View {
     
     public var body: some View {
         ZStack {
-            ScrollView {
-                LazyVStack(spacing: 12) {
-                    if viewModel.isfetchingCommunities {
-                        ForEach(0..<4, id: \.self) { _ in
-                            ShimmerCommunityCell()
-                                .shimmer()
-                        }
-                    } else {
-                        ForEach(viewModel.communities, id: \.communityId) { community in
-                            CommunityCell(
-                                community: community,
-                                likeAction: {
-                                    Task {
-                                        await viewModel.patchLike(communityId: community.communityId)
-                                    }
-                                },
-                                commentAction: {},
-                                detailAction: {}
-                            ) {
-                                router.navigate(to: CommunityDestination.communityDetail(id: community.communityId))
+            ScrollViewReader { reader in
+                ScrollView {
+                    LazyVStack(spacing: 12) {
+                        if viewModel.isfetchingCommunities {
+                            ForEach(0..<4, id: \.self) { _ in
+                                ShimmerCommunityCell()
+                                    .shimmer()
                             }
-                            .onAppear {
-                                guard let index = viewModel.communities.firstIndex(where: { $0.communityId == community.communityId }) else { return }
-                                
-                                if index % pagingInterval == (pagingInterval - 1) {
-                                    Task {
-                                        await viewModel.fetchNextCommunities()
+                        } else {
+                            ForEach(viewModel.communities, id: \.communityId) { community in
+                                CommunityCell(
+                                    community: community,
+                                    likeAction: {
+                                        Task {
+                                            await viewModel.patchLike(communityId: community.communityId)
+                                        }
+                                    },
+                                    commentAction: {},
+                                    detailAction: {}
+                                ) {
+                                    router.navigate(to: CommunityDestination.communityDetail(id: community.communityId))
+                                }
+                                .onAppear {
+                                    guard let index = viewModel.communities.firstIndex(where: { $0.communityId == community.communityId }) else { return }
+                                    
+                                    if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (viewModel.communities.count - 1) / pagingInterval {
+                                        Task {
+                                            await viewModel.fetchNextCommunities()
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 16)
+                    .padding(.bottom, 128)
+                    .onAppear {
+                        self.reader = reader
+                    }
+                    .id("lazyvstack")
                 }
-                .padding(.horizontal, 16)
-                .padding(.top, 16)
-                .padding(.bottom, 128)
-            }
-            .refreshable {
-                await viewModel.fetchCommunities()
             }
             HStack {
                 Spacer()
@@ -79,11 +83,13 @@ public struct CommunityView: View {
             }
         }
         .background(Color.backgroundColor)
+        .refreshable {
+            Task {
+                await viewModel.fetchCommunities()
+            }
+        }
         .task {
             await viewModel.fetchCommunities()
-        }
-        .onChange(of: viewModel.communities) {
-            print($0.count)
         }
     }
 }

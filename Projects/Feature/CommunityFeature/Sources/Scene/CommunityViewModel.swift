@@ -57,24 +57,14 @@ public final class CommunityViewModel: ObservableObject {
     
     @MainActor
     public func fetchNextCommunities() async {
-        withAnimation {
-            isfetchingCommunities = true
-        }
-        defer {
-            withAnimation {
-                isfetchingCommunities = false
-            }
-        }
+        
         do {
-            let nextPage = page + 1
+            let nextPage = communities.count / pagingInterval + 1
             print("\(#function) - fetching ... nextPage: \(nextPage)")
             let request = PageRequest(page: nextPage, size: pagingInterval)
             
             let pagedCommunities = try await getCommunitesUseCase(request)
             communities.append(contentsOf: pagedCommunities)
-            if !communities.isEmpty {
-                page = nextPage
-            }
         } catch {
             communities = []
             page = 1

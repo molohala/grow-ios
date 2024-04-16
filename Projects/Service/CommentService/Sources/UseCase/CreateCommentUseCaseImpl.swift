@@ -2,13 +2,13 @@ import CommentServiceInterface
 
 class CreateCommentUseCaseImpl: CreateCommentUseCase {
     
-    private let repository: any CommentRepository
+    private let commentRepository: CommentRepository
     
-    init(repository: any CommentRepository) {
-        self.repository = repository
+    init(commentRepository: CommentRepository) {
+        self.commentRepository = commentRepository
     }
     
     func callAsFunction(_ req: CreateCommentRequest) async throws {
-        try await repository.createComment(req)
+        try await commentRepository.createComment(req)
     }
 }

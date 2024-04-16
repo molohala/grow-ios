@@ -6,6 +6,8 @@ import BaekjoonRankFeature
 import BaekjoonRankFeatureInterface
 import BaekjoonSettingFeature
 import BaekjoonSettingFeatureInterface
+import CommentService
+import CommentServiceInterface
 import CommunityCreateFeature
 import CommunityCreateFeatureInterface
 import CommunityDetailFeature
@@ -172,6 +174,9 @@ private class CommunityDetailDependencyddffd27390310f096b6cProvider: CommunityDe
     var communityDomainBuildable: any CommunityDomainBuildable {
         return appComponent.communityDomainBuildable
     }
+    var commentDomainBuildable: any CommentDomainBuildable {
+        return appComponent.commentDomainBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -293,6 +298,17 @@ private class LikeDomainDependencyf63c0c1617be7448fbeeProvider: LikeDomainDepend
 private func factory9270861c93e2286ee142e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return LikeDomainDependencyf63c0c1617be7448fbeeProvider()
 }
+private class CommentDomainDependencyc311ef3dc1043384eea3Provider: CommentDomainDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->CommentDomainComponent
+private func factory9d07e84c0c1fdd02736fe3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return CommentDomainDependencyc311ef3dc1043384eea3Provider()
+}
 private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
 
 
@@ -384,6 +400,7 @@ extension CommunityCreateComponent: Registration {
 extension CommunityDetailComponent: Registration {
     public func registerItems() {
         keyPathToName[\CommunityDetailDependency.communityDomainBuildable] = "communityDomainBuildable-any CommunityDomainBuildable"
+        keyPathToName[\CommunityDetailDependency.commentDomainBuildable] = "commentDomainBuildable-any CommentDomainBuildable"
     }
 }
 extension SignInComponent: Registration {
@@ -432,6 +449,11 @@ extension LikeDomainComponent: Registration {
 
     }
 }
+extension CommentDomainComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension AuthDomainComponent: Registration {
     public func registerItems() {
 
@@ -475,6 +497,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->BaekjoonRankComponent", factoryf8ddad049da0deefda19e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BaekjoonSettingComponent", factorycbb61afc845cf58732dbe3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->LikeDomainComponent", factory9270861c93e2286ee142e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->CommentDomainComponent", factory9d07e84c0c1fdd02736fe3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityDomainComponent", factoryb1f366c0bb811d91cf77e3b0c44298fc1c149afb)
 }

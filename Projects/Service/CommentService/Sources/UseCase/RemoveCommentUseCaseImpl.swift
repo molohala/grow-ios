@@ -2,13 +2,13 @@ import CommentServiceInterface
 
 class RemoveCommentUseCaseImpl: RemoveCommentUseCase {
     
-    private let repository: any CommentRepository
+    private let commentRepository: CommentRepository
     
-    init(repository: any CommentRepository) {
-        self.repository = repository
+    init(commentRepository: CommentRepository) {
+        self.commentRepository = commentRepository
     }
     
     func callAsFunction(id: Int) async throws {
-        try await repository.removeComment(id: id)
+        try await commentRepository.removeComment(id: id)
     }
 }

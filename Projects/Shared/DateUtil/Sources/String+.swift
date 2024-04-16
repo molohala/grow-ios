@@ -2,8 +2,11 @@ import Foundation
 
 public extension String {
     var date: Date? {
+        var str = self
+        str.replace("T", with: " ")
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        return dateFormatter.date(from: self)
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        return dateFormatter.date(from: str)
     }
 }

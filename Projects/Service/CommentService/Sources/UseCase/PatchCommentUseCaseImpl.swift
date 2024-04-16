@@ -2,13 +2,13 @@ import CommentServiceInterface
 
 class PatchCommentUseCaseImpl: PatchCommentUseCase {
     
-    private let repository: any CommentRepository
+    private let commentRepository: CommentRepository
     
-    init(repository: any CommentRepository) {
-        self.repository = repository
+    init(commentRepository: CommentRepository) {
+        self.commentRepository = commentRepository
     }
     
     func callAsFunction(_ req: PatchCommentRequest) async throws {
-        try await repository.patchComment(req)
+        try await commentRepository.patchComment(req)
     }
 }
