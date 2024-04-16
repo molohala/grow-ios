@@ -10,7 +10,6 @@ public struct CommunityDetailView: View {
     @State private var reader: ScrollViewProxy?
     
     @StateObject private var viewModel: CommunityDetailViewModel
-    @State private var showEmptyAlert = false
     @Environment(\.dismiss) private var dismiss
     
     public init(
@@ -56,10 +55,6 @@ public struct CommunityDetailView: View {
                         .padding(8)
                         .font(.body)
                     Button {
-                        guard !viewModel.comment.isEmpty else {
-                            showEmptyAlert = true
-                            return
-                        }
                         Task {
                             await viewModel.createComment()
                             if let reader {
@@ -74,8 +69,9 @@ public struct CommunityDetailView: View {
                         Image(systemName: "arrow.up.circle.fill")
                             .renderingMode(.template)
                             .font(.title)
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(viewModel.comment.isEmpty ? Color.gray400 : .blue)
                     }
+                    .disabled(viewModel.comment.isEmpty)
                 }
                 .padding(.horizontal, 8)
                 .padding(8)

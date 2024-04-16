@@ -61,6 +61,7 @@ public struct AuthInterceptor: RequestInterceptor {
                 }
                 print("✅ refresh 성공")
                 UserDefaults.standard.setValue(accessToken, forKey: "accessToken")
+                completion(.retry)
             case .failure(let error):
                 print("❌ \(error.localizedDescription)")
                 print("❌ refresh 실패")
