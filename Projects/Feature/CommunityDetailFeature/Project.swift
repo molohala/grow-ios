@@ -10,12 +10,14 @@ let project = Project.makeFeature(
             .featureInterface(target: .ProfileDetail),
             .serviceInterface(target: .Community),
             .serviceInterface(target: .Like),
+            .serviceInterface(target: .Comment)
         ]),
         .featureInterface(target: .CommunityDetail, dependencies: []),
         .featureExample(target: .CommunityDetail, dependencies: [
             .feature(target: .CommunityDetail),
             .serviceTesting(target: .Community),
-            .serviceTesting(target: .Like)
+            .serviceTesting(target: .Like),
+            .serviceTesting(target: .Comment)
         ])
     ]
 )

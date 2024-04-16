@@ -44,6 +44,7 @@ public extension ModulePaths {
         case Base
         case Auth
         case Community
+        case Comment
         case Like
     }
     

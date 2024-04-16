@@ -16,6 +16,7 @@ open class BaseRemoteDataSource<Service> {
     public init() {
     }
     
+    @discardableResult
     public func requestGet<Res: Decodable>(
         url: String,
         res: Res.Type
@@ -28,6 +29,7 @@ open class BaseRemoteDataSource<Service> {
         .serializingDecodable(res).value
     }
     
+    @discardableResult
     public func requestPost<Res: Decodable>(
         url: String,
         res: Res.Type
@@ -40,6 +42,7 @@ open class BaseRemoteDataSource<Service> {
         .serializingDecodable(res).value
     }
     
+    @discardableResult
     public func requestPost<Req: Encodable, Res: Decodable>(
         url: String,
         req: Req,
@@ -56,6 +59,7 @@ open class BaseRemoteDataSource<Service> {
         .serializingDecodable(res).value
     }
     
+    @discardableResult
     public func requestPatch<Res: Decodable>(
         url: String,
         res: Res.Type
@@ -69,6 +73,7 @@ open class BaseRemoteDataSource<Service> {
         .serializingDecodable(res).value
     }
     
+    @discardableResult
     public func requestPatch<Req: Encodable, Res: Decodable>(
         url: String,
         req: Req,
@@ -85,6 +90,7 @@ open class BaseRemoteDataSource<Service> {
         .serializingDecodable(res).value
     }
     
+    @discardableResult
     public func requestDelete<Res: Decodable>(
         url: String,
         res: Res.Type
@@ -98,6 +104,7 @@ open class BaseRemoteDataSource<Service> {
         .serializingDecodable(res).value
     }
     
+    @discardableResult
     public func requestDelete<Req: Encodable, Res: Decodable>(
         url: String,
         req: Req,

@@ -12,6 +12,8 @@ import CommunityService
 import CommunityServiceInterface
 import LikeService
 import LikeServiceInterface
+import CommentService
+import CommentServiceInterface
 
 extension AppComponent {
     var authDomainBuildable: any AuthDomainBuildable {
@@ -29,6 +31,12 @@ extension AppComponent {
     var likeDomainBuildable: any LikeDomainBuildable {
         shared {
             LikeDomainComponent(parent: self)
+        }
+    }
+    
+    var commentDomainBuildable: any CommentDomainBuildable {
+        shared {
+            CommentDomainComponent(parent: self)
         }
     }
 }
