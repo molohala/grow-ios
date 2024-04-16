@@ -35,8 +35,8 @@ public struct CommunityView: View {
                                             await viewModel.patchLike(communityId: community.communityId)
                                         }
                                     },
-                                    commentAction: {},
-                                    detailAction: {}
+                                    editAction: {},
+                                    removeAction: {}
                                 ) {
                                     router.navigate(to: CommunityDestination.communityDetail(id: community.communityId))
                                 }

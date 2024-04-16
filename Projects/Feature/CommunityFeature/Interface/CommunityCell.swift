@@ -6,31 +6,50 @@ public struct CommunityCell: View {
     
     private let community: Community
     private let likeAction: () -> Void
-    private let commentAction: () -> Void
-    private let detailAction: () -> Void
+    private let editAction: () -> Void
+    private let removeAction: () -> Void
     private let action: () -> Void
     
     public init(
         community: Community,
         likeAction: @escaping () -> Void,
-        commentAction: @escaping () -> Void,
-        detailAction: @escaping () -> Void,
+        editAction: @escaping () -> Void,
+        removeAction: @escaping () -> Void,
         action: @escaping () -> Void
     ) {
         self.community = community
         self.likeAction = likeAction
-        self.commentAction = commentAction
-        self.detailAction = detailAction
+        self.editAction = editAction
+        self.removeAction = removeAction
         self.action = action
     }
     
     public var body: some View {
-        Button {
-            action()
-        } label: {
-            label
+        ZStack {
+            Button {
+                action()
+            } label: {
+                label
+            }
+            .applyAnimation()
+            HStack {
+                Spacer()
+                VStack {
+                    Menu {
+                        Button("수정하기", action: editAction)
+                        Button("삭제하기", role: .destructive, action: removeAction)
+                    } label: {
+                        DesignSystemAsset.detailVerticalLine.swiftUIImage
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(Color.gray)
+                    }
+                    .padding(12)
+                    Spacer()
+                }
+            }
         }
-        .applyAnimation()
     }
     
     @ViewBuilder
@@ -60,15 +79,6 @@ public struct CommunityCell: View {
             }
             .padding(.leading, 8)
             Spacer()
-            Button {
-                detailAction()
-            } label: {
-                DesignSystemAsset.detailVerticalLine.swiftUIImage
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 24, height: 24)
-                    .foregroundStyle(Color.gray)
-            }
         }
     }
     
@@ -81,10 +91,11 @@ public struct CommunityCell: View {
                 Image(systemName: "heart")
                     .font(.body)
                     .foregroundStyle(community.liked ? Color.red400 : Color.gray500)
+                Text("\(community.like)")
+                    .font(.footnote)
+                    .foregroundStyle(.gray)
             }
-            Text("\(community.like)")
-                .font(.footnote)
-                .foregroundStyle(.gray)
+            .layoutPriority(2)
             Spacer()
         }
     }

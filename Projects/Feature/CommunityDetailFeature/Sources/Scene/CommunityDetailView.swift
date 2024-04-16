@@ -113,8 +113,10 @@ public struct CommunityDetailView: View {
                     .padding(.leading, 4)
             }
             Spacer()
-            Button {
-                //
+            
+            Menu {
+                Button("수정하기") {}
+                Button("삭제하기", role: .destructive) {}
             } label: {
                 DesignSystemAsset.detailVerticalLine.swiftUIImage
                     .resizable()

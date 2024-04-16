@@ -58,8 +58,8 @@ public struct HomeView: View {
                     CommunityCell(
                         community: community,
                         likeAction: {},
-                        commentAction: {},
-                        detailAction: {}
+                        editAction: {},
+                        removeAction: {}
                     ) {
                         router.navigate(to: HomeDestination.communityDetail)
                     }
