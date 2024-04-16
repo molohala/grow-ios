@@ -25,8 +25,7 @@ struct CommentCell: View {
                 .frame(width: 36, height: 36)
             VStack(alignment: .leading, spacing: 0) {
                 profile
-                Text(comment.content)
-                    .font(.callout)
+                TextWrapper(comment.content, font: .callout)
             }
         }
     }

@@ -28,10 +28,7 @@ public struct CommunityDetailView: View {
                        let comments = viewModel.comments {
                         VStack(alignment: .leading, spacing: 16) {
                             profile(community)
-                            Text(community.content)
-                                .font(.body)
-                                .lineSpacing(.infinityLineSpacing)
-                                .fontWeight(.medium)
+                            TextWrapper(community.content, font: .callout)
                             info(community)
                             Divider()
                             self.makeComments(comments)
@@ -58,10 +55,10 @@ public struct CommunityDetailView: View {
                         Task {
                             await viewModel.createComment()
                             guard let reader else { return }
-                            guard let last = viewModel.comments?.last else { return }
+                            guard let first = viewModel.comments?.first else { return }
                             
                             withAnimation {
-                                reader.scrollTo(last.commentId, anchor: .top)
+                                reader.scrollTo(first.commentId, anchor: .top)
                             }
                         }
                     } label: {
@@ -138,8 +135,8 @@ public struct CommunityDetailView: View {
             } label: {
                 HStack(spacing: 4) {
                     let liked = viewModel.community?.liked ?? false
-                    Image(systemName: "heart.fill")
-                        .font(.headline)
+                    Image(systemName: "heart")
+                        .font(.body)
                         .foregroundStyle(liked ? Color.red400 : Color.gray500)
                     
                     Text("\(c.like)")

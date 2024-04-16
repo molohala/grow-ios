@@ -37,10 +37,7 @@ public struct CommunityCell: View {
     private var label: some View {
         VStack(alignment: .leading, spacing: 16) {
             profile
-            Text(community.content)
-                .lineSpacing(.infinityLineSpacing)
-                .font(.callout)
-                .fontWeight(.medium)
+            TextWrapper(community.content, font: .callout)
             info
         }
         .applyCardView()
@@ -77,11 +74,11 @@ public struct CommunityCell: View {
     
     @ViewBuilder
     private var info: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 4) {
             Button {
                 likeAction()
             } label: {
-                Image(systemName: "heart.fill")
+                Image(systemName: "heart")
                     .font(.body)
                     .foregroundStyle(community.liked ? Color.red400 : Color.gray500)
             }

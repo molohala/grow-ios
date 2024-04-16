@@ -38,6 +38,28 @@ public enum InfinityFont {
             DesignSystemFontFamily.WantedSans.medium.swiftUIFont(size: UIFont.preferredFont(forTextStyle: .caption1).pointSize)
         }
     }
+    
+    
+    public var uiFont: UIFont {
+        switch self {
+        case .largeTitle:
+            DesignSystemFontFamily.WantedSans.bold.font(size: UIFont.preferredFont(forTextStyle: .largeTitle).pointSize)
+        case .title:
+            DesignSystemFontFamily.WantedSans.semiBold.font(size: UIFont.preferredFont(forTextStyle: .title1).pointSize)
+        case .headline:
+            DesignSystemFontFamily.WantedSans.semiBold.font(size: UIFont.preferredFont(forTextStyle: .headline).pointSize)
+        case .subheadline:
+            DesignSystemFontFamily.WantedSans.semiBold.font(size: UIFont.preferredFont(forTextStyle: .subheadline).pointSize)
+        case .body:
+            DesignSystemFontFamily.WantedSans.medium.font(size: UIFont.preferredFont(forTextStyle: .body).pointSize)
+        case .callout:
+            DesignSystemFontFamily.WantedSans.medium.font(size: UIFont.preferredFont(forTextStyle: .callout).pointSize)
+        case .footnote:
+            DesignSystemFontFamily.WantedSans.regular.font(size: UIFont.preferredFont(forTextStyle: .footnote).pointSize)
+        case .caption:
+            DesignSystemFontFamily.WantedSans.medium.font(size: UIFont.preferredFont(forTextStyle: .caption1).pointSize)
+        }
+    }
 }
 
 public extension View {
