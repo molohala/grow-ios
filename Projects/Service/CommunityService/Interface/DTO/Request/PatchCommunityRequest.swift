@@ -1,4 +1,9 @@
 public struct PatchCommunityRequest: Encodable {
-    let content: String
-    let id: Int
+    public let content: String
+    public let id: Int
+    
+    public init(content: String, id: Int) {
+        self.content = content
+        self.id = id
+    }
 }

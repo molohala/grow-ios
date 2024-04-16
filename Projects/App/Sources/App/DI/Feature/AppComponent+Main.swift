@@ -9,6 +9,8 @@ import CommunityDetailFeature
 import CommunityDetailFeatureInterface
 import CommunityFeature
 import CommunityFeatureInterface
+import CommunityEditFeature
+import CommunityEditFeatureInterface
 import GithubRankFeature
 import GithubRankFeatureInterface
 import GithubSettingFeature
@@ -42,6 +44,10 @@ public extension AppComponent {
     
     var communityCreateBuildable: any CommunityCreateBuildable {
         CommunityCreateComponent(parent: self)
+    }
+    
+    var communityEditBuildable: any CommunityEditBuildable {
+        CommunityEditComponent(parent: self)
     }
     
     var communityDetailBuildable: any CommunityDetailBuildable {

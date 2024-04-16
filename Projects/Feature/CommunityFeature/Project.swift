@@ -10,7 +10,8 @@ let project = Project.makeFeature(
             .featureInterface(target: .CommunityDetail),
             .featureInterface(target: .CommunityCreate),
             .serviceInterface(target: .Community),
-            .serviceInterface(target: .Like)
+            .serviceInterface(target: .Like),
+            .featureInterface(target: .CommunityEdit)
         ]),
         .featureInterface(target: .Community, dependencies: [
             .serviceInterface(target: .Community)

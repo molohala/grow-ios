@@ -12,6 +12,8 @@ import CommunityCreateFeature
 import CommunityCreateFeatureInterface
 import CommunityDetailFeature
 import CommunityDetailFeatureInterface
+import CommunityEditFeature
+import CommunityEditFeatureInterface
 import CommunityFeature
 import CommunityFeatureInterface
 import CommunityService
@@ -268,6 +270,19 @@ private class ProfileEditDependencyec9ccff05278bca24819Provider: ProfileEditDepe
 private func factoryff80df4e3e21c6a49df9e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return ProfileEditDependencyec9ccff05278bca24819Provider()
 }
+private class CommunityEditDependency1ee294b35aa9a8c53e29Provider: CommunityEditDependency {
+    var communityDomainBuildable: any CommunityDomainBuildable {
+        return appComponent.communityDomainBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->CommunityEditComponent
+private func factory6ebc832ed4bcf9ae0afff47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return CommunityEditDependency1ee294b35aa9a8c53e29Provider(appComponent: parent1(component) as! AppComponent)
+}
 private class BaekjoonRankDependency7e94a57b9cd7dc6dd837Provider: BaekjoonRankDependency {
 
 
@@ -345,6 +360,7 @@ extension AppComponent: Registration {
         localTable["baekjoonRankBuildable-any BaekjoonRankBuildable"] = { [unowned self] in self.baekjoonRankBuildable as Any }
         localTable["baekjoonSettingBuildable-any BaekjoonSettingBuildable"] = { [unowned self] in self.baekjoonSettingBuildable as Any }
         localTable["communityCreateBuildable-any CommunityCreateBuildable"] = { [unowned self] in self.communityCreateBuildable as Any }
+        localTable["communityEditBuildable-any CommunityEditBuildable"] = { [unowned self] in self.communityEditBuildable as Any }
         localTable["communityDetailBuildable-any CommunityDetailBuildable"] = { [unowned self] in self.communityDetailBuildable as Any }
         localTable["communityBuildable-any CommunityBuildable"] = { [unowned self] in self.communityBuildable as Any }
         localTable["githubRankBuildable-any GithubRankBuildable"] = { [unowned self] in self.githubRankBuildable as Any }
@@ -438,6 +454,11 @@ extension ProfileEditComponent: Registration {
 
     }
 }
+extension CommunityEditComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\CommunityEditDependency.communityDomainBuildable] = "communityDomainBuildable-any CommunityDomainBuildable"
+    }
+}
 extension BaekjoonRankComponent: Registration {
     public func registerItems() {
 
@@ -498,6 +519,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->GithubSettingComponent", factorybe58855116216af426a2e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->ProfileEditComponent", factoryff80df4e3e21c6a49df9e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->CommunityEditComponent", factory6ebc832ed4bcf9ae0afff47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BaekjoonRankComponent", factoryf8ddad049da0deefda19e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BaekjoonSettingComponent", factorycbb61afc845cf58732dbe3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->LikeDomainComponent", factory9270861c93e2286ee142e3b0c44298fc1c149afb)

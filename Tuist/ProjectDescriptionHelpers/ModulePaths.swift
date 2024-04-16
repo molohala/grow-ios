@@ -38,6 +38,7 @@ public extension ModulePaths {
         case ProfileDetail
         case CommunityCreate
         case CommunityDetail
+        case CommunityEdit
     }
     
     enum Service: String, CaseIterable {
