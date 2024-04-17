@@ -20,7 +20,7 @@ public struct CommunityView: View {
         ZStack {
             ScrollViewReader { reader in
                 ScrollView {
-                    LazyVStack(spacing: 12) {
+                    LazyVStack(spacing: 8) {
                         if viewModel.isfetchingCommunities {
                             ForEach(0..<4, id: \.self) { _ in
                                 ShimmerCommunityCell()

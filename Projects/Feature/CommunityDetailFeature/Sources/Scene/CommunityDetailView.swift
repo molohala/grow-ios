@@ -3,6 +3,7 @@ import SwiftUI
 import CommunityDetailFeatureInterface
 import DesignSystem
 import CommunityServiceInterface
+import Pow
 import CommentServiceInterface
 
 public struct CommunityDetailView: View {
@@ -101,7 +102,7 @@ public struct CommunityDetailView: View {
             Circle()
                 .foregroundStyle(.gray)
                 .frame(width: 36, height: 36)
-            VStack(spacing: 2) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(c.writerName)
                     .font(.callout)
                     .fontWeight(.semibold)
@@ -135,15 +136,30 @@ public struct CommunityDetailView: View {
                     await viewModel.patchLike()
                 }
             } label: {
+                let liked = viewModel.community?.liked ?? false
+                let like = viewModel.community?.like ?? 0
                 HStack(spacing: 4) {
-                    let liked = viewModel.community?.liked ?? false
-                    Image(systemName: "heart")
-                        .font(.body)
+                    Image(systemName: liked ? "heart.fill" : "heart")
+                        .font(Font.title3)
                         .foregroundStyle(liked ? Color.red400 : Color.gray500)
-                    
-                    Text("\(c.like)")
+                    Text("\(like)")
                         .font(.callout)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(liked ? Color.red400 : Color.gray500)
+                }
+                .padding(6)
+                .background(liked ? Color.red100 : .white)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .overlay {
+                    EmptyView()
+                        .changeEffect(
+                            .spray(origin: UnitPoint(x: 0.25, y: 0.5)) {
+                                if liked {
+                                    Image(systemName: "heart.fill")
+                                        .foregroundStyle(.red)
+                                }
+                            },
+                            value: liked
+                        )
                 }
             }
             Spacer()

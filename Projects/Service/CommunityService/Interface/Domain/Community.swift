@@ -5,7 +5,7 @@ public struct Community: Equatable {
     public let communityId: Int
     public let content: String
     public let createdAt: Date
-    public let like: Int
+    public var like: Int
     public let writerId: Int
     public let writerName: String
     public var liked: Bool

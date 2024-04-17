@@ -76,8 +76,22 @@ public final class CommunityViewModel: ObservableObject {
     public func patchLike(communityId: Int) async {
         do {
             try await patchLikeUseCase(communityId: communityId)
+            communities.enumerated().forEach { idx, i in
+                print(i.communityId)
+                if communityId == i.communityId {
+                    communities[idx].like += i.liked ? -1 : 1
+                    communities[idx].liked.toggle()
+                }
+            }
         } catch {
             
+            communities.enumerated().forEach { idx, i in
+                print(i.communityId)
+                if communityId == i.communityId {
+                    communities[idx].like += i.liked ? -1 : 1
+                    communities[idx].liked.toggle()
+                }
+            }
         }
     }
 }

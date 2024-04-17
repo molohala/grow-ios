@@ -1,6 +1,7 @@
 import SwiftUI
 import CommunityServiceInterface
 import DesignSystem
+import Pow
 
 public struct CommunityCell: View {
     
@@ -57,7 +58,10 @@ public struct CommunityCell: View {
         VStack(alignment: .leading, spacing: 16) {
             profile
             TextWrapper(community.content, font: .callout)
-            info
+            VStack(spacing: 8) {
+                info
+                lastComment
+            }
         }
         .applyCardView()
     }
@@ -88,14 +92,45 @@ public struct CommunityCell: View {
             Button {
                 likeAction()
             } label: {
-                Image(systemName: "heart")
-                    .font(.body)
-                    .foregroundStyle(community.liked ? Color.red400 : Color.gray500)
-                Text("\(community.like)")
-                    .font(.footnote)
-                    .foregroundStyle(.gray)
+                HStack(spacing: 4) {
+                    Image(systemName: community.liked ? "heart.fill" : "heart")
+                        .font(Font.title3)
+                        .foregroundStyle(community.liked ? Color.red400 : Color.gray500)
+                    Text("\(community.like)")
+                        .font(.callout)
+                        .foregroundStyle(community.liked ? Color.red400 : Color.gray500)
+                }
+                .padding(6)
+                .background(community.liked ? Color.red100 : .white)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .overlay {
+                    EmptyView()
+                        .changeEffect(
+                            .spray(origin: UnitPoint(x: 0.25, y: 0.5)) {
+                                if community.liked {
+                                    Image(systemName: "heart.fill")
+                                        .foregroundStyle(.red)
+                                }
+                            },
+                            value: community.liked
+                        )
+                }
             }
-            .layoutPriority(2)
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    private var lastComment: some View {
+        HStack(spacing: 4) {
+            Text("노영재")
+                .font(.footnote)
+                .fontWeight(.semibold)
+            Text("정말 좋습니당")
+                .font(.footnote)
+            Text("1시간 전")
+                .font(.caption)
+                .foregroundStyle(.gray)
             Spacer()
         }
     }

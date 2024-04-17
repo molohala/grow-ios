@@ -5,7 +5,6 @@ let project = Project.makeFeature(
     target: .Community,
     targets: [
         .feature(target: .Community, dependencies: [
-            .feature(target: .Base),
             .featureInterface(target: .Community),
             .featureInterface(target: .CommunityDetail),
             .featureInterface(target: .CommunityCreate),
@@ -14,7 +13,8 @@ let project = Project.makeFeature(
             .featureInterface(target: .CommunityEdit)
         ]),
         .featureInterface(target: .Community, dependencies: [
-            .serviceInterface(target: .Community)
+            .serviceInterface(target: .Community),
+            .feature(target: .Base)
         ]),
         .featureExample(target: .Community, dependencies: [
             .feature(target: .Community),
