@@ -4,11 +4,18 @@ public struct TextWrapper: UIViewRepresentable {
     var text: String
     var font: InfinityFont
     var lineSpacing: CGFloat
+    var allowTruncating: Bool
     
-    public init(_ text: String, font: InfinityFont, lineSpacing: CGFloat = 4) {
+    public init(
+        _ text: String,
+        font: InfinityFont,
+        lineSpacing: CGFloat = 4,
+        allowTruncating: Bool = false
+    ) {
         self.text = text
         self.font = font
         self.lineSpacing = lineSpacing
+        self.allowTruncating = allowTruncating
     }
     
     public func makeUIView(context: Context) -> UITextView {
@@ -20,6 +27,11 @@ public struct TextWrapper: UIViewRepresentable {
         textView.dataDetectorTypes = .link
         textView.backgroundColor = .clear
         textView.font = font.uiFont
+        textView.textContainer.lineFragmentPadding = 0
+        if allowTruncating {
+            textView.textContainer.maximumNumberOfLines = 3
+            textView.textContainer.lineBreakMode = .byTruncatingTail
+        }
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         textView.textContainerInset = .zero

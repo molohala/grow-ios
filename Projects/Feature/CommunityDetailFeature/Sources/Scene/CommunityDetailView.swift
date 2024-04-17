@@ -66,7 +66,7 @@ public struct CommunityDetailView: View {
                         Image(systemName: "arrow.up.circle.fill")
                             .renderingMode(.template)
                             .font(.title)
-                            .foregroundStyle(viewModel.comment.isEmpty ? Color.gray400 : .blue)
+                            .foregroundStyle(viewModel.comment.isEmpty ? Color.gray400 : Color.blue500)
                     }
                     .disabled(viewModel.comment.isEmpty)
                 }

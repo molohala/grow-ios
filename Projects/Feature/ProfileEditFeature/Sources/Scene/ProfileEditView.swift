@@ -26,7 +26,7 @@ public struct ProfileEditView: View {
                             Spacer()
                             Image(systemName: has ? "checkmark.square.fill" : "checkmark.square")
                                 .font(.title)
-                                .foregroundStyle(has ? Color.blue : Color.gray400)
+                                .foregroundStyle(has ? Color.blue500 : Color.gray400)
                         }
                     }
                 }

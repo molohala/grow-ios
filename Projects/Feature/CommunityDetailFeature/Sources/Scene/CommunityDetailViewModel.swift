@@ -90,9 +90,8 @@ public final class CommunityDetailViewModel: ObservableObject {
         do {
             try await patchLikeUseCase(communityId: communityId)
             guard var community = community else { return }
+            community.like += community.liked ? -1 : 1
             community.liked.toggle()
-        } catch {
-            //
-        }
+        } catch {}
     }
 }

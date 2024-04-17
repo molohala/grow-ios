@@ -70,7 +70,7 @@ public struct CommunityView: View {
                     } label: {
                         Circle()
                             .frame(width: 64, height: 64)
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(Color.blue500)
                             .overlay {
                                 Image(systemName: "square.and.pencil")
                                     .foregroundStyle(.white)

@@ -27,7 +27,7 @@ struct CommunityViewExample: App {
                         Text("reload")
                             .padding()
                             .foregroundStyle(.white)
-                            .background(.blue)
+                            .background(Color.blue500)
                     }
                     .padding(.bottom, 24)
                 }

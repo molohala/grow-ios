@@ -24,7 +24,7 @@ public extension Color {
     static let red200 = Color(0xFFBCBC)
     static let red400 = Color(0xFF2B2B)
     
-    static let blue500 = Color(0x2597FF)
+    static let blue500 = Color(0x1E92F4)
     static let orange500 = Color(0xFF8125)
     
     // hex to color

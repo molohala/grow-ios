@@ -29,7 +29,7 @@ public struct InfinitySelector: View {
     public var body: some View {
         
         let foregroundColor: Color = isSelected ? .white : .gray
-        let backgroundColor: Color = isSelected ? .blue : .backgroundColor
+        let backgroundColor: Color = isSelected ? Color.blue500 : .backgroundColor
         
         Button {
             action()

@@ -8,6 +8,7 @@
 
 import SwiftUI
 import BaseFeature
+import DesignSystem
 
 struct InfinityTabCell: View {
     
@@ -26,10 +27,10 @@ struct InfinityTabCell: View {
                 .resizable()
                 .frame(width: 28, height: 28)
                 .padding(.top, 4)
-                .foregroundStyle(isSelected ? .blue : .gray.opacity(0.6))
+                .foregroundStyle(isSelected ? Color.blue500 : .gray.opacity(0.6))
             Text(type.name)
                 .font(.caption2)
-                .foregroundStyle(isSelected ? .blue : .gray.opacity(0.6))
+                .foregroundStyle(isSelected ? Color.blue500 : .gray.opacity(0.6))
         }
         .padding(.horizontal, 4)
     }

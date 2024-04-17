@@ -57,7 +57,15 @@ public struct CommunityCell: View {
     private var label: some View {
         VStack(alignment: .leading, spacing: 16) {
             profile
-            TextWrapper(community.content, font: .callout)
+            VStack(spacing: 4) {
+                TextWrapper(community.content, font: .callout, allowTruncating: true)
+                HStack {
+                    Text("더보기")
+                        .font(.footnote)
+                        .foregroundStyle(.gray)
+                    Spacer()
+                }
+            }
             VStack(spacing: 8) {
                 info
                 lastComment
