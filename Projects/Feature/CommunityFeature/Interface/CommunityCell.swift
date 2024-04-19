@@ -68,6 +68,7 @@ public struct CommunityCell: View {
             }
             VStack(spacing: 8) {
                 info
+                Divider()
                 lastComment
             }
         }
