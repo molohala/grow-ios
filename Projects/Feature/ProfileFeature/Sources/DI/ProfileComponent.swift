@@ -21,7 +21,11 @@ public protocol ProfileDependency: Dependency {
 public final class ProfileComponent: Component<ProfileDependency>, ProfileBuildable {
     public func makeView() -> some View {
         ProfileCoordinator(
-            settingBuildable: dependency.settingBuildable
+            settingBuildable: dependency.settingBuildable,
+            viewModel: .init(
+                getGithubUseCase: dependency.infoDomainBuildable.getGithubUseCase,
+                getSolvedavUseCase: dependency.infoDomainBuildable.getSolvedacUseCase
+            )
         )
     }
 }

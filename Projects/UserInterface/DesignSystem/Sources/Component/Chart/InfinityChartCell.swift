@@ -8,26 +8,32 @@
 
 import SwiftUI
 
+public enum ChartType: String, CaseIterable {
+    case github = "Github"
+    case baekjoon = "백준"
+}
+
+
 public struct InfinityChartCell: View {
     
     private let title: String
     private let subtitle: String
     private let subject: String
     private let chartData: InfinityChartData
-    private let tapped: () -> Void
+    @Binding var selectedType: ChartType
     
     public init(
         title: String,
         subtitle: String,
         subject: String,
         chartData: InfinityChartData,
-        tapped: @escaping () -> Void
+        selectedType: Binding<ChartType>
     ) {
         self.title = title
         self.subtitle = subtitle
         self.chartData = chartData
         self.subject = subject
-        self.tapped = tapped
+        self._selectedType = selectedType
     }
     
     public var body: some View {
@@ -43,8 +49,10 @@ public struct InfinityChartCell: View {
                 }
                 Spacer()
                     .foregroundStyle(.gray)
-                Button {
-                    tapped()
+                Picker(selection: $selectedType) {
+                    ForEach(ChartType.allCases, id: \.self) {
+                        Text($0.rawValue)
+                    }
                 } label: {
                     HStack(spacing: 4) {
                         Text(subject)

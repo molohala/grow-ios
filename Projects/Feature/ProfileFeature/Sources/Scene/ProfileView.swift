@@ -6,17 +6,20 @@ import ProfileFeatureInterface
 public struct ProfileView: View {
     
     @EnvironmentObject private var router: Router
+    @StateObject private var viewModel: ProfileViewModel
     
-    public init() {}
+    public init(
+        viewModel: ProfileViewModel
+    ) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     public var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 profile
                 stats
-                InfinityChartCell(title: "27", subtitle: "이번주에 푼 문제", subject: "백준", chartData: .init(data: InfinityChartData.dummy, color: .orange500)) {
-                    //
-                }
+                InfinityChartCell(title: "27", subtitle: "이번주에 푼 문제", subject: viewModel.selectedChart.rawValue, chartData: .init(data: InfinityChartData.dummy, color: .orange500), selectedType: $viewModel.selectedChart)
             }
             .padding(.top, 16)
             .padding(.horizontal, 16)

@@ -13,17 +13,24 @@ import ProfileFeatureInterface
 public struct ProfileCoordinator: View {
     
     private let settingBuildable: any SettingBuildable
+    private let viewModel: ProfileViewModel
     
-    public init(settingBuildable: any SettingBuildable) {
+    public init(
+        settingBuildable: any SettingBuildable,
+        viewModel: ProfileViewModel
+    ) {
         self.settingBuildable = settingBuildable
+        self.viewModel = viewModel
     }
     
     public var body: some View {
-        ProfileView()
-            .navigationDestination(for: ProfileDestination.self) {
-                switch $0 {
-                case .setting: settingBuildable.makeView().eraseToAnyView()
-                }
+        ProfileView(
+            viewModel: viewModel
+        )
+        .navigationDestination(for: ProfileDestination.self) {
+            switch $0 {
+            case .setting: settingBuildable.makeView().eraseToAnyView()
             }
+        }
     }
 }

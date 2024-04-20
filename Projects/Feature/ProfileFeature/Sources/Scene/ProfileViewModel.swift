@@ -1,7 +1,8 @@
 import Foundation
 import InfoServiceInterface
+import DesignSystem
 
-final class ProfileViewModel: ObservableObject {
+public final class ProfileViewModel: ObservableObject {
     
     enum Flow {
         case fetching
@@ -19,7 +20,9 @@ final class ProfileViewModel: ObservableObject {
     @Published var solvedac: Solvedav?
     @Published var solvedacFlow: Flow = .fetching
     
-    init(
+    @Published var selectedChart: ChartType = .baekjoon
+    
+    public init(
         getGithubUseCase: any GetGithubUseCase,
         getSolvedavUseCase: any GetSolvedacUseCase
     ) {
@@ -28,11 +31,24 @@ final class ProfileViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchInfo() async {
+    func fetchGithub() async {
+        githubFlow = .fetching
         do {
-            
+            github = try await getGithubUseCase()
+            githubFlow = .success
         } catch {
-            
+            githubFlow = .failure
+        }
+    }
+    
+    @MainActor
+    func fetchSolvedac() async {
+        solvedacFlow = .fetching
+        do {
+            solvedac = try await getSolvedavUseCase()
+            solvedacFlow = .success
+        } catch {
+            solvedacFlow = .failure
         }
     }
 }
