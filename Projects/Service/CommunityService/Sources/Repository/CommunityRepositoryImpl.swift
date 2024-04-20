@@ -20,7 +20,7 @@ class CommunityRepositoryImpl: CommunityRepository {
         try await dataSource.patchCommuntiy(req)
     }
     
-    func getCommunity(id: Int) async throws -> Community {
+    func getCommunity(id: Int) async throws -> CommunityContent {
         try await dataSource.getCommunity(id: id)
     }
     

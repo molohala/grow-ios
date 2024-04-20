@@ -28,8 +28,8 @@ public struct CommunityDetailView: View {
                        viewModel.commentFlow == .success,
                        let comments = viewModel.comments {
                         VStack(alignment: .leading, spacing: 16) {
-                            profile(community.community)
-                            TextWrapper(community.community.content, font: .callout)
+                            profile(community)
+                            TextWrapper(community.content, font: .callout)
                             info(community)
                             Divider()
                             self.makeComments(comments)
@@ -129,36 +129,34 @@ public struct CommunityDetailView: View {
     }
     
     @ViewBuilder
-    private func info(_ c: Community) -> some View {
+    private func info(_ c: CommunityContent) -> some View {
         HStack {
             Button {
                 Task {
                     await viewModel.patchLike()
                 }
             } label: {
-                let liked = viewModel.community?.community.liked ?? false
-                let like = viewModel.community?.community.like ?? 0
                 HStack(spacing: 4) {
-                    Image(systemName: liked ? "heart.fill" : "heart")
+                    Image(systemName: c.liked ? "heart.fill" : "heart")
                         .font(Font.title3)
-                        .foregroundStyle(liked ? Color.red400 : Color.gray500)
-                    Text("\(like)")
+                        .foregroundStyle(c.liked ? Color.red400 : Color.gray500)
+                    Text("\(c.like)")
                         .font(.callout)
-                        .foregroundStyle(liked ? Color.red400 : Color.gray500)
+                        .foregroundStyle(c.liked ? Color.red400 : Color.gray500)
                 }
                 .padding(6)
-                .background(liked ? Color.red100 : .white)
+                .background(c.liked ? Color.red100 : .white)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .overlay {
                     EmptyView()
                         .changeEffect(
                             .spray(origin: UnitPoint(x: 0.25, y: 0.5)) {
-                                if liked {
+                                if c.liked {
                                     Image(systemName: "heart.fill")
                                         .foregroundStyle(.red)
                                 }
                             },
-                            value: liked
+                            value: c.liked
                         )
                 }
             }

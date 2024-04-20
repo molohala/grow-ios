@@ -17,7 +17,7 @@ public final class CommunityDetailViewModel: ObservableObject {
         case failure
         case success
     }
-    @Published var community: Community?
+    @Published var community: CommunityContent?
     @Published var communityFlow: CommunityFlow = .fetching
     private let communityId: Int
     
@@ -90,8 +90,8 @@ public final class CommunityDetailViewModel: ObservableObject {
         do {
             try await patchLikeUseCase(communityId: communityId)
             guard var community = community else { return }
-            community.community.like += community.community.liked ? -1 : 1
-            community.community.liked.toggle()
+            community.like += community.liked ? -1 : 1
+            community.liked.toggle()
         } catch {}
     }
 }

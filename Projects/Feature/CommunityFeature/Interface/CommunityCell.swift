@@ -68,7 +68,6 @@ public struct CommunityCell: View {
             }
             VStack(spacing: 8) {
                 info
-                Divider()
                 lastComment
             }
         }
@@ -132,6 +131,7 @@ public struct CommunityCell: View {
     @ViewBuilder
     private var lastComment: some View {
         if let recentComment = community.recentComment {
+            Divider()
             HStack(spacing: 4) {
                 Text(recentComment.name)
                     .font(.footnote)

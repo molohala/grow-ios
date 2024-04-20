@@ -17,8 +17,8 @@ class CommunityDataSourceImpl: BaseRemoteDataSource<CommunityDataSourceImpl>, Co
         _ = try await requestPatch(url: "\(Infinity.baseUrl)/\(path)", req: req, res: BaseVoidResponse.self)
     }
     
-    func getCommunity(id: Int) async throws -> Community {
-        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/\(id)", res: BaseResponse<CommunityResponse>.self).data.toDomain()
+    func getCommunity(id: Int) async throws -> CommunityContent {
+        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/\(id)", res: BaseResponse<CommunityContentResponse>.self).data.toDomain()
     }
     
     func removeCommunity(id: Int) async throws {

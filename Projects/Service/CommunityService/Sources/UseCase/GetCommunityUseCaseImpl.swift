@@ -8,7 +8,7 @@ class GetCommunityUseCaseImpl: GetCommunityUseCase {
         self.repository = repository
     }
     
-    func callAsFunction(id: Int) async throws -> Community {
+    func callAsFunction(id: Int) async throws -> CommunityContent {
         try await repository.getCommunity(id: id)
     }
 }
