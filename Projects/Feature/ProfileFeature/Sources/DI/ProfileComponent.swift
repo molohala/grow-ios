@@ -11,9 +11,11 @@ import SwiftUI
 import NeedleFoundation
 import ProfileFeatureInterface
 import SettingFeatureInterface
+import InfoServiceInterface
 
 public protocol ProfileDependency: Dependency {
     var settingBuildable: any SettingBuildable { get }
+    var infoDomainBuildable: any InfoDomainBuildable { get }
 }
 
 public final class ProfileComponent: Component<ProfileDependency>, ProfileBuildable {

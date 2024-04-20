@@ -13,7 +13,7 @@ extension RecentCommentResponse {
         RecentComment(
             commentId: commentId,
             content: content,
-            createdAt: createdAt.date ?? .now, 
+            createdAt: createdAt.localDateTime ?? .now, 
             memberId: memberId,
             name: name
         )

@@ -15,7 +15,7 @@ extension CommentResponse {
         Comment(
             commentId: commentId,
             content: content,
-            createAt: createdAt.date ?? .now,
+            createAt: createdAt.localDateTime ?? .now,
             memberId: memberId,
             name: name
         )

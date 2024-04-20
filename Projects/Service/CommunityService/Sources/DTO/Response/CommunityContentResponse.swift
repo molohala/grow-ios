@@ -14,7 +14,7 @@ extension CommunityContentResponse {
     func toDomain() -> CommunityContent {
         CommunityContent(
             communityId: communityId,
-            content: content, createdAt: createdAt.date ?? .now,
+            content: content, createdAt: createdAt.localDateTime ?? .now,
             like: like,
             writerId: writerId,
             writerName: writerName,
