@@ -5,11 +5,11 @@ class InfoDataSourceImpl: BaseRemoteDataSource<InfoDataSourceImpl>, InfoDataSour
     
     private let path = "info"
     
-    func getSolvedav() async throws -> Solvedav {
-        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/solvedac", res: BaseResponse<SolvedavResponse>.self).data.toDomain()
+    func getSolvedav(name: String) async throws -> Solvedav {
+        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/solvedac?name=\(name)", res: BaseResponse<SolvedavResponse>.self).data.toDomain()
     }
     
-    func getGithub() async throws -> Github {
-        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/github", res: BaseResponse<GithubResponse>.self).data.toDomain()
+    func getGithub(name: String) async throws -> Github {
+        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/github?name=\(name)", res: BaseResponse<GithubResponse>.self).data.toDomain()
     }
 }

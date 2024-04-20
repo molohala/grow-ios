@@ -1,3 +1,3 @@
 public protocol GetSolvedacUseCase {
-    func callAsFunction() async throws -> Solvedav
+    func callAsFunction(name: String) async throws -> Solvedav
 }

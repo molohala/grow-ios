@@ -7,7 +7,7 @@ class GetGithubUseCaseImpl: GetGithubUseCase {
     init(infoRepository: any InfoRepository) {
         self.infoRepository = infoRepository
     }
-    func callAsFunction() async throws -> Github {
-        try await infoRepository.getGithub()
+    func callAsFunction(name: String) async throws -> Github {
+        try await infoRepository.getGithub(name: name)
     }
 }

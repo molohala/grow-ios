@@ -8,7 +8,7 @@ class GetSolvedacUseCaseImpl: GetSolvedacUseCase {
         self.infoRepository = infoRepository
     }
     
-    func callAsFunction() async throws -> Solvedav {
-        try await infoRepository.getSolvedav()
+    func callAsFunction(name: String) async throws -> Solvedav {
+        try await infoRepository.getSolvedav(name: name)
     }
 }

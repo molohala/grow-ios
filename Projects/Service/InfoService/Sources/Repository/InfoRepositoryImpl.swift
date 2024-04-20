@@ -8,11 +8,11 @@ class InfoRepositoryImpl: InfoRepository {
         self.infoDataSource = infoDataSource
     }
     
-    func getSolvedav() async throws -> Solvedav {
-        try await infoDataSource.getSolvedav()
+    func getSolvedav(name: String) async throws -> Solvedav {
+        try await infoDataSource.getSolvedav(name: name)
     }
     
-    func getGithub() async throws -> Github {
-        try await infoDataSource.getGithub()
+    func getGithub(name: String) async throws -> Github {
+        try await infoDataSource.getGithub(name: name)
     }
 }

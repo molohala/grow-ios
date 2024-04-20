@@ -31,11 +31,12 @@ public final class ProfileViewModel: ObservableObject {
         self.getSolvedavUseCase = getSolvedavUseCase
     }
     
+    // TODO: dummy name to real
     @MainActor
     func fetchGithub() async {
         githubFlow = .fetching
         do {
-            github = try await getGithubUseCase()
+            github = try await getGithubUseCase(name: "")
             guard let github else { return }
             chartInfo = github.weekCommits.githubWeekChartInfo
             githubFlow = .success
@@ -48,7 +49,7 @@ public final class ProfileViewModel: ObservableObject {
     func fetchSolvedac() async {
         solvedacFlow = .fetching
         do {
-            solvedac = try await getSolvedavUseCase()
+            solvedac = try await getSolvedavUseCase(name: "")
             
             solvedacFlow = .success
         } catch {
