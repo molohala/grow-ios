@@ -28,8 +28,8 @@ public struct CommunityDetailView: View {
                        viewModel.commentFlow == .success,
                        let comments = viewModel.comments {
                         VStack(alignment: .leading, spacing: 16) {
-                            profile(community)
-                            TextWrapper(community.content, font: .callout)
+                            profile(community.community)
+                            TextWrapper(community.community.content, font: .callout)
                             info(community)
                             Divider()
                             self.makeComments(comments)
@@ -97,7 +97,7 @@ public struct CommunityDetailView: View {
     }
     
     @ViewBuilder
-    func profile(_ c: Community) -> some View {
+    func profile(_ c: CommunityContent) -> some View {
         HStack(spacing: 0) {
             Circle()
                 .foregroundStyle(.gray)
@@ -136,8 +136,8 @@ public struct CommunityDetailView: View {
                     await viewModel.patchLike()
                 }
             } label: {
-                let liked = viewModel.community?.liked ?? false
-                let like = viewModel.community?.like ?? 0
+                let liked = viewModel.community?.community.liked ?? false
+                let like = viewModel.community?.community.like ?? 0
                 HStack(spacing: 4) {
                     Image(systemName: liked ? "heart.fill" : "heart")
                         .font(Font.title3)

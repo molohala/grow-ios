@@ -58,7 +58,7 @@ public struct CommunityCell: View {
         VStack(alignment: .leading, spacing: 16) {
             profile
             VStack(spacing: 4) {
-                TextWrapper(community.content, font: .callout, allowTruncating: true)
+                TextWrapper(community.community.content, font: .callout, allowTruncating: true)
                 HStack {
                     Text("더보기")
                         .font(.footnote)
@@ -82,10 +82,10 @@ public struct CommunityCell: View {
                 .foregroundStyle(.gray)
                 .frame(width: 36, height: 36)
             VStack(alignment: .leading, spacing: 2) {
-                Text(community.writerName)
+                Text(community.community.writerName)
                     .font(.callout)
                     .fontWeight(.semibold)
-                Text(community.createdAt.timeAgo)
+                Text(community.community.createdAt.timeAgo)
                     .font(.caption)
                     .fontWeight(.regular)
                     .foregroundStyle(.gray)
@@ -102,26 +102,26 @@ public struct CommunityCell: View {
                 likeAction()
             } label: {
                 HStack(spacing: 4) {
-                    Image(systemName: community.liked ? "heart.fill" : "heart")
+                    Image(systemName: community.community.liked ? "heart.fill" : "heart")
                         .font(Font.title3)
-                        .foregroundStyle(community.liked ? Color.red400 : Color.gray500)
-                    Text("\(community.like)")
+                        .foregroundStyle(community.community.liked ? Color.red400 : Color.gray500)
+                    Text("\(community.community.like)")
                         .font(.callout)
-                        .foregroundStyle(community.liked ? Color.red400 : Color.gray500)
+                        .foregroundStyle(community.community.liked ? Color.red400 : Color.gray500)
                 }
                 .padding(6)
-                .background(community.liked ? Color.red100 : .white)
+                .background(community.community.liked ? Color.red100 : .white)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .overlay {
                     EmptyView()
                         .changeEffect(
                             .spray(origin: UnitPoint(x: 0.25, y: 0.5)) {
-                                if community.liked {
+                                if community.community.liked {
                                     Image(systemName: "heart.fill")
                                         .foregroundStyle(.red)
                                 }
                             },
-                            value: community.liked
+                            value: community.community.liked
                         )
                 }
             }
@@ -131,16 +131,18 @@ public struct CommunityCell: View {
     
     @ViewBuilder
     private var lastComment: some View {
-        HStack(spacing: 4) {
-            Text("노영재")
-                .font(.footnote)
-                .fontWeight(.semibold)
-            Text("정말 좋습니당")
-                .font(.footnote)
-            Text("1시간 전")
-                .font(.caption)
-                .foregroundStyle(.gray)
-            Spacer()
+        if let recentComment = community.recentComment {
+            HStack(spacing: 4) {
+                Text(recentComment.name)
+                    .font(.footnote)
+                    .fontWeight(.semibold)
+                Text(recentComment.content)
+                    .font(.footnote)
+                Text(recentComment.createdAt.timeAgo)
+                    .font(.caption)
+                    .foregroundStyle(.gray)
+                Spacer()
+            }
         }
     }
 }

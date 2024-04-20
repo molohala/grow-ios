@@ -1,39 +1,13 @@
 import Foundation
 import DateUtil
+import CommentServiceInterface
 
-public struct Community: Equatable {
-    public let communityId: Int
-    public let content: String
-    public let createdAt: Date
-    public var like: Int
-    public let writerId: Int
-    public let writerName: String
-    public var liked: Bool
+public struct Community {
+    public var community: CommunityContent
+    public var recentComment: RecentComment?
     
-    public init(
-        communityId: Int,
-        content: String,
-        createdAt: Date,
-        like: Int,
-        writerId: Int,
-        writerName: String,
-        liked: Bool
-    ) {
-        self.communityId = communityId
-        self.content = content
-        self.createdAt = createdAt
-        self.like = like
-        self.writerId = writerId
-        self.writerName = writerName
-        self.liked = liked
+    public init(community: CommunityContent, recentComment: RecentComment?) {
+        self.community = community
+        self.recentComment = recentComment
     }
-}
-
-public extension Community {
-    static var dummy: [Community] = [
-        .init(communityId: 0, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재", liked: true),
-        .init(communityId: 1, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재", liked: true),
-        .init(communityId: 2, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재", liked: false),
-        .init(communityId: 3, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재", liked: true)
-    ]
 }

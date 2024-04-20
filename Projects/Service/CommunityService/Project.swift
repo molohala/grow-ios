@@ -6,7 +6,8 @@ let project = Project.makeService(
     targets: [
         .service(target: .Community, dependencies: [
             .service(target: .Base),
-            .serviceInterface(target: .Community)
+            .serviceInterface(target: .Community),
+            .serviceInterface(target: .Comment)
         ]),
         .serviceInterface(target: .Community, dependencies: [
             .service(target: .Base)

@@ -54,7 +54,7 @@ public struct HomeView: View {
         VStack(spacing: 12) {
             SubTitle("이번주 인기글")
             VStack(spacing: 12) {
-                ForEach(viewModel.weekCommunities, id: \.communityId) { community in
+                ForEach(viewModel.weekCommunities, id: \.community.communityId) { community in
                     CommunityCell(
                         community: community,
                         likeAction: {},

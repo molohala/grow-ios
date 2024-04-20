@@ -27,21 +27,21 @@ public struct CommunityView: View {
                                     .shimmer()
                             }
                         } else {
-                            ForEach(viewModel.communities, id: \.communityId) { community in
+                            ForEach(viewModel.communities, id: \.community.communityId) { community in
                                 CommunityCell(
                                     community: community,
                                     likeAction: {
                                         Task {
-                                            await viewModel.patchLike(communityId: community.communityId)
+                                            await viewModel.patchLike(communityId: community.community.communityId)
                                         }
                                     },
                                     editAction: {},
                                     removeAction: {}
                                 ) {
-                                    router.navigate(to: CommunityDestination.communityDetail(id: community.communityId))
+                                    router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))
                                 }
                                 .onAppear {
-                                    guard let index = viewModel.communities.firstIndex(where: { $0.communityId == community.communityId }) else { return }
+                                    guard let index = viewModel.communities.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
                                     
                                     if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (viewModel.communities.count - 1) / pagingInterval {
                                         Task {

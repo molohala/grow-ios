@@ -77,9 +77,9 @@ public final class CommunityViewModel: ObservableObject {
         do {
             try await patchLikeUseCase(communityId: communityId)
             communities.enumerated().forEach { idx, i in
-                if communityId == i.communityId {
-                    communities[idx].like += i.liked ? -1 : 1
-                    communities[idx].liked.toggle()
+                if communityId == i.community.communityId {
+                    communities[idx].community.like += i.community.liked ? -1 : 1
+                    communities[idx].community.liked.toggle()
                 }
             }
         } catch {}

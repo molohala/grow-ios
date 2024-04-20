@@ -1,25 +1,15 @@
 import CommunityServiceInterface
 
 struct CommunityResponse: Decodable {
-    let communityId: Int
-    let content: String
-    let createdAt: String
-    let like: Int
-    let writerId: Int
-    let writerName: String
-    let liked: Bool
+    let community: CommunityContentResponse
+    let recentComment: RecentCommentResponse?
 }
 
 extension CommunityResponse {
     func toDomain() -> Community {
         Community(
-            communityId: communityId,
-            content: content,
-            createdAt: createdAt.date ?? .now,
-            like: like,
-            writerId: writerId,
-            writerName: writerName,
-            liked: liked
+            community: community.toDomain(),
+            recentComment: recentComment?.toDomain()
         )
     }
 }

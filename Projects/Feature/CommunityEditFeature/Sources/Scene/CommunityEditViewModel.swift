@@ -24,7 +24,7 @@ public final class CommunityEditViewModel: ObservableObject {
     ) {
         self.patchCommunityUseCase = patchCommunityUseCase
         self.community = community
-        self.content = community.content
+        self.content = community.community.content
     }
     
     @MainActor
@@ -38,7 +38,7 @@ public final class CommunityEditViewModel: ObservableObject {
         flow = .fetching
         
         do {
-            try await patchCommunityUseCase(.init(content: content, id: community.communityId))
+            try await patchCommunityUseCase(.init(content: content, id: community.community.communityId))
             flow = .success
         } catch {
             flow = .failure
