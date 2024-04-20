@@ -13,26 +13,30 @@ public enum ChartType: String, CaseIterable {
     case baekjoon = "백준"
 }
 
+public struct ChartInfo {
+    let title: String
+    let subtitle: String
+    let subject: String
+    let chartData: InfinityChartData
+    
+    public init(title: String, subtitle: String, subject: String, chartData: InfinityChartData) {
+        self.title = title
+        self.subtitle = subtitle
+        self.subject = subject
+        self.chartData = chartData
+    }
+}
 
 public struct InfinityChartCell: View {
     
-    private let title: String
-    private let subtitle: String
-    private let subject: String
-    private let chartData: InfinityChartData
+    private let chartInfo: ChartInfo
     @Binding var selectedType: ChartType
     
     public init(
-        title: String,
-        subtitle: String,
-        subject: String,
-        chartData: InfinityChartData,
+        chartInfo: ChartInfo,
         selectedType: Binding<ChartType>
     ) {
-        self.title = title
-        self.subtitle = subtitle
-        self.chartData = chartData
-        self.subject = subject
+        self.chartInfo = chartInfo
         self._selectedType = selectedType
     }
     
@@ -40,10 +44,10 @@ public struct InfinityChartCell: View {
         VStack(spacing: 24) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(subtitle)
+                    Text(chartInfo.subtitle)
                         .font(.subheadline)
                         .foregroundStyle(.black)
-                    Text(title)
+                    Text(chartInfo.title)
                         .font(.largeTitle)
                         .foregroundStyle(.black)
                 }
@@ -55,7 +59,7 @@ public struct InfinityChartCell: View {
                     }
                 } label: {
                     HStack(spacing: 4) {
-                        Text(subject)
+                        Text(chartInfo.subject)
                             .font(.subheadline)
                             .foregroundStyle(.gray)
                         Icon.downArrorIcon
@@ -64,7 +68,7 @@ public struct InfinityChartCell: View {
                 .applyAnimation()
                 .padding(8)
             }
-            InfinityChart(chartData: chartData)
+            InfinityChart(chartData: chartInfo.chartData)
                 .frame(height: 200)
         }
         .applyCardView()

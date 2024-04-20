@@ -19,7 +19,14 @@ public struct ProfileView: View {
             VStack(spacing: 16) {
                 profile
                 stats
-                InfinityChartCell(title: "27", subtitle: "이번주에 푼 문제", subject: viewModel.selectedChart.rawValue, chartData: .init(data: InfinityChartData.dummy, color: .orange500), selectedType: $viewModel.selectedChart)
+                if let chartInfo = viewModel.chartInfo {
+                    InfinityChartCell(
+                        chartInfo: chartInfo,
+                        selectedType: $viewModel.selectedChart
+                    )
+                } else {
+                    // TODO: add shimmer
+                }
             }
             .padding(.top, 16)
             .padding(.horizontal, 16)

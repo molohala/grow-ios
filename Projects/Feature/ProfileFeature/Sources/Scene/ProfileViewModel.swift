@@ -20,6 +20,7 @@ public final class ProfileViewModel: ObservableObject {
     @Published var solvedac: Solvedav?
     @Published var solvedacFlow: Flow = .fetching
     
+    @Published var chartInfo: ChartInfo?
     @Published var selectedChart: ChartType = .baekjoon
     
     public init(
@@ -35,6 +36,8 @@ public final class ProfileViewModel: ObservableObject {
         githubFlow = .fetching
         do {
             github = try await getGithubUseCase()
+            guard let github else { return }
+            chartInfo = github.weekCommits.githubWeekChartInfo
             githubFlow = .success
         } catch {
             githubFlow = .failure
@@ -46,6 +49,7 @@ public final class ProfileViewModel: ObservableObject {
         solvedacFlow = .fetching
         do {
             solvedac = try await getSolvedavUseCase()
+            
             solvedacFlow = .success
         } catch {
             solvedacFlow = .failure

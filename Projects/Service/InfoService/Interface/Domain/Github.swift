@@ -1,4 +1,5 @@
 import Foundation
+import DesignSystem
 
 public struct Github {
     public var avatarUrl: String
@@ -22,5 +23,19 @@ public struct Commit {
     public init(date: Date, contributionCount: Int) {
         self.date = date
         self.contributionCount = contributionCount
+    }
+}
+
+public extension [Commit] {
+    var githubWeekChartInfo: ChartInfo {
+        .init(
+            title: "\(self.map { $0.contributionCount }.reduce(0, +))",
+            subtitle: "이번주에 한 커밋",
+            subject: ChartType.github.rawValue,
+            chartData: .init(
+                data: self.map { ($0.date.monthPerDay ?? "", y: $0.contributionCount) },
+                color: .orange500
+            )
+        )
     }
 }
