@@ -36,11 +36,8 @@ struct AuthRepositoryImpl: AuthRepository {
     }
     
     func dAuthSignIn(id: String, pw: String) async throws -> DAuthSignInDomain {
-        
-        let encryptedPw = SHA512.hash(data: Data(pw.utf8))
-        let hashedPw = encryptedPw.compactMap { String(format: "%02x", $0) }.joined()
         let req = DAuthSignInRequest(id: id,
-                                     pw: hashedPw,
+                                     pw: pw,
                                      clientId: DAuth.clientId,
                                      redirectUrl: DAuth.redirectUrl)
         print(req)
