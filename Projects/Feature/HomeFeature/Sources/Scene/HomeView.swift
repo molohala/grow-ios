@@ -39,10 +39,21 @@ public struct HomeView: View {
                 SubTitle("iOS 개발자\n\(profile.name)님 환영합니다")
                     .lineSpacing(4.0)
                     .font(.title)
+            } else {
+                VStack {
+                    SubTitle("iOS 개발자")
+                        .lineSpacing(4.0)
+                        .font(.title)
+                    SubTitle("더미님 환영합니다")
+                        .lineSpacing(4.0)
+                        .font(.title)
+                }
+                .shimmer()
             }
-            if let solvedac = appState.solvedac,
-               let github = appState.github {
-                HStack(spacing: 16) {
+            
+            HStack(spacing: 16) {
+                if let solvedac = appState.solvedac,
+                   let github = appState.github {
                     let todayCommit = github.todayCommits.contributionCount
                     let todaySolves = solvedac.todaySolves.solvedCount
                     InfinityStatCell("오늘 한 커밋 개수", type: .github(todayCommit)) {
@@ -51,6 +62,9 @@ public struct HomeView: View {
                     InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon(todaySolves)) {
                         // nav
                     }
+                } else {
+                    InfinityStatShimmerCell()
+                    InfinityStatShimmerCell()
                 }
             }
         }

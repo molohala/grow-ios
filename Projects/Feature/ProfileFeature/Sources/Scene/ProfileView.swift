@@ -44,6 +44,12 @@ public struct ProfileView: View {
             guard $0 != nil else { return }
             handleSelectingChart(type: viewModel.selectedChart)
         }
+        .onAppear {
+            handleSelectingChart(type: viewModel.selectedChart)
+        }
+        .refreshable {
+            appState.fetchProfile()
+        }
     }
     
     @ViewBuilder

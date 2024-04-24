@@ -48,22 +48,23 @@ public final class AppState: ObservableObject {
         self.getProfileUseCase = getProfileUseCase
         self.getSolvedacUseCase = getSolvedacUseCase
         self.getGithubUseCase = getGithubUseCase
-        Task {
-            profile = try? await getProfileUseCase()
-            if let profile {
-                let solvedavId = profile.socialAccounts.filter { $0.socialType == .SOLVED_AC }.first
-                solvedac = try? await getSolvedacUseCase(name: solvedavId?.socialId ?? "")
-                guard let solvedac else { return }
-                
-                let githubId = profile.socialAccounts.filter { $0.socialType == .GITHUB }.first
-                github = try await getGithubUseCase(name: githubId?.socialId ?? "")
-                guard let github else { return }
-            }
-        }
+        fetchProfile()
     }
     
-    @MainActor
-    public func fetchProfile() async {
-        profile = try? await getProfileUseCase()
+    public func fetchProfile() {
+        _ = withAnimation {
+            Task {
+                profile = try? await getProfileUseCase()
+                if let profile {
+                    let solvedavId = profile.socialAccounts.filter { $0.socialType == .SOLVED_AC }.first
+                    solvedac = try? await getSolvedacUseCase(name: solvedavId?.socialId ?? "")
+                    guard let solvedac else { return }
+                    
+                    let githubId = profile.socialAccounts.filter { $0.socialType == .GITHUB }.first
+                    github = try await getGithubUseCase(name: githubId?.socialId ?? "")
+                    guard let github else { return }
+                }
+            }
+        }
     }
 }
