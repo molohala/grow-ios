@@ -12,6 +12,7 @@ public struct CommunityDetailView: View {
     
     @StateObject private var viewModel: CommunityDetailViewModel
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var appState: AppState
     
     public init(
         viewModel: CommunityDetailViewModel
@@ -115,15 +116,18 @@ public struct CommunityDetailView: View {
             }
             Spacer()
             
-            Menu {
-                Button("수정하기") {}
-                Button("삭제하기", role: .destructive) {}
-            } label: {
-                DesignSystemAsset.detailVerticalLine.swiftUIImage
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 24, height: 24)
-                    .foregroundStyle(Color.gray)
+            if let profile = appState.profile,
+               profile.id == viewModel.community?.writerId {
+                Menu {
+                    Button("수정하기") {}
+                    Button("삭제하기", role: .destructive) {}
+                } label: {
+                    DesignSystemAsset.detailVerticalLine.swiftUIImage
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(Color.gray)
+                }
             }
         }
     }

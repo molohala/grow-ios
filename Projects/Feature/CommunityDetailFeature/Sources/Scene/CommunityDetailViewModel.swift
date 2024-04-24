@@ -92,6 +92,7 @@ public final class CommunityDetailViewModel: ObservableObject {
             guard var community = community else { return }
             community.like += community.liked ? -1 : 1
             community.liked.toggle()
+            self.community = community
         } catch {}
     }
 }

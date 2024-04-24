@@ -11,6 +11,7 @@ public final class CommunityViewModel: ObservableObject {
     // MARK: - Properties
     private let getCommunitesUseCase: any GetCommunitiesUseCase
     private let patchLikeUseCase: any PatchLikeUseCase
+    private let removeCommunityUseCase: any RemoveCommunityUseCase
     
     // MARK: - State
     @Published var communities: [Community]
@@ -18,13 +19,25 @@ public final class CommunityViewModel: ObservableObject {
     @Published var page = 1
     @Published var selectedCommunity: Community?
     
+    enum Flow {
+        case idle
+        case checking
+        case fetching
+        case success
+        case failure
+    }
+    @Published var removeCommunityFlow: Flow = .idle
+    @Published var removeCommunity: Community?
+    
     public init(
         getCommunitesUseCase: any GetCommunitiesUseCase,
         patchLikeUseCase: any PatchLikeUseCase,
+        removeCommunityUseCase: any RemoveCommunityUseCase,
         communities: [Community] = []
     ) {
         self.getCommunitesUseCase = getCommunitesUseCase
         self.patchLikeUseCase = patchLikeUseCase
+        self.removeCommunityUseCase = removeCommunityUseCase
         self.communities = communities
     }
     
@@ -83,5 +96,20 @@ public final class CommunityViewModel: ObservableObject {
                 }
             }
         } catch {}
+    }
+    
+    @MainActor
+    public func removeCommunity() async {
+        removeCommunityFlow = .fetching
+        do {
+            guard let removeCommunity else {
+                removeCommunityFlow = .failure
+                return
+            }
+            try await removeCommunityUseCase(id: removeCommunity.community.communityId)
+            removeCommunityFlow = .success
+        } catch {
+            removeCommunityFlow = .failure
+        }
     }
 }

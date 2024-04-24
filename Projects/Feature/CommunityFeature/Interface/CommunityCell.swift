@@ -2,20 +2,22 @@ import SwiftUI
 import CommunityServiceInterface
 import DesignSystem
 import Pow
+import BaseFeature
 
 public struct CommunityCell: View {
     
+    @EnvironmentObject private var appState: AppState
     private let community: Community
-    private let likeAction: () -> Void
-    private let editAction: () -> Void
-    private let removeAction: () -> Void
+    private let likeAction: () async -> Void
+    private let editAction: () async -> Void
+    private let removeAction: () async -> Void
     private let action: () -> Void
     
     public init(
         community: Community,
-        likeAction: @escaping () -> Void,
-        editAction: @escaping () -> Void,
-        removeAction: @escaping () -> Void,
+        likeAction: @escaping () async -> Void,
+        editAction: @escaping () async -> Void,
+        removeAction: @escaping () async -> Void,
         action: @escaping () -> Void
     ) {
         self.community = community
@@ -33,21 +35,32 @@ public struct CommunityCell: View {
                 label
             }
             .applyAnimation()
-            HStack {
-                Spacer()
-                VStack {
-                    Menu {
-                        Button("수정하기", action: editAction)
-                        Button("삭제하기", role: .destructive, action: removeAction)
-                    } label: {
-                        DesignSystemAsset.detailVerticalLine.swiftUIImage
-                            .resizable()
-                            .renderingMode(.template)
-                            .frame(width: 24, height: 24)
-                            .foregroundStyle(Color.gray)
-                    }
-                    .padding(12)
+            if let profile = appState.profile,
+               profile.id == community.community.writerId {
+                HStack {
                     Spacer()
+                    VStack {
+                        Menu {
+                            Button("수정하기") {
+                                Task {
+                                    await editAction()
+                                }
+                            }
+                            Button("삭제하기", role: .destructive) {
+                                Task {
+                                    await removeAction()
+                                }
+                            }
+                        } label: {
+                            DesignSystemAsset.detailVerticalLine.swiftUIImage
+                                .resizable()
+                                .renderingMode(.template)
+                                .frame(width: 24, height: 24)
+                                .foregroundStyle(Color.gray)
+                        }
+                        .padding(12)
+                        Spacer()
+                    }
                 }
             }
         }
@@ -98,7 +111,9 @@ public struct CommunityCell: View {
     private var info: some View {
         HStack(spacing: 4) {
             Button {
-                likeAction()
+                Task {
+                    await likeAction()
+                }
             } label: {
                 HStack(spacing: 4) {
                     Image(systemName: community.community.liked ? "heart.fill" : "heart")

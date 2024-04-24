@@ -30,7 +30,8 @@ public final class CommunityComponent: Component<CommunityDependency>, Community
             communityDetailBuildable: dependency.communityDetailBuildable,
             viewModel: .init(
                 getCommunitesUseCase: dependency.communityDomainBuildable.getCommunitiesUseCase,
-                patchLikeUseCase: dependency.likeDomainBuildable.patchLikeUseCase
+                patchLikeUseCase: dependency.likeDomainBuildable.patchLikeUseCase,
+                removeCommunityUseCase: dependency.communityDomainBuildable.removeCommunityUseCase
             )
         )
     }

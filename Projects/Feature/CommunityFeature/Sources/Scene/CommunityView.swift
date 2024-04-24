@@ -9,6 +9,7 @@ public struct CommunityView: View {
     @EnvironmentObject private var router: Router
     @State private var reader: ScrollViewProxy?
     @StateObject private var viewModel: CommunityViewModel
+    @EnvironmentObject private var appState: AppState
     
     public init(
         viewModel: CommunityViewModel
@@ -31,12 +32,15 @@ public struct CommunityView: View {
                                 CommunityCell(
                                     community: community,
                                     likeAction: {
-                                        Task {
-                                            await viewModel.patchLike(communityId: community.community.communityId)
-                                        }
+                                        await viewModel.patchLike(communityId: community.community.communityId)
                                     },
-                                    editAction: {},
-                                    removeAction: {}
+                                    editAction: {
+                                        
+                                    },
+                                    removeAction: {
+                                        viewModel.removeCommunity = community
+                                        viewModel.removeCommunityFlow = .checking
+                                    }
                                 ) {
                                     router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))
                                 }
@@ -49,6 +53,18 @@ public struct CommunityView: View {
                                         }
                                     }
                                 }
+                                .alert("정말 게시글을 삭제 하시겠습니까?", isPresented: .init(
+                                    get: { viewModel.removeCommunityFlow == .checking },
+                                    set: { _ in
+                                        Task {
+                                            await viewModel.removeCommunity()
+                                            await viewModel.fetchCommunities()
+                                        }
+                                    }
+                                )) {
+                                    Button("아니요", role: .cancel) {}
+                                    Button("삭제", role: .destructive) {}
+                                }
                             }
                         }
                     }
@@ -59,6 +75,13 @@ public struct CommunityView: View {
                         self.reader = reader
                     }
                     .id("lazyvstack")
+                    .alert("게시글 삭제 성공", isPresented: .init {
+                        viewModel.removeCommunityFlow == .success
+                    } set: { _ in
+                        viewModel.removeCommunityFlow = .idle
+                    }) {
+                        Button("닫기", role: .cancel) {}
+                    }
                 }
             }
             HStack {
@@ -90,6 +113,12 @@ public struct CommunityView: View {
         }
         .task {
             await viewModel.fetchCommunities()
+        }
+        .alert("게시글 삭제에 실패했습니다", isPresented: .init(
+            get: { viewModel.removeCommunityFlow == .failure },
+            set: { _ in viewModel.removeCommunityFlow = .idle }
+        )) {
+            Button("확인", role: .cancel) {}
         }
     }
 }
