@@ -29,13 +29,15 @@ public struct InfinityStatCell: View {
             action()
         } label: {
             VStack(alignment: .leading) {
-                HStack {
+                HStack(spacing: 0) {
                     if case .baekjoon(let int) = type {
                         Text("\(int)")
                             .font(.largeTitle)
+                            .fixedSize()
                     } else if case .github(let int) = type {
                         Text("\(int)")
                             .font(.largeTitle)
+                            .fixedSize()
                     }
                     Spacer()
                     type.icon
