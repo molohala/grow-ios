@@ -47,5 +47,6 @@ public struct GithubSettingView: View {
                 appState.fetchProfile()
             }
         }
+        .hideKeyboardWhenTap()
     }
 }

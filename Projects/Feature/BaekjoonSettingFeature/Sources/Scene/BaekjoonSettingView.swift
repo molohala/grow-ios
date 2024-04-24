@@ -47,5 +47,6 @@ public struct BaekjoonSettingView: View {
                 appState.fetchProfile()
             }
         }
+        .hideKeyboardWhenTap()
     }
 }

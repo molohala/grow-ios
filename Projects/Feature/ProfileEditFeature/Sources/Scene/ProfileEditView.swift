@@ -31,7 +31,6 @@ public struct ProfileEditView: View {
                     }
                 }
             }
-            
             Spacer()
             
             InfinityButton("완료하기") {
@@ -41,5 +40,6 @@ public struct ProfileEditView: View {
         .padding(.top, 16)
         .padding(.horizontal, 16)
         .infinityTopBar("프로필 설정")
+        .hideKeyboardWhenTap()
     }
 }
