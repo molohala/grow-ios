@@ -6,6 +6,7 @@ import BaekjoonRankFeature
 import BaekjoonRankFeatureInterface
 import BaekjoonSettingFeature
 import BaekjoonSettingFeatureInterface
+import BaseFeature
 import CommentService
 import CommentServiceInterface
 import CommunityCreateFeature
@@ -257,15 +258,17 @@ private func factory67229cdf0f755562b2b1f47b58f8f304c97af4d5(_ component: Needle
     return HomeDependency443c4e1871277bd8432aProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class GithubSettingDependency47eb9ae61eeb8f68ab76Provider: GithubSettingDependency {
-
-
-    init() {
-
+    var infoDomainBuildable: any InfoDomainBuildable {
+        return appComponent.infoDomainBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->GithubSettingComponent
-private func factorybe58855116216af426a2e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return GithubSettingDependency47eb9ae61eeb8f68ab76Provider()
+private func factorybe58855116216af426a2f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return GithubSettingDependency47eb9ae61eeb8f68ab76Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class ProfileEditDependencyec9ccff05278bca24819Provider: ProfileEditDependency {
 
@@ -303,15 +306,17 @@ private func factoryf8ddad049da0deefda19e3b0c44298fc1c149afb(_ component: Needle
     return BaekjoonRankDependency7e94a57b9cd7dc6dd837Provider()
 }
 private class BaekjoonSettingDependencyce5bee460baf327a3c82Provider: BaekjoonSettingDependency {
-
-
-    init() {
-
+    var infoDomainBuildable: any InfoDomainBuildable {
+        return appComponent.infoDomainBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->BaekjoonSettingComponent
-private func factorycbb61afc845cf58732dbe3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return BaekjoonSettingDependencyce5bee460baf327a3c82Provider()
+private func factorycbb61afc845cf58732dbf47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return BaekjoonSettingDependencyce5bee460baf327a3c82Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class LikeDomainDependencyf63c0c1617be7448fbeeProvider: LikeDomainDependency {
 
@@ -467,7 +472,7 @@ extension HomeComponent: Registration {
 }
 extension GithubSettingComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\GithubSettingDependency.infoDomainBuildable] = "infoDomainBuildable-any InfoDomainBuildable"
     }
 }
 extension ProfileEditComponent: Registration {
@@ -487,7 +492,7 @@ extension BaekjoonRankComponent: Registration {
 }
 extension BaekjoonSettingComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\BaekjoonSettingDependency.infoDomainBuildable] = "infoDomainBuildable-any InfoDomainBuildable"
     }
 }
 extension LikeDomainComponent: Registration {
@@ -543,11 +548,11 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->SignInComponent", factoryda2925fd76da866a652af47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->CommunityComponent", factorya680b0f614045d42b1adf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->GithubSettingComponent", factorybe58855116216af426a2e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->GithubSettingComponent", factorybe58855116216af426a2f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ProfileEditComponent", factoryff80df4e3e21c6a49df9e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityEditComponent", factory6ebc832ed4bcf9ae0afff47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BaekjoonRankComponent", factoryf8ddad049da0deefda19e3b0c44298fc1c149afb)
-    registerProviderFactory("^->AppComponent->BaekjoonSettingComponent", factorycbb61afc845cf58732dbe3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->BaekjoonSettingComponent", factorycbb61afc845cf58732dbf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->LikeDomainComponent", factory9270861c93e2286ee142e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->InfoDomainComponent", factoryce0a1bbfc08c2337f426e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommentDomainComponent", factory9d07e84c0c1fdd02736fe3b0c44298fc1c149afb)

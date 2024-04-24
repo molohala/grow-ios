@@ -6,7 +6,8 @@ let project = Project.makeFeature(
     targets: [
         .feature(target: .BaekjoonSetting, dependencies: [
             .feature(target: .Base),
-            .featureInterface(target: .BaekjoonSetting)
+            .featureInterface(target: .BaekjoonSetting),
+            .serviceInterface(target: .Info)
         ]),
         .featureInterface(target: .BaekjoonSetting, dependencies: [])
     ]

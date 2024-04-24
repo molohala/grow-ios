@@ -1,13 +1,35 @@
-//
-//  GithubEditViewModel.swift
-//  ProfileEditFeature
-//
-//  Created by dgsw8th71 on 4/5/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import Foundation
+import InfoServiceInterface
 
 public final class BaekjoonSettingViewModel: ObservableObject {
-    @Published var backjoonId = ""
+    @Published var baekjoonId: String
+    private let registerSolvedacUseCase: any RegisterSolvedacUseCase
+    
+    enum Flow {
+        case idle
+        case fetching
+        case success
+        case failure
+    }
+    
+    @Published var flow: Flow = .idle
+    
+    public init(
+        registerSolvedacUseCase: any RegisterSolvedacUseCase,
+        baekjoonId: String
+    ) {
+        self.registerSolvedacUseCase = registerSolvedacUseCase
+        self.baekjoonId = baekjoonId
+    }
+    
+    @MainActor
+    func completeSetting() async {
+        flow = .fetching
+        do {
+            try await registerSolvedacUseCase(.init(socialId: baekjoonId))
+            flow = .success
+        } catch {
+            flow = .failure
+        }
+    }
 }

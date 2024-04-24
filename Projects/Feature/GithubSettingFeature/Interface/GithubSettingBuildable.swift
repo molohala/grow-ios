@@ -2,5 +2,5 @@ import SwiftUI
 
 public protocol GithubSettingBuildable {
     associatedtype ViewType: View
-    func makeView() -> ViewType
+    func makeView(_ githubId: String) -> ViewType
 }

@@ -5,6 +5,7 @@ import GithubRankFeatureInterface
 
 public struct GithubRankView: View {
     
+    @EnvironmentObject private var appState: AppState
     @ObservedObject private var viewModel: GithubRankViewModel
     
     @EnvironmentObject private var router: Router
@@ -19,29 +20,32 @@ public struct GithubRankView: View {
         ZStack {
             ScrollView {
                 LazyVStack(spacing: 12) {
-                    VStack {
-                        Text("아직 Github 설정이 완료되지 않았네요")
-                            .foregroundStyle(.gray)
-                            .font(.caption)
-                        Text("Github 설정을 하고 순위권에 도전해 보세요!")
+                    if let profile = appState.profile,
+                       profile.socialAccounts.first(where: { $0.socialType == .GITHUB }) == nil {
+                        VStack {
+                            Text("아직 Github 설정이 완료되지 않았네요")
+                                .foregroundStyle(.gray)
+                                .font(.caption)
+                            Text("Github 설정을 하고 순위권에 도전해 보세요!")
+                                .font(.callout)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(1)
+                            InfinityButton("설정하기", height: 40) {
+                                router.navigate(to: GithubRankDestination.githubSetting)
+                            }
+                            .frame(width: 150)
                             .font(.callout)
-                            .multilineTextAlignment(.center)
-                            .lineLimit(1)
-                        InfinityButton("설정하기", height: 40) {
-                            router.navigate(to: GithubRankDestination.githubSetting)
                         }
-                        .frame(width: 150)
-                        .font(.callout)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 24)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(lineWidth: 1)
+                                .foregroundStyle(.gray.opacity(0.3))
+                        }
+                        .padding(.horizontal, 24)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 24)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 1)
-                            .foregroundStyle(.gray.opacity(0.3))
-                    }
-                    .padding(.horizontal, 24)
                     HStack {
                         InfinitySelector(text: "이번 주", isSelected: true) {
                             //

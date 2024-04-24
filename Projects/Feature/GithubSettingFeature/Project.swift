@@ -6,7 +6,8 @@ let project = Project.makeFeature(
     targets: [
         .feature(target: .GithubSetting, dependencies: [
             .feature(target: .Base),
-            .featureInterface(target: .GithubSetting)
+            .featureInterface(target: .GithubSetting),
+            .serviceInterface(target: .Info)
         ]),
         .featureInterface(target: .GithubSetting, dependencies: [])
     ]

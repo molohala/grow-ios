@@ -19,22 +19,27 @@ public struct SettingView: View {
     
     public var body: some View {
         VStack(spacing: 8) {
-            SettingCell(icon: Image(systemName: "person.fill"),
-                        iconColor: .gray,
-                        text: "프로필 설정") {
-                router.navigate(to: SettingDestination.profileEdit)
-            }
-            SettingCell(icon: DesignSystemAsset.github.swiftUIImage,
-                        iconColor: .github,
-                        text: "Github 설정",
-                        description: "bestswlkh0310") {
-                router.navigate(to: SettingDestination.githubSetting)
-            }
-            SettingCell(icon: DesignSystemAsset.baekjoon.swiftUIImage,
-                        iconColor: .baekjoon,
-                        text: "백준 설정",
-                        description: "hhhello0507") {
-                router.navigate(to: SettingDestination.baekjoonSetting)
+            if let profile = appState.profile,
+               let githubId = profile.socialAccounts.first(where: { $0.socialType == .GITHUB }),
+               let baekjoonId = profile.socialAccounts.first(where: { $0.socialType == .SOLVED_AC }) {
+                
+                SettingCell(icon: Image(systemName: "person.fill"),
+                            iconColor: .gray,
+                            text: "프로필 설정") {
+                    router.navigate(to: SettingDestination.profileEdit)
+                }
+                SettingCell(icon: DesignSystemAsset.github.swiftUIImage,
+                            iconColor: .github,
+                            text: "Github 설정",
+                            description: githubId.socialId) {
+                    router.navigate(to: SettingDestination.githubSetting)
+                }
+                SettingCell(icon: DesignSystemAsset.baekjoon.swiftUIImage,
+                            iconColor: .baekjoon,
+                            text: "백준 설정",
+                            description: baekjoonId.socialId) {
+                    router.navigate(to: SettingDestination.baekjoonSetting)
+                }
             }
             Spacer()
             logout
