@@ -38,6 +38,9 @@ public struct MainView: View {
                 .infinityTopBar(appState.selectedView.title, background: appState.selectedView.backgroundColor, hideBackButton: true)
                 .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
         }
+        .onAppear {
+            appState.fetchProfile()
+        }
     }
     
     @ViewBuilder
