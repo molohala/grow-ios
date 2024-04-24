@@ -8,7 +8,8 @@ let project = Project.makeFeature(
             .userInterface(target: .DesignSystem),
             .shared(target: .GlobalThirdPartyLibrary),
             .shared(target: .DateUtil),
-            .serviceInterface(target: .Auth)
+            .serviceInterface(target: .Auth),
+            .serviceInterface(target: .Info)
         ])
     ]
 )

@@ -11,9 +11,7 @@ public struct ProfileDetailView: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 12) {
-                InfinityChartCell(title: "100", subtitle: "이번주에 푼 문제", subject: "백준", chartData: .init(data: InfinityChartData.dummy, color: .orange)) {
-                    //
-                }
+                InfinityChartCell(chartInfo: .init(title: "100", subtitle: "이번주에 푼 문제", subject: "백준", chartData: .init(data: InfinityChartData.dummy, color: .orange500)), selectedType: .constant(.baekjoon))
             }
             .padding(.horizontal, 16)
             .padding(.top, 16)

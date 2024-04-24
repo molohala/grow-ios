@@ -35,15 +35,22 @@ public struct HomeView: View {
     @ViewBuilder
     private var profile: some View {
         VStack(spacing: 16) {
-            SubTitle("iOS 개발자\n이강현님 환영합니다")
-                .lineSpacing(4.0)
-                .font(.title)
-            HStack(spacing: 16) {
-                InfinityStatCell("오늘 한 커밋 개수", type: .github(7)) {
-                    // nav
-                }
-                InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon(3)) {
-                    // nav
+            if let profile = appState.profile {
+                SubTitle("iOS 개발자\n\(profile.name)님 환영합니다")
+                    .lineSpacing(4.0)
+                    .font(.title)
+            }
+            if let solvedac = appState.solvedac,
+               let github = appState.github {
+                HStack(spacing: 16) {
+                    let todayCommit = github.todayCommits.contributionCount
+                    let todaySolves = solvedac.todaySolves.solvedCount
+                    InfinityStatCell("오늘 한 커밋 개수", type: .github(todayCommit)) {
+                        // nav
+                    }
+                    InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon(todaySolves)) {
+                        // nav
+                    }
                 }
             }
         }

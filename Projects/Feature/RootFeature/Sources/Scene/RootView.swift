@@ -3,6 +3,7 @@ import BaseFeature
 import MainFeatureInterface
 import SignInFeatureInterface
 import AuthServiceInterface
+import InfoServiceInterface
 
 public struct RootView: View {
     
@@ -11,16 +12,27 @@ public struct RootView: View {
     
     private let mainBuildable: any MainBuildable
     private let signInBuildable: any SignInBuildable
+    private let infoDomainBuildable: any InfoDomainBuildable
     
     public init(
         mainBuildable: any MainBuildable,
         signInBuildable: any SignInBuildable,
         setTokenUseCase: any SetTokenUseCase,
-        getTokenUseCase: any GetTokenUseCase
+        getTokenUseCase: any GetTokenUseCase,
+        infoDomainBuilable: any InfoDomainBuildable
     ) {
         self.mainBuildable = mainBuildable
         self.signInBuildable = signInBuildable
-        self._appState = StateObject(wrappedValue: AppState(setTokenUseCase: setTokenUseCase, getTokenUseCase: getTokenUseCase))
+        self._appState = StateObject(
+            wrappedValue: AppState(
+                setTokenUseCase: setTokenUseCase,
+                getTokenUseCase: getTokenUseCase,
+                getProfileUseCase: infoDomainBuilable.getProfileUseCase,
+                getSolvedacUseCase: infoDomainBuilable.getSolvedacUseCase,
+                getGithubUseCase: infoDomainBuilable.getGithubUseCase
+            )
+        )
+        self.infoDomainBuildable = infoDomainBuilable
     }
     
     public var body: some View {
@@ -33,5 +45,8 @@ public struct RootView: View {
         }
         .environmentObject(router)
         .environmentObject(appState)
+        .task {
+            await appState.fetchProfile()
+        }
     }
 }

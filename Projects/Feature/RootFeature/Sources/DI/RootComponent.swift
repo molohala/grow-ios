@@ -12,11 +12,13 @@ import NeedleFoundation
 import MainFeatureInterface
 import SignInFeatureInterface
 import AuthServiceInterface
+import InfoServiceInterface
 
 public protocol RootDependency: Dependency {
     var mainBuildable: any MainBuildable { get }
     var signInBuildable: any SignInBuildable { get }
     var authDomainBuildable: any AuthDomainBuildable { get }
+    var infoDomainBuildable: any InfoDomainBuildable { get }
 }
 
 public final class RootComponent: Component<RootDependency> {
@@ -25,7 +27,8 @@ public final class RootComponent: Component<RootDependency> {
             mainBuildable: dependency.mainBuildable,
             signInBuildable: dependency.signInBuildable,
             setTokenUseCase: dependency.authDomainBuildable.setTokenUseCase,
-            getTokenUseCase: dependency.authDomainBuildable.getTokenUseCase
+            getTokenUseCase: dependency.authDomainBuildable.getTokenUseCase,
+            infoDomainBuilable: dependency.infoDomainBuildable
         )
     }
 }

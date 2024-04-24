@@ -25,6 +25,8 @@ import GithubSettingFeature
 import GithubSettingFeatureInterface
 import HomeFeature
 import HomeFeatureInterface
+import InfoService
+import InfoServiceInterface
 import LikeService
 import LikeServiceInterface
 import MainFeature
@@ -90,6 +92,9 @@ private class ProfileDependencydc1f16da12774bc5c202Provider: ProfileDependency {
     var settingBuildable: any SettingBuildable {
         return appComponent.settingBuildable
     }
+    var infoDomainBuildable: any InfoDomainBuildable {
+        return appComponent.infoDomainBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -149,6 +154,9 @@ private class RootDependency3944cc797a4a88956fb5Provider: RootDependency {
     }
     var authDomainBuildable: any AuthDomainBuildable {
         return appComponent.authDomainBuildable
+    }
+    var infoDomainBuildable: any InfoDomainBuildable {
+        return appComponent.infoDomainBuildable
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -316,6 +324,17 @@ private class LikeDomainDependencyf63c0c1617be7448fbeeProvider: LikeDomainDepend
 private func factory9270861c93e2286ee142e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return LikeDomainDependencyf63c0c1617be7448fbeeProvider()
 }
+private class InfoDomainDependency1d4a019e46f9ed94bc8eProvider: InfoDomainDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->InfoDomainComponent
+private func factoryce0a1bbfc08c2337f426e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return InfoDomainDependency1d4a019e46f9ed94bc8eProvider()
+}
 private class CommentDomainDependencyc311ef3dc1043384eea3Provider: CommentDomainDependency {
 
 
@@ -387,6 +406,7 @@ extension SettingComponent: Registration {
 extension ProfileComponent: Registration {
     public func registerItems() {
         keyPathToName[\ProfileDependency.settingBuildable] = "settingBuildable-any SettingBuildable"
+        keyPathToName[\ProfileDependency.infoDomainBuildable] = "infoDomainBuildable-any InfoDomainBuildable"
     }
 }
 extension MainComponent: Registration {
@@ -409,6 +429,7 @@ extension RootComponent: Registration {
         keyPathToName[\RootDependency.mainBuildable] = "mainBuildable-any MainBuildable"
         keyPathToName[\RootDependency.signInBuildable] = "signInBuildable-any SignInBuildable"
         keyPathToName[\RootDependency.authDomainBuildable] = "authDomainBuildable-any AuthDomainBuildable"
+        keyPathToName[\RootDependency.infoDomainBuildable] = "infoDomainBuildable-any InfoDomainBuildable"
     }
 }
 extension CommunityCreateComponent: Registration {
@@ -474,6 +495,11 @@ extension LikeDomainComponent: Registration {
 
     }
 }
+extension InfoDomainComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension CommentDomainComponent: Registration {
     public func registerItems() {
 
@@ -523,6 +549,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->BaekjoonRankComponent", factoryf8ddad049da0deefda19e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->BaekjoonSettingComponent", factorycbb61afc845cf58732dbe3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->LikeDomainComponent", factory9270861c93e2286ee142e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->InfoDomainComponent", factoryce0a1bbfc08c2337f426e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommentDomainComponent", factory9d07e84c0c1fdd02736fe3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityDomainComponent", factoryb1f366c0bb811d91cf77e3b0c44298fc1c149afb)

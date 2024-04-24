@@ -62,6 +62,7 @@ public struct InfinityChartCell: View {
                         Text(chartInfo.subject)
                             .font(.subheadline)
                             .foregroundStyle(.gray)
+                            .tint(.gray)
                         Icon.downArrorIcon
                     }
                 }

@@ -6,6 +6,7 @@ import ProfileFeatureInterface
 public struct ProfileView: View {
     
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var appState: AppState
     @StateObject private var viewModel: ProfileViewModel
     
     public init(
@@ -25,7 +26,10 @@ public struct ProfileView: View {
                         selectedType: $viewModel.selectedChart
                     )
                 } else {
-                    // TODO: add shimmer
+                    Rectangle()
+                        .foregroundStyle(Color.gray300)
+                        .frame(height: 100)
+                        .shimmer()
                 }
             }
             .padding(.top, 16)
@@ -33,6 +37,13 @@ public struct ProfileView: View {
             .padding(.bottom, 108)
         }
         .background(Color.backgroundColor)
+        .onChange(of: viewModel.selectedChart) { type in
+            handleSelectingChart(type: type)
+        }
+        .onChange(of: appState.profile) {
+            guard $0 != nil else { return }
+            handleSelectingChart(type: viewModel.selectedChart)
+        }
     }
     
     @ViewBuilder
@@ -43,7 +54,7 @@ public struct ProfileView: View {
                     .frame(width: 48, height: 48)
                     .clipShape(Circle())
                     .foregroundStyle(.gray)
-                Text("노영재")
+                Text(appState.profile?.name ?? "")
                     .font(.callout)
                     .fontWeight(.semibold)
                     .foregroundStyle(.black)
@@ -63,22 +74,37 @@ public struct ProfileView: View {
                 }
                 .applyAnimation()
             }
-            Text("\"뚝딱뚝딱.\"")
-                .padding(.vertical, 16)
-                .font(.callout)
-                .foregroundStyle(.gray)
+//            Text("\"뚝딱뚝딱.\"")
+//                .padding(.vertical, 16)
+//                .font(.callout)
+//                .foregroundStyle(.gray)
         }
         .applyCardView()
     }
     
     @ViewBuilder
     private var stats: some View {
-        HStack(spacing: 16) {
-            InfinityStatCell("커밋 개수", type: .github(1204)) {
-                // nav
+        if let github = appState.github,
+           let solvedac = appState.solvedac {
+            HStack(spacing: 16) {
+                InfinityStatCell("커밋 개수", type: .github(github.totalCommits)) {
+                    // nav
+                }
+                InfinityStatCell("문제 푼 개수", type: .baekjoon(solvedac.totalSolves)) {
+                    // nav
+                }
             }
-            InfinityStatCell("문제 푼 개수", type: .baekjoon(385)) {
-                // nav
+        }
+    }
+    
+    func handleSelectingChart(type: ChartType) {
+        if let github = appState.github,
+           let solvedac = appState.solvedac {
+            switch type {
+            case .github:
+                viewModel.chartInfo = github.weekCommits.githubWeekChartInfo
+            case .baekjoon:
+                viewModel.chartInfo = solvedac.weekSolves.baekjoonWeekChartInfo
             }
         }
     }

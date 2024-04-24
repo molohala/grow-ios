@@ -3,7 +3,7 @@ import InfoServiceInterface
 import DateUtil
 
 struct GithubResponse: Decodable {
-    var avatarUrl: String
+    var avatarUrl: String?
     var bio: String
     var totalCommits: Int
     var weekCommits: [CommitResponse]

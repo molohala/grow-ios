@@ -15,13 +15,9 @@ public final class ProfileViewModel: ObservableObject {
     private let getSolvedavUseCase: any GetSolvedacUseCase
     
     // MARK: - Properties
-    @Published var github: Github?
-    @Published var githubFlow: Flow = .fetching
-    @Published var solvedac: Solvedav?
-    @Published var solvedacFlow: Flow = .fetching
     
     @Published var chartInfo: ChartInfo?
-    @Published var selectedChart: ChartType = .baekjoon
+    @Published var selectedChart: ChartType = .github
     
     public init(
         getGithubUseCase: any GetGithubUseCase,
@@ -30,30 +26,32 @@ public final class ProfileViewModel: ObservableObject {
         self.getGithubUseCase = getGithubUseCase
         self.getSolvedavUseCase = getSolvedavUseCase
     }
-    
-    // TODO: dummy name to real
-    @MainActor
-    func fetchGithub() async {
-        githubFlow = .fetching
-        do {
-            github = try await getGithubUseCase(name: "")
-            guard let github else { return }
-            chartInfo = github.weekCommits.githubWeekChartInfo
-            githubFlow = .success
-        } catch {
-            githubFlow = .failure
-        }
+}
+
+public extension [Commit] {
+    var githubWeekChartInfo: ChartInfo {
+        .init(
+            title: "\(self.map { $0.contributionCount }.reduce(0, +))",
+            subtitle: "이번주에 한 커밋",
+            subject: ChartType.github.rawValue,
+            chartData: .init(
+                data: self.map { ($0.date.monthPerDay ?? "", y: $0.contributionCount) },
+                color: .orange500
+            )
+        )
     }
-    
-    @MainActor
-    func fetchSolvedac() async {
-        solvedacFlow = .fetching
-        do {
-            solvedac = try await getSolvedavUseCase(name: "")
-            
-            solvedacFlow = .success
-        } catch {
-            solvedacFlow = .failure
-        }
+}
+
+public extension [Solve] {
+    var baekjoonWeekChartInfo: ChartInfo {
+        .init(
+            title: "\(self.map { $0.solvedCount }.reduce(0, +))",
+            subtitle: "이번주에 푼 문제",
+            subject: ChartType.github.rawValue,
+            chartData: .init(
+                data: self.map { ($0.date.monthPerDay ?? "", y: $0.solvedCount) },
+                color: .orange500
+            )
+        )
     }
 }

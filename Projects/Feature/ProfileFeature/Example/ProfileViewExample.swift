@@ -7,7 +7,9 @@ struct ProfileViewExample: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                ProfileView()
+//                ProfileView(
+//                    viewModel: .init(getGithubUseCase: T##GetGithubUseCase, getSolvedavUseCase: T##GetSolvedacUseCase)
+//                )
             }
         }
     }

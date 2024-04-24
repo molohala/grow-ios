@@ -1,6 +1,5 @@
 import Foundation
 import DateUtil
-import CommentServiceInterface
 
 public struct Community {
     public var community: CommunityContent
