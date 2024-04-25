@@ -23,6 +23,7 @@ public final class GithubRankViewModel: ObservableObject {
     @Published var selectedTab: GithubTab = .week {
         didSet {
             Task {
+                githubRanksFlow = .fetching
                 await handleGithubRank()
             }
         }

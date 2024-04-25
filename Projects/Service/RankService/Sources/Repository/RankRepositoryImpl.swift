@@ -17,6 +17,10 @@ class RankRepositoryImpl: RankRepository {
     }
     
     func getTodayGithubRank() async throws -> [GithubRank] {
-        try await rankDataSource.getTodayGithubRank()
+        let ranks = try await rankDataSource.getTodayGithubRank()
+        if ranks.count <= 3 {
+            return ranks
+        }
+        return Array(ranks[0..<3])
     }
 }
