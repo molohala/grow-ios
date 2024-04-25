@@ -14,12 +14,14 @@ import ProfileDetailFeatureInterface
 import CommunityDetailFeatureInterface
 import ProfileFeatureInterface
 import CommunityFeatureInterface
+import RankServiceInterface
 
 public protocol HomeDependency: Dependency {
     var profileDetailBuildable: any ProfileDetailBuildable { get }
     var communityDetailBuildable: any CommunityDetailBuildable { get }
     var profileBuildable: any ProfileBuildable { get }
     var communityBuildable: any CommunityBuildable { get }
+    var rankDomainBuildable: any RankDomainBuildable { get }
 }
 
 public final class HomeComponent: Component<HomeDependency>, HomeBuildable {
@@ -27,7 +29,9 @@ public final class HomeComponent: Component<HomeDependency>, HomeBuildable {
         HomeCoordinator(
             communityDetailBuildable: dependency.communityDetailBuildable,
             profileDetailBuildable: dependency.profileDetailBuildable,
-            viewModel: .init()
+            viewModel: .init(
+                getTodayGithubRankUseCase: dependency.rankDomainBuildable.getTodayGithubRankUseCase
+            )
         )
     }
 }

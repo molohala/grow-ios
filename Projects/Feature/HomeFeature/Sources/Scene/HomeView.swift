@@ -30,6 +30,9 @@ public struct HomeView: View {
             .padding(.bottom, 108)
         }
         .background(Color.backgroundColor)
+        .task {
+            await viewModel.fetchTodayGithubRank()
+        }
     }
     
     @ViewBuilder

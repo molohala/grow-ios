@@ -250,6 +250,9 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var communityBuildable: any CommunityBuildable {
         return appComponent.communityBuildable
     }
+    var rankDomainBuildable: any RankDomainBuildable {
+        return appComponent.rankDomainBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -481,6 +484,7 @@ extension HomeComponent: Registration {
         keyPathToName[\HomeDependency.communityDetailBuildable] = "communityDetailBuildable-any CommunityDetailBuildable"
         keyPathToName[\HomeDependency.profileBuildable] = "profileBuildable-any ProfileBuildable"
         keyPathToName[\HomeDependency.communityBuildable] = "communityBuildable-any CommunityBuildable"
+        keyPathToName[\HomeDependency.rankDomainBuildable] = "rankDomainBuildable-any RankDomainBuildable"
     }
 }
 extension GithubSettingComponent: Registration {
