@@ -26,7 +26,8 @@ public final class GithubRankComponent: Component<GithubRankDependency>, GithubR
             profileDetailBuildable: dependency.profileDetailBuildable,
             githubSettingBuildable: dependency.githubSettingBuildable,
             viewModel: .init(
-                getTotalGithubRankUseCase: dependency.rankDomainBuildable.getTotalGithubRankUseCase
+                getTotalGithubRankUseCase: dependency.rankDomainBuildable.getTotalGithubRankUseCase,
+                getWeekGithubRankUseCase: dependency.rankDomainBuildable.getWeekGithubRankUseCase
             )
         )
     }

@@ -16,6 +16,7 @@ public final class GithubRankViewModel: ObservableObject {
     
     // MARK: - UseCases
     private let getTotalGithubRankUseCase: any GetTotalGithubRankUseCase
+    private let getWeekGithubRankUseCase: any GetWeekGithubRankUseCase
     
     // MARK: - Properties
     @Published var githubRanks: [GithubRank] = []
@@ -30,9 +31,11 @@ public final class GithubRankViewModel: ObservableObject {
     }
     
     public init(
-        getTotalGithubRankUseCase: any GetTotalGithubRankUseCase
+        getTotalGithubRankUseCase: any GetTotalGithubRankUseCase,
+        getWeekGithubRankUseCase: any GetWeekGithubRankUseCase
     ) {
         self.getTotalGithubRankUseCase = getTotalGithubRankUseCase
+        self.getWeekGithubRankUseCase = getWeekGithubRankUseCase
     }
     
     func handleGithubRank() async {
@@ -47,7 +50,7 @@ public final class GithubRankViewModel: ObservableObject {
     @MainActor
     private func fetchWeekGithubRank() async {
         do {
-            githubRanks = try await getTotalGithubRankUseCase()
+            githubRanks = try await getWeekGithubRankUseCase()
             githubRanksFlow = .success
         } catch {
             githubRanksFlow = .failure

@@ -100,15 +100,28 @@ public struct HomeView: View {
                 Spacer()
             }
             let profileId = appState.profile?.id ?? 0
-            VStack(spacing: 12) {
-                ForEach(viewModel.todayGithubRanks, id: \.self) { githubRank in
-                    InfinityGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profileId) {
-                        router.navigate(to: HomeDestination.profileDetail)
+            switch viewModel.todayGithubRanksFlow {
+            case .fetching:
+                VStack(spacing: 12) {
+                    ForEach(0..<3, id: \.self) { _ in
+                        InfinityGithubRankCellShimmer()
                     }
                 }
+                .padding(.vertical, 4)
+                .applyCardView()
+            case .success:
+                VStack(spacing: 12) {
+                    ForEach(viewModel.todayGithubRanks, id: \.self) { githubRank in
+                        InfinityGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profileId) {
+                            router.navigate(to: HomeDestination.profileDetail)
+                        }
+                    }
+                }
+                .padding(.vertical, 4)
+                .applyCardView()
+            case .failure:
+                Text("불러오기 실패..")
             }
-            .padding(.vertical, 4)
-            .applyCardView()
         }
     }
     

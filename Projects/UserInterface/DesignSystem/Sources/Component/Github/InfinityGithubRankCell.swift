@@ -57,13 +57,13 @@ public struct InfinityGithubRankCell: View {
                         .font(.body)
                     if isMe {
                         Text("나")
-                            .font(.footnote)
+                            .font(.caption)
                             .foregroundStyle(.white)
                             .padding(.vertical, 1)
                             .padding(.horizontal, 3)
                             .background(Color.gray)
                             .clipShape(RoundedRectangle(cornerRadius: 3))
-                            .fontWeight(.black)
+                            .fontWeight(.bold)
                     }
                 }
                 Text(rank.socialId)

@@ -32,6 +32,7 @@ public final class HomeViewModel: ObservableObject {
             todayGithubRanks = try await getTodayGithubRankUseCase()
             todayGithubRanksFlow = .success
         } catch {
+            print(error)
             todayGithubRanksFlow = .failure
         }
     }
