@@ -108,7 +108,7 @@ public struct HomeView: View {
             let dummyProfileId = 2
             VStack(spacing: 12) {
                 ForEach(0..<3, id: \.self) { i in
-                    InfinityGithubRankCell(rank: i + 1, isMe: i == dummyProfileId) {
+                    InfinityGithubRankCell(rank: .init(memberId: i + 1, rank: i + 1, commits: .random(in: 10..<30)), isMe: i == dummyProfileId) {
                         router.navigate(to: HomeDestination.profileDetail)
                     }
                 }
@@ -134,7 +134,7 @@ public struct HomeView: View {
             let dummyProfileId = 1
             VStack(spacing: 12) {
                 ForEach(0..<3, id: \.self) { i in
-                    InfinityGithubRankCell(rank: i + 1, isMe: dummyProfileId == i) {
+                    InfinityGithubRankCell(rank: .init(memberId: i + 1, rank: i + 1, commits: .random(in: 10..<30)), isMe: dummyProfileId == i) {
                         router.navigate(to: HomeDestination.profileDetail)
                     }
                 }

@@ -14,7 +14,8 @@ let project = Project.makeUserInterface(
     targets: [
         .userInterface(target: .DesignSystem, dependencies: [
             .shared(target: .DateUtil),
-            .SPM.Pow
+            .SPM.Pow,
+            .serviceInterface(target: .Rank)
         ]),
         .userInterfaceExample(target: .DesignSystem, dependencies: [
             .userInterface(target: .DesignSystem)

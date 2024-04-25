@@ -1,64 +1,29 @@
-//
-//  RankCell.swift
-//  RankFeature
-//
-//  Created by dgsw8th71 on 4/2/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
+import RankServiceInterface
 
 public struct InfinityGithubRankCell: View {
     
-    let rank: Int
-    let isCardView: Bool
-    let isMe: Bool
-    let action: () -> Void
+    private let rank: GithubRank
+    private let isMe: Bool
+    private let action: () async -> Void
     
-    private init(
-        rank: Int,
-        isCardView: Bool,
+    public init(
+        rank: GithubRank,
         isMe: Bool,
-        action: @escaping () -> Void
+        action: @escaping () async -> Void
     ) {
         self.rank = rank
-        self.isCardView = isCardView
         self.isMe = isMe
         self.action = action
     }
     
-    public init(
-        rank: Int,
-        isMe: Bool,
-        action: @escaping () -> Void
-    ) {
-        self.init(
-            rank: rank,
-            isCardView: false,
-            isMe: isMe,
-            action: action
-        )
-    }
-    
-    public func cardView() -> Self {
-        Self.init(
-            rank: rank,
-            isCardView: true,
-            isMe: isMe,
-            action: action
-        )
-    }
-    
     public var body: some View {
         Button {
-            action()
-        } label: {
-            if isCardView {
-                label
-                    .applyCardView()
-            } else {
-                label
+            Task {
+                await action()
             }
+        } label: {
+            label
         }
         .applyAnimation()
     }
@@ -66,14 +31,14 @@ public struct InfinityGithubRankCell: View {
     @ViewBuilder
     private var label: some View {
         HStack(spacing: 12) {
-            Text("\(rank)")
+            Text("\(rank.rank)")
                 .font(.body)
             ZStack {
                 Rectangle()
                     .foregroundStyle(.gray)
                 VStack {
                     Group {
-                        switch rank {
+                        switch rank.rank {
                         case 1: DesignSystemAsset.firstMedal.swiftUIImage.resizable()
                         case 2: DesignSystemAsset.secondMedal.swiftUIImage.resizable()
                         case 3: DesignSystemAsset.thirdMedal.swiftUIImage.resizable()
@@ -88,7 +53,7 @@ public struct InfinityGithubRankCell: View {
             .clipShape(Circle())
             VStack(alignment: .leading) {
                 HStack {
-                    Text("노영재")
+                    Text("\(rank.memberId)")
                         .font(.body)
                     if isMe {
                         Text("나")
@@ -101,12 +66,12 @@ public struct InfinityGithubRankCell: View {
                             .fontWeight(.black)
                     }
                 }
-                Text("nohjason")
+                Text("\(rank.memberId)")
                     .font(.callout)
                     .foregroundStyle(.gray)
             }
             Spacer()
-            Text("10 커밋")
+            Text("\(rank.commits) 커밋")
                 .font(.body)
                 .fontWeight(.semibold)
         }
