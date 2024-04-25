@@ -17,7 +17,7 @@ public final class HomeViewModel: ObservableObject {
     @Published var weekCommunities: [Community] = []
     @Published var selectedCommunity: Community?
     
-    @Published var githubRank: [Rank] = []
+    @Published var githubRank: [GithubRank] = []
     @Published var githubRankFlow: FetchFlow = .fetching
     
     public init(

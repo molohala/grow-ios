@@ -1,4 +1,4 @@
-public struct Rank {
+public struct GithubRank {
     public let memberId: Int
     public let rank: Int
     public let commits: Int

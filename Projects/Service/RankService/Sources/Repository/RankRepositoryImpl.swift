@@ -8,15 +8,15 @@ class RankRepositoryImpl: RankRepository {
         self.rankDataSource = rankDataSource
     }
     
-    func getWeekGithubRank() async throws -> [Rank] {
+    func getWeekGithubRank() async throws -> [GithubRank] {
         try await rankDataSource.getWeekGithubRank()
     }
     
-    func getTotalGithubRank() async throws -> [Rank] {
+    func getTotalGithubRank() async throws -> [GithubRank] {
         try await rankDataSource.getTotalGithubRank()
     }
     
-    func getTodayGithubRank() async throws -> [Rank] {
+    func getTodayGithubRank() async throws -> [GithubRank] {
         try await rankDataSource.getTodayGithubRank()
     }
 }
