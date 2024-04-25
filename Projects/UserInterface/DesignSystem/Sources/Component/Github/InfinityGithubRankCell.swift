@@ -53,7 +53,7 @@ public struct InfinityGithubRankCell: View {
             .clipShape(Circle())
             VStack(alignment: .leading) {
                 HStack {
-                    Text("\(rank.memberId)")
+                    Text(rank.memberName)
                         .font(.body)
                     if isMe {
                         Text("나")
@@ -66,7 +66,7 @@ public struct InfinityGithubRankCell: View {
                             .fontWeight(.black)
                     }
                 }
-                Text("\(rank.memberId)")
+                Text(rank.socialId)
                     .font(.callout)
                     .foregroundStyle(.gray)
             }

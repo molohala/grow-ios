@@ -96,19 +96,13 @@ public struct HomeView: View {
     private var todayGithub: some View {
         VStack(spacing: 16) {
             HStack(spacing: 0) {
-                //                DesignSystemAsset.github.swiftUIImage
-                //                    .resizable()
-                //                    .renderingMode(.template)
-                //                    .foregroundStyle(Color.github)
-                //                    .frame(width: 30, height: 30)
-                //                    .padding(.leading, 4)
                 SubTitle("오늘의 Github Top 3")
                 Spacer()
             }
-            let dummyProfileId = 2
+            let profileId = appState.profile?.id ?? 0
             VStack(spacing: 12) {
-                ForEach(0..<3, id: \.self) { i in
-                    InfinityGithubRankCell(rank: .init(memberId: i + 1, rank: i + 1, commits: .random(in: 10..<30)), isMe: i == dummyProfileId) {
+                ForEach(viewModel.todayGithubRanks, id: \.self) { githubRank in
+                    InfinityGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profileId) {
                         router.navigate(to: HomeDestination.profileDetail)
                     }
                 }
@@ -122,19 +116,13 @@ public struct HomeView: View {
     private var todayBaekjoon: some View {
         VStack(spacing: 16) {
             HStack(spacing: 0) {
-                //                DesignSystemAsset.baekjoon.swiftUIImage
-                //                    .resizable()
-                //                    .renderingMode(.template)
-                //                    .foregroundStyle(Color.baekjoon)
-                //                    .frame(width: 30, height: 30)
-                //                    .padding(.leading, 4)
                 SubTitle("오늘의 백준 Top 3")
                 Spacer()
             }
-            let dummyProfileId = 1
+            let profileId = appState.profile?.id ?? 0
             VStack(spacing: 12) {
-                ForEach(0..<3, id: \.self) { i in
-                    InfinityGithubRankCell(rank: .init(memberId: i + 1, rank: i + 1, commits: .random(in: 10..<30)), isMe: dummyProfileId == i) {
+                ForEach(viewModel.todayGithubRanks, id: \.self) { githubRank in
+                    InfinityGithubRankCell(rank: githubRank, isMe: profileId == githubRank.memberId) {
                         router.navigate(to: HomeDestination.profileDetail)
                     }
                 }

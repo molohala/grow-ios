@@ -22,52 +22,80 @@ public struct GithubRankView: View {
                 LazyVStack(spacing: 12) {
                     if let profile = appState.profile,
                        profile.socialAccounts.first(where: { $0.socialType == .GITHUB }) == nil {
-                        VStack {
-                            Text("아직 Github 설정이 완료되지 않았네요")
-                                .foregroundStyle(.gray)
-                                .font(.caption)
-                            Text("Github 설정을 하고 순위권에 도전해 보세요!")
-                                .font(.callout)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(1)
-                            InfinityButton("설정하기", height: 40) {
-                                router.navigate(to: GithubRankDestination.githubSetting)
+                        githubSetting
+                            .padding(.horizontal, 24)
+                    }
+                    selector
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 8)
+                    let profileId = appState.profile?.id ?? 0
+                    switch viewModel.githubRanksFlow {
+                    case .fetching:
+                        ForEach(0..<7, id: \.self) { _ in
+                            InfinityGithubRankCellShimmer()
+                                .padding(.horizontal, 16)
+                                .shimmer()
+                        }
+                    case .success:
+                        ForEach(viewModel.githubRanks, id: \.memberId) { githubRank in
+                            InfinityGithubRankCell(rank: githubRank, isMe: profileId == githubRank.memberId) {
+                                router.navigate(to: GithubRankDestination.profileDetail)
                             }
-                            .frame(width: 150)
-                            .font(.callout)
+                            .padding(.horizontal, 16)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 24)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(lineWidth: 1)
-                                .foregroundStyle(.gray.opacity(0.3))
-                        }
-                        .padding(.horizontal, 24)
-                    }
-                    HStack {
-                        InfinitySelector(text: "이번 주", isSelected: true) {
-                            //
-                        }
-                        InfinitySelector(text: "전체", isSelected: false) {
-                            //
-                        }
-                        Spacer()
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    let dummyProfileId = 0
-                    ForEach(viewModel.rank, id: \.self) { i in
-                        InfinityGithubRankCell(rank: .init(memberId: i + 1, rank: i + 1, commits: .random(in: 10..<30)), isMe: dummyProfileId == i) {
-                            router.navigate(to: GithubRankDestination.profileDetail)
-                        }
-                        .padding(.horizontal, 16)
+                    case .failure:
+                        Text("불러오기 실패..")
                     }
                 }
                 .padding(.top, 16)
                 .padding(.bottom, 128)
             }
+            .refreshable {
+                Task {
+                    await viewModel.handleGithubRank()
+                }
+            }
+        }
+        .task {
+            await viewModel.handleGithubRank()
+        }
+    }
+    
+    @ViewBuilder
+    private var githubSetting: some View {
+        VStack {
+            Text("아직 Github 설정이 완료되지 않았네요")
+                .foregroundStyle(.gray)
+                .font(.caption)
+            Text("Github 설정을 하고 순위권에 도전해 보세요!")
+                .font(.callout)
+                .multilineTextAlignment(.center)
+                .lineLimit(1)
+            InfinityButton("설정하기", height: 40) {
+                router.navigate(to: GithubRankDestination.githubSetting)
+            }
+            .frame(width: 150)
+            .font(.callout)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 24)
+        .overlay {
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(lineWidth: 1)
+                .foregroundStyle(.gray.opacity(0.3))
+        }
+    }
+    
+    @ViewBuilder
+    private var selector: some View {
+        HStack(spacing: 8) {
+            ForEach(GithubRankViewModel.GithubTab.allCases, id: \.self) { tab in
+                InfinitySelector(text: tab.rawValue, isSelected: tab == viewModel.selectedTab) {
+                    viewModel.selectedTab = tab
+                }
+            }
+            Spacer()
         }
     }
 }

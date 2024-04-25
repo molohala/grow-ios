@@ -17,8 +17,8 @@ public final class HomeViewModel: ObservableObject {
     @Published var weekCommunities: [Community] = []
     @Published var selectedCommunity: Community?
     
-    @Published var githubRank: [GithubRank] = []
-    @Published var githubRankFlow: FetchFlow = .fetching
+    @Published var todayGithubRanks: [GithubRank] = []
+    @Published var todayGithubRanksFlow: FetchFlow = .fetching
     
     public init(
         getTodayGithubRankUseCase: any GetTodayGithubRankUseCase
@@ -29,10 +29,10 @@ public final class HomeViewModel: ObservableObject {
     @MainActor
     func fetchTodayGithubRank() async {
         do {
-            githubRank = try await getTodayGithubRankUseCase()
-            githubRankFlow = .success
+            todayGithubRanks = try await getTodayGithubRankUseCase()
+            todayGithubRanksFlow = .success
         } catch {
-            githubRankFlow = .failure
+            todayGithubRanksFlow = .failure
         }
     }
 }

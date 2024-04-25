@@ -139,6 +139,9 @@ private class GithubRankDependency2a656f8c1300149b0745Provider: GithubRankDepend
     var githubSettingBuildable: any GithubSettingBuildable {
         return appComponent.githubSettingBuildable
     }
+    var rankDomainBuildable: any RankDomainBuildable {
+        return appComponent.rankDomainBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -443,6 +446,7 @@ extension GithubRankComponent: Registration {
     public func registerItems() {
         keyPathToName[\GithubRankDependency.profileDetailBuildable] = "profileDetailBuildable-any ProfileDetailBuildable"
         keyPathToName[\GithubRankDependency.githubSettingBuildable] = "githubSettingBuildable-any GithubSettingBuildable"
+        keyPathToName[\GithubRankDependency.rankDomainBuildable] = "rankDomainBuildable-any RankDomainBuildable"
     }
 }
 extension RootComponent: Registration {

@@ -12,10 +12,12 @@ import SwiftUI
 import GithubRankFeatureInterface
 import ProfileDetailFeatureInterface
 import GithubSettingFeatureInterface
+import RankServiceInterface
 
 public protocol GithubRankDependency: Dependency {
     var profileDetailBuildable: any ProfileDetailBuildable { get }
     var githubSettingBuildable: any GithubSettingBuildable { get }
+    var rankDomainBuildable: any RankDomainBuildable { get }
 }
 
 public final class GithubRankComponent: Component<GithubRankDependency>, GithubRankBuildable {
@@ -23,7 +25,9 @@ public final class GithubRankComponent: Component<GithubRankDependency>, GithubR
         GithubRankCoordinator(
             profileDetailBuildable: dependency.profileDetailBuildable,
             githubSettingBuildable: dependency.githubSettingBuildable,
-            viewModel: GithubRankViewModel()
+            viewModel: .init(
+                getTotalGithubRankUseCase: dependency.rankDomainBuildable.getTotalGithubRankUseCase
+            )
         )
     }
 }
