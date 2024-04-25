@@ -39,6 +39,8 @@ import ProfileEditFeature
 import ProfileEditFeatureInterface
 import ProfileFeature
 import ProfileFeatureInterface
+import RankService
+import RankServiceInterface
 import RootFeature
 import SettingFeature
 import SettingFeatureInterface
@@ -351,6 +353,17 @@ private class CommentDomainDependencyc311ef3dc1043384eea3Provider: CommentDomain
 private func factory9d07e84c0c1fdd02736fe3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return CommentDomainDependencyc311ef3dc1043384eea3Provider()
 }
+private class RankDomainDependency8f9f9683f682e9e4ee98Provider: RankDomainDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->RankDomainComponent
+private func factoryb45149ba1cc02c58ddc7e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return RankDomainDependency8f9f9683f682e9e4ee98Provider()
+}
 private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDependency {
 
 
@@ -510,6 +523,11 @@ extension CommentDomainComponent: Registration {
 
     }
 }
+extension RankDomainComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension AuthDomainComponent: Registration {
     public func registerItems() {
 
@@ -556,6 +574,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->LikeDomainComponent", factory9270861c93e2286ee142e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->InfoDomainComponent", factoryce0a1bbfc08c2337f426e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommentDomainComponent", factory9d07e84c0c1fdd02736fe3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->RankDomainComponent", factoryb45149ba1cc02c58ddc7e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityDomainComponent", factoryb1f366c0bb811d91cf77e3b0c44298fc1c149afb)
 }
