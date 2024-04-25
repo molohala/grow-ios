@@ -1,11 +1,3 @@
-//
-//  AppComponent+Auth.swift
-//  App
-//
-//  Created by dgsw8th71 on 4/8/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import AuthService
 import AuthServiceInterface
 import CommunityService
@@ -16,6 +8,8 @@ import CommentService
 import CommentServiceInterface
 import InfoService
 import InfoServiceInterface
+import RankService
+import RankServiceInterface
 
 extension AppComponent {
     var authDomainBuildable: any AuthDomainBuildable {
@@ -45,6 +39,12 @@ extension AppComponent {
     var infoDomainBuildable: any InfoDomainBuildable {
         shared {
             InfoDomainComponent(parent: self)
+        }
+    }
+    
+    var rankDomainBuildable: any RankDomainBuildable {
+        shared {
+            RankDomainComponent(parent: self)
         }
     }
 }
