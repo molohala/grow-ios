@@ -8,7 +8,8 @@ let project = Project.makeFeature(
             .feature(target: .Base),
             .featureInterface(target: .GithubRank),
             .featureInterface(target: .ProfileDetail),
-            .featureInterface(target: .GithubSetting)
+            .featureInterface(target: .GithubSetting),
+            .serviceInterface(target: .Rank)
         ]),
         .featureInterface(target: .GithubRank, dependencies: []),
         .featureExample(target: .GithubRank, dependencies: [

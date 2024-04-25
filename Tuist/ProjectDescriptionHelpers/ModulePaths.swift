@@ -48,6 +48,7 @@ public extension ModulePaths {
         case Comment
         case Like
         case Info
+        case Rank
     }
     
     enum Shared: String, CaseIterable {
