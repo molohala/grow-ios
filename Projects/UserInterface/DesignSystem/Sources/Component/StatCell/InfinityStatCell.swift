@@ -31,13 +31,25 @@ public struct InfinityStatCell: View {
             VStack(alignment: .leading) {
                 HStack(spacing: 0) {
                     if case .baekjoon(let int) = type {
-                        Text("\(int)")
-                            .font(.largeTitle)
-                            .fixedSize()
+                        if let int {
+                            Text("\(int)")
+                                .font(.largeTitle)
+                                .fixedSize()
+                        } else {
+                            Text("??")
+                                .font(.largeTitle)
+                                .fixedSize()
+                        }
                     } else if case .github(let int) = type {
-                        Text("\(int)")
-                            .font(.largeTitle)
-                            .fixedSize()
+                        if let int {
+                            Text("\(int)")
+                                .font(.largeTitle)
+                                .fixedSize()
+                        } else {
+                            Text("??")
+                                .font(.largeTitle)
+                                .fixedSize()
+                        }
                     }
                     Spacer()
                     type.icon

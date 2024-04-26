@@ -24,7 +24,6 @@ public struct InfinityTabView: View {
     public var body: some View {
         HStack(spacing: 0) {
             let mainViews = MainFlow.allCases
-            Spacer()
             ForEach(mainViews, id: \.self) { tab in
                 Button {
                     selectedTab = tab
@@ -35,7 +34,6 @@ public struct InfinityTabView: View {
                 }
                 .applyAnimation()
             }
-            Spacer()
         }
         .padding(.vertical, 10)
         .background(Color.white)
