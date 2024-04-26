@@ -26,8 +26,8 @@ public final class CommunityViewModel: ObservableObject {
         case success
         case failure
     }
-    @Published var removeCommunityFlow: Flow = .idle
-    @Published var removeCommunity: Community?
+    @Published var removedCommunityFlow: Flow = .idle
+    @Published var removedCommunity: Community?
     
     public init(
         getCommunitesUseCase: any GetCommunitiesUseCase,
@@ -42,74 +42,81 @@ public final class CommunityViewModel: ObservableObject {
     }
     
     @MainActor
-    public func fetchCommunities() async {
-        withAnimation {
-            isfetchingCommunities = true
-        }
-        defer {
+    public func fetchCommunities() {
+        Task {
             withAnimation {
-                isfetchingCommunities = false
+                isfetchingCommunities = true
             }
-        }
-        do {
-            let nextPage = 1
-            print("\(#function) - fetching ... nextPage: \(nextPage)")
-            let request = PageRequest(page: nextPage, size: pagingInterval)
-            
-            let pagedCommunities = try await getCommunitesUseCase(request)
-            communities = pagedCommunities
-            if !communities.isEmpty {
-                page = nextPage
-            }
-        } catch {
-            communities = []
-            page = 1
-            print("❌ 커뮤니티 불러오기 실패")
-        }
-    }
-    
-    @MainActor
-    public func fetchNextCommunities() async {
-        
-        do {
-            let nextPage = communities.count / pagingInterval + 1
-            print("\(#function) - fetching ... nextPage: \(nextPage)")
-            let request = PageRequest(page: nextPage, size: pagingInterval)
-            
-            let pagedCommunities = try await getCommunitesUseCase(request)
-            communities.append(contentsOf: pagedCommunities)
-        } catch {
-            communities = []
-            page = 1
-            print("❌ 커뮤니티 페이징 실패")
-        }
-    }
-    
-    @MainActor
-    public func patchLike(communityId: Int) async {
-        do {
-            try await patchLikeUseCase(communityId: communityId)
-            communities.enumerated().forEach { idx, i in
-                if communityId == i.community.communityId {
-                    communities[idx].community.like += i.community.liked ? -1 : 1
-                    communities[idx].community.liked.toggle()
+            defer {
+                withAnimation {
+                    isfetchingCommunities = false
                 }
             }
-        } catch {}
+            do {
+                let nextPage = 1
+                print("\(#function) - fetching ... nextPage: \(nextPage)")
+                let request = PageRequest(page: nextPage, size: pagingInterval)
+                
+                let pagedCommunities = try await getCommunitesUseCase(request)
+                communities = pagedCommunities
+                if !communities.isEmpty {
+                    page = nextPage
+                }
+            } catch {
+                communities = []
+                page = 1
+                print("❌ 커뮤니티 불러오기 실패")
+            }
+        }
     }
     
     @MainActor
-    public func removeCommunity() async {
-        removeCommunityFlow = .fetching
-        do {
-            guard let removeCommunity else {
-                removeCommunityFlow = .failure
-                return
+    public func fetchNextCommunities() {
+        Task {
+            do {
+                let nextPage = communities.count / pagingInterval + 1
+                print("\(#function) - fetching ... nextPage: \(nextPage)")
+                let request = PageRequest(page: nextPage, size: pagingInterval)
+                
+                let pagedCommunities = try await getCommunitesUseCase(request)
+                communities.append(contentsOf: pagedCommunities)
+            } catch {
+                communities = []
+                page = 1
+                print("❌ 커뮤니티 페이징 실패")
             }
-            try await removeCommunityUseCase(id: removeCommunity.community.communityId)
-            removeCommunityFlow = .success
-        } catch {
-            removeCommunityFlow = .failure
+        }
+    }
+    
+    @MainActor
+    public func patchLike(communityId: Int) {
+        Task {
+            do {
+                try await patchLikeUseCase(communityId: communityId)
+                communities.enumerated().forEach { idx, i in
+                    if communityId == i.community.communityId {
+                        communities[idx].community.like += i.community.liked ? -1 : 1
+                        communities[idx].community.liked.toggle()
+                    }
+                }
+            } catch {}
+        }
+    }
+    
+    @MainActor
+    public func removeCommunity() {
+        Task {
+            removedCommunityFlow = .fetching
+            do {
+                guard let removedCommunity else {
+                    removedCommunityFlow = .failure
+                    return
+                }
+                try await removeCommunityUseCase(id: removedCommunity.community.communityId)
+                removedCommunityFlow = .success
+            } catch {
+                removedCommunityFlow = .failure
+            }
         }
     }
 }

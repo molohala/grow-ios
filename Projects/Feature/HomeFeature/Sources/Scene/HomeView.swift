@@ -9,17 +9,17 @@ public struct HomeView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     
-    @ObservedObject private var viewModel: HomeViewModel
+    @StateObject private var viewModel: HomeViewModel
     
     public init(
         viewModel: HomeViewModel
     ) {
-        self.viewModel = viewModel
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
         ScrollView {
-            LazyVStack(spacing: 40) {
+            VStack(spacing: 40) {
                 profile
                     .padding(.top, 24)
                 todayGithub
@@ -30,8 +30,8 @@ public struct HomeView: View {
             .padding(.bottom, 108)
         }
         .background(Color.backgroundColor)
-        .task {
-            await viewModel.fetchTodayGithubRank()
+        .onAppear {
+            viewModel.fetchTodayGithubRank()
         }
     }
     
@@ -44,10 +44,10 @@ public struct HomeView: View {
                     .font(.title)
             } else {
                 VStack {
-                    SubTitle("iOS 개발자")
+                    SubTitle("--------")
                         .lineSpacing(4.0)
                         .font(.title)
-                    SubTitle("더미님 환영합니다")
+                    SubTitle("------------")
                         .lineSpacing(4.0)
                         .font(.title)
                 }
@@ -105,20 +105,37 @@ public struct HomeView: View {
                 VStack(spacing: 12) {
                     ForEach(0..<3, id: \.self) { _ in
                         InfinityGithubRankCellShimmer()
+                            .shimmer()
                     }
                 }
                 .padding(.vertical, 4)
                 .applyCardView()
             case .success:
-                VStack(spacing: 12) {
-                    ForEach(viewModel.todayGithubRanks, id: \.self) { githubRank in
-                        InfinityGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profileId) {
-                            router.navigate(to: HomeDestination.profileDetail)
+                if viewModel.todayGithubRanks.isEmpty {
+                    HStack {
+                        Spacer()
+                        VStack(spacing: 8) {
+                            Text("첫 번째로 커밋을 해보세요!")
+                                .font(.subheadline)
+                            Text("아직 아무도 커밋을 안 했어요")
+                                .foregroundStyle(Color.gray500)
+                                .font(.footnote)
+                        }
+                        Spacer()
+                    }
+                    .padding(.vertical, 8)
+                    .applyCardView()
+                } else {
+                    VStack(spacing: 12) {
+                        ForEach(viewModel.todayGithubRanks, id: \.self) { githubRank in
+                            InfinityGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profileId) {
+                                router.navigate(to: HomeDestination.profileDetail)
+                            }
                         }
                     }
+                    .padding(.vertical, 4)
+                    .applyCardView()
                 }
-                .padding(.vertical, 4)
-                .applyCardView()
             case .failure:
                 Text("불러오기 실패..")
             }

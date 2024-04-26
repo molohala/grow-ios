@@ -32,14 +32,14 @@ public struct CommunityView: View {
                                 CommunityCell(
                                     community: community,
                                     likeAction: {
-                                        await viewModel.patchLike(communityId: community.community.communityId)
+                                        viewModel.patchLike(communityId: community.community.communityId)
                                     },
                                     editAction: {
                                         
                                     },
                                     removeAction: {
-                                        viewModel.removeCommunity = community
-                                        viewModel.removeCommunityFlow = .checking
+                                        viewModel.removedCommunity = community
+                                        viewModel.removedCommunityFlow = .checking
                                     }
                                 ) {
                                     router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))
@@ -48,18 +48,14 @@ public struct CommunityView: View {
                                     guard let index = viewModel.communities.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
                                     
                                     if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (viewModel.communities.count - 1) / pagingInterval {
-                                        Task {
-                                            await viewModel.fetchNextCommunities()
-                                        }
+                                        viewModel.fetchNextCommunities()
                                     }
                                 }
                                 .alert("정말 게시글을 삭제 하시겠습니까?", isPresented: .init(
-                                    get: { viewModel.removeCommunityFlow == .checking },
+                                    get: { viewModel.removedCommunityFlow == .checking },
                                     set: { _ in
-                                        Task {
-                                            await viewModel.removeCommunity()
-                                            await viewModel.fetchCommunities()
-                                        }
+                                        viewModel.removeCommunity()
+                                        viewModel.fetchCommunities()
                                     }
                                 )) {
                                     Button("아니요", role: .cancel) {}
@@ -76,9 +72,9 @@ public struct CommunityView: View {
                     }
                     .id("lazyvstack")
                     .alert("게시글 삭제 성공", isPresented: .init {
-                        viewModel.removeCommunityFlow == .success
+                        viewModel.removedCommunityFlow == .success
                     } set: { _ in
-                        viewModel.removeCommunityFlow = .idle
+                        viewModel.removedCommunityFlow = .idle
                     }) {
                         Button("닫기", role: .cancel) {}
                     }
@@ -107,16 +103,14 @@ public struct CommunityView: View {
         }
         .background(Color.backgroundColor)
         .refreshable {
-            Task {
-                await viewModel.fetchCommunities()
-            }
+            viewModel.fetchCommunities()
         }
-        .task {
-            await viewModel.fetchCommunities()
+        .onAppear {
+            viewModel.fetchCommunities()
         }
         .alert("게시글 삭제에 실패했습니다", isPresented: .init(
-            get: { viewModel.removeCommunityFlow == .failure },
-            set: { _ in viewModel.removeCommunityFlow = .idle }
+            get: { viewModel.removedCommunityFlow == .failure },
+            set: { _ in viewModel.removedCommunityFlow = .idle }
         )) {
             Button("확인", role: .cancel) {}
         }

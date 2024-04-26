@@ -27,13 +27,15 @@ public final class HomeViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchTodayGithubRank() async {
-        do {
-            todayGithubRanks = try await getTodayGithubRankUseCase()
-            todayGithubRanksFlow = .success
-        } catch {
-            print(error)
-            todayGithubRanksFlow = .failure
+    func fetchTodayGithubRank() {
+        Task {
+            do {
+                todayGithubRanks = try await getTodayGithubRankUseCase()
+                todayGithubRanksFlow = .success
+            } catch {
+                print(error)
+                todayGithubRanksFlow = .failure
+            }
         }
     }
 }
