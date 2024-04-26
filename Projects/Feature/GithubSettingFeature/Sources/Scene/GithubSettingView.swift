@@ -41,6 +41,8 @@ public struct GithubSettingView: View {
             Button("확인") {
                 viewModel.flow = .idle
             }
+        } message: {
+            Text("아이디를 다시 확인해 주세요")
         }
         .onChange(of: viewModel.flow) {
             if $0 == .success {
