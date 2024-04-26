@@ -13,9 +13,14 @@ import CommentServiceInterface
 struct CommentCell: View {
     
     private let comment: Comment
+    private let removeAction: () -> Void
     
-    init(comment: Comment) {
+    init(
+        comment: Comment,
+        removeAction: @escaping () -> Void
+    ) {
         self.comment = comment
+        self.removeAction = removeAction
     }
     
     var body: some View {
@@ -42,8 +47,10 @@ struct CommentCell: View {
                 .foregroundStyle(.gray)
                 .padding(.leading, 8)
             Spacer()
-            Button {
-                //
+            Menu {
+                Button("삭제하기", role: .destructive) {
+                    removeAction()
+                }
             } label: {
                 DesignSystemAsset.detailVerticalLine.swiftUIImage
                     .resizable()

@@ -56,7 +56,6 @@ public final class AppState: ObservableObject {
         self.getProfileUseCase = getProfileUseCase
         self.getSolvedacUseCase = getSolvedacUseCase
         self.getGithubUseCase = getGithubUseCase
-        fetchProfile()
     }
     
     public func fetchProfile() {

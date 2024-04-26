@@ -45,6 +45,17 @@ public struct CommunityDetailView: View {
                             .shimmer()
                     }
                 }
+                .alert("게시글을 삭제하시겠습니까?", 
+                       isPresented: .init(get: { viewModel.showRemovingCommunity },
+                                          set: { _ in
+                    viewModel.showRemovingCommunity = false
+                    Task {
+                        await viewModel.removeCommuntiy()
+                    }
+                })) {
+                    Button("삭제", role: .destructive) {}
+                    Button("아니요", role: .cancel) {}
+                }
             }
             VStack(spacing: 0) {
                 Spacer()
@@ -95,6 +106,11 @@ public struct CommunityDetailView: View {
                 dismiss()
             }
         }
+        .onChange(of: viewModel.removeCommunityFlow) {
+            if $0 == .success {
+                dismiss()
+            }
+        }
     }
     
     @ViewBuilder
@@ -120,7 +136,7 @@ public struct CommunityDetailView: View {
                profile.id == viewModel.community?.writerId {
                 Menu {
                     Button("수정하기") {}
-                    Button("삭제하기", role: .destructive) {}
+                    Button("삭제하기", role: .destructive) { viewModel.showRemovingCommunity = true }
                 } label: {
                     DesignSystemAsset.detailVerticalLine.swiftUIImage
                         .resizable()
@@ -172,8 +188,22 @@ public struct CommunityDetailView: View {
     private func makeComments(_ comments: [Comment]) -> some View {
         LazyVStack(spacing: 20) {
             ForEach(comments, id: \.commentId) { comment in
-                CommentCell(comment: comment)
+                CommentCell(comment: comment) {
+                    viewModel.selectedRemovingComment = comment
+                    viewModel.showRemovingComment = true
+                }
             }
+        }
+        .alert("댓글을 삭제하시겠습니까?",
+               isPresented: .init(get: { viewModel.showRemovingComment },
+                                  set: { _ in
+            viewModel.showRemovingComment = false
+            Task {
+                await viewModel.removeComment()
+            }
+        })) {
+            Button("삭제", role: .destructive) {}
+            Button("아니요", role: .cancel) {}
         }
     }
 }

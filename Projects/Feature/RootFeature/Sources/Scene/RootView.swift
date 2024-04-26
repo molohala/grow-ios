@@ -46,7 +46,7 @@ public struct RootView: View {
         .environmentObject(router)
         .environmentObject(appState)
         .task {
-            await appState.fetchProfile()
+            appState.fetchProfile()
         }
     }
 }

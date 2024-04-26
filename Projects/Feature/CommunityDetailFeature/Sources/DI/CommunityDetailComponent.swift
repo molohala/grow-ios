@@ -28,6 +28,8 @@ public final class CommunityDetailComponent: Component<CommunityDetailDependency
                 getCommentUseCase: dependency.commentDomainBuildable.getCommentsUseCase,
                 createCommentUseCase: dependency.commentDomainBuildable.createCommentUseCase,
                 patchLikeUseCase: dependency.likeDomainBuildable.patchLikeUseCase,
+                removeCommunityUseCase: dependency.communityDomainBuildable.removeCommunityUseCase,
+                removeCommentUseCase: dependency.commentDomainBuildable.removeCommentUseCase,
                 communityId: id
             )
         )
