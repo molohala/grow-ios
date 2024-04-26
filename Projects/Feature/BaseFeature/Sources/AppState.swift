@@ -13,6 +13,12 @@ import InfoServiceInterface
 @MainActor
 public final class AppState: ObservableObject {
     
+    public enum FetchFlow {
+        case fetching
+        case success
+        case failure
+    }
+    
     @Published public var selectedView: MainFlow = .Home
     @Published public var accessToken: String {
         didSet {
@@ -26,7 +32,9 @@ public final class AppState: ObservableObject {
     }
     @Published public var profile: Profile?
     @Published public var solvedac: Solvedav?
+    @Published public var solvedacFlow: FetchFlow = .fetching
     @Published public var github: Github?
+    @Published public var githubFlow: FetchFlow = .fetching
     
     private let setTokenUseCase: any SetTokenUseCase
     private let getTokenUseCase: any GetTokenUseCase
@@ -52,17 +60,33 @@ public final class AppState: ObservableObject {
     }
     
     public func fetchProfile() {
-        _ = withAnimation {
-            Task {
-                profile = try? await getProfileUseCase()
-                if let profile {
-                    let solvedavId = profile.socialAccounts.filter { $0.socialType == .SOLVED_AC }.first
-                    solvedac = try? await getSolvedacUseCase(name: solvedavId?.socialId ?? "")
-                    guard let solvedac else { return }
-                    
-                    let githubId = profile.socialAccounts.filter { $0.socialType == .GITHUB }.first
-                    github = try await getGithubUseCase(name: githubId?.socialId ?? "")
-                    guard let github else { return }
+        Task {
+            profile = try? await getProfileUseCase()
+            if let profile {
+                // handle solvedac
+                let solvedavId = profile.socialAccounts.first { $0.socialType == .SOLVED_AC }
+                guard let solvedavId else {
+                    solvedacFlow = .failure
+                    return
+                }
+                do {
+                    solvedac = try await getSolvedacUseCase(name: solvedavId.socialId)
+                    solvedacFlow = .success
+                } catch {
+                    solvedacFlow = .failure
+                }
+                
+                // handle github
+                let githubId = profile.socialAccounts.first { $0.socialType == .GITHUB }
+                guard let githubId else { 
+                    githubFlow = .failure
+                    return
+                }
+                do {
+                    github = try await getGithubUseCase(name: githubId.socialId)
+                    githubFlow = .success
+                } catch {
+                    githubFlow = .failure
                 }
             }
         }

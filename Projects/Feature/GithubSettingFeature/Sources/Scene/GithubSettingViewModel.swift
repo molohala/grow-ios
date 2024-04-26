@@ -2,7 +2,7 @@ import Foundation
 import InfoServiceInterface
 
 public final class GithubSettingViewModel: ObservableObject {
-    @Published var githubId: String
+    @Published var githubId: String = ""
     private let registerGithubUseCase: any RegisterGithubUseCase
     
     enum Flow {

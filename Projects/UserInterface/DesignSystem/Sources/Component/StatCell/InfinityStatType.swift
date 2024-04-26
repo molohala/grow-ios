@@ -9,8 +9,8 @@
 import SwiftUI
 
 public enum InfinityStatType {
-    case github(Int)
-    case baekjoon(Int)
+    case github(Int?=nil)
+    case baekjoon(Int?=nil)
     
     var icon: Image {
         switch self {

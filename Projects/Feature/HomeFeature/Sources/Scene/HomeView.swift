@@ -55,19 +55,26 @@ public struct HomeView: View {
             }
             
             HStack(spacing: 16) {
-                if let solvedac = appState.solvedac,
-                   let github = appState.github {
+                if let github = appState.github, appState.githubFlow == .success {
                     let todayCommit = github.todayCommits.contributionCount
-                    let todaySolves = solvedac.todaySolves.solvedCount
                     InfinityStatCell("오늘 한 커밋 개수", type: .github(todayCommit)) {
                         // nav
                     }
-                    InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon(todaySolves)) {
-                        // nav
-                    }
+                } else if appState.githubFlow == .fetching {
+                    InfinityStatShimmerCell()
                 } else {
+                    InfinityStatCell("오늘 한 커밋 개수", type: .github()) {}
+                }
+                
+                if let solvedac = appState.solvedac, appState.solvedacFlow == .success {
+                     let todaySolves = solvedac.todaySolves.solvedCount
+                     InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon(todaySolves)) {
+                         // nav
+                     }
+                } else if appState.solvedacFlow == .fetching {
                     InfinityStatShimmerCell()
-                    InfinityStatShimmerCell()
+                } else {
+                    InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon()) {}
                 }
             }
         }
