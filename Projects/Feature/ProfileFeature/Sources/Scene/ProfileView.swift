@@ -16,7 +16,7 @@ public struct ProfileView: View {
     }
     
     public var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(spacing: 16) {
                 profile
                 stats

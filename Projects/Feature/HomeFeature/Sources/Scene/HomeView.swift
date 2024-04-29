@@ -18,7 +18,7 @@ public struct HomeView: View {
     }
     
     public var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(spacing: 40) {
                 profile
                     .padding(.top, 24)

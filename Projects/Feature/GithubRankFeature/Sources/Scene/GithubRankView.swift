@@ -18,7 +18,7 @@ public struct GithubRankView: View {
     
     public var body: some View {
         ZStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 12) {
                     if let profile = appState.profile,
                        profile.socialAccounts.first(where: { $0.socialType == .GITHUB }) == nil {
