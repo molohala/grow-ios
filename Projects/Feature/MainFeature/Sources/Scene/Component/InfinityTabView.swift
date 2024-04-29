@@ -27,7 +27,9 @@ public struct InfinityTabView: View {
             Spacer()
             ForEach(mainViews, id: \.self) { tab in
                 Button {
-                    selectedTab = tab
+                    if selectedTab != tab {
+                        selectedTab = tab
+                    }
                 } label: {
                     let width = proxy.size.width / 5 - 4
                     InfinityTabCell(type: tab, isSelected: selectedTab == tab)
