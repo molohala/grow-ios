@@ -56,6 +56,13 @@ public struct CommunityDetailView: View {
                     Button("삭제", role: .destructive) {}
                     Button("아니요", role: .cancel) {}
                 }
+                .refreshable {
+                    Task {
+                        async let fetchCommunity: () = viewModel.fetchCommunity()
+                        async let fetchComments: () = viewModel.fetchComments()
+                        _ = await [fetchCommunity, fetchComments]
+                    }
+                }
             }
             VStack(spacing: 0) {
                 Spacer()

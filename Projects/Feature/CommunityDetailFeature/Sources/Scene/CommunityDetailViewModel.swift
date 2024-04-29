@@ -70,6 +70,7 @@ public final class CommunityDetailViewModel: ObservableObject {
     @MainActor
     func fetchCommunity() async {
         do {
+            communityFlow = .fetching
             community = try await getCommunityUseCase(id: communityId)
             communityFlow = .success
         } catch {
@@ -80,6 +81,7 @@ public final class CommunityDetailViewModel: ObservableObject {
     @MainActor
     func fetchComments() async {
         do {
+            commentFlow = .fetching
             comments = try await getCommentUseCase(id: communityId)
             commentFlow = .success
         } catch {
@@ -90,6 +92,7 @@ public final class CommunityDetailViewModel: ObservableObject {
     @MainActor
     func createComment() async {
         do {
+            createCommentFlow = .idle
             try await createCommentUseCase(.init(content: comment, communityId: communityId))
             comment = ""
             createCommentFlow = .success
