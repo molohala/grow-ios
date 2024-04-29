@@ -87,10 +87,10 @@ public struct CommunityDetailView: View {
                             .renderingMode(.template)
                             .font(.title)
                             .foregroundStyle(viewModel.comment.isEmpty ? Color.gray400 : Color.blue500)
+                            .padding(4)
                     }
                     .disabled(viewModel.comment.isEmpty)
                 }
-                .padding(.horizontal, 8)
                 .padding(8)
                 .background(Color.white)
             }
