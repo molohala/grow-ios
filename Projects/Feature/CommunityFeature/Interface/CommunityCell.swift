@@ -81,7 +81,7 @@ public struct CommunityCell: View {
             }
             VStack(spacing: 8) {
                 info
-                lastComment
+                recentComment
             }
         }
         .applyCardView()
@@ -144,7 +144,7 @@ public struct CommunityCell: View {
     }
     
     @ViewBuilder
-    private var lastComment: some View {
+    private var recentComment: some View {
         if let recentComment = community.recentComment {
             Divider()
             HStack(spacing: 4) {
@@ -153,6 +153,8 @@ public struct CommunityCell: View {
                     .fontWeight(.semibold)
                 Text(recentComment.content)
                     .font(.footnote)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
                 Text(recentComment.createdAt.timeAgo)
                     .font(.caption)
                     .foregroundStyle(.gray)
