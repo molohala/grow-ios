@@ -17,11 +17,11 @@ public protocol CommunityEditDependency: Dependency {
 }
 
 public final class CommunityEditComponent: Component<CommunityEditDependency>, CommunityEditBuildable {
-    public func makeView(community: Community) -> some View {
+    public func makeView(communityContent: CommunityContent) -> some View {
         CommunityEditView(
             viewModel: CommunityEditViewModel(
                 patchCommunityUseCase: dependency.communityDomainBuildable.patchCommunityUseCase,
-                community: community
+                community: communityContent
             )
         )
     }

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CommunityContent: Equatable {
+public struct CommunityContent: Hashable {
     public let communityId: Int
     public let content: String
     public let createdAt: Date

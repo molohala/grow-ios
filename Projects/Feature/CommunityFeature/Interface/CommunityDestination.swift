@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import CommunityServiceInterface
 
 public enum CommunityDestination: Hashable {
     case communityDetail(id: Int)
     case communityCreate
+    case communityEdit(communityContent: CommunityContent)
 }

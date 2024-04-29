@@ -16,15 +16,15 @@ public final class CommunityEditViewModel: ObservableObject {
     @Published var content: String
     @Published var flow: Flow = .idle
     
-    private let community: Community
+    private let community: CommunityContent
     
     public init(
         patchCommunityUseCase: any PatchCommunityUseCase,
-        community: Community
+        community: CommunityContent
     ) {
         self.patchCommunityUseCase = patchCommunityUseCase
         self.community = community
-        self.content = community.community.content
+        self.content = community.content
     }
     
     @MainActor
@@ -38,7 +38,7 @@ public final class CommunityEditViewModel: ObservableObject {
         flow = .fetching
         
         do {
-            try await patchCommunityUseCase(.init(content: content, id: community.community.communityId))
+            try await patchCommunityUseCase(.init(content: content, id: community.communityId))
             flow = .success
         } catch {
             flow = .failure

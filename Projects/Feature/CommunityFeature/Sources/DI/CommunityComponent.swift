@@ -12,6 +12,7 @@ import NeedleFoundation
 import CommunityFeatureInterface
 import CommunityCreateFeatureInterface
 import CommunityDetailFeatureInterface
+import CommunityEditFeatureInterface
 import CommunityServiceInterface
 import LikeServiceInterface
 
@@ -19,6 +20,7 @@ public protocol CommunityDependency: Dependency {
     var communityCreateBuildable: any CommunityCreateBuildable { get }
     var communityDetailBuildable: any CommunityDetailBuildable { get }
     var communityDomainBuildable: any CommunityDomainBuildable { get }
+    var communityEditBuildable: any CommunityEditBuildable { get }
     var likeDomainBuildable: any LikeDomainBuildable { get }
 }
 
@@ -28,6 +30,7 @@ public final class CommunityComponent: Component<CommunityDependency>, Community
         CommunityCoordinator(
             communityCreateBuildable: dependency.communityCreateBuildable,
             communityDetailBuildable: dependency.communityDetailBuildable,
+            communityEditBuildable: dependency.communityEditBuildable,
             viewModel: .init(
                 getCommunitesUseCase: dependency.communityDomainBuildable.getCommunitiesUseCase,
                 patchLikeUseCase: dependency.likeDomainBuildable.patchLikeUseCase,

@@ -35,7 +35,7 @@ public struct CommunityView: View {
                                         viewModel.patchLike(communityId: community.community.communityId)
                                     },
                                     editAction: {
-                                        
+                                        router.navigate(to: CommunityDestination.communityEdit(communityContent: community.community))
                                     },
                                     removeAction: {
                                         viewModel.removedCommunity = community

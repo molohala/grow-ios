@@ -187,6 +187,9 @@ private func factoryff448a1abf8354e355e3f47b58f8f304c97af4d5(_ component: Needle
     return CommunityCreateDependency4cbbd0754f80ca35ed27Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class CommunityDetailDependencyddffd27390310f096b6cProvider: CommunityDetailDependency {
+    var communityEditBuildable: any CommunityEditBuildable {
+        return appComponent.communityEditBuildable
+    }
     var communityDomainBuildable: any CommunityDomainBuildable {
         return appComponent.communityDomainBuildable
     }
@@ -227,6 +230,9 @@ private class CommunityDependency704c8bb629388d37b98dProvider: CommunityDependen
     }
     var communityDomainBuildable: any CommunityDomainBuildable {
         return appComponent.communityDomainBuildable
+    }
+    var communityEditBuildable: any CommunityEditBuildable {
+        return appComponent.communityEditBuildable
     }
     var likeDomainBuildable: any LikeDomainBuildable {
         return appComponent.likeDomainBuildable
@@ -464,6 +470,7 @@ extension CommunityCreateComponent: Registration {
 }
 extension CommunityDetailComponent: Registration {
     public func registerItems() {
+        keyPathToName[\CommunityDetailDependency.communityEditBuildable] = "communityEditBuildable-any CommunityEditBuildable"
         keyPathToName[\CommunityDetailDependency.communityDomainBuildable] = "communityDomainBuildable-any CommunityDomainBuildable"
         keyPathToName[\CommunityDetailDependency.commentDomainBuildable] = "commentDomainBuildable-any CommentDomainBuildable"
         keyPathToName[\CommunityDetailDependency.likeDomainBuildable] = "likeDomainBuildable-any LikeDomainBuildable"
@@ -479,6 +486,7 @@ extension CommunityComponent: Registration {
         keyPathToName[\CommunityDependency.communityCreateBuildable] = "communityCreateBuildable-any CommunityCreateBuildable"
         keyPathToName[\CommunityDependency.communityDetailBuildable] = "communityDetailBuildable-any CommunityDetailBuildable"
         keyPathToName[\CommunityDependency.communityDomainBuildable] = "communityDomainBuildable-any CommunityDomainBuildable"
+        keyPathToName[\CommunityDependency.communityEditBuildable] = "communityEditBuildable-any CommunityEditBuildable"
         keyPathToName[\CommunityDependency.likeDomainBuildable] = "likeDomainBuildable-any LikeDomainBuildable"
     }
 }

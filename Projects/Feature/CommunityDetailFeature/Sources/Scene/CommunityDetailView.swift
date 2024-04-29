@@ -13,6 +13,7 @@ public struct CommunityDetailView: View {
     @StateObject private var viewModel: CommunityDetailViewModel
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var router: Router
     
     public init(
         viewModel: CommunityDetailViewModel
@@ -140,9 +141,9 @@ public struct CommunityDetailView: View {
             Spacer()
             
             if let profile = appState.profile,
-               profile.id == viewModel.community?.writerId {
+               let community = viewModel.community {
                 Menu {
-                    Button("수정하기") {}
+                    Button("수정하기") { router.navigate(to: CommunityDetailDestination.communityEdit(communityContent: community)) }
                     Button("삭제하기", role: .destructive) { viewModel.showRemovingCommunity = true }
                 } label: {
                     DesignSystemAsset.detailVerticalLine.swiftUIImage

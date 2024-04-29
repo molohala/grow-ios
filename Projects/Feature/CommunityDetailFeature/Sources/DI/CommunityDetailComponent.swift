@@ -10,11 +10,13 @@ import Foundation
 import SwiftUI
 import NeedleFoundation
 import CommunityDetailFeatureInterface
+import CommunityEditFeatureInterface
 import CommunityServiceInterface
 import CommentServiceInterface
 import LikeServiceInterface
 
 public protocol CommunityDetailDependency: Dependency {
+    var communityEditBuildable: any CommunityEditBuildable { get }
     var communityDomainBuildable: any CommunityDomainBuildable { get }
     var commentDomainBuildable: any CommentDomainBuildable { get }
     var likeDomainBuildable: any LikeDomainBuildable { get }
@@ -22,7 +24,7 @@ public protocol CommunityDetailDependency: Dependency {
 
 public final class CommunityDetailComponent: Component<CommunityDetailDependency>, CommunityDetailBuildable {
     public func makeView(id: Int) -> some View {
-        CommunityDetailView(
+        CommunityDetailCoordinator(
             viewModel: .init(
                 getCommunityUseCase: dependency.communityDomainBuildable.getCommunityUseCase,
                 getCommentUseCase: dependency.commentDomainBuildable.getCommentsUseCase,
@@ -31,7 +33,8 @@ public final class CommunityDetailComponent: Component<CommunityDetailDependency
                 removeCommunityUseCase: dependency.communityDomainBuildable.removeCommunityUseCase,
                 removeCommentUseCase: dependency.commentDomainBuildable.removeCommentUseCase,
                 communityId: id
-            )
+            ),
+            communityEditBuildable: dependency.communityEditBuildable
         )
     }
 }
