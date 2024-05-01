@@ -5,22 +5,45 @@ import DesignSystem
 public struct ProfileDetailView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var viewModel: ProfileDetailViewModel
     
-    public init() {}
+    public init(
+        viewModel: ProfileDetailViewModel
+    ) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     public var body: some View {
         ScrollView {
             VStack(spacing: 12) {
-                InfinityChartCell(chartInfo: .init(title: "100", subtitle: "이번주에 푼 문제", subject: "백준", chartData: .init(data: InfinityChartData.dummy, color: .orange500)), selectedType: .constant(.baekjoon))
+                profile
+                stats
+                if let chartInfo = viewModel.chartInfo {
+                    InfinityChartCell(
+                        chartInfo: chartInfo,
+                        selectedType: $viewModel.selectedChart
+                    )
+                } else {
+                    Rectangle()
+                        .foregroundStyle(Color.gray300)
+                        .frame(height: 100)
+                        .shimmer()
+                }
             }
             .padding(.horizontal, 16)
             .padding(.top, 16)
         }
         .background(Color.backgroundColor)
         .infinityTopBar(
-            "노영재님의 프로필",
+            "\(viewModel.profile?.name ?? "..")님의 프로필",
             background: .backgroundColor
         )
+        .task {
+            await viewModel.fetchProfile()
+            async let fetchSolvedac: () = viewModel.fetchSolvedac()
+            async let fetchGithub: () = viewModel.fetchGithub()
+            _ = await [fetchSolvedac, fetchGithub]
+        }
     }
     
     @ViewBuilder
@@ -32,5 +55,21 @@ public struct ProfileDetailView: View {
                 .foregroundStyle(.gray)
         }
         .applyCardView()
+    }
+    
+    
+    @ViewBuilder
+    private var stats: some View {
+        if let github = viewModel.github,
+           let solvedac = viewModel.solvedac {
+            HStack(spacing: 16) {
+                InfinityStatCell("커밋 개수", type: .github(github.totalCommits)) {
+                    // nav
+                }
+                InfinityStatCell("문제 푼 개수", type: .baekjoon(solvedac.totalSolves)) {
+                    // nav
+                }
+            }
+        }
     }
 }

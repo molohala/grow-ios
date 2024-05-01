@@ -136,7 +136,7 @@ public struct HomeView: View {
                     VStack(spacing: 12) {
                         ForEach(viewModel.todayGithubRanks, id: \.self) { githubRank in
                             InfinityGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profileId) {
-                                router.navigate(to: HomeDestination.profileDetail)
+                                router.navigate(to: HomeDestination.profileDetail(memberId: githubRank.memberId))
                             }
                         }
                     }
@@ -160,7 +160,7 @@ public struct HomeView: View {
             VStack(spacing: 12) {
                 ForEach(viewModel.todayGithubRanks, id: \.self) { githubRank in
                     InfinityGithubRankCell(rank: githubRank, isMe: profileId == githubRank.memberId) {
-                        router.navigate(to: HomeDestination.profileDetail)
+                        router.navigate(to: HomeDestination.profileDetail(memberId: githubRank.memberId))
                     }
                 }
             }

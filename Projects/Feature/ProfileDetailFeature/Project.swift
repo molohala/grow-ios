@@ -6,7 +6,8 @@ let project = Project.makeFeature(
     targets: [
         .feature(target: .ProfileDetail, dependencies: [
             .feature(target: .Base),
-            .featureInterface(target: .ProfileDetail)
+            .featureInterface(target: .ProfileDetail),
+            .serviceInterface(target: .Info),
         ]),
         .featureInterface(target: .ProfileDetail, dependencies: [])
     ]

@@ -39,7 +39,7 @@ public struct GithubRankView: View {
                     case .success:
                         ForEach(viewModel.githubRanks, id: \.memberId) { githubRank in
                             InfinityGithubRankCell(rank: githubRank, isMe: profileId == githubRank.memberId) {
-                                router.navigate(to: GithubRankDestination.profileDetail)
+                                router.navigate(to: GithubRankDestination.profileDetail(memberId: githubRank.memberId))
                             }
                             .padding(.horizontal, 16)
                         }

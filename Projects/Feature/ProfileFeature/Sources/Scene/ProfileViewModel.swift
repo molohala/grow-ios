@@ -27,31 +27,3 @@ public final class ProfileViewModel: ObservableObject {
         self.getSolvedavUseCase = getSolvedavUseCase
     }
 }
-
-public extension [Commit] {
-    var githubWeekChartInfo: ChartInfo {
-        .init(
-            title: "\(self.map { $0.contributionCount }.reduce(0, +))",
-            subtitle: "이번주에 한 커밋",
-            subject: ChartType.github.rawValue,
-            chartData: .init(
-                data: self.map { ($0.date.monthPerDay ?? "", y: $0.contributionCount) },
-                color: .orange500
-            )
-        )
-    }
-}
-
-public extension [Solve] {
-    var baekjoonWeekChartInfo: ChartInfo {
-        .init(
-            title: "\(self.map { $0.solvedCount }.reduce(0, +))",
-            subtitle: "이번주에 푼 문제",
-            subject: ChartType.github.rawValue,
-            chartData: .init(
-                data: self.map { ($0.date.monthPerDay ?? "", y: $0.solvedCount) },
-                color: .orange500
-            )
-        )
-    }
-}

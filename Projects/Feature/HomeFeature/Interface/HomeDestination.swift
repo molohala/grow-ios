@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum HomeDestination {
-    case profileDetail
+public enum HomeDestination: Hashable {
+    case profileDetail(memberId: Int)
     case communityDetail
 }

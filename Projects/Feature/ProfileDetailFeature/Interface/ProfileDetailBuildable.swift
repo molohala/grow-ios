@@ -2,5 +2,5 @@ import SwiftUI
 
 public protocol ProfileDetailBuildable {
     associatedtype ViewType: View
-    func makeView() -> ViewType
+    func makeView(memberId: Int) -> ViewType
 }

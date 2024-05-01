@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum GithubRankDestination {
-    case profileDetail
+public enum GithubRankDestination: Hashable {
+    case profileDetail(memberId: Int)
     case githubSetting
 }
