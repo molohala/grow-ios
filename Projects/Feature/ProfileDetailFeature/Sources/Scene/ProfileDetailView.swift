@@ -48,7 +48,9 @@ public struct ProfileDetailView: View {
             handleSelectingChart(type: viewModel.selectedChart)
         }
         .refreshable {
-            await viewModel.fetchProfile()
+            Task {
+                await viewModel.fetchProfile()
+            }
         }
     }
     
