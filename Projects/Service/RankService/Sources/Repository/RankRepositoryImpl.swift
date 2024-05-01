@@ -23,4 +23,20 @@ class RankRepositoryImpl: RankRepository {
         }
         return Array(ranks[0..<3])
     }
+    
+    func getWeekSolvedacRank() async throws -> [Rank] {
+        try await rankDataSource.getWeekSolvedacRank()
+    }
+    
+    func getTotalSolvedacRank() async throws -> [Rank] {
+        try await rankDataSource.getTotalSolvedacRank()
+    }
+    
+    func getTodaySolvedacRank() async throws -> [Rank] {
+        let ranks = try await rankDataSource.getTodaySolvedacRank()
+        if ranks.count <= 3 {
+            return ranks
+        }
+        return Array(ranks[0..<3])
+    }
 }

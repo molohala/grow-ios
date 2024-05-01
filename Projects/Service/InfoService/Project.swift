@@ -9,8 +9,7 @@ let project = Project.makeService(
             .serviceInterface(target: .Info)
         ]),
         .serviceInterface(target: .Info, dependencies: [
-            .service(target: .Base),
-            .userInterface(target: .DesignSystem)
+            .service(target: .Base)
         ]),
         .serviceTesting(target: .Info, dependencies: [
             .service(target: .Info)

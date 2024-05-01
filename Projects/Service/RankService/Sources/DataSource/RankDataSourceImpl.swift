@@ -28,6 +28,4 @@ class RankDataSourceImpl: BaseRemoteDataSource<RankDataSourceImpl>, RankDataSour
     func getTodaySolvedacRank() async throws -> [Rank] {
         try await requestGet(url: "\(Infinity.baseUrl)/\(solvedacPath)/today", res: BaseResponse<[RankResponse]>.self).data.map { $0.toDomain() }
     }
-    
-    
 }

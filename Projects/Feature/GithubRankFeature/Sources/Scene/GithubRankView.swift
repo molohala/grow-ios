@@ -99,3 +99,4 @@ public struct GithubRankView: View {
         }
     }
 }
+

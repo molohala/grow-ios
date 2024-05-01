@@ -8,35 +8,34 @@
 
 import SwiftUI
 import ProfileDetailFeatureInterface
-import GithubSettingFeatureInterface
-import GithubRankFeatureInterface
+import BaekjoonSettingFeatureInterface
+import BaekjoonRankFeatureInterface
 
-public struct GithubRankCoordinator: View {
+public struct BaekjoonRankCoordinator: View {
     
     private let profileDetailBuildable: any ProfileDetailBuildable
-    private let githubSettingBuildable: any GithubSettingBuildable
-    private let viewModel: GithubRankViewModel
+    private let baekjoonSettingBuildable: any BaekjoonSettingBuildable
+    private let viewModel: BaekjoonRankViewModel
     
     public init(
         profileDetailBuildable: any ProfileDetailBuildable,
-        githubSettingBuildable: any GithubSettingBuildable,
-        viewModel: GithubRankViewModel
+        baekjoonSettingBuildable: any BaekjoonSettingBuildable,
+        viewModel: BaekjoonRankViewModel
     ) {
         self.profileDetailBuildable = profileDetailBuildable
-        self.githubSettingBuildable = githubSettingBuildable
+        self.baekjoonSettingBuildable = baekjoonSettingBuildable
         self.viewModel = viewModel
     }
     
     public var body: some View {
-        GithubRankView(
+        BaekjoonRankView(
             viewModel: viewModel
         )
-        .navigationDestination(for: GithubRankDestination.self) {
+        .navigationDestination(for: BaekjoonDestination.self) {
             switch $0 {
             case .profileDetail(let memberId): profileDetailBuildable.makeView(memberId: memberId).eraseToAnyView()
-            case .githubSetting: githubSettingBuildable.makeView("").eraseToAnyView()
+            case .baekjoonSetting: baekjoonSettingBuildable.makeView("").eraseToAnyView()
             }
         }
     }
 }
-

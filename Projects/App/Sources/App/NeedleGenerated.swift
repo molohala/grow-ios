@@ -311,15 +311,23 @@ private func factory6ebc832ed4bcf9ae0afff47b58f8f304c97af4d5(_ component: Needle
     return CommunityEditDependency1ee294b35aa9a8c53e29Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class BaekjoonRankDependency7e94a57b9cd7dc6dd837Provider: BaekjoonRankDependency {
-
-
-    init() {
-
+    var rankDomainBuildable: any RankDomainBuildable {
+        return appComponent.rankDomainBuildable
+    }
+    var profileDetailBuildable: any ProfileDetailBuildable {
+        return appComponent.profileDetailBuildable
+    }
+    var baekjoonSettingBuildable: any BaekjoonSettingBuildable {
+        return appComponent.baekjoonSettingBuildable
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->BaekjoonRankComponent
-private func factoryf8ddad049da0deefda19e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return BaekjoonRankDependency7e94a57b9cd7dc6dd837Provider()
+private func factoryf8ddad049da0deefda19f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return BaekjoonRankDependency7e94a57b9cd7dc6dd837Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class BaekjoonSettingDependencyce5bee460baf327a3c82Provider: BaekjoonSettingDependency {
     var infoDomainBuildable: any InfoDomainBuildable {
@@ -518,7 +526,9 @@ extension CommunityEditComponent: Registration {
 }
 extension BaekjoonRankComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\BaekjoonRankDependency.rankDomainBuildable] = "rankDomainBuildable-any RankDomainBuildable"
+        keyPathToName[\BaekjoonRankDependency.profileDetailBuildable] = "profileDetailBuildable-any ProfileDetailBuildable"
+        keyPathToName[\BaekjoonRankDependency.baekjoonSettingBuildable] = "baekjoonSettingBuildable-any BaekjoonSettingBuildable"
     }
 }
 extension BaekjoonSettingComponent: Registration {
@@ -587,7 +597,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->GithubSettingComponent", factorybe58855116216af426a2f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ProfileEditComponent", factoryff80df4e3e21c6a49df9e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityEditComponent", factory6ebc832ed4bcf9ae0afff47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->BaekjoonRankComponent", factoryf8ddad049da0deefda19e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->BaekjoonRankComponent", factoryf8ddad049da0deefda19f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BaekjoonSettingComponent", factorycbb61afc845cf58732dbf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->LikeDomainComponent", factory9270861c93e2286ee142e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->InfoDomainComponent", factoryce0a1bbfc08c2337f426e3b0c44298fc1c149afb)

@@ -8,6 +8,7 @@ let project = Project.makeFeature(
             .feature(target: .Base),
             .featureInterface(target: .BaekjoonRank),
             .featureInterface(target: .ProfileDetail),
+            .featureInterface(target: .BaekjoonSetting),
             .serviceInterface(target: .Rank)
         ]),
         .featureInterface(target: .BaekjoonRank, dependencies: []),

@@ -23,6 +23,24 @@ public final class RankDomainComponent: Component<RankDomainDependency>, RankDom
         }
     }
     
+    public var getTotalSolvedacRankUseCase: GetTotalSolvedacRankUseCase {
+        shared {
+            GetTotalSolvedacRankUseCaseImpl(rankRepository: rankRepository)
+        }
+    }
+    
+    public var getTodaySolvedacRankUseCase: GetTodaySolvedacRankUseCase {
+        shared {
+            GetTodaySolvedacRankUseCaseImpl(rankRepository: rankRepository)
+        }
+    }
+    
+    public var getWeekSolvedacRankUseCase: GetWeekSolvedacRankUseCase {
+        shared {
+            GetWeekSolvedacRankUseCaseImpl(rankRepository: rankRepository)
+        }
+    }
+    
     public var rankRepository: any RankRepository {
         shared {
             RankRepositoryImpl(rankDataSource: rankDataSource)
