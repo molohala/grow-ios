@@ -1,21 +1,21 @@
 import RankServiceInterface
 
-public struct GithubRankResponse: Decodable {
+public struct RankResponse: Decodable {
     let memberId: Int
     let memberName: String
     let socialId: String
     let rank: Int
-    let commits: Int
+    let count: Int
 }
 
-extension GithubRankResponse {
-    func toDomain() -> GithubRank {
-        GithubRank(
+extension RankResponse {
+    func toDomain() -> Rank {
+        Rank(
             memberId: memberId,
             memberName: memberName,
             socialId: socialId,
             rank: rank,
-            commits: commits
+            count: count
         )
     }
 }

@@ -1,3 +1,3 @@
 public protocol GetTodayGithubRankUseCase {
-    func callAsFunction() async throws -> [GithubRank]
+    func callAsFunction() async throws -> [Rank]
 }

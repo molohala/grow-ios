@@ -3,12 +3,12 @@ import RankServiceInterface
 
 public struct InfinityGithubRankCell: View {
     
-    private let rank: GithubRank
+    private let rank: Rank
     private let isMe: Bool
     private let action: () async -> Void
     
     public init(
-        rank: GithubRank,
+        rank: Rank,
         isMe: Bool,
         action: @escaping () async -> Void
     ) {
@@ -71,7 +71,7 @@ public struct InfinityGithubRankCell: View {
                     .foregroundStyle(.gray)
             }
             Spacer()
-            Text("\(rank.commits) 커밋")
+            Text("\(rank.count) 커밋")
                 .font(.body)
                 .fontWeight(.semibold)
         }

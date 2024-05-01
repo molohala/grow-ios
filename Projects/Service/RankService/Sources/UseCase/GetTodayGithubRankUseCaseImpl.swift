@@ -8,7 +8,7 @@ class GetTodayGithubRankUseCaseImpl: GetTodayGithubRankUseCase {
         self.rankRepository = rankRepository
     }
     
-    func callAsFunction() async throws -> [GithubRank] {
+    func callAsFunction() async throws -> [Rank] {
         try await rankRepository.getTodayGithubRank()
     }
 }
