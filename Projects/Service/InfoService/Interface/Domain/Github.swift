@@ -1,6 +1,7 @@
 import Foundation
 
-public struct Github {
+public struct Github: Hashable {
+    
     public var avatarUrl: String?
     public var bio: String
     public var totalCommits: Int
@@ -16,7 +17,7 @@ public struct Github {
     }
 }
 
-public struct Commit {
+public struct Commit: Hashable {
     public var date: Date
     public var contributionCount: Int
     public init(date: Date, contributionCount: Int) {

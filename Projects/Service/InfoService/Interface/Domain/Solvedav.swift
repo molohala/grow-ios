@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Solvedav {
+public struct Solvedav: Hashable {
     public var name: String
     public var avatarUrl: String?
     public var bio: String
@@ -32,7 +32,7 @@ public struct Solvedav {
     }
 }
 
-public struct Solve {
+public struct Solve: Hashable {
     public let date: Date
     public let solvedCount: Int
     public let keepStreakReason: String?

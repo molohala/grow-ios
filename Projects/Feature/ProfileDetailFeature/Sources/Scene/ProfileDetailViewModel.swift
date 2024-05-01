@@ -43,40 +43,30 @@ public final class ProfileDetailViewModel: ObservableObject {
     
     @MainActor
     func fetchProfile() async {
-        do {
-            profileFlow = .fetching
-            profile = try await getProfileUseCase()
-            profileFlow = .success
-        } catch {
-            profileFlow = .failure
+        profile = try? await getProfileUseCase()
+        guard let profile else { return }
+        // handle solvedac
+        let solvedavId = profile.socialAccounts.first { $0.socialType == .SOLVED_AC }
+        guard let solvedavId else {
+            solvedacFlow = .failure
+            return
         }
-    }
-    
-    @MainActor
-    func fetchSolvedac() async {
         do {
-            solvedacFlow = .fetching
-            guard let profile, let solvedacId = (profile.socialAccounts.first { $0.socialType == .SOLVED_AC }) else {
-                solvedacFlow = .failure
-                return
-            }
-            solvedac = try await getSolvedacUseCase(name: solvedacId.socialId)
+            solvedac = try await getSolvedacUseCase(name: solvedavId.socialId)
             solvedacFlow = .success
         } catch {
             solvedacFlow = .failure
         }
-    }
-    
-    @MainActor
-    func fetchGithub() async {
+        
+        // handle github
+        let githubId = profile.socialAccounts.first { $0.socialType == .GITHUB }
+        guard let githubId else {
+            githubFlow = .failure
+            return
+        }
         do {
-            githubFlow = .fetching
-            guard let profile, let githubId = (profile.socialAccounts.first { $0.socialType == .GITHUB }) else {
-                githubFlow = .failure
-                return
-            }
             github = try await getGithubUseCase(name: githubId.socialId)
-            solvedacFlow = .success
+            githubFlow = .success
         } catch {
             githubFlow = .failure
         }

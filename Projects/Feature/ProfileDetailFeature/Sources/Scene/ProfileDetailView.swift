@@ -16,7 +16,6 @@ public struct ProfileDetailView: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 12) {
-                profile
                 stats
                 if let chartInfo = viewModel.chartInfo {
                     InfinityChartCell(
@@ -24,9 +23,7 @@ public struct ProfileDetailView: View {
                         selectedType: $viewModel.selectedChart
                     )
                 } else {
-                    Rectangle()
-                        .foregroundStyle(Color.gray300)
-                        .frame(height: 100)
+                    InfinityChartCellShimmer()
                         .shimmer()
                 }
             }
@@ -40,23 +37,20 @@ public struct ProfileDetailView: View {
         )
         .task {
             await viewModel.fetchProfile()
-            async let fetchSolvedac: () = viewModel.fetchSolvedac()
-            async let fetchGithub: () = viewModel.fetchGithub()
-            _ = await [fetchSolvedac, fetchGithub]
+        }
+        .onChange(of: viewModel.selectedChart) { type in
+            handleSelectingChart(type: type)
+        }
+        .onChange(of: viewModel.github) { _ in
+            handleSelectingChart(type: viewModel.selectedChart)
+        }
+        .onChange(of: viewModel.solvedac) { _ in
+            handleSelectingChart(type: viewModel.selectedChart)
+        }
+        .refreshable {
+            await viewModel.fetchProfile()
         }
     }
-    
-    @ViewBuilder
-    private var profile: some View {
-        VStack {
-            Text("\"뚝딱뚝딱.\"")
-                .padding(.vertical, 16)
-                .font(.callout)
-                .foregroundStyle(.gray)
-        }
-        .applyCardView()
-    }
-    
     
     @ViewBuilder
     private var stats: some View {
@@ -81,6 +75,18 @@ public struct ProfileDetailView: View {
                 InfinityStatShimmerCell()
             } else {
                 InfinityStatCell("푼 문제 개수", type: .baekjoon()) {}
+            }
+        }
+    }
+    
+    func handleSelectingChart(type: ChartType) {
+        if let github = viewModel.github,
+           let solvedac = viewModel.solvedac {
+            switch type {
+            case .github:
+                viewModel.chartInfo = github.weekCommits.githubWeekChartInfo
+            case .baekjoon:
+                viewModel.chartInfo = solvedac.weekSolves.baekjoonWeekChartInfo
             }
         }
     }

@@ -26,9 +26,7 @@ public struct ProfileView: View {
                         selectedType: $viewModel.selectedChart
                     )
                 } else {
-                    Rectangle()
-                        .foregroundStyle(Color.gray300)
-                        .frame(height: 100)
+                    InfinityChartCellShimmer()
                         .shimmer()
                 }
             }

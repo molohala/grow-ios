@@ -61,32 +61,31 @@ public final class AppState: ObservableObject {
     public func fetchProfile() {
         Task {
             profile = try? await getProfileUseCase()
-            if let profile {
-                // handle solvedac
-                let solvedavId = profile.socialAccounts.first { $0.socialType == .SOLVED_AC }
-                guard let solvedavId else {
-                    solvedacFlow = .failure
-                    return
-                }
-                do {
-                    solvedac = try await getSolvedacUseCase(name: solvedavId.socialId)
-                    solvedacFlow = .success
-                } catch {
-                    solvedacFlow = .failure
-                }
-                
-                // handle github
-                let githubId = profile.socialAccounts.first { $0.socialType == .GITHUB }
-                guard let githubId else { 
-                    githubFlow = .failure
-                    return
-                }
-                do {
-                    github = try await getGithubUseCase(name: githubId.socialId)
-                    githubFlow = .success
-                } catch {
-                    githubFlow = .failure
-                }
+            guard let profile else { return }
+            // handle solvedac
+            let solvedavId = profile.socialAccounts.first { $0.socialType == .SOLVED_AC }
+            guard let solvedavId else {
+                solvedacFlow = .failure
+                return
+            }
+            do {
+                solvedac = try await getSolvedacUseCase(name: solvedavId.socialId)
+                solvedacFlow = .success
+            } catch {
+                solvedacFlow = .failure
+            }
+            
+            // handle github
+            let githubId = profile.socialAccounts.first { $0.socialType == .GITHUB }
+            guard let githubId else {
+                githubFlow = .failure
+                return
+            }
+            do {
+                github = try await getGithubUseCase(name: githubId.socialId)
+                githubFlow = .success
+            } catch {
+                githubFlow = .failure
             }
         }
     }
