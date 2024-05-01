@@ -30,8 +30,11 @@ public struct HomeView: View {
             .padding(.bottom, 108)
         }
         .background(Color.backgroundColor)
-        .onAppear {
-            viewModel.fetchTodayGithubRank()
+        .task {
+            async let fetchTodayGithubRank: () = viewModel.fetchTodayGithubRank()
+            async let fetchTodayBaekjoonRank: () = viewModel.fetchTodayBaekjoonRank()
+            async let fetchBestCommunities: () = viewModel.fetchBestCommunities()
+            _ = await [fetchTodayGithubRank, fetchTodayBaekjoonRank, fetchBestCommunities]
         }
     }
     
@@ -75,25 +78,6 @@ public struct HomeView: View {
                     InfinityStatShimmerCell()
                 } else {
                     InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon()) {}
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private var weekNiceCommunity: some View {
-        VStack(spacing: 12) {
-            SubTitle("이번주 인기글")
-            VStack(spacing: 12) {
-                ForEach(viewModel.weekCommunities, id: \.community.communityId) { community in
-                    CommunityCell(
-                        community: community,
-                        likeAction: {},
-                        editAction: {},
-                        removeAction: {}
-                    ) {
-                        router.navigate(to: HomeDestination.communityDetail)
-                    }
                 }
             }
         }
@@ -157,15 +141,94 @@ public struct HomeView: View {
                 Spacer()
             }
             let profileId = appState.profile?.id ?? 0
-            VStack(spacing: 12) {
-                ForEach(viewModel.todayGithubRanks, id: \.self) { githubRank in
-                    InfinityGithubRankCell(rank: githubRank, isMe: profileId == githubRank.memberId) {
-                        router.navigate(to: HomeDestination.profileDetail(memberId: githubRank.memberId))
+            switch viewModel.todayBaekjoonRanksFlow {
+            case .fetching:
+                VStack(spacing: 12) {
+                    ForEach(0..<3, id: \.self) { _ in
+                        InfinityBaekjoonRankCellShimmer()
+                            .shimmer()
                     }
                 }
+                .padding(.vertical, 4)
+                .applyCardView()
+            case .success:
+                if viewModel.todayBaekjoonRanks.isEmpty {
+                    HStack {
+                        Spacer()
+                        VStack(spacing: 8) {
+                            Text("첫 번째로 문제를 풀어보세요!")
+                                .font(.subheadline)
+                            Text("아직 아무도 문제를 풀지 않았어요ㅠㅠ")
+                                .foregroundStyle(Color.gray500)
+                                .font(.footnote)
+                        }
+                        Spacer()
+                    }
+                    .padding(.vertical, 8)
+                    .applyCardView()
+                } else {
+                    VStack(spacing: 12) {
+                        ForEach(viewModel.todayBaekjoonRanks, id: \.self) { rank in
+                            InfinityBaekjoonRankCell(rank: rank, isMe: rank.memberId == profileId) {
+                                router.navigate(to: HomeDestination.profileDetail(memberId: rank.memberId))
+                            }
+                        }
+                    }
+                    .padding(.vertical, 4)
+                    .applyCardView()
+                }
+            case .failure:
+                Text("불러오기 실패..")
             }
-            .padding(.vertical, 4)
-            .applyCardView()
+        }
+    }
+    
+    @ViewBuilder
+    private var weekNiceCommunity: some View {
+        VStack(spacing: 12) {
+            SubTitle("이번주 인기글")
+            switch viewModel.weekCommunitiesFlow {
+            case .fetching:
+                VStack(spacing: 12) {
+                    ForEach(0..<3, id: \.self) { _ in
+                        CommunityCellShimmer()
+                            .shimmer()
+                    }
+                }
+                .padding(.vertical, 4)
+            case .success:
+                if viewModel.weekCommunities.isEmpty {
+                    HStack {
+                        Spacer()
+                        VStack(spacing: 8) {
+                            Text("😱")
+                                .font(.subheadline)
+                            Text("아직 아무도 게시글을 올리지 않았어요")
+                                .foregroundStyle(Color.gray500)
+                                .font(.footnote)
+                        }
+                        Spacer()
+                    }
+                    .padding(.vertical, 8)
+                    .applyCardView()
+                } else {
+                    VStack(spacing: 12) {
+                        ForEach(viewModel.weekCommunities, id: \.community.communityId) { community in
+                            CommunityCell(
+                                community: community,
+                                likeAction: {},
+                                editAction: {},
+                                removeAction: {}
+                            ) {
+                                router.navigate(to: HomeDestination.communityDetail)
+                            }
+                        }
+                    }
+                }
+            case .failure:
+                Text("불러오기 실패...")
+            }
+            
         }
     }
 }

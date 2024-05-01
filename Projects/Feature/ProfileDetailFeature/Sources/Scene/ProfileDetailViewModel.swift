@@ -12,7 +12,7 @@ public final class ProfileDetailViewModel: ObservableObject {
     
     // MARK: - UseCases
     private let getGithubUseCase: any GetGithubUseCase
-    private let getProfileUseCase: any GetProfileUseCase
+    private let getProfileByIdUseCase: any GetProfileByIdUseCase
     private let getSolvedacUseCase: any GetSolvedacUseCase
     
     // MARK: - Properties
@@ -31,19 +31,19 @@ public final class ProfileDetailViewModel: ObservableObject {
     
     public init(
         getGithubUseCase: any GetGithubUseCase,
-        getProfileUseCase: any GetProfileUseCase,
+        getProfileByIdUseCase: any GetProfileByIdUseCase,
         getSolvedacUseCase: any GetSolvedacUseCase,
         memberId: Int
     ) {
         self.getGithubUseCase = getGithubUseCase
-        self.getProfileUseCase = getProfileUseCase
+        self.getProfileByIdUseCase = getProfileByIdUseCase
         self.getSolvedacUseCase = getSolvedacUseCase
         self.memberId = memberId
     }
     
     @MainActor
     func fetchProfile() async {
-        profile = try? await getProfileUseCase()
+        profile = try? await getProfileByIdUseCase(memberId: memberId)
         guard let profile else { return }
         // handle solvedac
         let solvedavId = profile.socialAccounts.first { $0.socialType == .SOLVED_AC }

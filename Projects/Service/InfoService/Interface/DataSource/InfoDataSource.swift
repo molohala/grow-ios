@@ -4,4 +4,5 @@ public protocol InfoDataSource {
     func registerSolvedac(_ req: SocialIdRequest) async throws
     func registerGithub(_ req: SocialIdRequest) async throws
     func getProfile() async throws -> Profile
+    func getProfile(memberId: Int) async throws -> Profile
 }

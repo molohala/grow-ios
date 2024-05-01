@@ -24,4 +24,8 @@ class CommunityDataSourceImpl: BaseRemoteDataSource<CommunityDataSourceImpl>, Co
     func removeCommunity(id: Int) async throws {
         _ = try await requestDelete(url: "\(Infinity.baseUrl)/\(path)/\(id)", res: BaseVoidResponse.self)
     }
+    
+    func getBestCommunities(count: Int) async throws -> [Community] {
+        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/best?count=\(count)", res: BaseResponse<[CommunityResponse]>.self).data.map { $0.toDomain() }
+    }
 }

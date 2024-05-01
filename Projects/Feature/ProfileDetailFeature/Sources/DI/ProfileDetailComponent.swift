@@ -13,7 +13,7 @@ public final class ProfileDetailComponent: Component<ProfileDetailDependency>, P
         ProfileDetailView(
             viewModel: .init(
                 getGithubUseCase: dependency.infoDomainBuildable.getGithubUseCase,
-                getProfileUseCase: dependency.infoDomainBuildable.getProfileUseCase,
+                getProfileByIdUseCase: dependency.infoDomainBuildable.getProfileByIdUseCase,
                 getSolvedacUseCase: dependency.infoDomainBuildable.getSolvedacUseCase,
                 memberId: memberId
             )

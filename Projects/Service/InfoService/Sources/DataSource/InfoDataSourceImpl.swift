@@ -24,4 +24,8 @@ class InfoDataSourceImpl: BaseRemoteDataSource<InfoDataSourceImpl>, InfoDataSour
     func getProfile() async throws -> Profile {
         try await requestGet(url: "\(Infinity.baseUrl)/\(path)/me", res: BaseResponse<ProfileResponse>.self).data.toDomain()
     }
+    
+    func getProfile(memberId: Int) async throws -> Profile {
+        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/user/\(memberId)", res: BaseResponse<ProfileResponse>.self).data.toDomain()
+    }
 }

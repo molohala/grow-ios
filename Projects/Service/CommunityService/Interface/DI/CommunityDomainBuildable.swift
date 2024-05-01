@@ -4,4 +4,5 @@ public protocol CommunityDomainBuildable {
     var patchCommunityUseCase: any PatchCommunityUseCase { get }
     var getCommunityUseCase: any GetCommunityUseCase { get }
     var removeCommunityUseCase: any RemoveCommunityUseCase { get }
+    var getBestCommunitiesUseCase: any GetBestCommuntiesUseCase { get }
 }

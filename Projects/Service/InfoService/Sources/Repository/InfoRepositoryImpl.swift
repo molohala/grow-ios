@@ -26,4 +26,8 @@ class InfoRepositoryImpl: InfoRepository {
     func getProfile() async throws -> Profile {
         try await infoDataSource.getProfile()
     }
+    
+    func getProfile(memberId: Int) async throws -> Profile {
+        try await infoDataSource.getProfile(memberId: memberId)
+    }
 }

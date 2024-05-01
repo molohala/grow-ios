@@ -1,11 +1,3 @@
-//
-//  HomeComponent.swift
-//  HomeFeature
-//
-//  Created by dgsw8th71 on 4/7/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import Foundation
 import SwiftUI
 import NeedleFoundation
@@ -15,6 +7,7 @@ import CommunityDetailFeatureInterface
 import ProfileFeatureInterface
 import CommunityFeatureInterface
 import RankServiceInterface
+import CommunityServiceInterface
 
 public protocol HomeDependency: Dependency {
     var profileDetailBuildable: any ProfileDetailBuildable { get }
@@ -22,6 +15,7 @@ public protocol HomeDependency: Dependency {
     var profileBuildable: any ProfileBuildable { get }
     var communityBuildable: any CommunityBuildable { get }
     var rankDomainBuildable: any RankDomainBuildable { get }
+    var communityDomainBuildable: any CommunityDomainBuildable { get }
 }
 
 public final class HomeComponent: Component<HomeDependency>, HomeBuildable {
@@ -30,7 +24,9 @@ public final class HomeComponent: Component<HomeDependency>, HomeBuildable {
             communityDetailBuildable: dependency.communityDetailBuildable,
             profileDetailBuildable: dependency.profileDetailBuildable,
             viewModel: .init(
-                getTodayGithubRankUseCase: dependency.rankDomainBuildable.getTodayGithubRankUseCase
+                getTodayGithubRankUseCase: dependency.rankDomainBuildable.getTodayGithubRankUseCase,
+                getTodaySolvedacRankUseCase: dependency.rankDomainBuildable.getTodaySolvedacRankUseCase,
+                getBestCommunitiesUseCase: dependency.communityDomainBuildable.getBestCommunitiesUseCase
             )
         )
     }

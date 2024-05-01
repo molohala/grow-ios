@@ -27,4 +27,8 @@ class CommunityRepositoryImpl: CommunityRepository {
     func removeCommunity(id: Int) async throws {
         try await dataSource.removeCommunity(id: id)
     }
+    
+    func getBestCommunity(count: Int) async throws -> [Community] {
+        try await dataSource.getBestCommunities(count: count)
+    }
 }

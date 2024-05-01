@@ -16,6 +16,7 @@ public final class InfoDomainComponent: Component<InfoDomainDependency>, InfoDom
             GetGithubUseCaseImpl(infoRepository: infoRepository)
         }
     }
+    
     public var registerSolvedavUseCase: RegisterSolvedacUseCase {
         shared {
             RegisterSolvedacUseCaseImpl(infoRepository: infoRepository)
@@ -34,6 +35,11 @@ public final class InfoDomainComponent: Component<InfoDomainDependency>, InfoDom
         }
     }
     
+    public var getProfileByIdUseCase: GetProfileByIdUseCase {
+        shared {
+            GetProfileByIdUseCaseImpl(infoRepository: infoRepository)
+        }
+    }
     
     public var infoRepository: InfoRepository {
         shared {
@@ -46,5 +52,4 @@ public final class InfoDomainComponent: Component<InfoDomainDependency>, InfoDom
             InfoDataSourceImpl()
         }
     }
-    
 }

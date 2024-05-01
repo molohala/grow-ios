@@ -4,4 +4,5 @@ public protocol CommunityRepository {
     func patchCommuntiy(_ req: PatchCommunityRequest) async throws
     func getCommunity(id: Int) async throws -> CommunityContent
     func removeCommunity(id: Int) async throws
+    func getBestCommunity(count: Int) async throws -> [Community]
 }

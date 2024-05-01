@@ -2,7 +2,7 @@ import SwiftUI
 import CommunityServiceInterface
 import DesignSystem
 
-public struct ShimmerCommunityCell: View {
+public struct CommunityCellShimmer: View {
     
     public init() {}
     
