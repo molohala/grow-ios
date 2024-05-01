@@ -60,15 +60,27 @@ public struct ProfileDetailView: View {
     
     @ViewBuilder
     private var stats: some View {
-        if let github = viewModel.github,
-           let solvedac = viewModel.solvedac {
-            HStack(spacing: 16) {
-                InfinityStatCell("커밋 개수", type: .github(github.totalCommits)) {
+        HStack(spacing: 16) {
+            if let github = viewModel.github, viewModel.githubFlow == .success {
+                let todayCommit = github.todayCommits.contributionCount
+                InfinityStatCell("커밋 개수", type: .github(todayCommit)) {
                     // nav
                 }
-                InfinityStatCell("문제 푼 개수", type: .baekjoon(solvedac.totalSolves)) {
+            } else if viewModel.githubFlow == .fetching {
+                InfinityStatShimmerCell()
+            } else {
+                InfinityStatCell("커밋 개수", type: .github()) {}
+            }
+            
+            if let solvedac = viewModel.solvedac, viewModel.solvedacFlow == .success {
+                let todaySolves = solvedac.todaySolves.solvedCount
+                InfinityStatCell("푼 문제 개수", type: .baekjoon(todaySolves)) {
                     // nav
                 }
+            } else if viewModel.solvedacFlow == .fetching {
+                InfinityStatShimmerCell()
+            } else {
+                InfinityStatCell("푼 문제 개수", type: .baekjoon()) {}
             }
         }
     }

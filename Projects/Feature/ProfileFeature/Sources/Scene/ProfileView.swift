@@ -96,7 +96,7 @@ public struct ProfileView: View {
                 InfinityStatCell("커밋 개수", type: .github(github.totalCommits)) {
                     // nav
                 }
-                InfinityStatCell("문제 푼 개수", type: .baekjoon(solvedac.totalSolves)) {
+                InfinityStatCell("푼 문제 개수", type: .baekjoon(solvedac.totalSolves)) {
                     // nav
                 }
             }
