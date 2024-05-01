@@ -214,11 +214,18 @@ public struct HomeView: View {
                 } else {
                     VStack(spacing: 12) {
                         ForEach(viewModel.weekCommunities, id: \.community.communityId) { community in
+                            let communityId = community.community.communityId
                             CommunityCell(
                                 community: community,
-                                likeAction: {},
-                                editAction: {},
-                                removeAction: {}
+                                likeAction: {
+                                    await viewModel.patchLike(communityId: communityId)
+                                },
+                                editAction: {
+                                    router.navigate(to: HomeDestination.communityEdit(communityContent: community.community))
+                                },
+                                removeAction: {
+                                    await viewModel.removeCommunity()
+                                }
                             ) {
                                 router.navigate(to: HomeDestination.communityDetail)
                             }

@@ -267,6 +267,12 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var communityDomainBuildable: any CommunityDomainBuildable {
         return appComponent.communityDomainBuildable
     }
+    var likeDomainBuildable: any LikeDomainBuildable {
+        return appComponent.likeDomainBuildable
+    }
+    var communityEditBuildable: any CommunityEditBuildable {
+        return appComponent.communityEditBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -511,6 +517,8 @@ extension HomeComponent: Registration {
         keyPathToName[\HomeDependency.communityBuildable] = "communityBuildable-any CommunityBuildable"
         keyPathToName[\HomeDependency.rankDomainBuildable] = "rankDomainBuildable-any RankDomainBuildable"
         keyPathToName[\HomeDependency.communityDomainBuildable] = "communityDomainBuildable-any CommunityDomainBuildable"
+        keyPathToName[\HomeDependency.likeDomainBuildable] = "likeDomainBuildable-any LikeDomainBuildable"
+        keyPathToName[\HomeDependency.communityEditBuildable] = "communityEditBuildable-any CommunityEditBuildable"
     }
 }
 extension GithubSettingComponent: Registration {
