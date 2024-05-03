@@ -97,7 +97,7 @@ public final class CommunityDetailViewModel: ObservableObject {
             }
             data.like += data.liked ? -1 : 1
             data.liked.toggle()
-            self.community = community
+            self.community = .success(data)
         } catch {}
     }
     

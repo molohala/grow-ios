@@ -71,12 +71,20 @@ public struct CommunityCell: View {
         VStack(alignment: .leading, spacing: 16) {
             profile
             VStack(spacing: 4) {
-                TextWrapper(community.community.content, font: .callout, allowTruncating: true)
                 HStack {
-                    Text("더보기")
-                        .font(.footnote)
-                        .foregroundStyle(.gray)
+                    Text(LocalizedStringKey(community.community.content))
+                        .font(.callout)
+                        .applyOpenURL()
+                        .lineLimit(6)
                     Spacer()
+                }
+                if community.community.content.count > 30 {
+                    HStack {
+                        Text("...")
+                            .font(.footnote)
+                            .foregroundStyle(.gray)
+                        Spacer()
+                    }
                 }
             }
             VStack(spacing: 8) {
@@ -151,8 +159,9 @@ public struct CommunityCell: View {
                 Text(recentComment.name)
                     .font(.footnote)
                     .fontWeight(.semibold)
-                Text(recentComment.content)
+                Text(LocalizedStringKey(recentComment.content))
                     .font(.footnote)
+                    .applyOpenURL()
                     .lineLimit(1)
                     .truncationMode(.tail)
                 Text(recentComment.createdAt.timeAgo)

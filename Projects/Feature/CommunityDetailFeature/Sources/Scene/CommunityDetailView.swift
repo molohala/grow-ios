@@ -29,7 +29,9 @@ public struct CommunityDetailView: View {
                        case .success(let c) = viewModel.comments {
                         VStack(alignment: .leading, spacing: 16) {
                             profile(data)
-                            TextWrapper(data.content, font: .callout)
+                            Text(LocalizedStringKey(data.content))
+                                .font(.callout)
+                                .applyOpenURL()
                             info(data)
                             Divider()
                             self.makeComments(c)
@@ -44,7 +46,7 @@ public struct CommunityDetailView: View {
                             .shimmer()
                     }
                 }
-                .alert("게시글을 삭제하시겠습니까?", 
+                .alert("게시글을 삭제하시겠습니까?",
                        isPresented: .init(get: { viewModel.showRemovingCommunity },
                                           set: { _ in
                     viewModel.showRemovingCommunity = false

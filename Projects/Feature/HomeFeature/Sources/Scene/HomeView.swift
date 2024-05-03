@@ -52,7 +52,7 @@ public struct HomeView: View {
         VStack(spacing: 16) {
             switch appState.profile {
             case .success(let data):
-                SubTitle("iOS 개발자\n\(data)님 환영합니다")
+                SubTitle("iOS 개발자\n\(data.name)님 환영합니다")
                     .lineSpacing(4.0)
                     .font(.title)
             case .fetching:
