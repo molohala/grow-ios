@@ -8,12 +8,11 @@ import CommentServiceInterface
 
 public struct CommunityDetailView: View {
     
-    @State private var reader: ScrollViewProxy?
-    
     @StateObject private var viewModel: CommunityDetailViewModel
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
+    @State private var reader: ScrollViewProxy?
     
     public init(
         viewModel: CommunityDetailViewModel
@@ -25,8 +24,13 @@ public struct CommunityDetailView: View {
         ZStack {
             ScrollViewReader { reader in
                 ScrollView {
-                    if case .success(let data) = viewModel.community,
-                       case .success(let c) = viewModel.comments {
+                    EmptyView()
+                        .id("top")
+                    switch viewModel.community {
+                    case .fetching:
+                        ShimmerCommunityDetailCell()
+                            .shimmer()
+                    case .success(let data):
                         VStack(alignment: .leading, spacing: 16) {
                             profile(data)
                             Text(LocalizedStringKey(data.content))
@@ -34,35 +38,15 @@ public struct CommunityDetailView: View {
                                 .applyOpenURL()
                             info(data)
                             Divider()
-                            self.makeComments(c)
+                            self.comments
                                 .padding(.bottom, 64)
                         }
                         .padding(.horizontal, 16)
                         .onAppear {
                             self.reader = reader
                         }
-                    } else {
-                        ShimmerCommunityDetailCell()
-                            .shimmer()
-                    }
-                }
-                .alert("게시글을 삭제하시겠습니까?",
-                       isPresented: .init(get: { viewModel.showRemovingCommunity },
-                                          set: { _ in
-                    viewModel.showRemovingCommunity = false
-                })) {
-                    Button("삭제", role: .destructive) {
-                        Task {
-                            await viewModel.removeCommuntiy()
-                        }
-                    }
-                    Button("아니요", role: .cancel) {}
-                }
-                .refreshable {
-                    Task {
-                        async let fetchCommunity: () = viewModel.fetchCommunity()
-                        async let fetchComments: () = viewModel.fetchComments()
-                        _ = await [fetchCommunity, fetchComments]
+                    case .failure:
+                        Text("불러오기 실패")
                     }
                 }
             }
@@ -77,12 +61,9 @@ public struct CommunityDetailView: View {
                         Task {
                             await viewModel.createComment()
                             guard let reader else { return }
-                            guard case .success(let comments) = viewModel.comments else { return }
-                            guard let first = comments.first else { return }
+                            guard case .success = viewModel.comments else { return }
                             
-                            withAnimation {
-                                reader.scrollTo(first.commentId, anchor: .top)
-                            }
+                            reader.scrollTo("top", anchor: .top)
                         }
                     } label: {
                         Image(systemName: "arrow.up.circle.fill")
@@ -105,6 +86,18 @@ public struct CommunityDetailView: View {
             async let fetchComment: () = viewModel.fetchComments()
             _ = await (fetchCommunity, fetchComment)
         }
+        .refreshable {
+            Task {
+                async let fetchCommunity: () = viewModel.fetchCommunity()
+                async let fetchComments: () = viewModel.fetchComments()
+                _ = await [fetchCommunity, fetchComments]
+            }
+        }
+        .onChange(of: viewModel.removeCommunityFlow) {
+            if case .success = $0 {
+                dismiss()
+            }
+        }
         .alert(
             "게시글을 불러올 수 없습니다",
             isPresented: .init(
@@ -116,10 +109,31 @@ public struct CommunityDetailView: View {
                 dismiss()
             }
         }
-        .onChange(of: viewModel.removeCommunityFlow) {
-            if case .success = $0 {
-                dismiss()
+        .eraseToAnyView()
+        .alert("댓글을 삭제하시겠습니까?",
+               isPresented: .init(get: { viewModel.showRemovingComment },
+                                  set: { _ in
+            viewModel.showRemovingComment = false
+        })) {
+            Button("삭제", role: .destructive) {
+                Task {
+                    await viewModel.removeComment()
+                }
             }
+            Button("아니요", role: .cancel) {}
+        }
+        .eraseToAnyView()
+        .alert("게시글을 삭제하시겠습니까?",
+               isPresented: .init(get: { viewModel.showRemovingCommunity },
+                                  set: { _ in
+            viewModel.showRemovingCommunity = false
+        })) {
+            Button("삭제", role: .destructive) {
+                Task {
+                    await viewModel.removeCommuntiy()
+                }
+            }
+            Button("아니요", role: .cancel) {}
         }
     }
     
@@ -194,26 +208,19 @@ public struct CommunityDetailView: View {
     }
     
     @ViewBuilder
-    private func makeComments(_ comments: [Comment]) -> some View {
-        LazyVStack(spacing: 20) {
-            ForEach(comments, id: \.commentId) { comment in
-                CommentCell(comment: comment) {
-                    viewModel.selectedRemovingComment = comment
-                    viewModel.showRemovingComment = true
+    private var comments: some View {
+        switch viewModel.comments {
+        case .success(let data):
+            LazyVStack(spacing: 20) {
+                ForEach(data, id: \.commentId) { comment in
+                    CommentCell(comment: comment) {
+                        viewModel.selectedRemovingComment = comment
+                        viewModel.showRemovingComment = true
+                    }
                 }
             }
-        }
-        .alert("댓글을 삭제하시겠습니까?",
-               isPresented: .init(get: { viewModel.showRemovingComment },
-                                  set: { _ in
-            viewModel.showRemovingComment = false
-        })) {
-            Button("삭제", role: .destructive) {
-                Task {
-                    await viewModel.removeComment()
-                }
-            }
-            Button("아니요", role: .cancel) {}
+        default:
+            EmptyView()
         }
     }
 }
