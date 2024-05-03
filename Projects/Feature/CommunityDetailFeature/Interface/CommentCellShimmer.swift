@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ShimmerCommentCell: View {
+struct CommentCellShimmer: View {
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
             Circle()

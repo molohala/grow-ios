@@ -28,7 +28,6 @@ public final class CommunityDetailViewModel: ObservableObject {
     
     // remove community
     @Published var removeCommunityFlow: FetchFlow<Bool> = .fetching
-    @Published var showRemovingCommunity = false
     
     // remove comment
     @Published var removeCommentFlow: FetchFlow<Bool> = .fetching

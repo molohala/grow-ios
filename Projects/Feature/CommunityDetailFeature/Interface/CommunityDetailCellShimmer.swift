@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct ShimmerCommunityDetailCell: View {
+public struct CommunityDetailCellShimmer: View {
     
     public init() {}
     
@@ -44,7 +44,7 @@ public struct ShimmerCommunityDetailCell: View {
     private var comments: some View {
         LazyVStack(spacing: 20) {
             ForEach(0..<3, id: \.self) { _ in
-                ShimmerCommentCell()
+                CommentCellShimmer()
             }
         }
     }

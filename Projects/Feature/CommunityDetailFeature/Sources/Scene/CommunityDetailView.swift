@@ -13,6 +13,7 @@ public struct CommunityDetailView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     @State private var reader: ScrollViewProxy?
+    @State private var showRemovingCommunity = false
     
     public init(
         viewModel: CommunityDetailViewModel
@@ -28,7 +29,7 @@ public struct CommunityDetailView: View {
                         .id("top")
                     switch viewModel.community {
                     case .fetching:
-                        ShimmerCommunityDetailCell()
+                        CommunityDetailCellShimmer()
                             .shimmer()
                     case .success(let data):
                         VStack(alignment: .leading, spacing: 16) {
@@ -124,10 +125,7 @@ public struct CommunityDetailView: View {
         }
         .eraseToAnyView()
         .alert("게시글을 삭제하시겠습니까?",
-               isPresented: .init(get: { viewModel.showRemovingCommunity },
-                                  set: { _ in
-            viewModel.showRemovingCommunity = false
-        })) {
+               isPresented: $showRemovingCommunity) {
             Button("삭제", role: .destructive) {
                 Task {
                     await viewModel.removeCommuntiy()
@@ -159,7 +157,7 @@ public struct CommunityDetailView: View {
             if case .success(let community) = viewModel.community {
                 Menu {
                     Button("수정하기") { router.navigate(to: CommunityDetailDestination.communityEdit(communityContent: community)) }
-                    Button("삭제하기", role: .destructive) { viewModel.showRemovingCommunity = true }
+                    Button("삭제하기", role: .destructive) { showRemovingCommunity = true }
                 } label: {
                     DesignSystemAsset.detailVerticalLine.swiftUIImage
                         .resizable()
