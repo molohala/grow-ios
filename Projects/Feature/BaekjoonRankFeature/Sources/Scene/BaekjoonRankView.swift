@@ -20,7 +20,7 @@ public struct BaekjoonRankView: View {
         ZStack {
             ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 12) {
-                    if let profile = appState.profile,
+                    if case .success(let profile) = appState.profile,
                        profile.socialAccounts.first(where: { $0.socialType == .GITHUB }) == nil {
                         githubSetting
                             .padding(.horizontal, 24)
@@ -28,22 +28,21 @@ public struct BaekjoonRankView: View {
                     selector
                         .padding(.horizontal, 20)
                         .padding(.vertical, 8)
-                    let profileId = appState.profile?.id ?? 0
-                    switch viewModel.baekjoonRanksFlow {
-                    case .fetching:
+                    switch (viewModel.baekjoonRanks, appState.profile) {
+                    case (.fetching, _), (_, .fetching):
                         ForEach(0..<7, id: \.self) { _ in
                             InfinityBaekjoonRankCellShimmer()
                                 .padding(.horizontal, 16)
                                 .shimmer()
                         }
-                    case .success:
-                        ForEach(viewModel.baekjoonRanks, id: \.memberId) { rank in
-                            InfinityBaekjoonRankCell(rank: rank, isMe: profileId == rank.memberId) {
+                    case (.success(let data), .success(let profile)):
+                        ForEach(data, id: \.memberId) { rank in
+                            InfinityBaekjoonRankCell(rank: rank, isMe: profile.id == rank.memberId) {
                                 router.navigate(to: BaekjoonDestination.profileDetail(memberId: rank.memberId))
                             }
                             .padding(.horizontal, 16)
                         }
-                    case .failure:
+                    default:
                         Text("불러오기 실패..")
                     }
                 }

@@ -10,6 +10,7 @@ public struct HomeView: View {
     @EnvironmentObject private var router: Router
     
     @StateObject private var viewModel: HomeViewModel
+    @State private var showRemoveDialog = false
     
     public init(
         viewModel: HomeViewModel
@@ -36,16 +37,25 @@ public struct HomeView: View {
             async let fetchBestCommunities: () = viewModel.fetchBestCommunities()
             _ = await [fetchTodayGithubRank, fetchTodayBaekjoonRank, fetchBestCommunities]
         }
+        .alert("정말 게시글을 삭제 하시겠습니까?", isPresented: $showRemoveDialog) {
+            Button("아니요", role: .cancel) {}
+            Button("삭제", role: .destructive) {
+                Task {
+                    await viewModel.removeCommunity()
+                }
+            }
+        }
     }
     
     @ViewBuilder
     private var profile: some View {
         VStack(spacing: 16) {
-            if let profile = appState.profile {
-                SubTitle("iOS 개발자\n\(profile.name)님 환영합니다")
+            switch appState.profile {
+            case .success(let data):
+                SubTitle("iOS 개발자\n\(data)님 환영합니다")
                     .lineSpacing(4.0)
                     .font(.title)
-            } else {
+            case .fetching:
                 VStack {
                     SubTitle("--------")
                         .lineSpacing(4.0)
@@ -55,26 +65,27 @@ public struct HomeView: View {
                         .font(.title)
                 }
                 .shimmer()
+            case .failure:
+                Text("불러오기 실패")
             }
-            
             HStack(spacing: 16) {
-                if let github = appState.github, appState.githubFlow == .success {
-                    let todayCommit = github.todayCommits.contributionCount
+                if case .success(let data) = appState.github {
+                    let todayCommit = data.todayCommits.contributionCount
                     InfinityStatCell("오늘 한 커밋 개수", type: .github(todayCommit)) {
                         // nav
                     }
-                } else if appState.githubFlow == .fetching {
+                } else if appState.github == .fetching {
                     InfinityStatShimmerCell()
                 } else {
                     InfinityStatCell("오늘 한 커밋 개수", type: .github()) {}
                 }
                 
-                if let solvedac = appState.solvedac, appState.solvedacFlow == .success {
-                     let todaySolves = solvedac.todaySolves.solvedCount
+                if case .success(let data) = appState.solvedac {
+                     let todaySolves = data.todaySolves.solvedCount
                      InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon(todaySolves)) {
                          // nav
                      }
-                } else if appState.solvedacFlow == .fetching {
+                } else if appState.solvedac == .fetching {
                     InfinityStatShimmerCell()
                 } else {
                     InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon()) {}
@@ -90,9 +101,9 @@ public struct HomeView: View {
                 SubTitle("오늘의 Github Top 3")
                 Spacer()
             }
-            let profileId = appState.profile?.id ?? 0
-            switch viewModel.todayGithubRanksFlow {
-            case .fetching:
+//            let profileId = appState.profile?.id ?? 0
+            switch (viewModel.todayGithubRanks, appState.profile) {
+            case (.fetching, _), (_, .fetching):
                 VStack(spacing: 12) {
                     ForEach(0..<3, id: \.self) { _ in
                         InfinityGithubRankCellShimmer()
@@ -101,8 +112,8 @@ public struct HomeView: View {
                 }
                 .padding(.vertical, 4)
                 .applyCardView()
-            case .success:
-                if viewModel.todayGithubRanks.isEmpty {
+            case (.success(let data), .success(let profile)):
+                if data.isEmpty {
                     HStack {
                         Spacer()
                         VStack(spacing: 8) {
@@ -118,8 +129,8 @@ public struct HomeView: View {
                     .applyCardView()
                 } else {
                     VStack(spacing: 12) {
-                        ForEach(viewModel.todayGithubRanks, id: \.self) { githubRank in
-                            InfinityGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profileId) {
+                        ForEach(data, id: \.self) { githubRank in
+                            InfinityGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profile.id) {
                                 router.navigate(to: HomeDestination.profileDetail(memberId: githubRank.memberId))
                             }
                         }
@@ -127,7 +138,7 @@ public struct HomeView: View {
                     .padding(.vertical, 4)
                     .applyCardView()
                 }
-            case .failure:
+            default:
                 Text("불러오기 실패..")
             }
         }
@@ -140,9 +151,8 @@ public struct HomeView: View {
                 SubTitle("오늘의 백준 Top 3")
                 Spacer()
             }
-            let profileId = appState.profile?.id ?? 0
-            switch viewModel.todayBaekjoonRanksFlow {
-            case .fetching:
+            switch (viewModel.todayBaekjoonRanks, appState.profile) {
+            case (.fetching, _), (_, .fetching):
                 VStack(spacing: 12) {
                     ForEach(0..<3, id: \.self) { _ in
                         InfinityBaekjoonRankCellShimmer()
@@ -151,8 +161,8 @@ public struct HomeView: View {
                 }
                 .padding(.vertical, 4)
                 .applyCardView()
-            case .success:
-                if viewModel.todayBaekjoonRanks.isEmpty {
+            case (.success(let data), .success(let profile)):
+                if data.isEmpty {
                     HStack {
                         Spacer()
                         VStack(spacing: 8) {
@@ -168,8 +178,8 @@ public struct HomeView: View {
                     .applyCardView()
                 } else {
                     VStack(spacing: 12) {
-                        ForEach(viewModel.todayBaekjoonRanks, id: \.self) { rank in
-                            InfinityBaekjoonRankCell(rank: rank, isMe: rank.memberId == profileId) {
+                        ForEach(data, id: \.self) { rank in
+                            InfinityBaekjoonRankCell(rank: rank, isMe: rank.memberId == profile.id) {
                                 router.navigate(to: HomeDestination.profileDetail(memberId: rank.memberId))
                             }
                         }
@@ -177,7 +187,7 @@ public struct HomeView: View {
                     .padding(.vertical, 4)
                     .applyCardView()
                 }
-            case .failure:
+            default:
                 Text("불러오기 실패..")
             }
         }
@@ -187,7 +197,7 @@ public struct HomeView: View {
     private var weekNiceCommunity: some View {
         VStack(spacing: 12) {
             SubTitle("이번주 인기글")
-            switch viewModel.weekCommunitiesFlow {
+            switch viewModel.weekCommunities {
             case .fetching:
                 VStack(spacing: 12) {
                     ForEach(0..<3, id: \.self) { _ in
@@ -196,8 +206,8 @@ public struct HomeView: View {
                     }
                 }
                 .padding(.vertical, 4)
-            case .success:
-                if viewModel.weekCommunities.isEmpty {
+            case .success(let data):
+                if data.isEmpty {
                     HStack {
                         Spacer()
                         VStack(spacing: 8) {
@@ -213,7 +223,7 @@ public struct HomeView: View {
                     .applyCardView()
                 } else {
                     VStack(spacing: 12) {
-                        ForEach(viewModel.weekCommunities, id: \.community.communityId) { community in
+                        ForEach(data, id: \.community.communityId) { community in
                             let communityId = community.community.communityId
                             CommunityCell(
                                 community: community,
@@ -224,7 +234,7 @@ public struct HomeView: View {
                                     router.navigate(to: HomeDestination.communityEdit(communityContent: community.community))
                                 },
                                 removeAction: {
-                                    await viewModel.removeCommunity()
+                                    showRemoveDialog = true
                                 }
                             ) {
                                 router.navigate(to: HomeDestination.communityDetail)

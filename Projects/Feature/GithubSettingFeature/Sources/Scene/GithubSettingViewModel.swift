@@ -1,35 +1,27 @@
 import Foundation
 import InfoServiceInterface
+import BaseFeature
 
 public final class GithubSettingViewModel: ObservableObject {
     @Published var githubId: String = ""
     private let registerGithubUseCase: any RegisterGithubUseCase
     
-    enum Flow {
-        case idle
-        case fetching
-        case success
-        case failure
-    }
-    
-    @Published var flow: Flow = .idle
+    @Published var completeFlow: FetchFlow<Bool> = .fetching
     
     public init(
-        registerGithubUseCase: any RegisterGithubUseCase,
-        githubId: String
+        registerGithubUseCase: any RegisterGithubUseCase
     ) {
-        self.githubId = githubId
         self.registerGithubUseCase = registerGithubUseCase
     }
     
     @MainActor
     func completeSetting() async {
-        flow = .fetching
         do {
+            completeFlow = .fetching
             try await registerGithubUseCase(.init(socialId: githubId))
-            flow = .success
+            completeFlow = .success(true)
         } catch {
-            flow = .failure
+            completeFlow = .failure
         }
     }
 }

@@ -20,7 +20,7 @@ public struct GithubRankView: View {
         ZStack {
             ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 12) {
-                    if let profile = appState.profile,
+                    if case .success(let profile) = appState.profile,
                        profile.socialAccounts.first(where: { $0.socialType == .GITHUB }) == nil {
                         githubSetting
                             .padding(.horizontal, 24)
@@ -28,22 +28,21 @@ public struct GithubRankView: View {
                     selector
                         .padding(.horizontal, 20)
                         .padding(.vertical, 8)
-                    let profileId = appState.profile?.id ?? 0
-                    switch viewModel.githubRanksFlow {
-                    case .fetching:
+                    switch (viewModel.githubRanks, appState.profile) {
+                    case (.fetching, _), (_, .fetching):
                         ForEach(0..<7, id: \.self) { _ in
                             InfinityGithubRankCellShimmer()
                                 .padding(.horizontal, 16)
                                 .shimmer()
                         }
-                    case .success:
-                        ForEach(viewModel.githubRanks, id: \.memberId) { githubRank in
-                            InfinityGithubRankCell(rank: githubRank, isMe: profileId == githubRank.memberId) {
+                    case (.success(let githubRank), .success(let profile)):
+                        ForEach(githubRank, id: \.memberId) { githubRank in
+                            InfinityGithubRankCell(rank: githubRank, isMe: profile.id == githubRank.memberId) {
                                 router.navigate(to: GithubRankDestination.profileDetail(memberId: githubRank.memberId))
                             }
                             .padding(.horizontal, 16)
                         }
-                    case .failure:
+                    default:
                         Text("불러오기 실패..")
                     }
                 }

@@ -58,11 +58,13 @@ public struct ProfileView: View {
                     .frame(width: 48, height: 48)
                     .clipShape(Circle())
                     .foregroundStyle(.gray)
-                Text(appState.profile?.name ?? "")
-                    .font(.callout)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.black)
-                    .padding(.leading, 8)
+                if case .success(let profile) = appState.profile {
+                    Text(profile.name)
+                        .font(.callout)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.black)
+                        .padding(.leading, 8)
+                }
                 
                 Spacer()
                 Button {
@@ -88,8 +90,8 @@ public struct ProfileView: View {
     
     @ViewBuilder
     private var stats: some View {
-        if let github = appState.github,
-           let solvedac = appState.solvedac {
+        if case .success(let github) = appState.github,
+           case .success(let solvedac) = appState.solvedac {
             HStack(spacing: 16) {
                 InfinityStatCell("커밋 개수", type: .github(github.totalCommits)) {
                     // nav
@@ -102,8 +104,8 @@ public struct ProfileView: View {
     }
     
     func handleSelectingChart(type: ChartType) {
-        if let github = appState.github,
-           let solvedac = appState.solvedac {
+        if case .success(let github) = appState.github,
+           case .success(let solvedac) = appState.solvedac {
             switch type {
             case .github:
                 viewModel.chartInfo = github.weekCommits.githubWeekChartInfo

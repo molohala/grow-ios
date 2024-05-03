@@ -10,11 +10,10 @@ public protocol BaekjoonSettingDependency: Dependency {
 }
 
 public final class BaekjoonSettingComponent: Component<BaekjoonSettingDependency>, BaekjoonSettingBuildable {
-    public func makeView(_ baekjoonId: String) -> some View {
+    public func makeView() -> some View {
         BaekjoonSettingView(
             viewModel: .init(
-                registerSolvedacUseCase: dependency.infoDomainBuildable.registerSolvedavUseCase,
-                baekjoonId: baekjoonId
+                registerSolvedacUseCase: dependency.infoDomainBuildable.registerSolvedavUseCase
             )
         )
     }

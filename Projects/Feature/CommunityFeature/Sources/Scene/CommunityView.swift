@@ -7,14 +7,15 @@ import CommunityServiceInterface
 public struct CommunityView: View {
     
     @EnvironmentObject private var router: Router
-    @State private var reader: ScrollViewProxy?
-    @StateObject private var viewModel: CommunityViewModel
     @EnvironmentObject private var appState: AppState
+    @StateObject private var viewModel: CommunityViewModel
+    @State private var reader: ScrollViewProxy?
+    @State private var showRemoveDialog = false
     
     public init(
         viewModel: CommunityViewModel
     ) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
+        self._viewModel = .init(wrappedValue: viewModel)
     }
     
     public var body: some View {
@@ -22,46 +23,48 @@ public struct CommunityView: View {
             ScrollViewReader { reader in
                 ScrollView {
                     LazyVStack(spacing: 8) {
-                        if viewModel.isfetchingCommunities {
+                        switch viewModel.communities {
+                        case .fetching:
                             ForEach(0..<4, id: \.self) { _ in
                                 CommunityCellShimmer()
                                     .shimmer()
                             }
-                        } else {
-                            ForEach(viewModel.communities, id: \.community.communityId) { community in
+                        case .success(let data):
+                            ForEach(data, id: \.community.communityId) { community in
                                 CommunityCell(
                                     community: community,
                                     likeAction: {
-                                        viewModel.patchLike(communityId: community.community.communityId)
+                                        await viewModel.patchLike(communityId: community.community.communityId)
                                     },
                                     editAction: {
                                         router.navigate(to: CommunityDestination.communityEdit(communityContent: community.community))
                                     },
                                     removeAction: {
-                                        viewModel.removedCommunity = community
-                                        viewModel.removedCommunityFlow = .checking
+                                        viewModel.selectedRemoveCommunity = community
+                                        showRemoveDialog = true
                                     }
                                 ) {
                                     router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))
                                 }
-                                .onAppear {
-                                    guard let index = viewModel.communities.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
+                                .task {
+                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
                                     
-                                    if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (viewModel.communities.count - 1) / pagingInterval {
-                                        viewModel.fetchNextCommunities()
+                                    if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (data.count - 1) / pagingInterval {
+                                        await viewModel.fetchNextCommunities()
                                     }
                                 }
-                                .alert("정말 게시글을 삭제 하시겠습니까?", isPresented: .init(
-                                    get: { viewModel.removedCommunityFlow == .checking },
-                                    set: { _ in
-                                        viewModel.removeCommunity()
-                                        viewModel.fetchCommunities()
-                                    }
-                                )) {
+                                .alert("정말 게시글을 삭제 하시겠습니까?", isPresented: $showRemoveDialog) {
                                     Button("아니요", role: .cancel) {}
-                                    Button("삭제", role: .destructive) {}
+                                    Button("삭제", role: .destructive) {
+                                        Task {
+                                            await viewModel.removeCommunity()
+                                            await viewModel.fetchCommunities()
+                                        }
+                                    }
                                 }
                             }
+                        case .failure:
+                            Text("불러오기 실패")
                         }
                     }
                     .padding(.horizontal, 16)
@@ -72,9 +75,9 @@ public struct CommunityView: View {
                     }
                     .id("lazyvstack")
                     .alert("게시글 삭제 성공", isPresented: .init {
-                        viewModel.removedCommunityFlow == .success
+                        viewModel.removedCommunityFlow == .success(true)
                     } set: { _ in
-                        viewModel.removedCommunityFlow = .idle
+                        viewModel.removedCommunityFlow = .fetching
                     }) {
                         Button("닫기", role: .cancel) {}
                     }
@@ -103,14 +106,16 @@ public struct CommunityView: View {
         }
         .background(Color.backgroundColor)
         .refreshable {
-            viewModel.fetchCommunities()
+            Task {
+                await viewModel.fetchCommunities()
+            }
         }
-        .onAppear {
-            viewModel.fetchCommunities()
+        .task {
+            await viewModel.fetchCommunities()
         }
         .alert("게시글 삭제에 실패했습니다", isPresented: .init(
             get: { viewModel.removedCommunityFlow == .failure },
-            set: { _ in viewModel.removedCommunityFlow = .idle }
+            set: { _ in viewModel.removedCommunityFlow = .fetching }
         )) {
             Button("확인", role: .cancel) {}
         }

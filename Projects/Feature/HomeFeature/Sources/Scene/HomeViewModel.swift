@@ -2,22 +2,9 @@ import Foundation
 import CommunityServiceInterface
 import RankServiceInterface
 import LikeServiceInterface
+import BaseFeature
 
 public final class HomeViewModel: ObservableObject {
-    
-    enum FetchFlow {
-        case fetching
-        case success
-        case failure
-    }
-    
-    enum DeleteFlow {
-        case idle
-        case checking
-        case fetching
-        case success
-        case failure
-    }
     
     // MARK: - UseCases
     private let getTodayGithubRankUseCase: any GetTodayGithubRankUseCase
@@ -27,18 +14,13 @@ public final class HomeViewModel: ObservableObject {
     private let removeCommunityUseCase: any RemoveCommunityUseCase
     
     // MARK: - Properties
-    @Published var weekCommunities: [Community] = []
-    @Published var weekCommunitiesFlow: FetchFlow = .fetching
+    @Published var weekCommunities: FetchFlow<[Community]> = .fetching
     @Published var selectedCommunity: Community?
+    @Published var todayGithubRanks: FetchFlow<[Rank]> = .fetching
+    @Published var todayBaekjoonRanks: FetchFlow<[Rank]> = .fetching
     
-    @Published var todayGithubRanks: [Rank] = []
-    @Published var todayGithubRanksFlow: FetchFlow = .fetching
-    
-    @Published var todayBaekjoonRanks: [Rank] = []
-    @Published var todayBaekjoonRanksFlow: FetchFlow = .fetching
-    
-    @Published var removedCommunityFlow: FetchFlow = .fetching
-    @Published var removedCommunity: Community?
+    @Published var removedCommunityFlow: FetchFlow<Bool> = .fetching
+    @Published var selectedRemoveCommunity: Community?
     
     public init(
         getTodayGithubRankUseCase: any GetTodayGithubRankUseCase,
@@ -57,33 +39,33 @@ public final class HomeViewModel: ObservableObject {
     @MainActor
     func fetchTodayGithubRank() async {
         do {
-            todayBaekjoonRanksFlow = .fetching
-            todayGithubRanks = try await getTodayGithubRankUseCase()
-            todayGithubRanksFlow = .success
+            todayBaekjoonRanks = .fetching
+            let ranks = try await getTodayGithubRankUseCase()
+            todayGithubRanks = .success(ranks)
         } catch {
-            todayGithubRanksFlow = .failure
+            todayGithubRanks = .failure
         }
     }
     
     @MainActor
     func fetchTodayBaekjoonRank() async {
         do {
-            todayBaekjoonRanksFlow = .fetching
-            todayBaekjoonRanks = try await getTodaySolvedacRankUseCase()
-            todayBaekjoonRanksFlow = .success
+            todayBaekjoonRanks = .fetching
+            let rank = try await getTodaySolvedacRankUseCase()
+            todayBaekjoonRanks = .success(rank)
         } catch {
-            todayBaekjoonRanksFlow = .failure
+            todayBaekjoonRanks = .failure
         }
     }
     
     @MainActor
     func fetchBestCommunities() async {
         do {
-            weekCommunitiesFlow = .fetching
-            weekCommunities = try await getBestCommunitiesUseCase(count: 3)
-            weekCommunitiesFlow = .success
+            weekCommunities = .fetching
+            let communities = try await getBestCommunitiesUseCase(count: 3)
+            weekCommunities = .success(communities)
         } catch {
-            weekCommunitiesFlow = .failure
+            weekCommunities = .failure
         }
     }
     
@@ -91,25 +73,31 @@ public final class HomeViewModel: ObservableObject {
     public func patchLike(communityId: Int) async {
         do {
             try await patchLikeUseCase(communityId: communityId)
-            weekCommunities.enumerated().forEach { idx, i in
+            guard case .success(var data) = weekCommunities else {
+                return
+            }
+
+            data.enumerated().forEach { idx, i in
                 if communityId == i.community.communityId {
-                    weekCommunities[idx].community.like += i.community.liked ? -1 : 1
-                    weekCommunities[idx].community.liked.toggle()
+                    data[idx].community.like += i.community.liked ? -1 : 1
+                    data[idx].community.liked.toggle()
                 }
             }
+            self.weekCommunities = .success(data)
         } catch {}
     }
     
     @MainActor
     public func removeCommunity() async {
         do {
-            guard let removedCommunity else {
+            guard let selectedRemoveCommunity else {
                 removedCommunityFlow = .failure
                 return
             }
             removedCommunityFlow = .fetching
-            try await removeCommunityUseCase(id: removedCommunity.community.communityId)
-            removedCommunityFlow = .success
+            try await removeCommunityUseCase(id: selectedRemoveCommunity.community.communityId)
+            await fetchBestCommunities()
+            removedCommunityFlow = .success(true)
         } catch {
             removedCommunityFlow = .failure
         }

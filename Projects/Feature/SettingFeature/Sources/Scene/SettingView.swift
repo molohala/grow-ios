@@ -19,7 +19,7 @@ public struct SettingView: View {
     
     public var body: some View {
         VStack(spacing: 8) {
-            if let profile = appState.profile,
+            if case .success(let profile) = appState.profile,
                let githubId = profile.socialAccounts.first(where: { $0.socialType == .GITHUB }),
                let baekjoonId = profile.socialAccounts.first(where: { $0.socialType == .SOLVED_AC }) {
                 

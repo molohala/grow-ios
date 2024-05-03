@@ -34,7 +34,7 @@ public struct BaekjoonRankCoordinator: View {
         .navigationDestination(for: BaekjoonDestination.self) {
             switch $0 {
             case .profileDetail(let memberId): profileDetailBuildable.makeView(memberId: memberId).eraseToAnyView()
-            case .baekjoonSetting: baekjoonSettingBuildable.makeView("").eraseToAnyView()
+            case .baekjoonSetting: baekjoonSettingBuildable.makeView().eraseToAnyView()
             }
         }
     }

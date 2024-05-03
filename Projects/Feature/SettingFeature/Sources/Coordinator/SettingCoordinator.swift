@@ -35,15 +35,13 @@ public struct SettingCoordinator: View {
     }
     
     public var body: some View {
-        let baekjoonId = appState.profile?.socialAccounts.first { $0.socialType == .SOLVED_AC }
-        let githubId = appState.profile?.socialAccounts.first { $0.socialType == .GITHUB }
         SettingView(
             viewModel: viewModel
         )
         .navigationDestination(for: SettingDestination.self) {
             switch $0 {
-            case .baekjoonSetting: baekjoonSettingBuildable.makeView(baekjoonId?.socialId ?? "").eraseToAnyView()
-            case .githubSetting: githubSettingBuildable.makeView(githubId?.socialId ?? "").eraseToAnyView()
+            case .baekjoonSetting: baekjoonSettingBuildable.makeView().eraseToAnyView()
+            case .githubSetting: githubSettingBuildable.makeView().eraseToAnyView()
             case .profileEdit: profileEditBuildable.makeView().eraseToAnyView()
             }
         }

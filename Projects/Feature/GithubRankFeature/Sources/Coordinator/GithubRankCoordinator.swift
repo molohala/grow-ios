@@ -34,9 +34,8 @@ public struct GithubRankCoordinator: View {
         .navigationDestination(for: GithubRankDestination.self) {
             switch $0 {
             case .profileDetail(let memberId): profileDetailBuildable.makeView(memberId: memberId).eraseToAnyView()
-            case .githubSetting: githubSettingBuildable.makeView("").eraseToAnyView()
+            case .githubSetting: githubSettingBuildable.makeView().eraseToAnyView()
             }
         }
     }
 }
-

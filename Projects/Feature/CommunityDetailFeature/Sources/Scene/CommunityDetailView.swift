@@ -25,16 +25,14 @@ public struct CommunityDetailView: View {
         ZStack {
             ScrollViewReader { reader in
                 ScrollView {
-                    if viewModel.communityFlow == .success,
-                       let community = viewModel.community,
-                       viewModel.commentFlow == .success,
-                       let comments = viewModel.comments {
+                    if case .success(let data) = viewModel.community,
+                       case .success(let c) = viewModel.comments {
                         VStack(alignment: .leading, spacing: 16) {
-                            profile(community)
-                            TextWrapper(community.content, font: .callout)
-                            info(community)
+                            profile(data)
+                            TextWrapper(data.content, font: .callout)
+                            info(data)
                             Divider()
-                            self.makeComments(comments)
+                            self.makeComments(c)
                                 .padding(.bottom, 64)
                         }
                         .padding(.horizontal, 16)
@@ -50,11 +48,12 @@ public struct CommunityDetailView: View {
                        isPresented: .init(get: { viewModel.showRemovingCommunity },
                                           set: { _ in
                     viewModel.showRemovingCommunity = false
-                    Task {
-                        await viewModel.removeCommuntiy()
-                    }
                 })) {
-                    Button("삭제", role: .destructive) {}
+                    Button("삭제", role: .destructive) {
+                        Task {
+                            await viewModel.removeCommuntiy()
+                        }
+                    }
                     Button("아니요", role: .cancel) {}
                 }
                 .refreshable {
@@ -69,14 +68,15 @@ public struct CommunityDetailView: View {
                 Spacer()
                 Divider()
                 HStack {
-                    TextField("댓글을 남겨보세요", text: $viewModel.comment)
+                    TextField("댓글을 남겨보세요", text: $viewModel.currentComment)
                         .padding(8)
                         .font(.body)
                     Button {
                         Task {
                             await viewModel.createComment()
                             guard let reader else { return }
-                            guard let first = viewModel.comments?.first else { return }
+                            guard case .success(let comments) = viewModel.comments else { return }
+                            guard let first = comments.first else { return }
                             
                             withAnimation {
                                 reader.scrollTo(first.commentId, anchor: .top)
@@ -86,10 +86,10 @@ public struct CommunityDetailView: View {
                         Image(systemName: "arrow.up.circle.fill")
                             .renderingMode(.template)
                             .font(.title)
-                            .foregroundStyle(viewModel.comment.isEmpty ? Color.gray400 : Color.blue500)
+                            .foregroundStyle(viewModel.currentComment.isEmpty ? Color.gray400 : Color.blue500)
                             .padding(4)
                     }
-                    .disabled(viewModel.comment.isEmpty)
+                    .disabled(viewModel.currentComment.isEmpty)
                 }
                 .padding(8)
                 .background(Color.white)
@@ -106,7 +106,7 @@ public struct CommunityDetailView: View {
         .alert(
             "게시글을 불러올 수 없습니다",
             isPresented: .init(
-                get: { viewModel.commentFlow == .failure || viewModel.commentFlow == .failure },
+                get: { viewModel.comments == .failure || viewModel.comments == .failure },
                 set: { _ in dismiss() }
             )
         ) {
@@ -115,7 +115,7 @@ public struct CommunityDetailView: View {
             }
         }
         .onChange(of: viewModel.removeCommunityFlow) {
-            if $0 == .success {
+            if case .success = $0 {
                 dismiss()
             }
         }
@@ -140,8 +140,7 @@ public struct CommunityDetailView: View {
             }
             Spacer()
             
-            if let profile = appState.profile,
-               let community = viewModel.community {
+            if case .success(let community) = viewModel.community {
                 Menu {
                     Button("수정하기") { router.navigate(to: CommunityDetailDestination.communityEdit(communityContent: community)) }
                     Button("삭제하기", role: .destructive) { viewModel.showRemovingCommunity = true }
@@ -206,11 +205,12 @@ public struct CommunityDetailView: View {
                isPresented: .init(get: { viewModel.showRemovingComment },
                                   set: { _ in
             viewModel.showRemovingComment = false
-            Task {
-                await viewModel.removeComment()
-            }
         })) {
-            Button("삭제", role: .destructive) {}
+            Button("삭제", role: .destructive) {
+                Task {
+                    await viewModel.removeComment()
+                }
+            }
             Button("아니요", role: .cancel) {}
         }
     }

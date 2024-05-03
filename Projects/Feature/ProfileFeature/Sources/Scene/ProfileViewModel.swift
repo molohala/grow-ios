@@ -4,12 +4,6 @@ import DesignSystem
 
 public final class ProfileViewModel: ObservableObject {
     
-    enum Flow {
-        case fetching
-        case success
-        case failure
-    }
-    
     // MARK: - UseCases
     private let getGithubUseCase: any GetGithubUseCase
     private let getSolvedavUseCase: any GetSolvedacUseCase

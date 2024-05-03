@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Comment {
+public struct Comment: Hashable {
     public let commentId: Int
     public let content: String
     public let createdAt: Date

@@ -9,11 +9,10 @@ public protocol GithubSettingDependency: Dependency {
 }
 
 public final class GithubSettingComponent: Component<GithubSettingDependency>, GithubSettingBuildable {
-    public func makeView(_ githubId: String) -> some View {
+    public func makeView() -> some View {
         GithubSettingView(
             viewModel: .init(
-                registerGithubUseCase: dependency.infoDomainBuildable.registerGithubUseCase,
-                githubId: githubId
+                registerGithubUseCase: dependency.infoDomainBuildable.registerGithubUseCase
             )
         )
     }

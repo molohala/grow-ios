@@ -20,32 +20,35 @@ public struct BaekjoonSettingView: View {
                 
                 Spacer()
                 
-                InfinityButton("완료하기", isLoading: viewModel.flow == .fetching) {
+                InfinityButton("완료하기", isLoading: viewModel.completeFlow == .fetching) {
                     await viewModel.completeSetting()
                 }
                 .disabled(viewModel.baekjoonId.isEmpty)
                 .alert("백준 정보 수정 완료", isPresented: .init(
-                    get: { viewModel.flow == .success },
-                    set: { _ in viewModel.flow = .idle })) {
-                        Button("닫기") { viewModel.flow = .idle }
+                    get: { viewModel.completeFlow == .success(true) },
+                    set: { _ in })
+                ) {
+                    Button("닫기") {
+                        viewModel.completeFlow = .fetching
                     }
+                }
             }
             .padding(.top, 16)
             .padding(.horizontal, 16)
         }
         .infinityTopBar("백준 설정")
         .alert("수정에 실패했습니다", isPresented: .init(
-            get: { viewModel.flow == .failure },
-            set: { _ in viewModel.flow = .idle }
+            get: { viewModel.completeFlow == .failure },
+            set: { _ in }
         )) {
             Button("확인") {
-                viewModel.flow = .idle
+                viewModel.completeFlow = .fetching
             }
         } message: {
             Text("아이디를 다시 확인해 주세요")
         }
-        .onChange(of: viewModel.flow) {
-            if $0 == .success {
+        .onChange(of: viewModel.completeFlow) {
+            if case .success(let data) = $0 {
                 appState.fetchProfile()
             }
         }

@@ -1,5 +1,6 @@
 import Foundation
 import RankServiceInterface
+import BaseFeature
 
 public final class GithubRankViewModel: ObservableObject {
     
@@ -8,23 +9,15 @@ public final class GithubRankViewModel: ObservableObject {
         case total = "전체"
     }
     
-    enum FetchFlow {
-        case fetching
-        case success
-        case failure
-    }
-    
     // MARK: - UseCases
     private let getTotalGithubRankUseCase: any GetTotalGithubRankUseCase
     private let getWeekGithubRankUseCase: any GetWeekGithubRankUseCase
     
     // MARK: - Properties
-    @Published var githubRanks: [Rank] = []
-    @Published var githubRanksFlow: FetchFlow = .fetching
+    @Published var githubRanks: FetchFlow<[Rank]> = .fetching
     @Published var selectedTab: GithubTab = .week {
         didSet {
             Task {
-                githubRanksFlow = .fetching
                 await handleGithubRank()
             }
         }
@@ -50,20 +43,22 @@ public final class GithubRankViewModel: ObservableObject {
     @MainActor
     private func fetchWeekGithubRank() async {
         do {
-            githubRanks = try await getWeekGithubRankUseCase()
-            githubRanksFlow = .success
+            githubRanks = .fetching
+            let ranks = try await getWeekGithubRankUseCase()
+            githubRanks = .success(ranks)
         } catch {
-            githubRanksFlow = .failure
+            githubRanks = .failure
         }
     }
     
     @MainActor
     private func fetchTotalGithubRank() async {
         do {
-            githubRanks = try await getTotalGithubRankUseCase()
-            githubRanksFlow = .success
+            githubRanks = .fetching
+            let ranks = try await getTotalGithubRankUseCase()
+            githubRanks = .success(ranks)
         } catch {
-            githubRanksFlow = .failure
+            githubRanks = .failure
         }
     }
 }

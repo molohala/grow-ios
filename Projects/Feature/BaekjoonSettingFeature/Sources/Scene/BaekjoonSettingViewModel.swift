@@ -1,35 +1,27 @@
 import Foundation
 import InfoServiceInterface
+import BaseFeature
 
 public final class BaekjoonSettingViewModel: ObservableObject {
-    @Published var baekjoonId: String
+    @Published var baekjoonId: String = ""
     private let registerSolvedacUseCase: any RegisterSolvedacUseCase
     
-    enum Flow {
-        case idle
-        case fetching
-        case success
-        case failure
-    }
-    
-    @Published var flow: Flow = .idle
+    @Published var completeFlow: FetchFlow<Bool> = .fetching
     
     public init(
-        registerSolvedacUseCase: any RegisterSolvedacUseCase,
-        baekjoonId: String
+        registerSolvedacUseCase: any RegisterSolvedacUseCase
     ) {
         self.registerSolvedacUseCase = registerSolvedacUseCase
-        self.baekjoonId = baekjoonId
     }
     
     @MainActor
     func completeSetting() async {
-        flow = .fetching
+        completeFlow = .fetching
         do {
             try await registerSolvedacUseCase(.init(socialId: baekjoonId))
-            flow = .success
+            completeFlow = .success(true)
         } catch {
-            flow = .failure
+            completeFlow = .failure
         }
     }
 }

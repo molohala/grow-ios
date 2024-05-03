@@ -35,7 +35,7 @@ public struct CommunityCell: View {
                 label
             }
             .applyAnimation()
-            if let profile = appState.profile,
+            if case .success(let profile) = appState.profile,
                profile.id == community.community.writerId {
                 HStack {
                     Spacer()
