@@ -5,10 +5,10 @@ public struct InfinityChartData {
     
     public typealias Data = [(x: String, y: Int)]
     
-    public let data: [(x: String, y: Int)]
+    public let data: Data
     public let color: Color
     
-    public init(data: [(x: String, y: Int)], color: Color) {
+    public init(data: Data, color: Color) {
         self.data = data
         self.color = color
     }
