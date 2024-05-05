@@ -24,6 +24,7 @@ public enum GrowIconography {
     case expandStopUp
     case expandUp
     case github
+    case heart
     case hide
     case home
     case logout
@@ -62,6 +63,7 @@ public enum GrowIconography {
         case .expandStopUp: DesignSystemAsset.expandStopUp.swiftUIImage
         case .expandUp: DesignSystemAsset.expandUp.swiftUIImage
         case .github: DesignSystemAsset.github.swiftUIImage
+        case .heart: DesignSystemAsset.heart.swiftUIImage
         case .hide: DesignSystemAsset.hide.swiftUIImage
         case .home: DesignSystemAsset.home.swiftUIImage
         case .logout: DesignSystemAsset.logout.swiftUIImage

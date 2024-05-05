@@ -26,6 +26,8 @@ struct ButtonPreview: View {
                 
                 GrowToggle(isOn: .constant(true))
                 GrowToggle(isOn: .constant(false))
+                GrowLikeButton(like: 312, isLiked: true) {}
+                GrowLikeButton(like: 311, isLiked: false) {}
             }
         }
         .growTopBar("") {}
