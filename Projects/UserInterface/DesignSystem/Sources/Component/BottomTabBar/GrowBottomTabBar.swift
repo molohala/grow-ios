@@ -1,13 +1,4 @@
-//
-//  GrowTabView.swift
-//  MainFeature
-//
-//  Created by dgsw8th71 on 4/2/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
-import BaseFeature
 
 public struct GrowBottomTabBar<C>: View where C: View {
     @Binding var selectedTab: BottomTabType
@@ -58,26 +49,5 @@ public struct GrowBottomTabBar<C>: View where C: View {
             let impactMed = UIImpactFeedbackGenerator(style: .rigid)
             impactMed.impactOccurred()
         }
-//        .padding(.bottom, safeAreaInsets.bottom)
-    }
-}
-
-private struct SafeAreaInsetsKey: EnvironmentKey {
-    static var defaultValue: EdgeInsets {
-        (UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.safeAreaInsets ?? .zero).insets
-    }
-}
-
-extension EnvironmentValues {
-    
-    var safeAreaInsets: EdgeInsets {
-        self[SafeAreaInsetsKey.self]
-    }
-}
-
-private extension UIEdgeInsets {
-    
-    var insets: EdgeInsets {
-        EdgeInsets(top: top, leading: left, bottom: bottom, trailing: right)
     }
 }

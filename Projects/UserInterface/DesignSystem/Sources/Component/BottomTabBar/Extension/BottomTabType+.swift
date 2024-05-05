@@ -1,5 +1,4 @@
 import SwiftUI
-import BaseFeature
 
 public extension BottomTabType {
     

@@ -5,6 +5,7 @@ enum GrowPreview: String, CaseIterable {
     case Avatar
     case Button
     case Divider
+    case TextField
     case TopAppBar
     
     var view: some View {
@@ -13,6 +14,7 @@ enum GrowPreview: String, CaseIterable {
             case .Avatar: AvatarPreview()
             case .Button: ButtonPreview()
             case .Divider: DividerPreview()
+            case .TextField: TextFieldPreview()
             case .TopAppBar: TopAppBarPreview()
             }
         }
@@ -27,7 +29,7 @@ enum GrowPreview: String, CaseIterable {
 //                    Text("\(preview.rawValue) Preview")
 //                }
 //            }
-            GrowPreview.Button.view
+            GrowPreview.TextField.view
         }
     }
 }

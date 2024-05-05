@@ -1,12 +1,14 @@
 import SwiftUI
-import BaseFeature
 
 struct GrowBottomTabItem: View {
     
     let type: BottomTabType
     let isSelected: Bool
     
-    init(type: BottomTabType, isSelected: Bool) {
+    init(
+        type: BottomTabType,
+        isSelected: Bool
+    ) {
         self.type = type
         self.isSelected = isSelected
     }

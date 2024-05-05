@@ -23,7 +23,7 @@ public extension GrowColorScheme {
         case .textFieldIcon: GrowPallete.shared.Neutral90
         case .textFieldPrimary: GrowPallete.shared.Primary80
         case .textFieldSecondary: GrowPallete.shared.Neutral30
-        case .textFieldSecondaryDisabled: GrowPallete.shared.Neutral30
+        case .textFieldSecondaryDisabled: GrowPallete.shared.Neutral20
         case .textFieldTextDisabled: GrowPallete.shared.Neutral40
         case .avatarLabel: GrowPallete.shared.Neutral30
         case .avatarBackground: GrowPallete.shared.Neutral20
