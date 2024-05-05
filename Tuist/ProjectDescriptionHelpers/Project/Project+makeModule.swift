@@ -12,7 +12,7 @@ extension Project {
     ) -> Project {
         let settings: Settings = .settings(
             base: ["OTHER_LDFLAGS": .string("-ObjC"),
-                   "ENABLE_USER_SCRIPT_SANDBOXING": .string("No")].merging(env.baseSetting),
+                   "ENABLE_USER_SCRIPT_SANDBOXING": .string("No")].merging(env.baseSetting).merging(.init().otherSwiftFlags("-Xfrontend -warn-long-function-bodies=100")),
             configurations: [
                 .debug(name: .debug),
                 .release(name: .release)
