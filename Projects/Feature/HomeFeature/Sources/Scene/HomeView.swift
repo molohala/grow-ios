@@ -222,30 +222,29 @@ public struct HomeView: View {
                     .padding(.vertical, 8)
                     .applyCardView()
                 } else {
-                    VStack(spacing: 12) {
-                        ForEach(data, id: \.community.communityId) { community in
-                            let communityId = community.community.communityId
-                            CommunityCell(
-                                community: community,
-                                likeAction: {
-                                    await viewModel.patchLike(communityId: communityId)
-                                },
-                                editAction: {
-                                    router.navigate(to: HomeDestination.communityEdit(communityContent: community.community))
-                                },
-                                removeAction: {
-                                    showRemoveDialog = true
-                                }
-                            ) {
-                                router.navigate(to: HomeDestination.communityDetail)
-                            }
-                        }
-                    }
+//                    VStack(spacing: 12) {
+//                        ForEach(data, id: \.community.communityId) { community in
+//                            let communityId = community.community.communityId
+//                            CommunityCell(
+//                                community: community,
+//                                likeAction: {
+//                                    await viewModel.patchLike(communityId: communityId)
+//                                },
+//                                editAction: {
+//                                    router.navigate(to: HomeDestination.communityEdit(communityContent: community.community))
+//                                },
+//                                removeAction: {
+//                                    showRemoveDialog = true
+//                                }
+//                            ) {
+//                                router.navigate(to: HomeDestination.communityDetail)
+//                            }
+//                        }
+//                    }
                 }
             case .failure:
                 Text("불러오기 실패...")
             }
-            
         }
     }
 }

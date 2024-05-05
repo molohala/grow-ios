@@ -18,7 +18,7 @@ struct CommunityDetailCoordinator: View {
         CommunityDetailView(viewModel: viewModel)
             .navigationDestination(for: CommunityDetailDestination.self) {
                 switch $0 {
-                case .communityEdit(communityContent: let communityContent): communityEditBuildable.makeView(communityContent: communityContent).eraseToAnyView()
+                case .communityEdit(let forumId): communityEditBuildable.makeView(forumId: forumId).eraseToAnyView()
                 }
             }
     }

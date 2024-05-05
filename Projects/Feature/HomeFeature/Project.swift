@@ -11,11 +11,7 @@ let project = Project.makeFeature(
             .featureInterface(target: .ProfileDetail),
             .featureInterface(target: .Community),
         ]),
-        .featureInterface(target: .Home, dependencies: [
-            .serviceInterface(target: .Community),
-            .serviceInterface(target: .Like),
-            .serviceInterface(target: .Rank)
-        ]),
+        .featureInterface(target: .Home, dependencies: []),
         .featureExample(target: .Home, dependencies: [
             .feature(target: .Home)
         ])

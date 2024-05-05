@@ -2,11 +2,9 @@ import SwiftUI
 import CommunityServiceInterface
 import DesignSystem
 import Pow
-import BaseFeature
 
 public struct CommunityCell: View {
     
-    @EnvironmentObject private var appState: AppState
     private let community: Community
     private let likeAction: () async -> Void
     private let editAction: () async -> Void
@@ -35,34 +33,32 @@ public struct CommunityCell: View {
                 label
             }
             .applyAnimation()
-            if case .success(let profile) = appState.profile,
-               profile.id == community.community.writerId {
-                HStack {
-                    Spacer()
-                    VStack {
-                        Menu {
-                            Button("수정하기") {
-                                Task {
-                                    await editAction()
-                                }
-                            }
-                            Button("삭제하기", role: .destructive) {
-                                Task {
-                                    await removeAction()
-                                }
-                            }
-                        } label: {
-                            DesignSystemAsset.detailVerticalLine.swiftUIImage
-                                .resizable()
-                                .renderingMode(.template)
-                                .frame(width: 24, height: 24)
-                                .foregroundStyle(Color.gray)
-                        }
-                        .padding(12)
-                        Spacer()
-                    }
-                }
-            }
+//               profile.id == community.community.writerId {
+//                HStack {
+//                    Spacer()
+//                    VStack {
+//                        Menu {
+//                            Button("수정하기") {
+//                                Task {
+//                                    await editAction()
+//                                }
+//                            }
+//                            Button("삭제하기", role: .destructive) {
+//                                Task {
+//                                    await removeAction()
+//                                }
+//                            }
+//                        } label: {
+//                            DesignSystemAsset.detailVerticalLine.swiftUIImage
+//                                .resizable()
+//                                .renderingMode(.template)
+//                                .frame(width: 24, height: 24)
+//                                .foregroundStyle(Color.gray)
+//                        }
+//                        .padding(12)
+//                        Spacer()
+//                    }
+//                }
         }
     }
     

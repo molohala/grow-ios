@@ -28,7 +28,7 @@ public struct CommunityEditView: View {
             } else {
                 Button("완료") {
                     Task {
-                        await viewModel.createCommunity()
+//                        await viewModel.createCommunity()
                     }
                 }
             }

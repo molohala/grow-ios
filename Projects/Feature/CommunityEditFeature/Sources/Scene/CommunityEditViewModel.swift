@@ -13,35 +13,34 @@ public final class CommunityEditViewModel: ObservableObject {
         case empty = "내용을 입력해 주세요"
     }
     
-    @Published var content: String
+    @Published var content: String = ""
     @Published var flow: Flow = .idle
     
-    private let community: CommunityContent
+    private let forumId: Int
     
     public init(
         patchCommunityUseCase: any PatchCommunityUseCase,
-        community: CommunityContent
+        forumId: Int
     ) {
         self.patchCommunityUseCase = patchCommunityUseCase
-        self.community = community
-        self.content = community.content
+        self.forumId = forumId
     }
     
-    @MainActor
-    func createCommunity() async {
-        
-        guard !content.isEmpty else {
-            flow = .empty
-            return
-        }
-        
-        flow = .fetching
-        
-        do {
-            try await patchCommunityUseCase(.init(content: content, id: community.communityId))
-            flow = .success
-        } catch {
-            flow = .failure
-        }
-    }
+//    @MainActor
+//    func createCommunity() async {
+//        
+//        guard !content.isEmpty else {
+//            flow = .empty
+//            return
+//        }
+//        
+//        flow = .fetching
+//        
+//        do {
+//            try await patchCommunityUseCase(.init(content: content, id: community.communityId))
+//            flow = .success
+//        } catch {
+//            flow = .failure
+//        }
+//    }
 }

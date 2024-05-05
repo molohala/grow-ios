@@ -1,5 +1,3 @@
-import CommunityServiceInterface
-
 enum CommunityDetailDestination: Hashable {
-    case communityEdit(communityContent: CommunityContent)
+    case communityEdit(forumId: Int)
 }

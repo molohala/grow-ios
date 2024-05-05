@@ -156,7 +156,7 @@ public struct CommunityDetailView: View {
             
             if case .success(let community) = viewModel.community {
                 Menu {
-                    Button("수정하기") { router.navigate(to: CommunityDetailDestination.communityEdit(communityContent: community)) }
+                    Button("수정하기") { router.navigate(to: CommunityDetailDestination.communityEdit(forumId: 1)) }
                     Button("삭제하기", role: .destructive) { showRemovingCommunity = true }
                 } label: {
                     DesignSystemAsset.detailVerticalLine.swiftUIImage

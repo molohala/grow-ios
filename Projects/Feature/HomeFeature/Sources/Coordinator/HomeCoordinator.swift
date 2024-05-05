@@ -32,7 +32,7 @@ public struct HomeCoordinator: View {
             switch $0 {
             case .communityDetail: communityDetailBuildable.makeView(id: viewModel.selectedCommunity?.community.communityId ?? -1).eraseToAnyView()
             case .profileDetail(let memberId): profileDetailBuildable.makeView(memberId: memberId).eraseToAnyView()
-            case .communityEdit(let communityContent): communityEditBuildable.makeView(communityContent: communityContent).eraseToAnyView()
+            case .communityEdit(let forumId): communityEditBuildable.makeView(forumId: forumId).eraseToAnyView()
             }
         }
     }

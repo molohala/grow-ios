@@ -39,7 +39,7 @@ public struct CommunityCoordinator: View {
                 switch $0 {
                 case .communityCreate: communityCreateBuildable.makeView().eraseToAnyView()
                 case .communityDetail(let id): communityDetailBuildable.makeView(id: id).eraseToAnyView()
-                case .communityEdit(let communityContent): communityEditBuildable.makeView(communityContent: communityContent).eraseToAnyView()
+                case .communityEdit(let forumId): communityEditBuildable.makeView(forumId: forumId).eraseToAnyView()
                 }
             }
     }

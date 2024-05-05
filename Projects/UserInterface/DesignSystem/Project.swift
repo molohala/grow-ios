@@ -1,10 +1,3 @@
-//
-//  Project.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by dgsw8th71 on 3/22/24.
-//
-
 import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
@@ -14,10 +7,8 @@ let project = Project.makeUserInterface(
     targets: [
         .userInterface(target: .DesignSystem, dependencies: [
             .shared(target: .DateUtil),
-            .SPM.Pow,
-            .serviceInterface(target: .Rank),
-            .serviceInterface(target: .Info)
-        ]),
+            .SPM.Pow
+        ] + ModulePaths.Service.allCases.map { TargetDependency.service(target: $0) }),
         .userInterfaceExample(target: .DesignSystem, dependencies: [
             .userInterface(target: .DesignSystem)
         ])

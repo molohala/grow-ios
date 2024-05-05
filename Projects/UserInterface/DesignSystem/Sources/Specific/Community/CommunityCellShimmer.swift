@@ -1,6 +1,5 @@
 import SwiftUI
 import CommunityServiceInterface
-import DesignSystem
 
 public struct CommunityCellShimmer: View {
     
