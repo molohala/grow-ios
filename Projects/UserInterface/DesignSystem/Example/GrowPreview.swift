@@ -2,11 +2,13 @@ import SwiftUI
 import DesignSystem
 
 enum GrowPreview: String, CaseIterable {
+    case Avatar
     case TopAppBar
     
     var view: some View {
         Group {
             switch self {
+            case .Avatar: AvatarPreview()
             case .TopAppBar: TopAppBarPreview()
             }
         }
@@ -20,7 +22,7 @@ enum GrowPreview: String, CaseIterable {
 //                    Text("\(preview.rawValue) Preview")
 //                }
 //            }
-            GrowPreview.TopAppBar.view
+            GrowPreview.Avatar.view
         }
     }
 }
