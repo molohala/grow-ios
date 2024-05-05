@@ -12,6 +12,10 @@ struct StatCellPreview: View {
                 GrowStatCell(label: "오늘 푼 문제", type: .github(commit: 100)) {}
                 GrowStatCell(label: "오늘 푼 문제", type: .github(commit: nil)) {}
             }
+            HStack(spacing: 12) {
+                GrowStatCellShimmer()
+                GrowStatCellShimmer()
+            }
         }
         .growBackground(.backgroundAlt)
     }
