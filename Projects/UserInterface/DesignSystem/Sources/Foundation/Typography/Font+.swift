@@ -67,7 +67,7 @@ public enum GrowFont {
 }
 
 public extension View {
-    func font(_ growFont: GrowFont) -> some View {
+    func growFont(_ growFont: GrowFont) -> some View {
         self.font(growFont.font)
     }
 }

@@ -36,11 +36,11 @@ public struct SettingCell: View {
                     .frame(width: 24, height: 24)
                     .foregroundStyle(iconColor)
                 Text(text)
-                    .font(.callout)
+                    .growFont(.callout)
                 Spacer()
                 if let description {
                     Text(description)
-                        .font(.caption)
+                        .growFont(.caption)
                         .foregroundStyle(.gray)
                 }
                 Icon.rightArrorIcon

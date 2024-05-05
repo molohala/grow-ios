@@ -65,16 +65,16 @@ public struct GithubRankView: View {
         VStack {
             Text("아직 Github 설정이 완료되지 않았네요")
                 .foregroundStyle(.gray)
-                .font(.caption)
+                .growFont(.caption)
             Text("Github 설정을 하고 순위권에 도전해 보세요!")
-                .font(.callout)
+                .growFont(.callout)
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
             GrowButton("설정하기", height: 40) {
                 router.navigate(to: GithubRankDestination.githubSetting)
             }
             .frame(width: 150)
-            .font(.callout)
+            .growFont(.callout)
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 8)

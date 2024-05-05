@@ -59,7 +59,7 @@ public struct SettingView: View {
         } label: {
             HStack {
                 Text("로그아웃")
-                    .font(.body)
+                    .growFont(.body)
                     .foregroundStyle(.red)
                     .fontWeight(.medium)
                     .padding(4)

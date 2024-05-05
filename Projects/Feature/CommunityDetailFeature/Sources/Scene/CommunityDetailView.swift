@@ -57,7 +57,7 @@ public struct CommunityDetailView: View {
                 HStack {
                     TextField("댓글을 남겨보세요", text: $viewModel.currentComment)
                         .padding(8)
-                        .font(.body)
+                        .growFont(.body)
                     Button {
                         Task {
                             await viewModel.createComment()
@@ -69,7 +69,7 @@ public struct CommunityDetailView: View {
                     } label: {
                         Image(systemName: "arrow.up.circle.fill")
                             .renderingMode(.template)
-                            .font(.title)
+                            .growFont(.title)
                             .foregroundStyle(viewModel.currentComment.isEmpty ? Color.gray400 : Color.blue500)
                             .padding(4)
                     }
@@ -143,11 +143,11 @@ public struct CommunityDetailView: View {
                 .frame(width: 36, height: 36)
             VStack(alignment: .leading, spacing: 2) {
                 Text(c.writerName)
-                    .font(.callout)
+                    .growFont(.callout)
                     .fontWeight(.semibold)
                     .padding(.leading, 8)
                 Text(c.createdAt.timeAgo)
-                    .font(.caption)
+                    .growFont(.caption)
                     .fontWeight(.regular)
                     .foregroundStyle(.gray)
                     .padding(.leading, 4)
@@ -182,7 +182,7 @@ public struct CommunityDetailView: View {
                         .font(Font.title3)
                         .foregroundStyle(c.liked ? Color.red400 : Color.gray500)
                     Text("\(c.like)")
-                        .font(.callout)
+                        .growFont(.callout)
                         .foregroundStyle(c.liked ? Color.red400 : Color.gray500)
                 }
                 .padding(6)

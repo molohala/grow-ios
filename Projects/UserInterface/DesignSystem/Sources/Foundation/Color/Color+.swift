@@ -65,7 +65,11 @@ public extension View {
 
 public class ColorProvider: ObservableObject {
     
-    @Published private(set) var isDarkTheme = true
+    @Published private(set) var isDarkTheme: Bool
+    
+    public init(isDarkTheme: Bool) {
+        self.isDarkTheme = isDarkTheme
+    }
     
     func color(_ color: GrowColorScheme) -> Color {
         isDarkTheme ? color.darkColor : color.lightColor

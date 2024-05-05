@@ -41,10 +41,10 @@ struct CommentCell: View {
     private var profile: some View {
         HStack(spacing: 0) {
             Text(comment.name)
-                .font(.callout)
+                .growFont(.callout)
                 .fontWeight(.semibold)
             Text(comment.createdAt.timeAgo)
-                .font(.caption)
+                .growFont(.caption)
                 .fontWeight(.regular)
                 .foregroundStyle(.gray)
                 .padding(.leading, 8)

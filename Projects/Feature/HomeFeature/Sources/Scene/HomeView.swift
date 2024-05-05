@@ -54,15 +54,15 @@ public struct HomeView: View {
             case .success(let data):
                 SubTitle("iOS 개발자\n\(data.name)님 환영합니다")
                     .lineSpacing(4.0)
-                    .font(.title)
+                    .growFont(.title)
             case .fetching:
                 VStack {
                     SubTitle("--------")
                         .lineSpacing(4.0)
-                        .font(.title)
+                        .growFont(.title)
                     SubTitle("------------")
                         .lineSpacing(4.0)
-                        .font(.title)
+                        .growFont(.title)
                 }
                 .shimmer()
             case .failure:
@@ -118,10 +118,10 @@ public struct HomeView: View {
                         Spacer()
                         VStack(spacing: 8) {
                             Text("첫 번째로 커밋을 해보세요!")
-                                .font(.subheadline)
+                                .growFont(.subheadline)
                             Text("아직 아무도 커밋을 안 했어요")
                                 .foregroundStyle(Color.gray500)
-                                .font(.footnote)
+                                .growFont(.footnote)
                         }
                         Spacer()
                     }
@@ -167,10 +167,10 @@ public struct HomeView: View {
                         Spacer()
                         VStack(spacing: 8) {
                             Text("첫 번째로 문제를 풀어보세요!")
-                                .font(.subheadline)
+                                .growFont(.subheadline)
                             Text("아직 아무도 문제를 풀지 않았어요ㅠㅠ")
                                 .foregroundStyle(Color.gray500)
-                                .font(.footnote)
+                                .growFont(.footnote)
                         }
                         Spacer()
                     }
@@ -212,10 +212,10 @@ public struct HomeView: View {
                         Spacer()
                         VStack(spacing: 8) {
                             Text("😱")
-                                .font(.subheadline)
+                                .growFont(.subheadline)
                             Text("아직 아무도 게시글을 올리지 않았어요")
                                 .foregroundStyle(Color.gray500)
-                                .font(.footnote)
+                                .growFont(.footnote)
                         }
                         Spacer()
                     }

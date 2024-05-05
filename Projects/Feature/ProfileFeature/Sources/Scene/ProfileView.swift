@@ -60,7 +60,7 @@ public struct ProfileView: View {
                     .foregroundStyle(.gray)
                 if case .success(let profile) = appState.profile {
                     Text(profile.name)
-                        .font(.callout)
+                        .growFont(.callout)
                         .fontWeight(.semibold)
                         .foregroundStyle(.black)
                         .padding(.leading, 8)
@@ -71,7 +71,7 @@ public struct ProfileView: View {
                     router.navigate(to: ProfileDestination.setting)
                 } label: {
                     Text("설정")
-                        .font(.callout)
+                        .growFont(.callout)
                         .foregroundStyle(.gray)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 12)
