@@ -7,6 +7,7 @@ let project = Project.makeUserInterface(
     targets: [
         .userInterface(target: .DesignSystem, dependencies: [
             .shared(target: .DateUtil),
+            .shared(target: .SwiftUtil),
             .SPM.Pow
         ] + ModulePaths.Service.allCases.map { TargetDependency.service(target: $0) }),
         .userInterfaceExample(target: .DesignSystem, dependencies: [

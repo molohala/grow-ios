@@ -9,7 +9,8 @@ let project = Project.makeFeature(
             .shared(target: .GlobalThirdPartyLibrary),
             .shared(target: .DateUtil),
             .serviceInterface(target: .Auth),
-            .serviceInterface(target: .Info)
+            .serviceInterface(target: .Info),
+            .shared(target: .SwiftUtil)
         ])
     ]
 )
