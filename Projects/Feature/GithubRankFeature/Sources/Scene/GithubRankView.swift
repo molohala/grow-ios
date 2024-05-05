@@ -31,13 +31,13 @@ public struct GithubRankView: View {
                     switch (viewModel.githubRanks, appState.profile) {
                     case (.fetching, _), (_, .fetching):
                         ForEach(0..<7, id: \.self) { _ in
-                            InfinityGithubRankCellShimmer()
+                            GrowGithubRankCellShimmer()
                                 .padding(.horizontal, 16)
                                 .shimmer()
                         }
                     case (.success(let githubRank), .success(let profile)):
                         ForEach(githubRank, id: \.memberId) { githubRank in
-                            InfinityGithubRankCell(rank: githubRank, isMe: profile.id == githubRank.memberId) {
+                            GrowGithubRankCell(rank: githubRank, isMe: profile.id == githubRank.memberId) {
                                 router.navigate(to: GithubRankDestination.profileDetail(memberId: githubRank.memberId))
                             }
                             .padding(.horizontal, 16)
@@ -70,7 +70,7 @@ public struct GithubRankView: View {
                 .font(.callout)
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
-            InfinityButton("설정하기", height: 40) {
+            GrowButton("설정하기", height: 40) {
                 router.navigate(to: GithubRankDestination.githubSetting)
             }
             .frame(width: 150)
@@ -90,7 +90,7 @@ public struct GithubRankView: View {
     private var selector: some View {
         HStack(spacing: 8) {
             ForEach(GithubRankViewModel.GithubTab.allCases, id: \.self) { tab in
-                InfinitySelector(text: tab.rawValue, isSelected: tab == viewModel.selectedTab) {
+                GrowSelector(text: tab.rawValue, isSelected: tab == viewModel.selectedTab) {
                     viewModel.selectedTab = tab
                 }
             }

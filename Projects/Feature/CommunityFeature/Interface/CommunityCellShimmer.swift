@@ -16,11 +16,11 @@ public struct CommunityCellShimmer: View {
             profile
             VStack(alignment: .leading, spacing: 8) {
                 Text(Array(repeating: "-", count: .random(in: 20..<40)).joined())
-                    .lineSpacing(.infinityLineSpacing)
+                    .lineSpacing(.growLineSpacing)
                     .font(.callout)
                     .fontWeight(.medium)
                 Text(Array(repeating: "-", count: .random(in: 10..<20)).joined())
-                    .lineSpacing(.infinityLineSpacing)
+                    .lineSpacing(.growLineSpacing)
                     .font(.callout)
                     .fontWeight(.medium)
             }

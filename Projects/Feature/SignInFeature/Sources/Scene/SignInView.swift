@@ -18,9 +18,9 @@ public struct SignInView: View {
     
     public var body: some View {
         VStack {
-            InfinityTextField("아이디를 입력해 주세요", text: $viewModel.id)
+            GrowTextField("아이디를 입력해 주세요", text: $viewModel.id)
                 .padding(.top, 24)
-            InfinityTextField("비밀번호를 입력해 주세요", text: $viewModel.pw, isSecured: isSecured)
+            GrowTextField("비밀번호를 입력해 주세요", text: $viewModel.pw, isSecured: isSecured)
                 .overlay {
                     HStack {
                         Spacer()
@@ -35,7 +35,7 @@ public struct SignInView: View {
                     }
                 }
             Spacer()
-            InfinityButton("도담도담 로그인") {
+            GrowButton("도담도담 로그인") {
                 await viewModel.signIn { token in
                     withAnimation {
                         appState.accessToken = token.accessToken
@@ -45,7 +45,7 @@ public struct SignInView: View {
             }
         }
         .padding(.horizontal, 16)
-        .infinityTopBar("로그인", hideBackButton: true)
+        .growTopBar("로그인", hideBackButton: true)
         .hideKeyboardWhenTap()
         .alert("로그인에 실패했습니다", isPresented: $viewModel.showErrorDialog) {
             Button("확인", role: .none) {}

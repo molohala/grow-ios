@@ -3,7 +3,7 @@ import DesignSystem
 import BaseService
 
 @main
-struct InfinityApp: App {
+struct GrowApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     

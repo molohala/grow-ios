@@ -81,7 +81,7 @@ public struct CommunityDetailView: View {
         }
         .background(Color.white)
         .hideKeyboardWhenTap()
-        .infinityTopBar("")
+        .growTopBar("")
         .task {
             async let fetchCommunity: () = viewModel.fetchCommunity()
             async let fetchComment: () = viewModel.fetchComments()

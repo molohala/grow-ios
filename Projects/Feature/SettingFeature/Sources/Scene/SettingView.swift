@@ -48,7 +48,7 @@ public struct SettingView: View {
         .padding(.top, 16)
         .padding(.horizontal, 16)
         .background(Color.backgroundColor)
-        .infinityTopBar("설정", background: .backgroundColor)
+        .growTopBar("설정", background: .backgroundColor)
     }
     
     @ViewBuilder

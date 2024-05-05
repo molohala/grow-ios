@@ -35,7 +35,7 @@ public struct MainView: View {
     public var body: some View {
         NavigationStack(path: $router.navPath) {
             content
-                .infinityTopBar(appState.selectedView.title, background: appState.selectedView.backgroundColor, hideBackButton: true)
+                .growTopBar(appState.selectedView.title, background: appState.selectedView.backgroundColor, hideBackButton: true)
                 .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
         }
         .onAppear {
@@ -56,7 +56,7 @@ public struct MainView: View {
                 }
                 VStack {
                     Spacer()
-                    InfinityTabView(selectedTab: $appState.selectedView, proxy: proxy)
+                    GrowTabView(selectedTab: $appState.selectedView, proxy: proxy)
                         .shadow(color: Color.black.opacity(0.04), radius: 12)
                 }
                 VStack {

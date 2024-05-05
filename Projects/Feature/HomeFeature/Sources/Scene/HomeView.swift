@@ -71,24 +71,24 @@ public struct HomeView: View {
             HStack(spacing: 16) {
                 if case .success(let data) = appState.github {
                     let todayCommit = data.todayCommits.contributionCount
-                    InfinityStatCell("오늘 한 커밋 개수", type: .github(todayCommit)) {
+                    GrowStatCell("오늘 한 커밋 개수", type: .github(todayCommit)) {
                         // nav
                     }
                 } else if appState.github == .fetching {
-                    InfinityStatShimmerCell()
+                    GrowStatShimmerCell()
                 } else {
-                    InfinityStatCell("오늘 한 커밋 개수", type: .github()) {}
+                    GrowStatCell("오늘 한 커밋 개수", type: .github()) {}
                 }
                 
                 if case .success(let data) = appState.solvedac {
                      let todaySolves = data.todaySolves.solvedCount
-                     InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon(todaySolves)) {
+                     GrowStatCell("오늘 푼 문제 개수", type: .baekjoon(todaySolves)) {
                          // nav
                      }
                 } else if appState.solvedac == .fetching {
-                    InfinityStatShimmerCell()
+                    GrowStatShimmerCell()
                 } else {
-                    InfinityStatCell("오늘 푼 문제 개수", type: .baekjoon()) {}
+                    GrowStatCell("오늘 푼 문제 개수", type: .baekjoon()) {}
                 }
             }
         }
@@ -106,7 +106,7 @@ public struct HomeView: View {
             case (.fetching, _), (_, .fetching):
                 VStack(spacing: 12) {
                     ForEach(0..<3, id: \.self) { _ in
-                        InfinityGithubRankCellShimmer()
+                        GrowGithubRankCellShimmer()
                             .shimmer()
                     }
                 }
@@ -130,7 +130,7 @@ public struct HomeView: View {
                 } else {
                     VStack(spacing: 12) {
                         ForEach(data, id: \.self) { githubRank in
-                            InfinityGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profile.id) {
+                            GrowGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profile.id) {
                                 router.navigate(to: HomeDestination.profileDetail(memberId: githubRank.memberId))
                             }
                         }
@@ -155,7 +155,7 @@ public struct HomeView: View {
             case (.fetching, _), (_, .fetching):
                 VStack(spacing: 12) {
                     ForEach(0..<3, id: \.self) { _ in
-                        InfinityBaekjoonRankCellShimmer()
+                        GrowRankCellShimmer()
                             .shimmer()
                     }
                 }
@@ -179,7 +179,7 @@ public struct HomeView: View {
                 } else {
                     VStack(spacing: 12) {
                         ForEach(data, id: \.self) { rank in
-                            InfinityBaekjoonRankCell(rank: rank, isMe: rank.memberId == profile.id) {
+                            GrowRankCell(rank: rank, isMe: rank.memberId == profile.id) {
                                 router.navigate(to: HomeDestination.profileDetail(memberId: rank.memberId))
                             }
                         }

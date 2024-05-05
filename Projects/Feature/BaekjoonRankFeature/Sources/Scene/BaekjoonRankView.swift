@@ -31,13 +31,13 @@ public struct BaekjoonRankView: View {
                     switch (viewModel.baekjoonRanks, appState.profile) {
                     case (.fetching, _), (_, .fetching):
                         ForEach(0..<7, id: \.self) { _ in
-                            InfinityBaekjoonRankCellShimmer()
+                            GrowRankCellShimmer()
                                 .padding(.horizontal, 16)
                                 .shimmer()
                         }
                     case (.success(let data), .success(let profile)):
                         ForEach(data, id: \.memberId) { rank in
-                            InfinityBaekjoonRankCell(rank: rank, isMe: profile.id == rank.memberId) {
+                            GrowRankCell(rank: rank, isMe: profile.id == rank.memberId) {
                                 router.navigate(to: BaekjoonDestination.profileDetail(memberId: rank.memberId))
                             }
                             .padding(.horizontal, 16)
@@ -70,7 +70,7 @@ public struct BaekjoonRankView: View {
                 .font(.callout)
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
-            InfinityButton("설정하기", height: 40) {
+            GrowButton("설정하기", height: 40) {
                 router.navigate(to: BaekjoonDestination.baekjoonSetting)
             }
             .frame(width: 150)
@@ -90,7 +90,7 @@ public struct BaekjoonRankView: View {
     private var selector: some View {
         HStack(spacing: 8) {
             ForEach(BaekjoonRankViewModel.BaekjoonTab.allCases, id: \.self) { tab in
-                InfinitySelector(text: tab.rawValue, isSelected: tab == viewModel.selectedTab) {
+                GrowSelector(text: tab.rawValue, isSelected: tab == viewModel.selectedTab) {
                     viewModel.selectedTab = tab
                 }
             }

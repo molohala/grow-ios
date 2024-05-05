@@ -1,5 +1,5 @@
 //
-//  InfinityTabView.swift
+//  GrowTabView.swift
 //  MainFeature
 //
 //  Created by dgsw8th71 on 4/2/24.
@@ -9,7 +9,7 @@
 import SwiftUI
 import BaseFeature
 
-public struct InfinityTabView: View {
+public struct GrowTabView: View {
     @Binding var selectedTab: MainFlow
     private let proxy: GeometryProxy
     
@@ -32,7 +32,7 @@ public struct InfinityTabView: View {
                     }
                 } label: {
                     let width = proxy.size.width / 5 - 4
-                    InfinityTabCell(type: tab, isSelected: selectedTab == tab)
+                    GrowTabCell(type: tab, isSelected: selectedTab == tab)
                         .frame(width: width > 0 ? width : 0)
                 }
                 .applyAnimation()

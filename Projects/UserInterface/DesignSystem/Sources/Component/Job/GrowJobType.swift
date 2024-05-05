@@ -1,6 +1,6 @@
 import SwiftUI
 
-public enum InfinityJobType: String, CaseIterable {
+public enum GrowJobType: String, CaseIterable {
     case Server
     case Web
     case Android

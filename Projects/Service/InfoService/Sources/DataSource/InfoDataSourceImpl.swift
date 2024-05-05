@@ -6,26 +6,26 @@ class InfoDataSourceImpl: BaseRemoteDataSource<InfoDataSourceImpl>, InfoDataSour
     private let path = "info"
     
     func getSolvedav(name: String) async throws -> Solvedav {
-        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/solvedac?name=\(name)", res: BaseResponse<SolvedavResponse>.self).data.toDomain()
+        try await requestGet(url: "\(Grow.baseUrl)/\(path)/solvedac?name=\(name)", res: BaseResponse<SolvedavResponse>.self).data.toDomain()
     }
     
     func getGithub(name: String) async throws -> Github {
-        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/github?name=\(name)", res: BaseResponse<GithubResponse>.self).data.toDomain()
+        try await requestGet(url: "\(Grow.baseUrl)/\(path)/github?name=\(name)", res: BaseResponse<GithubResponse>.self).data.toDomain()
     }
     
     func registerSolvedac(_ req: SocialIdRequest) async throws {
-        try await requestPost(url: "\(Infinity.baseUrl)/\(path)/solvedac", req: req, res: BaseVoidResponse.self)
+        try await requestPost(url: "\(Grow.baseUrl)/\(path)/solvedac", req: req, res: BaseVoidResponse.self)
     }
     
     func registerGithub(_ req: SocialIdRequest) async throws {
-        try await requestPost(url: "\(Infinity.baseUrl)/\(path)/github", req: req, res: BaseVoidResponse.self)
+        try await requestPost(url: "\(Grow.baseUrl)/\(path)/github", req: req, res: BaseVoidResponse.self)
     }
     
     func getProfile() async throws -> Profile {
-        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/me", res: BaseResponse<ProfileResponse>.self).data.toDomain()
+        try await requestGet(url: "\(Grow.baseUrl)/\(path)/me", res: BaseResponse<ProfileResponse>.self).data.toDomain()
     }
     
     func getProfile(memberId: Int) async throws -> Profile {
-        try await requestGet(url: "\(Infinity.baseUrl)/\(path)/user/\(memberId)", res: BaseResponse<ProfileResponse>.self).data.toDomain()
+        try await requestGet(url: "\(Grow.baseUrl)/\(path)/user/\(memberId)", res: BaseResponse<ProfileResponse>.self).data.toDomain()
     }
 }

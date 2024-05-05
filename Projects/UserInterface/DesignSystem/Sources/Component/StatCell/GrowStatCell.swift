@@ -1,22 +1,14 @@
-//
-//  InfinityStatCell.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 4/9/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
 
-public struct InfinityStatCell: View {
+public struct GrowStatCell: View {
     
     private let title: String
-    private let type: InfinityStatType
+    private let type: GrowStatType
     private let action: () -> Void
     
     public init(
         _ title: String,
-        type: InfinityStatType,
+        type: GrowStatType,
         action: @escaping () -> Void
     ) {
         self.type = type

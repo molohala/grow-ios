@@ -1,7 +1,7 @@
 import Alamofire
 import Foundation
 
-public class InfinitySession {
+public class GrowSession {
     static let session: Session = {
         let configuration = URLSessionConfiguration.af.default
         let apiLogger = APIEventLogger()
@@ -20,7 +20,7 @@ open class BaseRemoteDataSource<Service> {
         url: String,
         res: Res.Type
     ) async throws -> Res {
-        try await InfinitySession.session.request(
+        try await GrowSession.session.request(
             url,
             method: .get
         )
@@ -33,7 +33,7 @@ open class BaseRemoteDataSource<Service> {
         url: String,
         res: Res.Type
     ) async throws -> Res {
-        try await InfinitySession.session.request(
+        try await GrowSession.session.request(
             url,
             method: .post
         )
@@ -48,7 +48,7 @@ open class BaseRemoteDataSource<Service> {
         res: Res.Type,
         encoder: ParameterEncoder = JSONParameterEncoder.default
     ) async throws -> Res {
-        try await InfinitySession.session.request(
+        try await GrowSession.session.request(
             url,
             method: .post,
             parameters: req,
@@ -63,7 +63,7 @@ open class BaseRemoteDataSource<Service> {
         url: String,
         res: Res.Type
     ) async throws -> Res {
-        try await InfinitySession.session.request(
+        try await GrowSession.session.request(
             url,
             method: .patch,
             encoding: JSONEncoding.default
@@ -79,7 +79,7 @@ open class BaseRemoteDataSource<Service> {
         res: Res.Type,
         encoder: ParameterEncoder = JSONParameterEncoder.default
     ) async throws -> Res {
-        try await InfinitySession.session.request(
+        try await GrowSession.session.request(
             url,
             method: .patch,
             parameters: req,
@@ -94,7 +94,7 @@ open class BaseRemoteDataSource<Service> {
         url: String,
         res: Res.Type
     ) async throws -> Res {
-        try await InfinitySession.session.request(
+        try await GrowSession.session.request(
             url,
             method: .delete,
             encoding: JSONEncoding.default
@@ -110,7 +110,7 @@ open class BaseRemoteDataSource<Service> {
         res: Res.Type,
         encoder: ParameterEncoder = JSONParameterEncoder.default
     ) async throws -> Res {
-        try await InfinitySession.session.request(
+        try await GrowSession.session.request(
             url,
             method: .delete,
             parameters: req,

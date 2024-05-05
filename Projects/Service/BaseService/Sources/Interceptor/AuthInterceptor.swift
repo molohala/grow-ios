@@ -41,7 +41,7 @@ public struct AuthInterceptor: RequestInterceptor {
         print("✅ refresh 시도")
         
         AF.request(
-            "\(Infinity.baseUrl)/auth/reissue",
+            "\(Grow.baseUrl)/auth/reissue",
             method: .post,
             parameters: ["refreshToken": refreshToken],
             encoding: JSONEncoding.default

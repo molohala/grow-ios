@@ -21,12 +21,12 @@ public struct ProfileView: View {
                 profile
                 stats
                 if let chartInfo = viewModel.chartInfo {
-                    InfinityChartCell(
+                    GrowChartCell(
                         chartInfo: chartInfo,
                         selectedType: $viewModel.selectedChart
                     )
                 } else {
-                    InfinityChartCellShimmer()
+                    GrowChartCellShimmer()
                         .shimmer()
                 }
             }
@@ -93,10 +93,10 @@ public struct ProfileView: View {
         if case .success(let github) = appState.github,
            case .success(let solvedac) = appState.solvedac {
             HStack(spacing: 16) {
-                InfinityStatCell("커밋 개수", type: .github(github.totalCommits)) {
+                GrowStatCell("커밋 개수", type: .github(github.totalCommits)) {
                     // nav
                 }
-                InfinityStatCell("푼 문제 개수", type: .baekjoon(solvedac.totalSolves)) {
+                GrowStatCell("푼 문제 개수", type: .baekjoon(solvedac.totalSolves)) {
                     // nav
                 }
             }

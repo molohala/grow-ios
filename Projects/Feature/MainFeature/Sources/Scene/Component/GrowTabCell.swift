@@ -1,16 +1,8 @@
-//
-//  InfinityTabCell.swift
-//  MainFeature
-//
-//  Created by dgsw8th71 on 4/2/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
 import BaseFeature
 import DesignSystem
 
-struct InfinityTabCell: View {
+struct GrowTabCell: View {
     
     let type: MainFlow
     let isSelected: Bool

@@ -1,5 +1,5 @@
 //
-//  InfinityJob.swift
+//  GrowJob.swift
 //  DesignSystem
 //
 //  Created by dgsw8th71 on 4/9/24.
@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-public struct InfinityJob: View {
+public struct GrowJob: View {
     
-    private let type: InfinityJobType
+    private let type: GrowJobType
     
     public init(
-        _ type: InfinityJobType
+        _ type: GrowJobType
     ) {
         self.type = type
     }

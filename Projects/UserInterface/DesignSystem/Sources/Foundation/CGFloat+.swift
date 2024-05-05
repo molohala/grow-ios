@@ -9,5 +9,5 @@
 import Foundation
 
 public extension CGFloat {
-    static let infinityLineSpacing: CGFloat = 4
+    static let growLineSpacing: CGFloat = 4
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 import RankServiceInterface
 
-public struct InfinityGithubRankCellShimmer: View {
+public struct GrowRankCellShimmer: View {
     
     public init() {}
     
@@ -31,4 +31,3 @@ public struct InfinityGithubRankCellShimmer: View {
         .frame(minHeight: 50)
     }
 }
-

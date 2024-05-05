@@ -17,15 +17,15 @@ struct DesignSystemExample: App {
         WindowGroup {
             //            ScrollView {
             VStack {
-                InfinityGithubRankCell(rank: 1, isMe: false) {
+                GrowGithubRankCell(rank: 1, isMe: false) {
                     //
                 }
-                InfinityGithubRankCell(rank: 2, isMe: true) {
+                GrowGithubRankCell(rank: 2, isMe: true) {
                     //
                 }
             }
             //            }
-            .infinityTopBar("디자인 시스템")
+            .growTopBar("디자인 시스템")
         }
     }
 }

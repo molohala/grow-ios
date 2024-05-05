@@ -1,11 +1,3 @@
-//
-//  InfinityGithubCell.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 4/2/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
 import InfoServiceInterface
 import DateUtil
@@ -19,9 +11,9 @@ public struct ChartInfo {
     let title: String
     let subtitle: String
     let subject: String
-    let chartData: InfinityChartData
+    let chartData: GrowChartData
     
-    public init(title: String, subtitle: String, subject: String, chartData: InfinityChartData) {
+    public init(title: String, subtitle: String, subject: String, chartData: GrowChartData) {
         self.title = title
         self.subtitle = subtitle
         self.subject = subject
@@ -29,7 +21,7 @@ public struct ChartInfo {
     }
 }
 
-public struct InfinityChartCell: View {
+public struct GrowChartCell: View {
     
     private let chartInfo: ChartInfo
     @Binding var selectedType: ChartType
@@ -71,7 +63,7 @@ public struct InfinityChartCell: View {
                 .applyAnimation()
                 .padding(8)
             }
-            InfinityChart(chartData: chartInfo.chartData)
+            GrowChart(chartData: chartInfo.chartData)
                 .frame(height: 200)
         }
         .applyCardView()

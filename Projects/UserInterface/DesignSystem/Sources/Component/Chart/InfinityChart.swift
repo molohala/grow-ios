@@ -1,14 +1,14 @@
 import SwiftUI
 import Charts
 
-public struct InfinityChart: View {
+public struct GrowChart: View {
     
-    private let data: InfinityChartData.Data
+    private let data: GrowChartData.Data
     private let color: Color
     private let backgroundColor: LinearGradient
     
     public init(
-        chartData: InfinityChartData
+        chartData: GrowChartData
     ) {
         self.data = chartData.data
         self.color = chartData.color

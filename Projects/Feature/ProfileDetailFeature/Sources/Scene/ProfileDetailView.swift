@@ -18,12 +18,12 @@ public struct ProfileDetailView: View {
             VStack(spacing: 12) {
                 stats
                 if let chartInfo = viewModel.chartInfo {
-                    InfinityChartCell(
+                    GrowChartCell(
                         chartInfo: chartInfo,
                         selectedType: $viewModel.selectedChart
                     )
                 } else {
-                    InfinityChartCellShimmer()
+                    GrowChartCellShimmer()
                         .shimmer()
                 }
             }
@@ -31,7 +31,7 @@ public struct ProfileDetailView: View {
             .padding(.top, 16)
         }
         .background(Color.backgroundColor)
-        .infinityTopBar(
+        .growTopBar(
             "\(viewModel.profile?.name ?? "..")님의 프로필",
             background: .backgroundColor
         )
@@ -59,24 +59,24 @@ public struct ProfileDetailView: View {
         HStack(spacing: 16) {
             if let github = viewModel.github, viewModel.githubFlow == .success {
                 let todayCommit = github.todayCommits.contributionCount
-                InfinityStatCell("커밋 개수", type: .github(todayCommit)) {
+                GrowStatCell("커밋 개수", type: .github(todayCommit)) {
                     // nav
                 }
             } else if viewModel.githubFlow == .fetching {
-                InfinityStatShimmerCell()
+                GrowStatShimmerCell()
             } else {
-                InfinityStatCell("커밋 개수", type: .github()) {}
+                GrowStatCell("커밋 개수", type: .github()) {}
             }
             
             if let solvedac = viewModel.solvedac, viewModel.solvedacFlow == .success {
                 let todaySolves = solvedac.todaySolves.solvedCount
-                InfinityStatCell("푼 문제 개수", type: .baekjoon(todaySolves)) {
+                GrowStatCell("푼 문제 개수", type: .baekjoon(todaySolves)) {
                     // nav
                 }
             } else if viewModel.solvedacFlow == .fetching {
-                InfinityStatShimmerCell()
+                GrowStatShimmerCell()
             } else {
-                InfinityStatCell("푼 문제 개수", type: .baekjoon()) {}
+                GrowStatCell("푼 문제 개수", type: .baekjoon()) {}
             }
         }
     }

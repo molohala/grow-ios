@@ -1,14 +1,6 @@
-//
-//  InfinitySelector.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 4/6/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
 
-public struct InfinitySelector: View {
+public struct GrowSelector: View {
     
     private static let categoryHeight: CGFloat = 34
     

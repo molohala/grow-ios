@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public enum InfinityFont {
+public enum GrowFont {
     case largeTitle
     case title
     case headline
@@ -63,7 +63,7 @@ public enum InfinityFont {
 }
 
 public extension View {
-    func font(_ font: InfinityFont) -> some View {
+    func font(_ font: GrowFont) -> some View {
         self.font(font.font)
     }
 }

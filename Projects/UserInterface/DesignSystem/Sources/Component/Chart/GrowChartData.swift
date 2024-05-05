@@ -1,7 +1,7 @@
 import SwiftUI
 import DateUtil
 
-public struct InfinityChartData {
+public struct GrowChartData {
     
     public typealias Data = [(x: String, y: Int)]
     
@@ -14,7 +14,7 @@ public struct InfinityChartData {
     }
 }
 
-public extension InfinityChartData {
+public extension GrowChartData {
     static let dummy: Self.Data = Date.datesForWeek.map {
         (x: $0.monthPerDay ?? "", y: .random(in: 0..<30))
     }

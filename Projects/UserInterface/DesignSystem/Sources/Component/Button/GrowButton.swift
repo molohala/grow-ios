@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct InfinityButton: View {
+public struct GrowButton: View {
     
     // MARK: - State
     @State private var isLoading: Bool

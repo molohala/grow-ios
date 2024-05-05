@@ -9,7 +9,7 @@
 import SwiftUI
 import UIKit
 
-struct InfinityAnimationButton: ButtonStyle {
+struct GrowAnimationButton: ButtonStyle {
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .addPressAnimation(configuration.isPressed)
@@ -28,7 +28,7 @@ public extension View {
     
     func applyAnimation() -> some View {
         self
-            .buttonStyle(InfinityAnimationButton())
+            .buttonStyle(GrowAnimationButton())
     }
 }
 

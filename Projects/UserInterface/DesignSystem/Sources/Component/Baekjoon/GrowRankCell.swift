@@ -1,7 +1,7 @@
 import SwiftUI
 import RankServiceInterface
 
-public struct InfinityGithubRankCell: View {
+public struct GrowRankCell: View {
     
     private let rank: Rank
     private let isMe: Bool
@@ -71,7 +71,7 @@ public struct InfinityGithubRankCell: View {
                     .foregroundStyle(.gray)
             }
             Spacer()
-            Text("\(rank.count) 커밋")
+            Text("\(rank.count) 문제")
                 .font(.body)
                 .fontWeight(.semibold)
         }

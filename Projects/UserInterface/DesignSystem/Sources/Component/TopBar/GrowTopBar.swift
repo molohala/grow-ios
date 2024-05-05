@@ -1,3 +1,11 @@
+//
+//  InfinityTopBar.swift
+//  DesignSystem
+//
+//  Created by dgsw8th71 on 4/8/24.
+//  Copyright © 2024 molohala. All rights reserved.
+//
+
 import SwiftUI
 
 public struct GrowTopBar<C>: View where C: View {

@@ -1,14 +1,6 @@
-//
-//  InfinityStatType.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 4/9/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
 
-public enum InfinityStatType {
+public enum GrowStatType {
     case github(Int?=nil)
     case baekjoon(Int?=nil)
     

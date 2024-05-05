@@ -16,11 +16,11 @@ public struct BaekjoonSettingView: View {
     public var body: some View {
         ZStack {
             VStack {
-                InfinityTextField("백준 Id를 입력해 주세요", text: $viewModel.baekjoonId)
+                GrowTextField("백준 Id를 입력해 주세요", text: $viewModel.baekjoonId)
                 
                 Spacer()
                 
-                InfinityButton("완료하기", isLoading: viewModel.completeFlow == .fetching) {
+                GrowButton("완료하기", isLoading: viewModel.completeFlow == .fetching) {
                     await viewModel.completeSetting()
                 }
                 .disabled(viewModel.baekjoonId.isEmpty)
@@ -36,7 +36,7 @@ public struct BaekjoonSettingView: View {
             .padding(.top, 16)
             .padding(.horizontal, 16)
         }
-        .infinityTopBar("백준 설정")
+        .growTopBar("백준 설정")
         .alert("수정에 실패했습니다", isPresented: .init(
             get: { viewModel.completeFlow == .failure },
             set: { _ in }

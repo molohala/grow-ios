@@ -2,7 +2,7 @@ import SwiftUI
 import InfoServiceInterface
 import DateUtil
 
-public struct InfinityChartCellShimmer: View {
+public struct GrowChartCellShimmer: View {
     
     public init() {}
     

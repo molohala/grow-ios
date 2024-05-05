@@ -15,10 +15,10 @@ final class AuthDataSourceImpl: BaseRemoteDataSource<AuthDataSourceImpl>, AuthDa
     private let url = "auth"
     
     func signIn(code: String) async throws -> TokenDomain {
-        return try await requestPost(url: "\(Infinity.baseUrl)/\(url)/sign-in?code=\(code)", res: BaseResponse<TokenResponse>.self).data.toDomain()
+        return try await requestPost(url: "\(Grow.baseUrl)/\(url)/sign-in?code=\(code)", res: BaseResponse<TokenResponse>.self).data.toDomain()
     }
     
     func ressiue(refreshToken: String) async throws -> RessiueDomain {
-        try await requestPost(url: "\(Infinity.baseUrl)/\(url)", req: ReissueRequest(refreshToken: refreshToken), res: BaseResponse<ReissueResponse>.self).data.toDomain()
+        try await requestPost(url: "\(Grow.baseUrl)/\(url)", req: ReissueRequest(refreshToken: refreshToken), res: BaseResponse<ReissueResponse>.self).data.toDomain()
     }
 }
