@@ -3,6 +3,7 @@ import DesignSystem
 
 enum GrowPreview: String, CaseIterable {
     case Avatar
+    case Button
     case Divider
     case TopAppBar
     
@@ -10,6 +11,7 @@ enum GrowPreview: String, CaseIterable {
         Group {
             switch self {
             case .Avatar: AvatarPreview()
+            case .Button: ButtonPreview()
             case .Divider: DividerPreview()
             case .TopAppBar: TopAppBarPreview()
             }
@@ -25,7 +27,7 @@ enum GrowPreview: String, CaseIterable {
 //                    Text("\(preview.rawValue) Preview")
 //                }
 //            }
-            GrowPreview.Divider.view
+            GrowPreview.Button.view
         }
     }
 }
