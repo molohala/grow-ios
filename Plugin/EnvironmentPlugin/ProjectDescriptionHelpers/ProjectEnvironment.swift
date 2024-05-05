@@ -12,7 +12,7 @@ public struct ProjectEnvironment {
 public let env = ProjectEnvironment(
     name: "grow",
     organizationName: "molohala",
-    destinations: [.iPhone, .iPad],
+    destinations: [.iPhone],
     deploymentTargets: .iOS("16.4"),
     baseSetting: ["DEVELOPMENT_TEAM": "\(teamId)"]
 )

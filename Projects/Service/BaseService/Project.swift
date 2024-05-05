@@ -8,6 +8,7 @@ let project = Project.makeService(
             .shared(target: .GlobalThirdPartyLibrary),
             .shared(target: .DateUtil),
             .shared(target: .SwiftUtil)
-        ])
+        ]),
+        .serviceInterface(target: .Base, dependencies: [])
     ]
 )
