@@ -37,7 +37,7 @@ public enum GrowFont {
     case captionM
     case captionR
     
-    typealias Wanted = DesignSystemFontFamily.WantedSans
+    public typealias Wanted = DesignSystemFontFamily.WantedSans
     
     public var font: Font {
         switch self {

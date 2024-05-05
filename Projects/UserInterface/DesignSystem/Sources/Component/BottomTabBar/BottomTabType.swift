@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-public enum MainFlow: CaseIterable {
+public enum BottomTabType: CaseIterable {
     case Home
-    case Community
+    case Forum
     case GithubRank
     case BaekjoonRank
     case Profile

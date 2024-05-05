@@ -35,8 +35,6 @@ public struct MainView: View {
     public var body: some View {
         NavigationStack(path: $router.navPath) {
             content
-                .growTopBar(appState.selectedView.title, background: appState.selectedView.backgroundColor, hideBackButton: true)
-                .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
         }
         .onAppear {
             appState.fetchProfile()

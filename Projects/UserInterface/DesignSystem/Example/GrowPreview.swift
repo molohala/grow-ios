@@ -22,7 +22,7 @@ enum GrowPreview: String, CaseIterable {
 //                    Text("\(preview.rawValue) Preview")
 //                }
 //            }
-            GrowPreview.Avatar.view
+            GrowPreview.TopAppBar.view
         }
     }
 }
