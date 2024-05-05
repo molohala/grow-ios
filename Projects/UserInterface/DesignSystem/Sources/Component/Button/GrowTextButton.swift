@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct GrowButton: View {
+public struct GrowTextButton: View {
     
     // MARK: - State
     @State private var isLoading = false
@@ -32,7 +32,7 @@ public struct GrowButton: View {
     
     public var body: some View {
         
-        let color: GrowColorScheme = isEnabled ? .buttonText : .buttonTextDisabled
+        let color: GrowColorScheme = isEnabled ? .buttonPrimary : .buttonTextDisabled
         
         Button {
             guard isEnabled, !isLoading else { return }
@@ -68,12 +68,12 @@ public struct GrowButton: View {
             }
             .padding(.horizontal, type.horizontalPadding)
         }
-        .buttonStyle(GrowButtonStyle(isLoading: isLoading, isEnabled: isEnabled, type: type))
+        .buttonStyle(GrowTextButtonStyle(isLoading: isLoading, isEnabled: isEnabled, type: type))
         .disabled(isLoading)
     }
 }
 
-struct GrowButtonStyle: ButtonStyle {
+struct GrowTextButtonStyle: ButtonStyle {
     private let isLoading: Bool
     private let isEnabled: Bool
     private let type: ButtonType
@@ -90,15 +90,11 @@ struct GrowButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         
-        let background: GrowColorScheme = isEnabled ? .buttonPrimary : .buttonPrimaryDisabled
-        
         configuration.label
             .frame(height: type.height)
             .if(type == .CTA) {
                 $0.frame(maxWidth: .infinity)
             }
-            .growBackground(background)
-            .cornerRadius(type.cornerRadius, corners: .allCorners)
             .if(isEnabled) {
                 $0.addPressAnimation(configuration.isPressed)
             }
