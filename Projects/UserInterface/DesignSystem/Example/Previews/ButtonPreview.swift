@@ -23,6 +23,9 @@ struct ButtonPreview: View {
                     try? await Task.sleep(for: .seconds(1))
                 }
                 GrowTabButton("시작하기", isSelected: false) {}
+                
+                GrowToggle(isOn: .constant(true))
+                GrowToggle(isOn: .constant(false))
             }
         }
         .growTopBar("") {}

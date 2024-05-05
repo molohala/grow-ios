@@ -51,6 +51,23 @@ public struct GrowBackgroundViewModifier: ViewModifier {
     }
 }
 
+public struct GrowTintViewModifier: ViewModifier {
+    
+    @EnvironmentObject private var colorProvider: ColorProvider
+    private let color: GrowColorScheme
+    
+    public init(
+        color: GrowColorScheme
+    ) {
+        self.color = color
+    }
+    
+    public func body(content: Content) -> some View {
+        content
+            .tint(colorProvider.isDarkTheme ? color.darkColor : color.lightColor)
+    }
+}
+
 public extension View {
     func growColor(_ color: GrowColorScheme) -> some View {
         self
@@ -60,6 +77,11 @@ public extension View {
     func growBackground(_ color: GrowColorScheme) -> some View {
         self
             .modifier(GrowBackgroundViewModifier(color: color))
+    }
+    
+    func growTint(_ color: GrowColorScheme) -> some View {
+        self
+            .modifier(GrowTintViewModifier(color: color))
     }
 }
 

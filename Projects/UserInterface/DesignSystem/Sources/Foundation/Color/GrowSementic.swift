@@ -11,7 +11,7 @@ public extension GrowColorScheme {
         case .textWarning: GrowPallete.shared.Red70
         case .buttonPrimary: GrowPallete.shared.Primary60
         case .buttonPrimaryPressed: GrowPallete.shared.Primary80
-        case .buttonPrimaryDisabled: GrowPallete.shared.Neutral10
+        case .buttonPrimaryDisabled: GrowPallete.shared.Neutral20
         case .buttonText: GrowPallete.shared.Neutral90
         case .buttonTextDisabled: GrowPallete.shared.Neutral40
         case .background: GrowPallete.shared.Neutral00

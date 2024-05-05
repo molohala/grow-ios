@@ -14,7 +14,7 @@ struct DesignSystemExample: App {
     var body: some Scene {
         WindowGroup {
             GrowPreview.preview
-                .environmentObject(ColorProvider(isDarkTheme: true))
+                .environmentObject(ColorProvider(isDarkTheme: false))
         }
     }
 }
