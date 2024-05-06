@@ -3,7 +3,6 @@ import SwiftUI
 import CommunityDetailFeatureInterface
 import DesignSystem
 import CommunityServiceInterface
-import Pow
 import CommentServiceInterface
 
 public struct CommunityDetailView: View {

@@ -14,8 +14,8 @@ public struct Shimmer<C: View>: View {
     }
     
     public var body: some View {
-        let color = colorProvider.isDarkTheme ? Color.white.opacity(0.5) : GrowPallete.shared.Neutral90.opacity(0.1)
-        let midColor = colorProvider.isDarkTheme ? Color.white.opacity(0) : GrowPallete.shared.Neutral90.opacity(0.2)
+        let color = colorProvider.isDarkTheme ? Color.white.opacity(0.7) : GrowPallete.shared.Neutral90.opacity(0.1)
+        let midColor = colorProvider.isDarkTheme ? Color.white.opacity(0.2) : GrowPallete.shared.Neutral90.opacity(0.2)
         
         content()
             .redacted(reason: .placeholder)

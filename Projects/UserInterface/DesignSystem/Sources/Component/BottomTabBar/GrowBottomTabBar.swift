@@ -1,15 +1,19 @@
 import SwiftUI
 
 public struct GrowBottomTabBar<C>: View where C: View {
-    @Binding var selectedTab: BottomTabType
+    
     @EnvironmentObject private var colorProvider: ColorProvider
+    private let selectedTab: BottomTabType
+    private let onTap: (BottomTabType) -> Void
     private let content: () -> C
     
     public init(
-        selectedTab: Binding<BottomTabType>,
+        selectedTab: BottomTabType,
+        onTap: @escaping (BottomTabType) -> Void,
         content: @escaping () -> C
     ) {
-        self._selectedTab = selectedTab
+        self.selectedTab = selectedTab
+        self.onTap = onTap
         self.content = content
     }
     
@@ -30,7 +34,7 @@ public struct GrowBottomTabBar<C>: View where C: View {
             ForEach(BottomTabType.allCases, id: \.self) { tab in
                 Button {
                     if selectedTab != tab {
-                        selectedTab = tab
+                        onTap(tab)
                     }
                 } label: {
                     GrowBottomTabItem(type: tab, isSelected: selectedTab == tab)

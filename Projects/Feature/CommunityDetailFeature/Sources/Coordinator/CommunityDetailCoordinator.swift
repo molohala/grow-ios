@@ -1,5 +1,6 @@
 import SwiftUI
 import CommunityEditFeatureInterface
+import BaseFeature
 
 struct CommunityDetailCoordinator: View {
     

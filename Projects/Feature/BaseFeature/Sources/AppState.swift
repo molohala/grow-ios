@@ -6,7 +6,7 @@ import InfoServiceInterface
 @MainActor
 public final class AppState: ObservableObject {
     
-    @Published public var selectedView: BottomTabType = .Home
+    @Published public var selectedView: BottomTabType = .Forum
     @Published public var accessToken: String {
         didSet {
             setTokenUseCase(accessToken, type: .accessToken)

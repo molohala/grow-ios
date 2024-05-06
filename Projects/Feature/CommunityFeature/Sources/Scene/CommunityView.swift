@@ -15,7 +15,7 @@ public struct CommunityView: View {
     public init(
         viewModel: CommunityViewModel
     ) {
-        self._viewModel = .init(wrappedValue: viewModel)
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {

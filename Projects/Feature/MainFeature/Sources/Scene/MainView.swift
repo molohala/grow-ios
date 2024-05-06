@@ -34,7 +34,9 @@ public struct MainView: View {
     
     public var body: some View {
         NavigationStack(path: $router.navPath) {
-            GrowBottomTabBar(selectedTab: $appState.selectedView) {
+            GrowBottomTabBar(selectedTab: appState.selectedView, onTap: { tab in
+                appState.selectedView = tab
+            }) {
                 switch appState.selectedView {
                 case .Home: homeBuildable.makeView().eraseToAnyView()
                 case .Forum: communityBuildable.makeView().eraseToAnyView()
