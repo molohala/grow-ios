@@ -90,8 +90,6 @@ struct GrowTextFieldStyle: TextFieldStyle {
         let textColor: GrowColorScheme = !isEnabled ? .textFieldTextDisabled : .textNormal
         let iconColor: GrowColorScheme = !isEnabled ? .textFieldTextDisabled : .textAlt
         let radius: CGFloat = isRounded ? 26 : 12
-        print(colorProvider.isDarkTheme)
-        print(colorProvider.color(strokeColor))
         return configuration
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled()

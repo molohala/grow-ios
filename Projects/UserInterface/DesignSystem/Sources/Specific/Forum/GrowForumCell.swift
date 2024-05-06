@@ -5,18 +5,18 @@ public struct GrowForumCell: View {
     
     private let forum: Community
     private let profileId: Int
-    private let likeAction: () -> Void
-    private let removeAction: () -> Void
-    private let editAction: () -> Void
-    private let action: () -> Void
+    private let likeAction: () async -> Void
+    private let removeAction: () async -> Void
+    private let editAction: () async -> Void
+    private let action: () async -> Void
     
     public init(
         forum: Community,
         profileId: Int,
-        likeAction: @escaping () -> Void,
-        removeAction: @escaping () -> Void,
-        editAction: @escaping () -> Void,
-        action: @escaping () -> Void
+        likeAction: @escaping () async -> Void,
+        removeAction: @escaping () async -> Void,
+        editAction: @escaping () async -> Void,
+        action: @escaping () async -> Void
     ) {
         self.forum = forum
         self.profileId = profileId
@@ -33,7 +33,9 @@ public struct GrowForumCell: View {
         
         ZStack(alignment: .top) {
             Button {
-                action()
+                Task {
+                    await action()
+                }
             } label: {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(spacing: 8) {
@@ -55,7 +57,7 @@ public struct GrowForumCell: View {
                         .growColor(.textNormal)
                         .lineSpacing(5)
                     GrowLikeButton(like: content.like, isLiked: content.liked) {
-                        likeAction()
+                        await likeAction()
                     }
                     if let recentComment {
                         GrowDivider()
@@ -86,10 +88,14 @@ public struct GrowForumCell: View {
                     Spacer()
                     Menu {
                         Button("수정하기") {
-                            editAction()
+                            Task {
+                                await editAction()
+                            }
                         }
                         Button("삭제하기", role: .destructive) {
-                            removeAction()
+                            Task {
+                                await removeAction()
+                            }
                         }
                     } label: {
                         if profileId == content.writerId {

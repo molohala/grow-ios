@@ -12,6 +12,7 @@ public struct GrowButton: View {
     private let leadingIcon: GrowIconography?
     private let trailingIcon: GrowIconography?
     private let isEnabled: Bool
+    private let isRounded: Bool
     private let action: () async -> Void
     
     public init(
@@ -20,6 +21,7 @@ public struct GrowButton: View {
         leadingIcon: GrowIconography? = nil,
         trailingIcon: GrowIconography? = nil,
         isEnabled: Bool = true,
+        isRounded: Bool = false,
         action: @escaping () async -> Void
     ) {
         self.text = text
@@ -27,6 +29,7 @@ public struct GrowButton: View {
         self.leadingIcon = leadingIcon
         self.trailingIcon = trailingIcon
         self.isEnabled = isEnabled
+        self.isRounded = isRounded
         self.action = action
     }
     
@@ -68,7 +71,7 @@ public struct GrowButton: View {
             }
             .padding(.horizontal, type.horizontalPadding)
         }
-        .buttonStyle(GrowButtonStyle(isLoading: isLoading, isEnabled: isEnabled, type: type))
+        .buttonStyle(GrowButtonStyle(isLoading: isLoading, isEnabled: isEnabled, isRounded: isRounded, type: type))
         .disabled(isLoading)
     }
 }
@@ -76,15 +79,18 @@ public struct GrowButton: View {
 struct GrowButtonStyle: ButtonStyle {
     private let isLoading: Bool
     private let isEnabled: Bool
+    private let isRounded: Bool
     private let type: ButtonType
     
     init(
         isLoading: Bool,
         isEnabled: Bool,
+        isRounded: Bool,
         type: ButtonType
     ) {
         self.isLoading = isLoading
         self.isEnabled = isEnabled
+        self.isRounded = isRounded
         self.type = type
     }
     
@@ -98,7 +104,7 @@ struct GrowButtonStyle: ButtonStyle {
                 $0.frame(maxWidth: .infinity)
             }
             .growBackground(background)
-            .cornerRadius(type.cornerRadius, corners: .allCorners)
+            .cornerRadius(isRounded ? type.height / 2 : type.cornerRadius, corners: .allCorners)
             .if(isEnabled) {
                 $0.addPressAnimation(configuration.isPressed)
             }

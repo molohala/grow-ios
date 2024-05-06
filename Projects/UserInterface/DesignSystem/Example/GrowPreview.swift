@@ -34,12 +34,14 @@ enum GrowPreview: String, CaseIterable {
     
     static var preview: some View {
         NavigationStack {
-            ForEach(Self.allCases, id: \.self) { preview in
-                NavigationLink {
-                    preview.view
-                } label: {
-                    Text("\(preview.rawValue) Preview")
-                        .padding()
+            ScrollView {
+                ForEach(Self.allCases, id: \.self) { preview in
+                    NavigationLink {
+                        preview.view
+                    } label: {
+                        Text("\(preview.rawValue) Preview")
+                            .padding()
+                    }
                 }
             }
         }
