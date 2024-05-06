@@ -4,6 +4,7 @@ import DesignSystem
 enum GrowPreview: String, CaseIterable {
     case Avatar
     case Button
+    case Comment
     case Divider
     case RankCell
     case TextField
@@ -16,6 +17,7 @@ enum GrowPreview: String, CaseIterable {
             switch self {
             case .Avatar: AvatarPreview()
             case .Button: ButtonPreview()
+            case .Comment: CommentPreview()
             case .Divider: DividerPreview()
             case .RankCell: RankCellPreview()
             case .TextField: TextFieldPreview()
@@ -35,7 +37,7 @@ enum GrowPreview: String, CaseIterable {
 //                    Text("\(preview.rawValue) Preview")
 //                }
 //            }
-            GrowPreview.RankCell.view
+            GrowPreview.Comment.view
         }
     }
 }
