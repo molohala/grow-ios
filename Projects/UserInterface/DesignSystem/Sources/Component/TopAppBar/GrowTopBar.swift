@@ -71,7 +71,7 @@ public struct GrowTopAppBar<C>: View where C: View {
 public extension View {
     func growTopBar<TC>(
         _ title: String,
-        background: GrowColorScheme = .backgroundAlt,
+        background: GrowColorScheme = .background,
         @ViewBuilder trailingContent: @escaping () -> TC = { EmptyView() },
         backButtonAction: (() -> Void)? = nil
     ) -> some View where TC: View {

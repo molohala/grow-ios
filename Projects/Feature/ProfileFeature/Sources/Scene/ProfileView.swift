@@ -16,102 +16,88 @@ public struct ProfileView: View {
     }
     
     public var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 16) {
-                profile
+        ScrollView() {
+            LazyVStack(spacing: 12) {
+                info
                 stats
-                if let chartInfo = viewModel.chartInfo {
-                    GrowChartCell(
-                        chartInfo: chartInfo,
-                        selectedType: $viewModel.selectedChart
-                    )
-                } else {
-                    GrowChartCellShimmer()
-                        .shimmer()
-                }
+                chart
             }
-            .padding(.top, 16)
-            .padding(.horizontal, 16)
-            .padding(.bottom, 108)
+            .padding(.horizontal, 12)
         }
-        .background(Color.backgroundColor)
-        .onChange(of: viewModel.selectedChart) { type in
-            handleSelectingChart(type: type)
-        }
-        .onChange(of: appState.profile) {
-            guard $0 != nil else { return }
-            handleSelectingChart(type: viewModel.selectedChart)
-        }
-        .onAppear {
-            handleSelectingChart(type: viewModel.selectedChart)
-        }
+        .scrollIndicators(.hidden)
+        .growTopBar("프로필", background: .backgroundAlt)
         .refreshable {
-            appState.fetchProfile()
+            Task {
+                await appState.fetchProfile()
+            }
         }
     }
     
     @ViewBuilder
-    private var profile: some View {
-        VStack {
-            HStack(spacing: 0) {
-                Rectangle()
-                    .frame(width: 48, height: 48)
-                    .clipShape(Circle())
-                    .foregroundStyle(.gray)
-                if case .success(let profile) = appState.profile {
-                    Text(profile.name)
-                        .growFont(.callout)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.black)
-                        .padding(.leading, 8)
+    private var info: some View {
+        HStack(spacing: 0) {
+            HStack(spacing: 8) {
+                switch appState.profile {
+                case .fetching:
+                    GrowAvatarShimmer(type: .large)
+                    RowShimmer(width: 40)
+                case .success(let data):
+                    GrowAvatar(type: .large)
+                    RowShimmer(width: 40)
+                case .failure:
+                    Text("불러오기 실패")
                 }
-                
-                Spacer()
-                Button {
-                    router.navigate(to: ProfileDestination.setting)
-                } label: {
-                    Text("설정")
-                        .growFont(.callout)
-                        .foregroundStyle(.gray)
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 12)
-                        .background(Color.backgroundColor)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                }
-                .applyAnimation()
             }
-//            Text("\"뚝딱뚝딱.\"")
-//                .padding(.vertical, 16)
-//                .font(.callout)
-//                .foregroundStyle(.gray)
+            Spacer()
+            Image(icon: .setting)
+                .resizable()
+                .growIconColor(.textAlt)
+                .frame(size: 32)
         }
+        .padding(12)
         .applyCardView()
     }
     
     @ViewBuilder
     private var stats: some View {
-        if case .success(let github) = appState.github,
-           case .success(let solvedac) = appState.solvedac {
-            HStack(spacing: 16) {
-                GrowStatCell("커밋 개수", type: .github(github.totalCommits)) {
-                    // nav
-                }
-                GrowStatCell("푼 문제 개수", type: .baekjoon(solvedac.totalSolves)) {
-                    // nav
-                }
+        HStack(spacing: 12) {
+            switch appState.github {
+            case .fetching:
+                GrowStatCellShimmer()
+            case .success(let data):
+                GrowStatCell(
+                    label: "커밋 개수",
+                    type: .github(commit: data.totalCommits)) {
+                        // action
+                    }
+            case .failure:
+                Text("불러오기 실패")
+            }
+            switch appState.baekjoon {
+            case .fetching:
+                GrowStatCellShimmer()
+            case .success(let data):
+                GrowStatCell(
+                    label: "커밋 개수",
+                    type: .baekjoon(solved: data.totalSolves)) {
+                        // action
+                    }
+            case .failure:
+                Text("불러오기 실패")
             }
         }
     }
     
-    func handleSelectingChart(type: ChartType) {
-        if case .success(let github) = appState.github,
-           case .success(let solvedac) = appState.solvedac {
-            switch type {
-            case .github:
-                viewModel.chartInfo = github.weekCommits.githubWeekChartInfo
-            case .baekjoon:
-                viewModel.chartInfo = solvedac.weekSolves.baekjoonWeekChartInfo
-            }
-        }
+    @ViewBuilder
+    private var chart: some View {
+//        switch appState.profile {
+//        case .fetching:
+//            <#code#>
+//        case .success(let data):
+//            <#code#>
+//        case .failure:
+//            <#code#>
+//        }
+        EmptyView() // todo add
     }
 }
