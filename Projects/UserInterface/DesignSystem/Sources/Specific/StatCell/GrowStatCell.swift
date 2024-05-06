@@ -42,8 +42,8 @@ public struct GrowStatCell: View {
                     Spacer()
                     Image(icon: type.icon)
                         .resizable()
+                        .growIconColor(type.color)
                         .frame(size: 32)
-                        .growColor(type.color)
                 }
                 Text(label)
                     .growFont(.labelM)

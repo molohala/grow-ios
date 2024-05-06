@@ -35,6 +35,7 @@ public struct GrowCommentCell: View {
                         .applyOpenURL()
                         .growFont(.bodyR)
                         .growColor(.textNormal)
+                        .lineSpacing(5)
                 }
             }
             Spacer()

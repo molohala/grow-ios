@@ -19,7 +19,7 @@ public struct HomeView: View {
     
     public var body: some View {
         ScrollView {
-            LazyVStack(spacing: 0) {
+            VStack(spacing: 0) {
                 greeting
                 stat
                 todayGithub
@@ -42,12 +42,12 @@ public struct HomeView: View {
         VStack(spacing: 12) {
             switch appState.profile {
             case .fetching:
-                VStack(spacing: 4) {
+                VStack(alignment: .leading, spacing: 4) {
                     RowShimmer(width: 80)
                     RowShimmer(width: 120)
                 }
             case .success(let data):
-                VStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
                     GrowHeadline("iOS 개발자")
                     GrowHeadline("\(data.name)님 환영합니다")
                 }
@@ -55,19 +55,28 @@ public struct HomeView: View {
                 Text("불러오기 실패")
             }
         }
+        .toLeading()
     }
     
     @ViewBuilder
     private var stat: some View {
         HStack(spacing: 16) {
-//            switch appState.github {
-//            case .fetching:
-//                GrowStatCellShimmer()
-//            case .success(let data):
-//                GrowStatCell(label: "오늘 한 커밋 개수", type: .github(commit: data.todayCommits.contributionCount)) {}
-//            case .failure:
-//                Text("불러오기 실패")
-//            }
+            switch appState.github {
+            case .fetching:
+                GrowStatCellShimmer()
+            case .success(let data):
+                GrowStatCell(label: "오늘 한 커밋 개수", type: .github(commit: data?.todayCommits.contributionCount)) {}
+            case .failure:
+                Text("불러오기 실패")
+            }
+            switch appState.baekjoon {
+            case .fetching:
+                GrowStatCellShimmer()
+            case .success(let data):
+                GrowStatCell(label: "오늘 한 커밋 개수", type: .baekjoon(solved: data?.todaySolves.solvedCount)) {}
+            case .failure:
+                Text("불러오기 실패")
+            }
         }
         .padding(.vertical, 20)
     }
@@ -76,6 +85,7 @@ public struct HomeView: View {
     private var todayGithub: some View {
         VStack(spacing: 0) {
             GrowHeadline("오늘의 Github Top 3")
+                .toLeading()
             VStack(spacing: 4) {
                 switch viewModel.todayGithubRanks {
                 case .fetching:
@@ -106,6 +116,7 @@ public struct HomeView: View {
     private var todayBaekjoon: some View {
         VStack(spacing: 0) {
             GrowHeadline("오늘의 백준 Top 3")
+                .toLeading()
             VStack(spacing: 4) {
                 switch viewModel.todayBaekjoonRanks {
                 case .fetching:

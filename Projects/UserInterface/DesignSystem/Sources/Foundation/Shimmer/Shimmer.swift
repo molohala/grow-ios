@@ -14,18 +14,17 @@ public struct Shimmer<C: View>: View {
     }
     
     public var body: some View {
-        
-        let color = GrowPallete.shared.Neutral50
-        let added = colorProvider.isDarkTheme ? 0.5 : 0
+        let color = colorProvider.isDarkTheme ? Color.white.opacity(0.5) : GrowPallete.shared.Neutral90.opacity(0.1)
+        let midColor = colorProvider.isDarkTheme ? Color.white.opacity(0) : GrowPallete.shared.Neutral90.opacity(0.2)
         
         content()
             .redacted(reason: .placeholder)
             .mask(
                 LinearGradient(
                     colors: [
-                        color.opacity(0.15 + added),
-                        color.opacity(0.05 + added),
-                        color.opacity(0.15 + added)
+                        color,
+                        midColor,
+                        color
                     ],
                     startPoint: startPoint,
                     endPoint: endPoint

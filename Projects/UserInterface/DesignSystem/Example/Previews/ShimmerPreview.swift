@@ -2,13 +2,16 @@ import SwiftUI
 import DesignSystem
 
 struct ShimmerPreview: View {
+    
+    @EnvironmentObject var c: ColorProvider
+    
     var body: some View {
         VStack {
-            Rectangle()
-                .frame(width: 100, height: 20)
-                .background(GrowPallete.shared.Transparent)
-                .shimmer()
-                .cornerRadius(4, corners: .allCorners)
+            RowShimmer(width: 100)
+            GrowAvatarShimmer(type: .large)
+            Spacer()
         }
+        .toCenter()
+        .growBackground(.background)
     }
 }

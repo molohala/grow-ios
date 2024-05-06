@@ -14,5 +14,6 @@ struct TextFieldPreview: View {
                 GrowTextField("비밀번호", text: $pw, isEnabled: false, isRounded: true)
             }
         }
+        .growBackground(.background)
     }
 }

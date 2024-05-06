@@ -53,6 +53,7 @@ public struct GrowForumCell: View {
                         .growFont(.bodyR)
                         .truncationMode(.tail)
                         .growColor(.textNormal)
+                        .lineSpacing(5)
                     GrowLikeButton(like: content.like, isLiked: content.liked) {
                         likeAction()
                     }

@@ -36,7 +36,7 @@ public struct BaekjoonRankView: View {
                             name: rank.memberName,
                             socialId: rank.socialId,
                             rank: rank.rank,
-                            label: "\(rank) 문제",
+                            label: "\(rank.count) 문제",
                             action: {})
                     }
                 }
@@ -73,24 +73,21 @@ public struct BaekjoonRankView: View {
         .padding(16)
     }
     
-    
-    
     @ViewBuilder
     private var indicator: some View {
         HStack(spacing: 12) {
-            ForEach(BaekjoonTab.allCases, id: \.self) {
+            ForEach(BaekjoonTab.allCases, id: \.self) { tab in
                 GrowTabButton(
-                    $0.rawValue,
-                    isSelected: $0 == viewModel.selectedTab
+                    tab.rawValue,
+                    isSelected: tab == viewModel.selectedTab
                 ) {
-                    //
+                    viewModel.selectedTab = tab
                 }
             }
             Spacer()
         }
         .padding(.leading, 12)
     }
-    
 }
 
 /**

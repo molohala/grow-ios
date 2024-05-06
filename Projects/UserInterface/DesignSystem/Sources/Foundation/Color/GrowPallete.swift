@@ -52,5 +52,5 @@ public class GrowPallete {
     /*
     Common
      */
-    public let Transparent = Color(0x00FFFFFF)
+    public let Transparent = Color(0x00FFFFFF, alpha: 0)
 }

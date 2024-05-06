@@ -11,10 +11,28 @@ import DesignSystem
 @main
 struct DesignSystemExample: App {
     
+    @State var s = false
+    
     var body: some Scene {
         WindowGroup {
             GrowPreview.preview
-                .environmentObject(ColorProvider(isDarkTheme: false))
+                .environmentObject(ColorProvider(isDarkTheme: s))
+                .onTapGesture {
+                    s.toggle()
+                }
         }
+    }
+}
+
+import UIKit
+
+extension UINavigationController: ObservableObject, UIGestureRecognizerDelegate {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return viewControllers.count > 1
     }
 }

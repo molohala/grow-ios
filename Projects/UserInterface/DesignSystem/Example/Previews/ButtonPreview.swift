@@ -18,8 +18,8 @@ struct ButtonPreview: View {
                     }
                     GrowTextButton("시작하기", type: $0, isEnabled: false) {}
                 }
-                GrowTabButton("완료", leadingIcon: .check) {}
-                GrowTabButton("시작하기") {
+                GrowTabButton("완료", leadingIcon: .check, isSelected: true) {}
+                GrowTabButton("시작하기", isSelected: true) {
                     try? await Task.sleep(for: .seconds(1))
                 }
                 GrowTabButton("시작하기", isSelected: false) {}
