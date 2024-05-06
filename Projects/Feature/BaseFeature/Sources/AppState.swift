@@ -1,12 +1,5 @@
-//
-//  AppState.swift
-//  BaseFeature
-//
-//  Created by dgsw8th71 on 4/9/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
+import DesignSystem
 import AuthServiceInterface
 import InfoServiceInterface
 
@@ -50,59 +43,53 @@ public final class AppState: ObservableObject {
         self.getGithubUseCase = getGithubUseCase
     }
     
-    public func fetchProfile() {
-        Task {
-            do {
-                profile = .fetching
-                let profile = try await getProfileUseCase()
-                self.profile = .success(profile)
-            } catch {
-                profile = .failure
-            }
-            fetchSolvedac()
-            fetchGithub()
+    public func fetchProfile() async {
+        do {
+            profile = .fetching
+            let profile = try await getProfileUseCase()
+            self.profile = .success(profile)
+        } catch {
+            profile = .failure
+        }
+        await fetchSolvedac()
+        await fetchGithub()
+    }
+    
+    private func fetchSolvedac() async {
+        guard case .success(let profile) = profile else {
+            solvedac = .failure
+            return
+        }
+        let solvedavId = profile.socialAccounts.first { $0.socialType == .SOLVED_AC }
+        guard let solvedavId else {
+            solvedac = .failure
+            return
+        }
+        do {
+            solvedac = .fetching
+            let solvedac = try await getSolvedacUseCase(name: solvedavId.socialId)
+            self.solvedac = .success(solvedac)
+        } catch {
+            solvedac = .failure
         }
     }
     
-    private func fetchSolvedac() {
-        Task {
-            guard case .success(let profile) = profile else {
-                solvedac = .failure
-                return
-            }
-            let solvedavId = profile.socialAccounts.first { $0.socialType == .SOLVED_AC }
-            guard let solvedavId else {
-                solvedac = .failure
-                return
-            }
-            do {
-                solvedac = .fetching
-                let solvedac = try await getSolvedacUseCase(name: solvedavId.socialId)
-                self.solvedac = .success(solvedac)
-            } catch {
-                solvedac = .failure
-            }
+    private func fetchGithub() async {
+        guard case .success(let profile) = profile else {
+            github = .failure
+            return
         }
-    }
-    
-    private func fetchGithub() {
-        Task {
-            guard case .success(let profile) = profile else {
-                github = .failure
-                return
-            }
-            let githubId = profile.socialAccounts.first { $0.socialType == .GITHUB }
-            guard let githubId else {
-                github = .failure
-                return
-            }
-            do {
-                github = .fetching
-                let github = try await getGithubUseCase(name: githubId.socialId)
-                self.github = .success(github)
-            } catch {
-                github = .failure
-            }
+        let githubId = profile.socialAccounts.first { $0.socialType == .GITHUB }
+        guard let githubId else {
+            github = .failure
+            return
+        }
+        do {
+            github = .fetching
+            let github = try await getGithubUseCase(name: githubId.socialId)
+            self.github = .success(github)
+        } catch {
+            github = .failure
         }
     }
 }
