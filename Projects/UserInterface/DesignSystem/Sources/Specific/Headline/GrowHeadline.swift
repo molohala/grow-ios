@@ -5,7 +5,7 @@ public struct GrowHeadline: View {
     private let text: String
     
     public init(
-        text: String
+        _ text: String
     ) {
         self.text = text
     }

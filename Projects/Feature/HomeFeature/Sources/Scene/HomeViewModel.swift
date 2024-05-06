@@ -15,12 +15,8 @@ public final class HomeViewModel: ObservableObject {
     
     // MARK: - Properties
     @Published var weekCommunities: FetchFlow<[Community]> = .fetching
-    @Published var selectedCommunity: Community?
     @Published var todayGithubRanks: FetchFlow<[Rank]> = .fetching
     @Published var todayBaekjoonRanks: FetchFlow<[Rank]> = .fetching
-    
-    @Published var removedCommunityFlow: FetchFlow<Bool> = .fetching
-    @Published var selectedRemoveCommunity: Community?
     
     public init(
         getTodayGithubRankUseCase: any GetTodayGithubRankUseCase,
@@ -71,35 +67,19 @@ public final class HomeViewModel: ObservableObject {
     
     @MainActor
     public func patchLike(communityId: Int) async {
+        guard case .success(var data) = weekCommunities else {
+            return
+        }
         do {
             try await patchLikeUseCase(communityId: communityId)
-            guard case .success(var data) = weekCommunities else {
-                return
-            }
-
             data.enumerated().forEach { idx, i in
                 if communityId == i.community.communityId {
-                    data[idx].community.like += i.community.liked ? -1 : 1
+                    let added = i.community.liked ? -1 : 1
+                    data[idx].community.like += added
                     data[idx].community.liked.toggle()
                 }
             }
             self.weekCommunities = .success(data)
         } catch {}
-    }
-    
-    @MainActor
-    public func removeCommunity() async {
-        do {
-            guard let selectedRemoveCommunity else {
-                removedCommunityFlow = .failure
-                return
-            }
-            removedCommunityFlow = .fetching
-            try await removeCommunityUseCase(id: selectedRemoveCommunity.community.communityId)
-            await fetchBestCommunities()
-            removedCommunityFlow = .success(true)
-        } catch {
-            removedCommunityFlow = .failure
-        }
     }
 }

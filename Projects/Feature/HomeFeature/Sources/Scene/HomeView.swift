@@ -10,7 +10,6 @@ public struct HomeView: View {
     @EnvironmentObject private var router: Router
     
     @StateObject private var viewModel: HomeViewModel
-    @State private var showRemoveDialog = false
     
     public init(
         viewModel: HomeViewModel
@@ -19,232 +18,150 @@ public struct HomeView: View {
     }
     
     public var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 40) {
-                profile
-                    .padding(.top, 24)
+        ScrollView {
+            LazyVStack(spacing: 0) {
+                greeting
+                stat
                 todayGithub
                 todayBaekjoon
-                weekNiceCommunity
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 108)
+            .padding(.horizontal, 12)
         }
-        .background(Color.backgroundColor)
+        .scrollIndicators(.hidden)
+        .growTopBar("홈", background: .backgroundAlt, backButtonAction: nil)
         .task {
             async let fetchTodayGithubRank: () = viewModel.fetchTodayGithubRank()
             async let fetchTodayBaekjoonRank: () = viewModel.fetchTodayBaekjoonRank()
             async let fetchBestCommunities: () = viewModel.fetchBestCommunities()
             _ = await [fetchTodayGithubRank, fetchTodayBaekjoonRank, fetchBestCommunities]
         }
-        .alert("정말 게시글을 삭제 하시겠습니까?", isPresented: $showRemoveDialog) {
-            Button("아니요", role: .cancel) {}
-            Button("삭제", role: .destructive) {
-                Task {
-                    await viewModel.removeCommunity()
+    }
+    
+    @ViewBuilder
+    private var greeting: some View {
+        VStack(spacing: 12) {
+            switch appState.profile {
+            case .fetching:
+                VStack(spacing: 4) {
+                    RowShimmer(width: 80)
+                    RowShimmer(width: 120)
                 }
+            case .success(let data):
+                VStack(spacing: 0) {
+                    GrowHeadline("iOS 개발자")
+                    GrowHeadline("\(data.name)님 환영합니다")
+                }
+            case .failure:
+                Text("불러오기 실패")
             }
         }
     }
     
     @ViewBuilder
-    private var profile: some View {
-        VStack(spacing: 16) {
-            switch appState.profile {
-            case .success(let data):
-                SubTitle("iOS 개발자\n\(data.name)님 환영합니다")
-                    .lineSpacing(4.0)
-                    .growFont(.title)
+    private var stat: some View {
+        HStack(spacing: 16) {
+            switch appState.github {
             case .fetching:
-                VStack {
-                    SubTitle("--------")
-                        .lineSpacing(4.0)
-                        .growFont(.title)
-                    SubTitle("------------")
-                        .lineSpacing(4.0)
-                        .growFont(.title)
-                }
-                .shimmer()
+                GrowStatCellShimmer()
+            case .success(let data):
+                GrowStatCell(label: "오늘 한 커밋 개수", type: .github(commit: data.todayCommits.contributionCount)) {}
             case .failure:
                 Text("불러오기 실패")
             }
-            HStack(spacing: 16) {
-                if case .success(let data) = appState.github {
-                    let todayCommit = data.todayCommits.contributionCount
-                    GrowStatCell("오늘 한 커밋 개수", type: .github(todayCommit)) {
-                        // nav
-                    }
-                } else if appState.github == .fetching {
-                    GrowStatShimmerCell()
-                } else {
-                    GrowStatCell("오늘 한 커밋 개수", type: .github()) {}
-                }
-                
-                if case .success(let data) = appState.solvedac {
-                     let todaySolves = data.todaySolves.solvedCount
-                     GrowStatCell("오늘 푼 문제 개수", type: .baekjoon(todaySolves)) {
-                         // nav
-                     }
-                } else if appState.solvedac == .fetching {
-                    GrowStatShimmerCell()
-                } else {
-                    GrowStatCell("오늘 푼 문제 개수", type: .baekjoon()) {}
-                }
-            }
         }
+        .padding(.vertical, 20)
     }
     
     @ViewBuilder
     private var todayGithub: some View {
-        VStack(spacing: 16) {
-            HStack(spacing: 0) {
-                SubTitle("오늘의 Github Top 3")
-                Spacer()
-            }
-//            let profileId = appState.profile?.id ?? 0
-            switch (viewModel.todayGithubRanks, appState.profile) {
-            case (.fetching, _), (_, .fetching):
-                VStack(spacing: 12) {
+        VStack(spacing: 0) {
+            GrowHeadline("오늘의 Github Top 3")
+            VStack(spacing: 4) {
+                switch viewModel.todayGithubRanks {
+                case .fetching:
                     ForEach(0..<3, id: \.self) { _ in
-                        GrowGithubRankCellShimmer()
-                            .shimmer()
+                        GrowRankCellShimmer()
                     }
+                case .success(let data):
+                    ForEach(data, id: \.memberId) { rank in
+                        GrowRankCell(
+                            name: rank.memberName,
+                            socialId: rank.socialId,
+                            rank: rank.rank,
+                            label: "\(rank.count) 커밋") {}
+                    }
+                case .failure:
+                    Text("불러오기 실패")
                 }
-                .padding(.vertical, 4)
-                .applyCardView()
-            case (.success(let data), .success(let profile)):
-                if data.isEmpty {
-                    HStack {
-                        Spacer()
-                        VStack(spacing: 8) {
-                            Text("첫 번째로 커밋을 해보세요!")
-                                .growFont(.subheadline)
-                            Text("아직 아무도 커밋을 안 했어요")
-                                .foregroundStyle(Color.gray500)
-                                .growFont(.footnote)
-                        }
-                        Spacer()
-                    }
-                    .padding(.vertical, 8)
-                    .applyCardView()
-                } else {
-                    VStack(spacing: 12) {
-                        ForEach(data, id: \.self) { githubRank in
-                            GrowGithubRankCell(rank: githubRank, isMe: githubRank.memberId == profile.id) {
-                                router.navigate(to: HomeDestination.profileDetail(memberId: githubRank.memberId))
-                            }
-                        }
-                    }
-                    .padding(.vertical, 4)
-                    .applyCardView()
-                }
-            default:
-                Text("불러오기 실패..")
             }
+            .padding(.vertical, 12)
+            .applyCardView()
+            .padding(.horizontal, 8)
+            .padding(.vertical, 12)
         }
+        .padding(.vertical, 8)
     }
     
     @ViewBuilder
     private var todayBaekjoon: some View {
-        VStack(spacing: 16) {
-            HStack(spacing: 0) {
-                SubTitle("오늘의 백준 Top 3")
-                Spacer()
-            }
-            switch (viewModel.todayBaekjoonRanks, appState.profile) {
-            case (.fetching, _), (_, .fetching):
-                VStack(spacing: 12) {
+        VStack(spacing: 0) {
+            GrowHeadline("오늘의 백준 Top 3")
+            VStack(spacing: 4) {
+                switch viewModel.todayBaekjoonRanks {
+                case .fetching:
                     ForEach(0..<3, id: \.self) { _ in
                         GrowRankCellShimmer()
-                            .shimmer()
                     }
+                case .success(let data):
+                    ForEach(data, id: \.memberId) { rank in
+                        GrowRankCell(
+                            name: rank.memberName,
+                            socialId: rank.socialId,
+                            rank: rank.rank,
+                            label: "\(rank.count) 커밋") {}
+                    }
+                case .failure:
+                    Text("불러오기 실패")
                 }
-                .padding(.vertical, 4)
-                .applyCardView()
-            case (.success(let data), .success(let profile)):
-                if data.isEmpty {
-                    HStack {
-                        Spacer()
-                        VStack(spacing: 8) {
-                            Text("첫 번째로 문제를 풀어보세요!")
-                                .growFont(.subheadline)
-                            Text("아직 아무도 문제를 풀지 않았어요ㅠㅠ")
-                                .foregroundStyle(Color.gray500)
-                                .growFont(.footnote)
-                        }
-                        Spacer()
-                    }
-                    .padding(.vertical, 8)
-                    .applyCardView()
-                } else {
-                    VStack(spacing: 12) {
-                        ForEach(data, id: \.self) { rank in
-                            GrowRankCell(rank: rank, isMe: rank.memberId == profile.id) {
-                                router.navigate(to: HomeDestination.profileDetail(memberId: rank.memberId))
-                            }
-                        }
-                    }
-                    .padding(.vertical, 4)
-                    .applyCardView()
-                }
-            default:
-                Text("불러오기 실패..")
             }
+            .padding(.vertical, 12)
+            .applyCardView()
+            .padding(.horizontal, 8)
+            .padding(.vertical, 12)
         }
+        .padding(.vertical, 8)
     }
     
     @ViewBuilder
-    private var weekNiceCommunity: some View {
-        VStack(spacing: 12) {
-            SubTitle("이번주 인기글")
-            switch viewModel.weekCommunities {
-            case .fetching:
-                VStack(spacing: 12) {
+    private var weekBestForum: some View {
+        VStack(spacing: 0) {
+            GrowHeadline("이번주 인기글")
+            VStack(spacing: 8) {
+                switch viewModel.weekCommunities {
+                case .fetching:
                     ForEach(0..<3, id: \.self) { _ in
-                        CommunityCellShimmer()
-                            .shimmer()
+                        GrowForumCellShimmer()
                     }
-                }
-                .padding(.vertical, 4)
-            case .success(let data):
-                if data.isEmpty {
-                    HStack {
-                        Spacer()
-                        VStack(spacing: 8) {
-                            Text("😱")
-                                .growFont(.subheadline)
-                            Text("아직 아무도 게시글을 올리지 않았어요")
-                                .foregroundStyle(Color.gray500)
-                                .growFont(.footnote)
+                case .success(let data):
+                    if case .success(let profile) = appState.profile {
+                        ForEach(data, id: \.community.communityId) { forum in
+                            let forumId = forum.community.communityId
+                            GrowForumCell(
+                                forum: forum,
+                                profileId: profile.id,
+                                likeAction: {},
+                                removeAction: {},
+                                editAction: {},
+                                action: {}
+                            )
                         }
-                        Spacer()
                     }
-                    .padding(.vertical, 8)
-                    .applyCardView()
-                } else {
-//                    VStack(spacing: 12) {
-//                        ForEach(data, id: \.community.communityId) { community in
-//                            let communityId = community.community.communityId
-//                            CommunityCell(
-//                                community: community,
-//                                likeAction: {
-//                                    await viewModel.patchLike(communityId: communityId)
-//                                },
-//                                editAction: {
-//                                    router.navigate(to: HomeDestination.communityEdit(communityContent: community.community))
-//                                },
-//                                removeAction: {
-//                                    showRemoveDialog = true
-//                                }
-//                            ) {
-//                                router.navigate(to: HomeDestination.communityDetail)
-//                            }
-//                        }
-//                    }
+                case .failure:
+                    Text("불러오기 실패")
                 }
-            case .failure:
-                Text("불러오기 실패...")
             }
+            .padding(.vertical, 8)
         }
+        .padding(.vertical, 8)
     }
 }

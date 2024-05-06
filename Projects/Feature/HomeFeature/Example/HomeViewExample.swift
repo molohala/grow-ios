@@ -6,7 +6,7 @@ struct HomeViewExample: App {
     var body: some Scene {
         WindowGroup {
             HomeView(
-                viewModel: .init()
+                viewModel: .init(getTodayGithubRankUseCase: <#GetTodayGithubRankUseCase#>, getTodaySolvedacRankUseCase: <#GetTodaySolvedacRankUseCase#>, getBestCommunitiesUseCase: <#GetBestCommuntiesUseCase#>, patchLikeUseCase: <#PatchLikeUseCase#>, removeCommunityUseCase: <#RemoveCommunityUseCase#>)
             )
         }
     }
