@@ -18,8 +18,8 @@ public final class AppState: ObservableObject {
         }
     }
     @Published public var profile: FetchFlow<Profile> = .fetching
-    @Published public var baekjoon: FetchFlow<Solvedav> = .fetching
-    @Published public var github: FetchFlow<Github> = .fetching
+    @Published public var baekjoon: FetchFlow<Solvedav?> = .fetching
+    @Published public var github: FetchFlow<Github?> = .fetching
     
     private let setTokenUseCase: any SetTokenUseCase
     private let getTokenUseCase: any GetTokenUseCase
@@ -51,26 +51,26 @@ public final class AppState: ObservableObject {
         } catch {
             profile = .failure
         }
-        await fetchSolvedac()
+        await fetchBaekjoon()
         await fetchGithub()
     }
     
-    private func fetchSolvedac() async {
+    private func fetchBaekjoon() async {
         guard case .success(let profile) = profile else {
-            solvedac = .failure
+            baekjoon = .failure
             return
         }
-        let solvedavId = profile.socialAccounts.first { $0.socialType == .SOLVED_AC }
-        guard let solvedavId else {
-            solvedac = .failure
+        let baekjoonId = profile.socialAccounts.first { $0.socialType == .SOLVED_AC }
+        guard let baekjoonId else {
+            baekjoon = .success(nil)
             return
         }
         do {
-            solvedac = .fetching
-            let solvedac = try await getSolvedacUseCase(name: solvedavId.socialId)
-            self.solvedac = .success(solvedac)
+            baekjoon = .fetching
+            let baekjoon = try await getSolvedacUseCase(name: baekjoonId.socialId)
+            self.baekjoon = .success(baekjoon)
         } catch {
-            solvedac = .failure
+            baekjoon = .failure
         }
     }
     
@@ -81,7 +81,7 @@ public final class AppState: ObservableObject {
         }
         let githubId = profile.socialAccounts.first { $0.socialType == .GITHUB }
         guard let githubId else {
-            github = .failure
+            github = .success(nil)
             return
         }
         do {

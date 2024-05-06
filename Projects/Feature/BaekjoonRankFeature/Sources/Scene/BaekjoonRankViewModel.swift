@@ -2,26 +2,20 @@ import Foundation
 import RankServiceInterface
 import BaseFeature
 
+public enum BaekjoonTab: String, CaseIterable {
+    case week = "이번 주"
+    case total = "전체"
+}
+
 public final class BaekjoonRankViewModel: ObservableObject {
-    
-    enum BaekjoonTab: String, CaseIterable {
-        case week = "이번 주"
-        case total = "전체"
-    }
-    
+   
     // MARK: - UseCases
     private let getTotalSolvedacRankUseCase: any GetTotalSolvedacRankUseCase
     private let getWeekSolvedacRankUseCase: any GetWeekSolvedacRankUseCase
     
     // MARK: - Properties
     @Published var baekjoonRanks: FetchFlow<[Rank]> = .fetching
-    @Published var selectedTab: BaekjoonTab = .week {
-        didSet {
-            Task {
-                await handleGithubRank()
-            }
-        }
-    }
+    @Published var selectedTab: BaekjoonTab = .week
     
     public init(
         getTotalSolvedacRankUseCase: any GetTotalSolvedacRankUseCase,
@@ -31,31 +25,14 @@ public final class BaekjoonRankViewModel: ObservableObject {
         self.getWeekSolvedacRankUseCase = getWeekSolvedacRankUseCase
     }
     
-    func handleGithubRank() async {
-        switch selectedTab {
-        case .week:
-            await fetchWeekGithubRank()
-        case .total:
-            await fetchTotalGithubRank()
-        }
-    }
-    
     @MainActor
-    private func fetchWeekGithubRank() async {
+    func fetchBaekjoonRank() async {
         do {
             baekjoonRanks = .fetching
-            let ranks = try await getWeekSolvedacRankUseCase()
-            baekjoonRanks = .success(ranks)
-        } catch {
-            baekjoonRanks = .failure
-        }
-    }
-    
-    @MainActor
-    private func fetchTotalGithubRank() async {
-        do {
-            baekjoonRanks = .fetching
-            let ranks = try await getTotalSolvedacRankUseCase()
+            let ranks = try await switch selectedTab {
+            case .week: getWeekSolvedacRankUseCase()
+            case .total: getTotalSolvedacRankUseCase()
+            }
             baekjoonRanks = .success(ranks)
         } catch {
             baekjoonRanks = .failure

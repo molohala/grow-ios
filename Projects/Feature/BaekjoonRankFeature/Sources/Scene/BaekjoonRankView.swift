@@ -6,95 +6,110 @@ import BaekjoonRankFeatureInterface
 public struct BaekjoonRankView: View {
     
     @EnvironmentObject private var appState: AppState
-    @ObservedObject private var viewModel: BaekjoonRankViewModel
-    
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var colorProvider: ColorProvider
+    @StateObject private var viewModel: BaekjoonRankViewModel
     
     public init(
         viewModel: BaekjoonRankViewModel
     ) {
-        self._viewModel = ObservedObject(wrappedValue: viewModel)
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
-        ZStack {
-            ScrollView(showsIndicators: false) {
-                LazyVStack(spacing: 12) {
-                    if case .success(let profile) = appState.profile,
-                       profile.socialAccounts.first(where: { $0.socialType == .GITHUB }) == nil {
-                        githubSetting
-                            .padding(.horizontal, 24)
-                    }
-                    selector
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 8)
-                    switch (viewModel.baekjoonRanks, appState.profile) {
-                    case (.fetching, _), (_, .fetching):
-                        ForEach(0..<7, id: \.self) { _ in
-                            GrowRankCellShimmer()
-                                .padding(.horizontal, 16)
-                                .shimmer()
-                        }
-                    case (.success(let data), .success(let profile)):
-                        ForEach(data, id: \.memberId) { rank in
-                            GrowRankCell(rank: rank, isMe: profile.id == rank.memberId) {
-                                router.navigate(to: BaekjoonDestination.profileDetail(memberId: rank.memberId))
-                            }
-                            .padding(.horizontal, 16)
-                        }
-                    default:
-                        Text("불러오기 실패..")
-                    }
-                }
-                .padding(.top, 16)
-                .padding(.bottom, 128)
+        VStack(spacing: 0) {
+            if case .success(let data) = appState.baekjoon,
+               data == nil {
+                recommendingSettingBaekjoon
             }
-            .refreshable {
-                Task {
-                    await viewModel.handleGithubRank()
+            indicator
+            switch viewModel.baekjoonRanks {
+            case .fetching:
+                VStack(spacing: 0) {
+                    GrowRankCellShimmer()
                 }
+                .padding(.horizontal, 20)
+            case .success(let data):
+                LazyVStack(spacing: 12) {
+                    ForEach(data, id: \.memberId) { rank in
+                        GrowRankCell(
+                            name: rank.memberName, 
+                            socialId: rank.socialId,
+                            rank: rank.rank,
+                            label: "\(rank) 문제",
+                            action: {})
+                    }
+                }
+                .padding(12)
+            case .failure:
+                Text("불러오기 실패")
             }
         }
+        .growTopBar("백준 랭킹")
         .task {
-            await viewModel.handleGithubRank()
+            Task {
+                await viewModel.fetchBaekjoonRank()
+            }
+        }
+        .task(id: viewModel.selectedTab) {
+            await viewModel.fetchBaekjoonRank()
         }
     }
     
     @ViewBuilder
-    private var githubSetting: some View {
-        VStack {
-            Text("아직 백준 설정이 완료되지 않았네요")
-                .foregroundStyle(.gray)
-                .growFont(.caption)
-            Text("백준 설정을 하고 순위권에 도전해 보세요!")
-                .growFont(.callout)
-                .multilineTextAlignment(.center)
-                .lineLimit(1)
-            GrowButton("설정하기", height: 40) {
+    private var recommendingSettingBaekjoon: some View {
+        VStack(spacing: 16) {
+            Text("아직 백준 ID를 설정하지 않았어요")
+                .growFont(.bodyM)
+                .growColor(.textNormal)
+            GrowButton("설정하기", type: .Small) {
                 router.navigate(to: BaekjoonDestination.baekjoonSetting)
             }
-            .frame(width: 150)
-            .growFont(.callout)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 8)
-        .padding(.vertical, 24)
-        .overlay {
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(lineWidth: 1)
-                .foregroundStyle(.gray.opacity(0.3))
-        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 16)
+        .toCenter()
+        .stroke(12, content: colorProvider.color(.textAlt))
+        .padding(16)
     }
     
+    
+    
     @ViewBuilder
-    private var selector: some View {
-        HStack(spacing: 8) {
-            ForEach(BaekjoonRankViewModel.BaekjoonTab.allCases, id: \.self) { tab in
-                GrowSelector(text: tab.rawValue, isSelected: tab == viewModel.selectedTab) {
-                    viewModel.selectedTab = tab
+    private var indicator: some View {
+        HStack(spacing: 12) {
+            ForEach(BaekjoonTab.allCases, id: \.self) {
+                GrowTabButton(
+                    $0.rawValue,
+                    isSelected: $0 == viewModel.selectedTab
+                ) {
+                    //
                 }
             }
             Spacer()
         }
+        .padding(.leading, 12)
     }
+    
 }
+
+/**
+ Row(
+       modifier = Modifier
+           .padding(start = 12.dp),
+       horizontalArrangement = Arrangement.spacedBy(12.dp)
+   ) {
+       BaekjoonRankTab.entries.forEach {
+           GrowTabButton(
+               modifier = Modifier,
+               text = it.label,
+               selected = it == selectedTab,
+               type = ButtonType.Small,
+               shape = CircleShape
+           ) {
+               onClickTab(it)
+           }
+       }
+       Spacer(modifier = Modifier.weight(1f))
+   }
+ */

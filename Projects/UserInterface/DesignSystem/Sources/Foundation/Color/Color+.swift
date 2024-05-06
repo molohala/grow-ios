@@ -93,7 +93,7 @@ public class ColorProvider: ObservableObject {
         self.isDarkTheme = isDarkTheme
     }
     
-    func color(_ color: GrowColorScheme) -> Color {
+    public func color(_ color: GrowColorScheme) -> Color {
         isDarkTheme ? color.darkColor : color.lightColor
     }
 }

@@ -16,7 +16,7 @@ public struct GrowTabButton: View {
         _ text: String,
         leadingIcon: GrowIconography? = nil,
         trailingIcon: GrowIconography? = nil,
-        isSelected: Bool = true,
+        isSelected: Bool,
         action: @escaping () async -> Void
     ) {
         self.text = text
