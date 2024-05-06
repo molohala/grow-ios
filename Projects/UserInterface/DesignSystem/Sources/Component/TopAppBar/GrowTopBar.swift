@@ -14,14 +14,14 @@ public struct GrowTopAppBar<C>: View where C: View {
     @EnvironmentObject private var colorProvider: ColorProvider
     
     private let title: String
-    private let background: GrowColorScheme?
+    private let background: GrowColorScheme
     private let content: () -> C
     private let backButtonAction: (() -> Void)?
     private let trailingContent: AnyView
     
     public init(
         title: String,
-        background: GrowColorScheme?,
+        background: GrowColorScheme,
         backButtonAction: (() -> Void)?,
         trailingContent: AnyView = AnyView(EmptyView()),
         @ViewBuilder content: @escaping () -> C
@@ -35,7 +35,7 @@ public struct GrowTopAppBar<C>: View where C: View {
     
     public var body: some View {
         ZStack {
-            colorProvider.color(background ?? .backgroundAlt)
+            colorProvider.color(background)
                 .ignoresSafeArea()
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
@@ -58,7 +58,7 @@ public struct GrowTopAppBar<C>: View where C: View {
                     trailingContent
                 }
                 .frame(height: 54)
-                .growBackground(background ?? .backgroundAlt)
+                .growBackground(background)
                 .padding(.horizontal, 4)
                 content()
             }
@@ -71,9 +71,9 @@ public struct GrowTopAppBar<C>: View where C: View {
 public extension View {
     func growTopBar<TC>(
         _ title: String,
-        background: GrowColorScheme? = nil,
+        background: GrowColorScheme = .backgroundAlt,
         @ViewBuilder trailingContent: @escaping () -> TC = { EmptyView() },
-        backButtonAction: (() -> Void)?
+        backButtonAction: (() -> Void)? = nil
     ) -> some View where TC: View {
         GrowTopAppBar(
             title: title,

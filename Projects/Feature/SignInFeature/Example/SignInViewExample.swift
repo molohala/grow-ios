@@ -1,5 +1,6 @@
 import SwiftUI
 import SignInFeature
+import AuthServiceInterface
 
 @main
 struct SignInViewExample: App {
