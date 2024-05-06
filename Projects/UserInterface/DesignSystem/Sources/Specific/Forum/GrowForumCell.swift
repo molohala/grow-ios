@@ -31,20 +31,57 @@ public struct GrowForumCell: View {
         let content = forum.community
         let recentComment = forum.recentComment
         
-        Button {
-            action()
-        } label: {
+        ZStack(alignment: .top) {
+            Button {
+                action()
+            } label: {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 8) {
+                        GrowAvatar(type: .medium)
+                        VStack(alignment: .leading) {
+                            Text(content.writerName)
+                                .growFont(.bodyB)
+                                .growColor(.textNormal)
+                            Text(content.createdAt.timeAgo)
+                                .growFont(.labelM)
+                                .growColor(.textAlt)
+                        }
+                        Spacer()
+                    }
+                    Text(content.content)
+                        .lineLimit(5)
+                        .growFont(.bodyR)
+                        .truncationMode(.tail)
+                        .growColor(.textNormal)
+                    GrowLikeButton(like: content.like, isLiked: content.liked) {
+                        likeAction()
+                    }
+                    if let recentComment {
+                        GrowDivider()
+                        HStack(spacing: 4) {
+                            Text(recentComment.name)
+                                .growFont(.labelB)
+                                .growColor(.textNormal)
+                            Text(recentComment.content)
+                                .applyOpenURL()
+                                .growColor(.textNormal)
+                                .growFont(.labelR)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                            Text(recentComment.createdAt.timeAgo)
+                                .growFont(.labelM)
+                                .growColor(.textAlt)
+                            Spacer()
+                        }
+                    }
+                }
+                .padding(12)
+                .applyCardView()
+            }
+            .applyAnimation()
+            
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 8) {
-                    GrowAvatar(type: .medium)
-                    VStack(alignment: .leading) {
-                        Text(content.writerName)
-                            .growFont(.bodyB)
-                            .growColor(.textNormal)
-                        Text(content.createdAt.timeAgo)
-                            .growFont(.labelM)
-                            .growColor(.textAlt)
-                    }
                     Spacer()
                     Menu {
                         Button("수정하기") {
@@ -59,39 +96,12 @@ public struct GrowForumCell: View {
                                 .resizable()
                                 .growIconColor(.textAlt)
                                 .frame(size: 28)
+                                .growBackground(.background)
                         }
-                    }
-                }
-                Text(content.content)
-                    .lineLimit(5)
-                    .growFont(.bodyR)
-                    .truncationMode(.tail)
-                    .growColor(.textNormal)
-                GrowLikeButton(like: content.like, isLiked: content.liked) {
-                    likeAction()
-                }
-                if let recentComment {
-                    GrowDivider()
-                    HStack(spacing: 4) {
-                        Text(recentComment.name)
-                            .growFont(.labelB)
-                            .growColor(.textNormal)
-                        Text(recentComment.content)
-                            .applyOpenURL()
-                            .growColor(.textNormal)
-                            .growFont(.labelR)
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                        Text(recentComment.createdAt.timeAgo)
-                            .growFont(.labelM)
-                            .growColor(.textAlt)
-                        Spacer()
                     }
                 }
             }
             .padding(12)
-            .applyCardView()
         }
-        .applyAnimation()
     }
 }
