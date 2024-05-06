@@ -105,8 +105,8 @@ public struct HomeView: View {
                 }
             }
             .padding(.vertical, 12)
-            .applyCardView()
             .padding(.horizontal, 8)
+            .applyCardView()
             .padding(.vertical, 12)
         }
         .padding(.vertical, 8)
@@ -136,8 +136,8 @@ public struct HomeView: View {
                 }
             }
             .padding(.vertical, 12)
-            .applyCardView()
             .padding(.horizontal, 8)
+            .applyCardView()
             .padding(.vertical, 12)
         }
         .padding(.vertical, 8)
