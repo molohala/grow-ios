@@ -12,7 +12,7 @@ public struct GrowLikeButton: View {
     
     public init(
         like: Int,
-        isLiked: Bool = true,
+        isLiked: Bool,
         action: @escaping () async -> Void
     ) {
         self.like = like
