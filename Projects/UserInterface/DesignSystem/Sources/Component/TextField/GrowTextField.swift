@@ -3,6 +3,7 @@ import SwiftUI
 public struct GrowTextField: View {
     
     // MARK: - State
+    @EnvironmentObject private var colorProvider: ColorProvider
     @Binding var text: String
     @State private var isHide = true
     
@@ -32,13 +33,16 @@ public struct GrowTextField: View {
             if isSecured && isHide {
                 SecureField(
                     hint,
-                    text: $text
+                    text: $text,
+                    prompt: Text(hint).foregroundColor(colorProvider.color(.textAlt))
                 )
             } else {
                 TextField(
                     hint,
-                    text: $text
+                    text: $text,
+                    prompt: Text(hint).foregroundColor(colorProvider.color(.textAlt))
                 )
+                .growColor(text.isEmpty ? .textAlt : .textNormal)
             }
         }
         .textFieldStyle(
