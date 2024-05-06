@@ -60,14 +60,14 @@ public struct HomeView: View {
     @ViewBuilder
     private var stat: some View {
         HStack(spacing: 16) {
-            switch appState.github {
-            case .fetching:
-                GrowStatCellShimmer()
-            case .success(let data):
-                GrowStatCell(label: "오늘 한 커밋 개수", type: .github(commit: data.todayCommits.contributionCount)) {}
-            case .failure:
-                Text("불러오기 실패")
-            }
+//            switch appState.github {
+//            case .fetching:
+//                GrowStatCellShimmer()
+//            case .success(let data):
+//                GrowStatCell(label: "오늘 한 커밋 개수", type: .github(commit: data.todayCommits.contributionCount)) {}
+//            case .failure:
+//                Text("불러오기 실패")
+//            }
         }
         .padding(.vertical, 20)
     }

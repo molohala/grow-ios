@@ -4,11 +4,13 @@ import MainFeatureInterface
 import SignInFeatureInterface
 import AuthServiceInterface
 import InfoServiceInterface
+import DesignSystem
 
 public struct RootView: View {
     
     @StateObject private var router = Router()
     @StateObject private var appState: AppState
+    @StateObject private var colorProvider = ColorProvider(isDarkTheme: true)
     
     private let mainBuildable: any MainBuildable
     private let signInBuildable: any SignInBuildable
@@ -45,6 +47,7 @@ public struct RootView: View {
         }
         .environmentObject(router)
         .environmentObject(appState)
+        .environmentObject(colorProvider)
         .task {
             await appState.fetchProfile()
         }

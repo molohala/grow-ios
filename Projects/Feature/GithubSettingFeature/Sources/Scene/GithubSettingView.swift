@@ -20,7 +20,7 @@ public struct GithubSettingView: View {
                 
                 Spacer()
                 
-                GrowButton("완료하기") {
+                GrowButton("완료하기", type: .CTA) {
                     await viewModel.completeSetting()
                 }
                 .disabled(viewModel.githubId.isEmpty)
@@ -47,7 +47,9 @@ public struct GithubSettingView: View {
         }
         .onChange(of: viewModel.completeFlow) {
             if $0 == .success(true) {
-                appState.fetchProfile()
+                Task {
+                    await appState.fetchProfile()
+                }
             }
         }
         .hideKeyboardWhenTap()

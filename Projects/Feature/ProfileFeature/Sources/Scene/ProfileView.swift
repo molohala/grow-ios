@@ -20,7 +20,6 @@ public struct ProfileView: View {
             LazyVStack(spacing: 12) {
                 info
                 stats
-                chart
             }
             .padding(.horizontal, 12)
         }
@@ -67,7 +66,7 @@ public struct ProfileView: View {
             case .success(let data):
                 GrowStatCell(
                     label: "커밋 개수",
-                    type: .github(commit: data.totalCommits)) {
+                    type: .github(commit: data?.totalCommits)) {
                         // action
                     }
             case .failure:
@@ -79,7 +78,7 @@ public struct ProfileView: View {
             case .success(let data):
                 GrowStatCell(
                     label: "커밋 개수",
-                    type: .baekjoon(solved: data.totalSolves)) {
+                    type: .baekjoon(solved: data?.totalSolves)) {
                         // action
                     }
             case .failure:

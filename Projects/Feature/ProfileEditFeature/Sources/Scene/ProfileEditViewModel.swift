@@ -10,5 +10,5 @@ import Foundation
 import DesignSystem
 
 final class ProfileEditViewModel: ObservableObject {
-    @Published var jobs: [GrowJobType] = [.Android, .Designer]
+//    @Published var jobs: [GrowJobType] = [.Android, .Designer]
 }

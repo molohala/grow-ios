@@ -30,7 +30,7 @@ public struct HomeCoordinator: View {
         )
         .navigationDestination(for: HomeDestination.self) {
             switch $0 {
-            case .communityDetail: communityDetailBuildable.makeView(id: viewModel.selectedCommunity?.community.communityId ?? -1).eraseToAnyView()
+            case .communityDetail: communityDetailBuildable.makeView(id: 1).eraseToAnyView()
             case .profileDetail(let memberId): profileDetailBuildable.makeView(memberId: memberId).eraseToAnyView()
             case .communityEdit(let forumId): communityEditBuildable.makeView(forumId: forumId).eraseToAnyView()
             }

@@ -26,42 +26,42 @@ public struct CommunityView: View {
                         switch viewModel.communities {
                         case .fetching:
                             ForEach(0..<4, id: \.self) { _ in
-                                CommunityCellShimmer()
+                                GrowForumCellShimmer()
                                     .shimmer()
                             }
                         case .success(let data):
                             ForEach(data, id: \.community.communityId) { community in
-                                CommunityCell(
-                                    community: community,
-                                    likeAction: {
-                                        await viewModel.patchLike(communityId: community.community.communityId)
-                                    },
-                                    editAction: {
-                                        router.navigate(to: CommunityDestination.communityEdit(forumId: community.community.communityId))
-                                    },
-                                    removeAction: {
-                                        viewModel.selectedRemoveCommunity = community
-                                        showRemoveDialog = true
-                                    }
-                                ) {
-                                    router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))
-                                }
-                                .task {
-                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
-                                    
-                                    if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (data.count - 1) / pagingInterval {
-                                        await viewModel.fetchNextCommunities()
-                                    }
-                                }
-                                .alert("정말 게시글을 삭제 하시겠습니까?", isPresented: $showRemoveDialog) {
-                                    Button("아니요", role: .cancel) {}
-                                    Button("삭제", role: .destructive) {
-                                        Task {
-                                            await viewModel.removeCommunity()
-                                            await viewModel.fetchCommunities()
-                                        }
-                                    }
-                                }
+//                                GrowForumCell(
+//                                    forum: community,
+//                                    likeAction: {
+//                                        await viewModel.patchLike(communityId: community.community.communityId)
+//                                    },
+//                                    editAction: {
+//                                        router.navigate(to: CommunityDestination.communityEdit(forumId: community.community.communityId))
+//                                    },
+//                                    removeAction: {
+//                                        viewModel.selectedRemoveCommunity = community
+//                                        showRemoveDialog = true
+//                                    }
+//                                ) {
+//                                    router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))
+//                                }
+//                                .task {
+//                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
+//                                    
+//                                    if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (data.count - 1) / pagingInterval {
+//                                        await viewModel.fetchNextCommunities()
+//                                    }
+//                                }
+//                                .alert("정말 게시글을 삭제 하시겠습니까?", isPresented: $showRemoveDialog) {
+//                                    Button("아니요", role: .cancel) {}
+//                                    Button("삭제", role: .destructive) {
+//                                        Task {
+//                                            await viewModel.removeCommunity()
+//                                            await viewModel.fetchCommunities()
+//                                        }
+//                                    }
+//                                }
                             }
                         case .failure:
                             Text("불러오기 실패")
@@ -92,7 +92,7 @@ public struct CommunityView: View {
                     } label: {
                         Circle()
                             .frame(width: 64, height: 64)
-                            .foregroundStyle(Color.blue500)
+//                            .foregroundStyle(Color.blue500)
                             .overlay {
                                 Image(systemName: "square.and.pencil")
                                     .foregroundStyle(.white)
@@ -104,7 +104,7 @@ public struct CommunityView: View {
                 }
             }
         }
-        .background(Color.backgroundColor)
+//        .background(Color.backgroundColor)
         .refreshable {
             Task {
                 await viewModel.fetchCommunities()

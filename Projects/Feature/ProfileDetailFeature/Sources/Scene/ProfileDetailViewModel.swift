@@ -26,8 +26,8 @@ public final class ProfileDetailViewModel: ObservableObject {
     @Published var solvedac: Solvedav?
     @Published var solvedacFlow: FetchFlow = .fetching
     
-    @Published var chartInfo: ChartInfo?
-    @Published var selectedChart: ChartType = .github
+//    @Published var chartInfo: ChartInfo?
+//    @Published var selectedChart: ChartType = .github
     
     public init(
         getGithubUseCase: any GetGithubUseCase,

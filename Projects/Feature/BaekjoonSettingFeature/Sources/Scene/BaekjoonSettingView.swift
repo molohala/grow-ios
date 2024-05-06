@@ -20,10 +20,9 @@ public struct BaekjoonSettingView: View {
                 
                 Spacer()
                 
-                GrowButton("완료하기", isLoading: viewModel.completeFlow == .fetching) {
+                GrowButton("완료하기", type: .CTA, isEnabled: !viewModel.baekjoonId.isEmpty) {
                     await viewModel.completeSetting()
                 }
-                .disabled(viewModel.baekjoonId.isEmpty)
                 .alert("백준 정보 수정 완료", isPresented: .init(
                     get: { viewModel.completeFlow == .success(true) },
                     set: { _ in })
@@ -49,7 +48,9 @@ public struct BaekjoonSettingView: View {
         }
         .onChange(of: viewModel.completeFlow) {
             if case .success(let data) = $0 {
-                appState.fetchProfile()
+                Task {
+                    await appState.fetchProfile()
+                }
             }
         }
         .hideKeyboardWhenTap()

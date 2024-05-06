@@ -16,8 +16,8 @@ public struct CommunityCreateView: View {
     public var body: some View {
         ScrollView {
             LazyVStack {
-                GrowTextEditor("내용을 적어주세요", text: $viewModel.content)
-                    .frame(minHeight: 300)
+//                GrowTextEditor("내용을 적어주세요", text: $viewModel.content)
+//                    .frame(minHeight: 300)
             }
             .padding(.horizontal, 16)
         }

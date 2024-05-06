@@ -33,7 +33,7 @@ public struct BaekjoonRankView: View {
                 LazyVStack(spacing: 12) {
                     ForEach(data, id: \.memberId) { rank in
                         GrowRankCell(
-                            name: rank.memberName, 
+                            name: rank.memberName,
                             socialId: rank.socialId,
                             rank: rank.rank,
                             label: "\(rank) 문제",

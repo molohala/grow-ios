@@ -10,8 +10,8 @@ public final class ProfileViewModel: ObservableObject {
     
     // MARK: - Properties
     
-    @Published var chartInfo: ChartInfo?
-    @Published var selectedChart: ChartType = .github
+//    @Published var chartInfo: ChartInfo?
+//    @Published var selectedChart: ChartType = .github
     
     public init(
         getGithubUseCase: any GetGithubUseCase,
