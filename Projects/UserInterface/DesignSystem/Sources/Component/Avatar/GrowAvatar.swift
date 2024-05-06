@@ -23,8 +23,8 @@ public enum AvatarType: CaseIterable {
 
 public struct GrowAvatar: View {
     
-    var url: String?
-    var type: AvatarType
+    private let url: String?
+    private let type: AvatarType
     
     public init(
         _ url: String? = nil,
@@ -42,9 +42,7 @@ public struct GrowAvatar: View {
                } else if state.error != nil {
                    label
                } else {
-                   Circle()
-                       .frame(width: type.size, height: type.size)
-                       .shimmer()
+                   GrowAvatarShimmer(type: type)
                }
             }
             .processors([.resize(size: .init(width: type.size, height: type.size), unit: .pixels)])
