@@ -142,7 +142,10 @@ public struct HomeView: View {
                             name: rank.memberName,
                             socialId: rank.socialId,
                             rank: rank.rank,
-                            label: "\(rank.count) 커밋") {}
+                            label: "\(rank.count) 문제"
+                        ) {
+                            router.navigate(to: HomeDestination.profileDetail(memberId: rank.memberId))
+                        }
                     }
                 case .failure:
                     Text("불러오기 실패")
