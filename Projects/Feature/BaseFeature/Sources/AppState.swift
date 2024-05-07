@@ -20,6 +20,7 @@ public final class AppState: ObservableObject {
     @Published public var profile: FetchFlow<Profile> = .fetching
     @Published public var baekjoon: FetchFlow<Solvedav?> = .fetching
     @Published public var github: FetchFlow<Github?> = .fetching
+    @Published public var chartInfo: FetchFlow<ChartInfo> = .fetching
     
     private let setTokenUseCase: any SetTokenUseCase
     private let getTokenUseCase: any GetTokenUseCase

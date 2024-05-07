@@ -5,36 +5,37 @@ import BaseFeature
 public struct GithubSettingView: View {
     
     @EnvironmentObject private var appState: AppState
-    @ObservedObject private var viewModel: GithubSettingViewModel
+    @EnvironmentObject private var router: Router
+    @StateObject private var viewModel: GithubSettingViewModel
     
     public init(
         viewModel: GithubSettingViewModel
     ) {
-        self._viewModel = ObservedObject(wrappedValue: viewModel)
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
-        ZStack {
-            VStack {
-                GrowTextField("Github Id를 입력해 주세요", text: $viewModel.githubId)
-                
-                Spacer()
-                
-                GrowButton("완료하기", type: .CTA) {
-                    await viewModel.completeSetting()
-                }
-                .disabled(viewModel.githubId.isEmpty)
-                .alert("Github 정보 수정 완료", isPresented: .init(
-                    get: { viewModel.completeFlow == .success(true) },
-                    set: { _ in })
-                ) {
-                    Button("닫기") { viewModel.completeFlow = .fetching }
+        VStack {
+            GrowTextField("Github ID", text: $viewModel.githubId)
+                .padding(.top, 20)
+            Spacer()
+            GrowButton("완료하기", type: .CTA, isEnabled: viewModel.githubId.isEmpty) {
+                await viewModel.completeSetting()
+            }
+            .padding(.bottom, 8)
+        }
+        .padding(.horizontal, 12)
+        .growTopBar("Github 설정", background: .backgroundAlt) {
+            router.popToStack()
+        }
+        .onChange(of: viewModel.completeFlow) {
+            if $0 == .success(true) {
+                Task {
+                    await appState.fetchProfile()
                 }
             }
-            .padding(.top, 16)
-            .padding(.horizontal, 16)
         }
-        .growTopBar("Github 설정")
+        .hideKeyboardWhenTap()
         .alert("수정에 실패했습니다", isPresented: .init(
             get: { viewModel.completeFlow == .failure },
             set: { _ in }
@@ -45,13 +46,12 @@ public struct GithubSettingView: View {
         } message: {
             Text("아이디를 다시 확인해 주세요")
         }
-        .onChange(of: viewModel.completeFlow) {
-            if $0 == .success(true) {
-                Task {
-                    await appState.fetchProfile()
-                }
-            }
+        .eraseToAnyView()
+        .alert("Github 정보 수정 완료", isPresented: .init(
+            get: { viewModel.completeFlow == .success(true) },
+            set: { _ in })
+        ) {
+            Button("닫기") { viewModel.completeFlow = .fetching }
         }
-        .hideKeyboardWhenTap()
     }
 }

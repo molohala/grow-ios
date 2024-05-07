@@ -28,19 +28,21 @@ public struct SettingView: View {
                     ) {
                         router.navigate(to: SettingDestination.profileEdit)
                     }
-                    if let github = profile.socialAccounts.first(where: { $0.socialType == .GITHUB }) {
-                        GrowSettingCell(
-                            label: "Github 설정",
-                            leftIcon: .github,
-                            description: github.socialId
-                        )
+                    let github = profile.socialAccounts.first(where: { $0.socialType == .GITHUB })
+                    GrowSettingCell(
+                        label: "Github 설정",
+                        leftIcon: .github,
+                        description: github?.socialId ?? ""
+                    ) {
+                        router.navigate(to: SettingDestination.githubSetting)
                     }
-                    if let baekjoon = profile.socialAccounts.first(where: { $0.socialType == .SOLVED_AC }) {
-                        GrowSettingCell(
-                            label: "백준 설정",
-                            leftIcon: .baekjoon,
-                            description: baekjoon.socialId
-                        )
+                    let baekjoon = profile.socialAccounts.first(where: { $0.socialType == .SOLVED_AC })
+                    GrowSettingCell(
+                        label: "백준 설정",
+                        leftIcon: .baekjoon,
+                        description: baekjoon?.socialId ?? ""
+                    ) {
+                        router.navigate(to: SettingDestination.baekjoonSetting)
                     }
                 }
             }

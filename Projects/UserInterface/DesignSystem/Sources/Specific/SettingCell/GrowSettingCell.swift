@@ -2,7 +2,6 @@ import SwiftUI
 
 public struct GrowSettingCell<C>: View where C: View {
     
-    
     public let label: String
     public let labelColor: GrowColorScheme
     public let leftIcon: GrowIconography?
@@ -62,7 +61,9 @@ public struct GrowSettingCell<C>: View where C: View {
         .applyCardView()
         .if(action != nil) { view in
             Button {
-                
+                if let action {
+                    action()
+                }
             } label: {
                 view
             }

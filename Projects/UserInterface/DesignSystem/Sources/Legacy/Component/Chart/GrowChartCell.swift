@@ -1,74 +1,80 @@
-//import SwiftUI
-//import InfoServiceInterface
-//import DateUtil
-//
-//public enum ChartType: String, CaseIterable {
-//    case github = "Github"
-//    case baekjoon = "백준"
-//}
-//
-//public struct ChartInfo {
-//    let title: String
-//    let subtitle: String
-//    let subject: String
-//    let chartData: GrowChartData
-//    
-//    public init(title: String, subtitle: String, subject: String, chartData: GrowChartData) {
-//        self.title = title
-//        self.subtitle = subtitle
-//        self.subject = subject
-//        self.chartData = chartData
-//    }
-//}
-//
-//public struct GrowChartCell: View {
-//    
-//    private let chartInfo: ChartInfo
-//    @Binding var selectedType: ChartType
-//    
-//    public init(
-//        chartInfo: ChartInfo,
-//        selectedType: Binding<ChartType>
-//    ) {
-//        self.chartInfo = chartInfo
-//        self._selectedType = selectedType
-//    }
-//    
-//    public var body: some View {
-//        VStack(spacing: 24) {
-//            HStack(alignment: .top) {
-//                VStack(alignment: .leading, spacing: 0) {
-//                    Text(chartInfo.subtitle)
-//                        .font(.subheadline)
-//                        .foregroundStyle(.black)
-//                    Text(chartInfo.title)
-//                        .font(.largeTitle)
-//                        .foregroundStyle(.black)
-//                }
-//                Spacer()
-//                    .foregroundStyle(.gray)
-//                Picker(selection: $selectedType) {
-//                    ForEach(ChartType.allCases, id: \.self) {
-//                        Text($0.rawValue)
-//                    }
-//                } label: {
-//                    HStack(spacing: 4) {
-//                        Text(chartInfo.subject)
-//                            .font(.subheadline)
-//                            .foregroundStyle(.gray)
-//                            .tint(.gray)
-//                        Icon.downArrorIcon
-//                    }
-//                }
-//                .applyAnimation()
-//                .padding(8)
-//            }
-//            GrowChart(chartData: chartInfo.chartData)
-//                .frame(height: 200)
-//        }
-//        .applyCardView()
-//    }
-//}
+import SwiftUI
+import InfoServiceInterface
+import DateUtil
+
+public enum ChartType: Equatable {
+    case github
+    case baekjoon
+    
+    var icon: GrowIconography {
+        switch self {
+        case .github: .github
+        case .baekjoon: .baekjoon
+        }
+    }
+    
+    var iconColor: GrowColorScheme {
+        switch self {
+        case .github: .github
+        case .baekjoon: .baekjoon
+        }
+    }
+}
+
+public struct ChartInfo: Equatable {
+    let label: String
+    let description: String
+    let type: ChartType
+    let chartData: GrowChartData
+    
+    public init(
+        label: String,
+        description: String,
+        type: ChartType,
+        chartData: GrowChartData
+    ) {
+        self.label = label
+        self.description = description
+        self.type = type
+        self.chartData = chartData
+    }
+}
+
+public struct GrowChartCell: View {
+    
+    private let chartInfo: ChartInfo
+    
+    public init(
+        chartInfo: ChartInfo
+    ) {
+        self.chartInfo = chartInfo
+    }
+    
+    public var body: some View {
+        VStack(spacing: 8) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(chartInfo.label)
+                        .growFont(.title1B)
+                        .growColor(.textNormal)
+                    Text(chartInfo.description)
+                        .growFont(.labelM)
+                        .growColor(.textDarken)
+                }
+                Spacer()
+                Image(icon: chartInfo.type.icon)
+                    .resizable()
+                    .growIconColor(chartInfo.type.iconColor)
+                    .frame(size: 28)
+            }
+            GrowChart(chartData: chartInfo.chartData)
+                .frame(height: 200)
+                .growBackground(.background)
+        }
+        .padding(16)
+        .applyCardView()
+    }
+}
 //
 //public extension [Commit] {
 //    var githubWeekChartInfo: ChartInfo {
@@ -78,7 +84,7 @@
 //            subject: ChartType.github.rawValue,
 //            chartData: .init(
 //                data: self.map { ($0.date.monthPerDay ?? "", y: $0.contributionCount) },
-//                color: .orange500
+//                color: .blue
 //            )
 //        )
 //    }
@@ -92,9 +98,9 @@
 //            subject: ChartType.github.rawValue,
 //            chartData: .init(
 //                data: self.map { ($0.date.monthPerDay ?? "", y: $0.solvedCount) },
-//                color: .orange500
+//                color: .blue
 //            )
 //        )
 //    }
 //}
-//
+
