@@ -7,6 +7,7 @@ public struct GrowMotivationCell: View {
         if let motivation = motivations.randomElement() {
             Text(motivation)
                 .growColor(.textNormal)
+                .growFont(.headline2R)
                 .multilineTextAlignment(.center)
                 .toCenter()
                 .padding(16)

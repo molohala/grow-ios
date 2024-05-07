@@ -6,97 +6,89 @@ import GithubRankFeatureInterface
 public struct GithubRankView: View {
     
     @EnvironmentObject private var appState: AppState
-    @ObservedObject private var viewModel: GithubRankViewModel
-    
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var colorProvider: ColorProvider
+    @StateObject private var viewModel: GithubRankViewModel
     
     public init(
         viewModel: GithubRankViewModel
     ) {
-        self._viewModel = ObservedObject(wrappedValue: viewModel)
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
-        ZStack {
-            ScrollView(showsIndicators: false) {
+        VStack(spacing: 0) {
+            if case .success(let data) = appState.github,
+               data == nil {
+                recommendingSettingGithub
+            }
+            indicator
+            switch viewModel.githubRanks {
+            case .fetching:
+                VStack(spacing: 0) {
+                    GrowRankCellShimmer()
+                }
+                .padding(.horizontal, 20)
+            case .success(let data):
                 LazyVStack(spacing: 12) {
-                    //                    if case .success(let profile) = appState.profile,
-                    //                       profile.socialAccounts.first(where: { $0.socialType == .GITHUB }) == nil {
-                    //                        githubSetting
-                    //                            .padding(.horizontal, 24)
-                    //                    }
-                    //                    selector
-                    //                        .padding(.horizontal, 20)
-                    //                        .padding(.vertical, 8)
-                    //                    switch (viewModel.githubRanks, appState.profile) {
-                    //                    case (.fetching, _), (_, .fetching):
-                    //                        ForEach(0..<7, id: \.self) { _ in
-                    //                            GrowGithubRankCellShimmer()
-                    //                                .padding(.horizontal, 16)
-                    //                                .shimmer()
-                    //                        }
-                    //                    case (.success(let githubRank), .success(let profile)):
-                    //                        ForEach(githubRank, id: \.memberId) { githubRank in
-                    //                            GrowGithubRankCell(rank: githubRank, isMe: profile.id == githubRank.memberId) {
-                    //                                router.navigate(to: GithubRankDestination.profileDetail(memberId: githubRank.memberId))
-                    //                            }
-                    //                            .padding(.horizontal, 16)
-                    //                        }
-                    //                    default:
-                    //                        Text("불러오기 실패..")
-                    //                    }
+                    ForEach(data, id: \.memberId) { rank in
+                        GrowRankCell(
+                            name: rank.memberName,
+                            socialId: rank.socialId,
+                            rank: rank.rank,
+                            label: "\(rank.count) 문제",
+                            action: {
+                                router.navigate(to: GithubRankDestination.profileDetail(memberId: rank.memberId))
+                            }
+                        )
+                    }
                 }
-                .padding(.top, 16)
-                .padding(.bottom, 128)
-            }
-            .refreshable {
-                Task {
-                    await viewModel.handleGithubRank()
-                }
+                .padding(12)
+            case .failure:
+                Text("불러오기 실패")
             }
         }
+        .growTopBar("Github 랭킹")
         .task {
-            await viewModel.handleGithubRank()
+            Task {
+                await viewModel.fetchGithubRank()
+            }
         }
-        //    }
-        //    
-        //    @ViewBuilder
-        //    private var githubSetting: some View {
-        //        VStack {
-        //            Text("아직 Github 설정이 완료되지 않았네요")
-        //                .foregroundStyle(.gray)
-        //                .growFont(.caption)
-        //            Text("Github 설정을 하고 순위권에 도전해 보세요!")
-        //                .growFont(.callout)
-        //                .multilineTextAlignment(.center)
-        //                .lineLimit(1)
-        //            GrowButton("설정하기", height: 40) {
-        //                router.navigate(to: GithubRankDestination.githubSetting)
-        //            }
-        //            .frame(width: 150)
-        //            .growFont(.callout)
-        //        }
-        //        .frame(maxWidth: .infinity)
-        //        .padding(.horizontal, 8)
-        //        .padding(.vertical, 24)
-        //        .overlay {
-        //            RoundedRectangle(cornerRadius: 10)
-        //                .stroke(lineWidth: 1)
-        //                .foregroundStyle(.gray.opacity(0.3))
-        //        }
-        //    }
-        //    
-        //    @ViewBuilder
-        //    private var selector: some View {
-        //        HStack(spacing: 8) {
-        //            ForEach(GithubRankViewModel.GithubTab.allCases, id: \.self) { tab in
-        //                GrowSelector(text: tab.rawValue, isSelected: tab == viewModel.selectedTab) {
-        //                    viewModel.selectedTab = tab
-        //                }
-        //            }
-        //            Spacer()
-        //        }
-        //    }
+        .task(id: viewModel.selectedTab) {
+            await viewModel.fetchGithubRank()
+        }
+    }
+    
+    @ViewBuilder
+    private var recommendingSettingGithub: some View {
+        VStack(spacing: 16) {
+            Text("아직 백준 ID를 설정하지 않았어요")
+                .growFont(.bodyM)
+                .growColor(.textNormal)
+            GrowButton("설정하기", type: .Small) {
+                router.navigate(to: GithubRankDestination.githubSetting)
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 16)
+        .toCenter()
+        .stroke(12, content: colorProvider.color(.textAlt))
+        .padding(16)
+    }
+    
+    @ViewBuilder
+    private var indicator: some View {
+        HStack(spacing: 12) {
+            ForEach(GithubTab.allCases, id: \.self) { tab in
+                GrowTabButton(
+                    tab.rawValue,
+                    isSelected: tab == viewModel.selectedTab
+                ) {
+                    viewModel.selectedTab = tab
+                }
+            }
+            Spacer()
+        }
+        .padding(.leading, 12)
     }
 }
-

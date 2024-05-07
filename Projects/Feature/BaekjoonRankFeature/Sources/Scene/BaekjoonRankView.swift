@@ -92,24 +92,3 @@ public struct BaekjoonRankView: View {
         .padding(.leading, 12)
     }
 }
-
-/**
- Row(
-       modifier = Modifier
-           .padding(start = 12.dp),
-       horizontalArrangement = Arrangement.spacedBy(12.dp)
-   ) {
-       BaekjoonRankTab.entries.forEach {
-           GrowTabButton(
-               modifier = Modifier,
-               text = it.label,
-               selected = it == selectedTab,
-               type = ButtonType.Small,
-               shape = CircleShape
-           ) {
-               onClickTab(it)
-           }
-       }
-       Spacer(modifier = Modifier.weight(1f))
-   }
- */
