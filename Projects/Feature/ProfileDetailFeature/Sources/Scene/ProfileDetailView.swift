@@ -65,30 +65,36 @@ public struct ProfileDetailView: View {
     
     @ViewBuilder
     private var stats: some View {
-        HStack(spacing: 12) {
-            switch viewModel.github {
-            case .fetching:
-                GrowStatCellShimmer()
-            case .success(let data):
-                GrowStatCell(
-                    label: "커밋 개수",
-                    type: .github(commit: data?.totalCommits)) {
+        if case .success(let profile) = viewModel.profile {
+            HStack(spacing: 12) {
+                switch viewModel.github {
+                case .fetching:
+                    GrowStatCellShimmer()
+                case .success(let data):
+                    GrowStatCell(
+                        label: "커밋 개수",
+                        type: .github(commit: data?.totalCommits),
+                        socialId: profile.githubId
+                    ) {
                         // action
                     }
-            case .failure:
-                Text("불러오기 실패")
-            }
-            switch viewModel.baekjoon {
-            case .fetching:
-                GrowStatCellShimmer()
-            case .success(let data):
-                GrowStatCell(
-                    label: "커밋 개수",
-                    type: .baekjoon(solved: data?.totalSolves)) {
+                case .failure:
+                    Text("불러오기 실패")
+                }
+                switch viewModel.baekjoon {
+                case .fetching:
+                    GrowStatCellShimmer()
+                case .success(let data):
+                    GrowStatCell(
+                        label: "푼 문제 개수",
+                        type: .baekjoon(solved: data?.totalSolves),
+                        socialId: profile.baekjoonId
+                    ) {
                         // action
                     }
-            case .failure:
-                Text("불러오기 실패")
+                case .failure:
+                    Text("불러오기 실패")
+                }
             }
         }
     }

@@ -60,25 +60,35 @@ public struct HomeView: View {
     
     @ViewBuilder
     private var stat: some View {
-        HStack(spacing: 16) {
-            switch appState.github {
-            case .fetching:
-                GrowStatCellShimmer()
-            case .success(let data):
-                GrowStatCell(label: "오늘 한 커밋 개수", type: .github(commit: data?.todayCommits.contributionCount)) {}
-            case .failure:
-                Text("불러오기 실패")
+        if case .success(let profile) = appState.profile {
+            HStack(spacing: 16) {
+                switch appState.github {
+                case .fetching:
+                    GrowStatCellShimmer()
+                case .success(let data):
+                    GrowStatCell(
+                        label: "오늘 한 커밋 개수",
+                        type: .github(commit: data?.todayCommits.contributionCount),
+                        socialId: profile.githubId
+                    ) {}
+                case .failure:
+                    Text("불러오기 실패")
+                }
+                switch appState.baekjoon {
+                case .fetching:
+                    GrowStatCellShimmer()
+                case .success(let data):
+                    GrowStatCell(
+                        label: "오늘 푼 문제 개수",
+                        type: .baekjoon(solved: data?.todaySolves.solvedCount),
+                        socialId: profile.baekjoonId
+                    ) {}
+                case .failure:
+                    Text("불러오기 실패")
+                }
             }
-            switch appState.baekjoon {
-            case .fetching:
-                GrowStatCellShimmer()
-            case .success(let data):
-                GrowStatCell(label: "오늘 푼 문제 개수", type: .baekjoon(solved: data?.todaySolves.solvedCount)) {}
-            case .failure:
-                Text("불러오기 실패")
-            }
+            .padding(.vertical, 20)
         }
-        .padding(.vertical, 20)
     }
     
     @ViewBuilder
