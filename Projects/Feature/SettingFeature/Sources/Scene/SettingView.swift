@@ -1,5 +1,6 @@
 import SwiftUI
 import SettingFeatureInterface
+import SwiftUtil
 
 import BaseFeature
 
@@ -84,7 +85,7 @@ public struct SettingView: View {
                 )
             }
             VStack(spacing: 16) {
-                Text("버전 -")
+                Text("버전 - \(version ?? "")")
                     .growFont(.labelM)
                     .growColor(.textAlt)
                 Text("개인정보 이용 약관")
@@ -100,7 +101,7 @@ public struct SettingView: View {
             Spacer()
         }
         .padding(.top, 12)
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 16)
         .growTopBar("설정", background: .backgroundAlt) {
             router.popToStack()
         }

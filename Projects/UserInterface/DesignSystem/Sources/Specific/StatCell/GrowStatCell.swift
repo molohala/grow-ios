@@ -25,9 +25,9 @@ public struct GrowStatCell: View {
             solved
         }
         
-        Button {
-            action()
-        } label: {
+//        Button {
+//            action()
+//        } label: {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     if let number {
@@ -51,7 +51,7 @@ public struct GrowStatCell: View {
             }
             .padding(16)
             .applyCardView()
-        }
-        .applyAnimation()
+//        }
+//        .applyAnimation()
     }
 }

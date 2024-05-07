@@ -62,7 +62,7 @@ public struct CommunityView: View {
                             Text("불러오기 실패")
                         }
                     }
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 16)
                     .onAppear {
                         self.reader = reader
                     }

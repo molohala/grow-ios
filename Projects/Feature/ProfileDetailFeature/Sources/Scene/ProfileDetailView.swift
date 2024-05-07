@@ -47,7 +47,7 @@ public struct ProfileDetailView: View {
                     baekjoonChart
                 }
             }
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 16)
             .padding(.top, 12)
         }
         .growTopBar("\(name)님의 프로필", background: .backgroundAlt) {

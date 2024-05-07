@@ -24,7 +24,7 @@ public struct ProfileView: View {
                 baekjoonChart
                 Spacer().frame(height: 92)
             }
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 16)
         }
         .scrollIndicators(.hidden)
         .growTopBar("프로필", background: .backgroundAlt)
@@ -87,7 +87,7 @@ public struct ProfileView: View {
                 GrowStatCellShimmer()
             case .success(let data):
                 GrowStatCell(
-                    label: "커밋 개수",
+                    label: "푼 문제 개수",
                     type: .baekjoon(solved: data?.totalSolves)) {
                         // action
                     }

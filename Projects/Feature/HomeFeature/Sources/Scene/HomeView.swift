@@ -25,7 +25,7 @@ public struct HomeView: View {
                 todayGithub
                 todayBaekjoon
             }
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 16)
         }
         .scrollIndicators(.hidden)
         .growTopBar("홈", background: .backgroundAlt, backButtonAction: nil)
@@ -73,7 +73,7 @@ public struct HomeView: View {
             case .fetching:
                 GrowStatCellShimmer()
             case .success(let data):
-                GrowStatCell(label: "오늘 한 커밋 개수", type: .baekjoon(solved: data?.todaySolves.solvedCount)) {}
+                GrowStatCell(label: "오늘 푼 문제 개수", type: .baekjoon(solved: data?.todaySolves.solvedCount)) {}
             case .failure:
                 Text("불러오기 실패")
             }
