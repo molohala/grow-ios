@@ -36,6 +36,6 @@ public struct SolveResponse: Decodable {
 
 extension SolveResponse {
     func toDomain() -> Solve {
-        Solve(date: date.localDateTime ?? .now, solvedCount: solvedCount, keepStreakReason: keepStreakReason)
+        Solve(date: date.localDate ?? .now, solvedCount: solvedCount, keepStreakReason: keepStreakReason)
     }
 }

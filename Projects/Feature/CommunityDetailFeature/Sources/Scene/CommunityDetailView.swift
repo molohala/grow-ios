@@ -64,7 +64,7 @@ public struct CommunityDetailView: View {
                 } label: {
                     Image(icon: .send)
                         .resizable()
-                        .growIconColor(isDisabled ? .buttonPrimaryDisabled : .textFieldIcon)
+                        .growIconColor(isDisabled ? .textFieldIconDisabled : .textFieldIcon)
                         .frame(size: 28)
                         .padding(4)
                         .opacity(isCreateCommentFetch ? 0 : 1)

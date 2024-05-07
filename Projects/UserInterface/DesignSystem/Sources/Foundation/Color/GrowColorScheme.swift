@@ -19,6 +19,7 @@ public enum GrowColorScheme {
     case baekjoon
     case dividerNormal
     case textFieldIcon
+    case textFieldIconDisabled
     case textFieldPrimary
     case textFieldSecondary
     case textFieldSecondaryDisabled

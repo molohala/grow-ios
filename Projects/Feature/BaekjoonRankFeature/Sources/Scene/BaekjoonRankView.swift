@@ -37,7 +37,10 @@ public struct BaekjoonRankView: View {
                             socialId: rank.socialId,
                             rank: rank.rank,
                             label: "\(rank.count) 문제",
-                            action: {})
+                            action: {
+                                router.navigate(to: BaekjoonRankDestination.profileDetail(memberId: rank.memberId))
+                            }
+                        )
                     }
                 }
                 .padding(12)
@@ -63,7 +66,7 @@ public struct BaekjoonRankView: View {
                 .growFont(.bodyM)
                 .growColor(.textNormal)
             GrowButton("설정하기", type: .Small) {
-                router.navigate(to: BaekjoonDestination.baekjoonSetting)
+                router.navigate(to: BaekjoonRankDestination.baekjoonSetting)
             }
         }
         .padding(.horizontal, 12)

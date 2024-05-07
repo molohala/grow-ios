@@ -1,14 +1,9 @@
 import Foundation
 import InfoServiceInterface
 import DesignSystem
+import BaseFeature
 
 public final class ProfileDetailViewModel: ObservableObject {
-    
-    enum FetchFlow {
-        case fetching
-        case success
-        case failure
-    }
     
     // MARK: - UseCases
     private let getGithubUseCase: any GetGithubUseCase
@@ -19,15 +14,11 @@ public final class ProfileDetailViewModel: ObservableObject {
     private let memberId: Int
     
     // MARK: - States
-    @Published var profile: Profile?
-    @Published var profileFlow: FetchFlow = .fetching
-    @Published var github: Github?
-    @Published var githubFlow: FetchFlow = .fetching
-    @Published var solvedac: Solvedav?
-    @Published var solvedacFlow: FetchFlow = .fetching
-    
-//    @Published var chartInfo: ChartInfo?
-//    @Published var selectedChart: ChartType = .github
+    @Published var profile: FetchFlow<Profile> = .fetching
+    @Published var github: FetchFlow<Github?> = .fetching
+    @Published var baekjoon: FetchFlow<Solvedav?> = .fetching
+    @Published var githubChartInfo: FetchFlow<ChartInfo?> = .fetching
+    @Published var baekjoonChartInfo: FetchFlow<ChartInfo?> = .fetching
     
     public init(
         getGithubUseCase: any GetGithubUseCase,
@@ -43,32 +34,61 @@ public final class ProfileDetailViewModel: ObservableObject {
     
     @MainActor
     func fetchProfile() async {
-        profile = try? await getProfileByIdUseCase(memberId: memberId)
-        guard let profile else { return }
-        // handle solvedac
-        let solvedavId = profile.socialAccounts.first { $0.socialType == .SOLVED_AC }
-        guard let solvedavId else {
-            solvedacFlow = .failure
+        do {
+            profile = .fetching
+            let profile = try await getProfileByIdUseCase(memberId: memberId)
+            self.profile = .success(profile)
+            async let fetchProfile: () = await fetchGithub()
+            async let fetchBaekjoon: () = await fetchBaekjoon()
+            _ = await [fetchProfile, fetchBaekjoon]
+        } catch {
+            profile = .failure
+        }
+    }
+    
+    @MainActor
+    func fetchBaekjoon() async {
+        guard case .success(let profile) = profile else {
+            baekjoon = .failure
+            baekjoonChartInfo = .failure
             return
         }
-        do {
-            solvedac = try await getSolvedacUseCase(name: solvedavId.socialId)
-            solvedacFlow = .success
-        } catch {
-            solvedacFlow = .failure
-        }
-        
-        // handle github
-        let githubId = profile.socialAccounts.first { $0.socialType == .GITHUB }
-        guard let githubId else {
-            githubFlow = .failure
+        guard let baekjoonId = profile.baekjoonId else {
+            baekjoon = .success(nil)
+            baekjoonChartInfo = .success(nil)
             return
         }
+
         do {
-            github = try await getGithubUseCase(name: githubId.socialId)
-            githubFlow = .success
+            self.baekjoon = .fetching
+            let baekjoon = try await getSolvedacUseCase(name: baekjoonId)
+            self.baekjoon = .success(baekjoon)
+            self.baekjoonChartInfo = .success(baekjoon.weekSolves.baekjoonWeekChartInfo)
         } catch {
-            githubFlow = .failure
+            self.baekjoon = .failure
+        }
+    }
+    
+    @MainActor
+    func fetchGithub() async {
+        guard case .success(let profile) = profile else {
+            github = .failure
+            githubChartInfo = .failure
+            return
+        }
+        guard let githubId = profile.githubId else {
+            github = .success(nil)
+            githubChartInfo = .success(nil)
+            return
+        }
+
+        do {
+            self.github = .fetching
+            let github = try await getGithubUseCase(name: githubId)
+            self.github = .success(github)
+            githubChartInfo = .success(github.weekCommits.githubWeekChartInfo)
+        } catch {
+            self.github = .failure
         }
     }
 }

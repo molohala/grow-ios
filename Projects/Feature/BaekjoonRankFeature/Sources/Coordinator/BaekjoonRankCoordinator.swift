@@ -31,7 +31,7 @@ public struct BaekjoonRankCoordinator: View {
         BaekjoonRankView(
             viewModel: viewModel
         )
-        .navigationDestination(for: BaekjoonDestination.self) {
+        .navigationDestination(for: BaekjoonRankDestination.self) {
             switch $0 {
             case .profileDetail(let memberId): profileDetailBuildable.makeView(memberId: memberId).eraseToAnyView()
             case .baekjoonSetting: baekjoonSettingBuildable.makeView().eraseToAnyView()

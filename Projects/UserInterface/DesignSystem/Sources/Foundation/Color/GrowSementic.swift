@@ -21,6 +21,7 @@ public extension GrowColorScheme {
         case .baekjoon: Color(0xFF0076C0)
         case .dividerNormal: GrowPallete.shared.Neutral20
         case .textFieldIcon: GrowPallete.shared.Neutral90
+        case .textFieldIconDisabled: GrowPallete.shared.Neutral50
         case .textFieldPrimary: GrowPallete.shared.Primary80
         case .textFieldSecondary: GrowPallete.shared.Neutral30
         case .textFieldSecondaryDisabled: GrowPallete.shared.Neutral20
@@ -58,6 +59,7 @@ public extension GrowColorScheme {
         case .baekjoon: GrowPallete.shared.Neutral10
         case .dividerNormal: GrowPallete.shared.Neutral70
         case .textFieldIcon: GrowPallete.shared.Primary60
+        case .textFieldIconDisabled: GrowPallete.shared.Primary30
         case .textFieldPrimary: GrowPallete.shared.Primary80
         case .textFieldSecondary: GrowPallete.shared.Neutral70
         case .textFieldSecondaryDisabled: GrowPallete.shared.Neutral70

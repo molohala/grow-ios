@@ -6,6 +6,8 @@ public struct ProfileDetailView: View {
     
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: ProfileDetailViewModel
+    @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var router: Router
     
     public init(
         viewModel: ProfileDetailViewModel
@@ -14,82 +16,103 @@ public struct ProfileDetailView: View {
     }
     
     public var body: some View {
-        ScrollView {
-            VStack(spacing: 12) {
-//                stats
-//                if let chartInfo = viewModel.chartInfo {
-//                    GrowChartCell(
-//                        chartInfo: chartInfo,
-//                        selectedType: $viewModel.selectedChart
-//                    )
-//                } else {
-//                    GrowChartCellShimmer()
-//                        .shimmer()
-//                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.top, 16)
+        let name = if case .success(let profile) = viewModel.profile {
+            profile.name
+        } else {
+            ""
         }
-//        .background(Color.backgroundColor)
-//        .growTopBar(
-//            "\(viewModel.profile?.name ?? "..")님의 프로필",
-//            background: .backgroundColor
-//        )
-//        .task {
-//            await viewModel.fetchProfile()
-//        }
-//        .onChange(of: viewModel.selectedChart) { type in
-//            handleSelectingChart(type: type)
-//        }
-//        .onChange(of: viewModel.github) { _ in
-//            handleSelectingChart(type: viewModel.selectedChart)
-//        }
-//        .onChange(of: viewModel.solvedac) { _ in
-//            handleSelectingChart(type: viewModel.selectedChart)
-//        }
-//        .refreshable {
-//            Task {
-//                await viewModel.fetchProfile()
-//            }
+        ScrollView {
+            VStack(spacing: 24) {
+                VStack(spacing: 8) {
+                    switch viewModel.profile {
+                    case .fetching:
+                        GrowAvatarShimmer(type: .extraLarge)
+                        RowShimmer(width: 40)
+                        RowShimmer(width: 100)
+                    case .success(let data):
+                        GrowAvatar(type: .extraLarge)
+                        Text(data.name)
+                            .growFont(.bodyB)
+                            .growColor(.textNormal)
+                        Text("\"응아잇 안드로이드\"")
+                            .growFont(.labelM)
+                            .growColor(.textAlt)
+                    case .failure:
+                        Text("불러오기 실패")
+                    }
+                }
+                VStack(spacing: 12) {
+                    stats
+                    githubChart
+                    baekjoonChart
+                }
+            }
+            .padding(.horizontal, 12)
+            .padding(.top, 12)
+        }
+        .growTopBar("\(name)님의 프로필", background: .backgroundAlt) {
+            router.popToStack()
+        }
+        .task {
+            await viewModel.fetchProfile()
         }
     }
     
-//    @ViewBuilder
-//    private var stats: some View {
-//        HStack(spacing: 16) {
-//            if let github = viewModel.github, viewModel.githubFlow == .success {
-//                let todayCommit = github.todayCommits.contributionCount
-//                GrowStatCell("커밋 개수", type: .github(todayCommit)) {
-//                    // nav
-//                }
-//            } else if viewModel.githubFlow == .fetching {
-//                GrowStatShimmerCell()
-//            } else {
-//                GrowStatCell("커밋 개수", type: .github()) {}
-//            }
-//            
-//            if let solvedac = viewModel.solvedac, viewModel.solvedacFlow == .success {
-//                let todaySolves = solvedac.todaySolves.solvedCount
-//                GrowStatCell("푼 문제 개수", type: .baekjoon(todaySolves)) {
-//                    // nav
-//                }
-//            } else if viewModel.solvedacFlow == .fetching {
-//                GrowStatShimmerCell()
-//            } else {
-//                GrowStatCell("푼 문제 개수", type: .baekjoon()) {}
-//            }
-//        }
-//    }
-//    
-//    func handleSelectingChart(type: ChartType) {
-//        if let github = viewModel.github,
-//           let solvedac = viewModel.solvedac {
-//            switch type {
-//            case .github:
-//                viewModel.chartInfo = github.weekCommits.githubWeekChartInfo
-//            case .baekjoon:
-//                viewModel.chartInfo = solvedac.weekSolves.baekjoonWeekChartInfo
-//            }
-//        }
-//    }
-
+    @ViewBuilder
+    private var stats: some View {
+        HStack(spacing: 12) {
+            switch viewModel.github {
+            case .fetching:
+                GrowStatCellShimmer()
+            case .success(let data):
+                GrowStatCell(
+                    label: "커밋 개수",
+                    type: .github(commit: data?.totalCommits)) {
+                        // action
+                    }
+            case .failure:
+                Text("불러오기 실패")
+            }
+            switch viewModel.baekjoon {
+            case .fetching:
+                GrowStatCellShimmer()
+            case .success(let data):
+                GrowStatCell(
+                    label: "커밋 개수",
+                    type: .baekjoon(solved: data?.totalSolves)) {
+                        // action
+                    }
+            case .failure:
+                Text("불러오기 실패")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var githubChart: some View {
+        switch viewModel.githubChartInfo {
+        case .fetching:
+            EmptyView()
+        case .success(let chartInfo):
+            if let chartInfo {
+                GrowChartCell(chartInfo: chartInfo)
+            }
+        case .failure:
+            Text("불러오기 실패")
+        }
+    }
+    
+    @ViewBuilder
+    private var baekjoonChart: some View {
+        switch viewModel.baekjoonChartInfo {
+        case .fetching:
+            EmptyView()
+        case .success(let chartInfo):
+            if let chartInfo {
+                GrowChartCell(chartInfo: chartInfo)
+            }
+        case .failure:
+            Text("불러오기 실패")
+        }
+    }
+}

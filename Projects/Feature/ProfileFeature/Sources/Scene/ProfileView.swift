@@ -20,7 +20,9 @@ public struct ProfileView: View {
             LazyVStack(spacing: 12) {
                 info
                 stats
-                chart
+                githubChart
+                baekjoonChart
+                Spacer().frame(height: 92)
             }
             .padding(.horizontal, 12)
         }
@@ -96,12 +98,28 @@ public struct ProfileView: View {
     }
     
     @ViewBuilder
-    private var chart: some View {
-        switch appState.chartInfo {
+    private var githubChart: some View {
+        switch appState.githubChartInfo {
         case .fetching:
             EmptyView()
-        case .success(let data):
-            GrowChartCell(chartInfo: data)
+        case .success(let chartInfo):
+            if let chartInfo {
+                GrowChartCell(chartInfo: chartInfo)
+            }
+        case .failure:
+            Text("불러오기 실패")
+        }
+    }
+    
+    @ViewBuilder
+    private var baekjoonChart: some View {
+        switch appState.baekjoonChartInfo {
+        case .fetching:
+            EmptyView()
+        case .success(let chartInfo):
+            if let chartInfo {
+                GrowChartCell(chartInfo: chartInfo)
+            }
         case .failure:
             Text("불러오기 실패")
         }
