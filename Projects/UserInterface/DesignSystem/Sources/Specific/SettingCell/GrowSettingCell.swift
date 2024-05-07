@@ -16,8 +16,8 @@ public struct GrowSettingCell<C>: View where C: View {
         labelColor: GrowColorScheme = .textNormal,
         leftIcon: GrowIconography? = nil,
         leftIconColor: GrowColorScheme = .textAlt,
-        description: String? = nil,
         content: @escaping () -> C = { EmptyView() },
+        description: String? = nil,
         action: (() -> Void)? = nil
     ) {
         self.label = label

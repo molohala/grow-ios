@@ -50,10 +50,15 @@ public struct ProfileView: View {
                 }
             }
             Spacer()
-            Image(icon: .setting)
-                .resizable()
-                .growIconColor(.textAlt)
-                .frame(size: 32)
+            Button {
+                router.navigate(to: ProfileDestination.setting)
+            } label: {
+                Image(icon: .setting)
+                    .resizable()
+                    .growIconColor(.textAlt)
+                    .frame(size: 32)
+            }
+            .applyAnimation()
         }
         .padding(12)
         .applyCardView()
