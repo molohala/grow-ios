@@ -61,6 +61,7 @@ public struct GrowRankCell: View {
                     .growColor(.textNormal)
             }
             .padding(4)
+            .contentShape(Rectangle())
         }
         .applyAnimation()
     }

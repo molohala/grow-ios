@@ -51,28 +51,32 @@ public struct GrowChartCell: View {
     }
     
     public var body: some View {
-        VStack(spacing: 8) {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(chartInfo.label)
-                        .growFont(.title1B)
-                        .growColor(.textNormal)
-                    Text(chartInfo.description)
-                        .growFont(.labelM)
-                        .growColor(.textDarken)
+            VStack(spacing: 8) {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(chartInfo.label)
+                            .growFont(.title1B)
+                            .growColor(.textNormal)
+                        Text(chartInfo.description)
+                            .growFont(.labelM)
+                            .growColor(.textDarken)
+                    }
+                    Spacer()
+                    Image(icon: chartInfo.type.icon)
+                        .resizable()
+                        .growIconColor(chartInfo.type.iconColor)
+                        .frame(size: 28)
                 }
-                Spacer()
-                Image(icon: chartInfo.type.icon)
-                    .resizable()
-                    .growIconColor(chartInfo.type.iconColor)
-                    .frame(size: 28)
+                if chartInfo.chartData.sum > 0 {
+                    GrowChart(chartData: chartInfo.chartData, type: chartInfo.type)
+                        .frame(height: 200)
+                        .growBackground(.background)
+                } else {
+                    GrowMotivationCell()
+                }
             }
-            GrowChart(chartData: chartInfo.chartData)
-                .frame(height: 200)
-                .growBackground(.background)
-        }
-        .padding(16)
-        .applyCardView()
+            .padding(16)
+            .applyCardView()
     }
 }
 

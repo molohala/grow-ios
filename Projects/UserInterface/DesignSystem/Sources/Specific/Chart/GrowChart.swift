@@ -6,9 +6,11 @@ public struct GrowChart: View {
     private let data: GrowChartData.Data
     private let color: Color
     private let backgroundColor: LinearGradient
+    private let type: ChartType
     
     public init(
-        chartData: GrowChartData
+        chartData: GrowChartData,
+        type: ChartType
     ) {
         self.data = chartData.data
         self.color = chartData.color
@@ -20,14 +22,12 @@ public struct GrowChart: View {
             startPoint: .top,
             endPoint: .bottom
         )
+        self.type = type
     }
     
     public var body: some View {
         
         let balancedMax = max(data.max { $0.y < $1.y }?.y ?? 0, 0) + 10
-        let _ = print(balancedMax)
-        let _ = print(data)
-        
         ZStack {
             Chart(data, id: \.x) { i in
                 LineMark(
@@ -65,3 +65,4 @@ public struct GrowChart: View {
         }
     }
 }
+

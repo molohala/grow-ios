@@ -16,6 +16,10 @@ public struct GrowChartData: Equatable {
         self.data = data
         self.color = color
     }
+    
+    public var sum: Int {
+        self.data.map { $0.y }.reduce(0, +)
+    }
 }
 
 public extension GrowChartData {
