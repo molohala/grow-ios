@@ -68,6 +68,11 @@ public struct CommunityView: View {
                     }
                     .id("lazyvstack")
                 }
+                .refreshable {
+                    Task {
+                        await viewModel.fetchCommunities()
+                    }
+                }
             }
             GrowButton(
                 "글쓰기",
@@ -83,11 +88,6 @@ public struct CommunityView: View {
             .toTrailing()
         }
         .growTopBar("포럼", background: .backgroundAlt)
-        .refreshable {
-            Task {
-                await viewModel.fetchCommunities()
-            }
-        }
         .task {
             await viewModel.fetchCommunities()
         }

@@ -17,7 +17,7 @@ struct DesignSystemExample: App {
         WindowGroup {
             GrowPreview.preview
                 .environmentObject(ColorProvider(isDarkTheme: s))
-                .onTapGesture {
+                .onTapGesture(count: 2) {
                     s.toggle()
                 }
         }

@@ -15,35 +15,33 @@ public struct CommunityCreateView: View {
     
     public var body: some View {
         ScrollView {
-            LazyVStack {
-//                GrowTextEditor("내용을 적어주세요", text: $viewModel.content)
-//                    .frame(minHeight: 300)
-            }
-            .padding(.horizontal, 16)
+            GrowTextEditor(text: $viewModel.content)
+                .frame(minHeight: 300)
+                .padding(12)
         }
         .hideKeyboardWhenTap()
-        .growTopBar("글쓰기") {
-            if viewModel.flow == .fetching {
-                ProgressView()
-            } else {
-                Button("완료") {
-                    Task {
-                        await viewModel.createCommunity()
-                    }
-                }
+        .growTopBar("글쓰기", trailingContent: {
+            GrowTextButton("완료", type: .Small) {
+                await viewModel.createCommunity()
             }
+            .padding(.horizontal, 4)
+        }) {
+            dismiss()
         }
-        .onChange(of: viewModel.flow) {
-            if $0 == .success {
+        .onChange(of: viewModel.createForumFlow) {
+            if $0 == .success(true) {
                 dismiss()
             }
         }
-        .alert(
-            viewModel.flow.rawValue,
-            isPresented: .init(
-                get: { viewModel.flow == .failure || viewModel.flow == .empty },
-                set: { _ in viewModel.flow = .idle })
-        ) {
+        .alert("내용을 입력해 주세요", isPresented: $viewModel.showNoContentDialog) {
+            Button("확인", role: .cancel) {}
+        }
+        .eraseToAnyView()
+        .alert("업로드를 실패했습니다", isPresented: .init(get: {
+            viewModel.createForumFlow == .failure
+        }, set: { _ in
+            viewModel.createForumFlow = .fetching
+        })) {
             Button("확인", role: .cancel) {}
         }
     }

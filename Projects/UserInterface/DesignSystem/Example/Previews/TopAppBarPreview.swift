@@ -7,7 +7,9 @@ struct TopAppBarPreview: View {
     @State private var selectedTab = BottomTabType.Home
     
     var body: some View {
-        GrowBottomTabBar(selectedTab: $selectedTab) {
+        GrowBottomTabBar(selectedTab: selectedTab, onTap: { tab in
+            selectedTab = tab
+        }) {
             ScrollView {
                 VStack {
                     Text("정말 반갑습니다")

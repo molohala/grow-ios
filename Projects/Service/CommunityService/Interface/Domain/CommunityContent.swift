@@ -28,7 +28,6 @@ public struct CommunityContent: Hashable {
     }
 }
 
-
 public extension CommunityContent {
     static var dummy: [CommunityContent] = [
         .init(communityId: 0, content: "", createdAt: .now, like: 0, writerId: 1, writerName: "노영재", liked: true),

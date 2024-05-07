@@ -16,7 +16,7 @@ public struct ProfileView: View {
     }
     
     public var body: some View {
-        ScrollView() {
+        ScrollView {
             LazyVStack(spacing: 12) {
                 info
                 stats
@@ -42,7 +42,9 @@ public struct ProfileView: View {
                     RowShimmer(width: 40)
                 case .success(let data):
                     GrowAvatar(type: .large)
-                    RowShimmer(width: 40)
+                    Text(data.name)
+                        .growFont(.bodyB)
+                        .growColor(.textNormal)
                 case .failure:
                     Text("불러오기 실패")
                 }

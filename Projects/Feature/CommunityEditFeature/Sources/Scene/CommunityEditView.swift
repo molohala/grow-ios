@@ -15,35 +15,33 @@ public struct CommunityEditView: View {
     
     public var body: some View {
         ScrollView {
-            LazyVStack {
-//                GrowTextEditor("내용을 적어주세요", text: $viewModel.content)
-//                    .frame(minHeight: 300)
-            }
-            .padding(.horizontal, 16)
+            GrowTextEditor(text: $viewModel.content)
+                .frame(minHeight: 300)
+                .padding(12)
         }
         .hideKeyboardWhenTap()
-        .growTopBar("글 수정") {
-            if viewModel.flow == .fetching {
-                ProgressView()
-            } else {
-                Button("완료") {
-                    Task {
-//                        await viewModel.createCommunity()
-                    }
-                }
+        .growTopBar("글 수정", trailingContent: {
+            GrowTextButton("수정", type: .Small) {
+                await viewModel.patchCommunity()
             }
+            .padding(.horizontal, 4)
+        }) {
+            dismiss()
         }
-        .onChange(of: viewModel.flow) {
-            if $0 == .success {
+        .onChange(of: viewModel.patchForumFlow) {
+            if $0 == .success(true) {
                 dismiss()
             }
         }
-        .alert(
-            viewModel.flow.rawValue,
-            isPresented: .init(
-                get: { viewModel.flow == .failure || viewModel.flow == .empty },
-                set: { _ in viewModel.flow = .idle })
-        ) {
+        .alert("내용을 입력해 주세요", isPresented: $viewModel.showNoContentDialog) {
+            Button("확인", role: .cancel) {}
+        }
+        .eraseToAnyView()
+        .alert("업로드를 실패했습니다", isPresented: .init(get: {
+            viewModel.patchForumFlow == .failure
+        }, set: { _ in
+            viewModel.patchForumFlow = .fetching
+        })) {
             Button("확인", role: .cancel) {}
         }
     }

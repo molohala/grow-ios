@@ -11,7 +11,7 @@ public struct CommunityDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
-    @State private var reader: ScrollViewProxy?
+    @State private var proxy: ScrollViewProxy?
     @State private var showRemovingCommunity = false
     
     public init(
@@ -22,65 +22,33 @@ public struct CommunityDetailView: View {
     
     public var body: some View {
         ZStack {
-            ScrollViewReader { reader in
+            ScrollViewReader { proxy in
                 ScrollView {
-//                    EmptyView()
-//                        .id("top")
-//                    switch viewModel.community {
-//                    case .fetching:
-//                        CommunityDetailCellShimmer()
-//                            .shimmer()
-//                    case .success(let data):
-//                        VStack(alignment: .leading, spacing: 16) {
-//                            profile(data)
-//                            Text(LocalizedStringKey(data.content))
-//                                .font(.callout)
-//                                .applyOpenURL()
-//                            info(data)
-//                            Divider()
-//                            self.comments
-//                                .padding(.bottom, 64)
-//                        }
-//                        .padding(.horizontal, 16)
-//                        .onAppear {
-//                            self.reader = reader
-//                        }
-//                    case .failure:
-//                        Text("불러오기 실패")
-//                    }
+                    Group {
+                        switch viewModel.community {
+                        case .fetching:
+                            EmptyView() // todo
+                        case .success(let data):
+                            VStack(spacing: 8) {
+                                makeForum(data)
+                                GrowDivider()
+                                comments
+                                Spacer().frame(height: 64)
+                            }
+                        case .failure:
+                            Text("불러오기 실패")
+                        }
+                    }
+                    .onAppear {
+                        self.proxy = proxy
+                    }
                 }
-            }
-            VStack(spacing: 0) {
-                Spacer()
-                Divider()
-                HStack {
-                    TextField("댓글을 남겨보세요", text: $viewModel.currentComment)
-                        .padding(8)
-//                        .growFont(.body)
-//                    Button {
-//                        Task {
-//                            await viewModel.createComment()
-//                            guard let reader else { return }
-//                            guard case .success = viewModel.comments else { return }
-//                            
-//                            reader.scrollTo("top", anchor: .top)
-//                        }
-//                    } label: {
-//                        Image(systemName: "arrow.up.circle.fill")
-//                            .renderingMode(.template)
-//                            .growFont(.title)
-//                            .foregroundStyle(viewModel.currentComment.isEmpty ? Color.gray400 : Color.blue500)
-//                            .padding(4)
-//                    }
-                    .disabled(viewModel.currentComment.isEmpty)
-                }
-                .padding(8)
-                .background(Color.white)
             }
         }
-        .background(Color.white)
         .hideKeyboardWhenTap()
-        .growTopBar("")
+        .growTopBar("", background: .backgroundAlt, backButtonAction: {
+            dismiss()
+        })
         .task {
             async let fetchCommunity: () = viewModel.fetchCommunity()
             async let fetchComment: () = viewModel.fetchComments()
@@ -133,91 +101,64 @@ public struct CommunityDetailView: View {
             Button("아니요", role: .cancel) {}
         }
     }
-//    
-//    @ViewBuilder
-//    func profile(_ c: CommunityContent) -> some View {
-//        HStack(spacing: 0) {
-//            Circle()
-//                .foregroundStyle(.gray)
-//                .frame(width: 36, height: 36)
-//            VStack(alignment: .leading, spacing: 2) {
-//                Text(c.writerName)
-//                    .growFont(.callout)
-//                    .fontWeight(.semibold)
-//                    .padding(.leading, 8)
-//                Text(c.createdAt.timeAgo)
-//                    .growFont(.caption)
-//                    .fontWeight(.regular)
-//                    .foregroundStyle(.gray)
-//                    .padding(.leading, 4)
-//            }
-//            Spacer()
-//            
-//            if case .success(let community) = viewModel.community {
-//                Menu {
-//                    Button("수정하기") { router.navigate(to: CommunityDetailDestination.communityEdit(forumId: 1)) }
-//                    Button("삭제하기", role: .destructive) { showRemovingCommunity = true }
-//                } label: {
-//                    DesignSystemAsset.detailVerticalLine.swiftUIImage
-//                        .resizable()
-//                        .renderingMode(.template)
-//                        .frame(width: 24, height: 24)
-//                        .foregroundStyle(Color.gray)
-//                }
-//            }
-//        }
-//    }
-//    
-//    @ViewBuilder
-//    private func info(_ c: CommunityContent) -> some View {
-//        HStack {
-//            Button {
-//                Task {
-//                    await viewModel.patchLike()
-//                }
-//            } label: {
-//                HStack(spacing: 4) {
-//                    Image(systemName: c.liked ? "heart.fill" : "heart")
-//                        .font(Font.title3)
-//                        .foregroundStyle(c.liked ? Color.red400 : Color.gray500)
-//                    Text("\(c.like)")
-//                        .growFont(.callout)
-//                        .foregroundStyle(c.liked ? Color.red400 : Color.gray500)
-//                }
-//                .padding(6)
-//                .background(c.liked ? Color.red100 : .white)
-//                .clipShape(RoundedRectangle(cornerRadius: 8))
-//                .overlay {
-//                    EmptyView()
-//                        .changeEffect(
-//                            .spray(origin: UnitPoint(x: 0.25, y: 0.5)) {
-//                                if c.liked {
-//                                    Image(systemName: "heart.fill")
-//                                        .foregroundStyle(.red)
-//                                }
-//                            },
-//                            value: c.liked
-//                        )
-//                }
-//            }
-//            Spacer()
-//        }
-//    }
     
-//    @ViewBuilder
-//    private var comments: some View {
-//        switch viewModel.comments {
-//        case .success(let data):
-//            LazyVStack(spacing: 20) {
-//                ForEach(data, id: \.commentId) { comment in
-//                    CommentCell(comment: comment) {
-//                        viewModel.selectedRemovingComment = comment
-//                        viewModel.showRemovingComment = true
-//                    }
-//                }
-//            }
-//        default:
-//            EmptyView()
-//        }
-//    }
+    @ViewBuilder
+    private func makeForum(_ forum: CommunityContent) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 8) {
+                GrowAvatar(type: .medium)
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(forum.writerName)
+                        .growFont(.bodyB)
+                        .growColor(.textNormal)
+                    Text(forum.createdAt.timeAgo)
+                        .growFont(.labelM)
+                        .growColor(.textAlt)
+                }
+                Spacer()
+                Menu {
+                    Button("수정하기", role: .cancel) {
+                        // action
+                    }
+                    Button("삭제하기", role: .destructive) {
+                        // action
+                    }
+                } label: {
+                    Image(icon: .detailVertical)
+                        .resizable()
+                        .growIconColor(.textAlt)
+                        .frame(size: 24)
+                }
+            }
+            Text(forum.content)
+                .growFont(.bodyR)
+                .growColor(.textNormal)
+            GrowLikeButton(
+                like: forum.like,
+                isLiked: forum.liked) {
+                    // action
+                }
+        }
+        .padding(12)
+    }
+    
+    @ViewBuilder
+    private var comments: some View {
+        switch viewModel.comments {
+        case .fetching:
+            GrowCommentCellShimmer()
+        case .success(let data):
+            VStack(spacing: 4) {
+                if case .success(let profile) = appState.profile {
+                    ForEach(data, id: \.commentId) { comment in
+                        GrowCommentCell(comment: comment, profileId: profile.id) {
+                            // remove action
+                        }
+                    }
+                }
+            }
+        case .failure:
+            Text("불러오기 실패")
+        }
+    }
 }

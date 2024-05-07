@@ -1,20 +1,13 @@
 import Foundation
 import CommunityServiceInterface
+import BaseFeature
 
 public final class CommunityCreateViewModel: ObservableObject {
     
     private let createCommunityUseCase: any CreateCommunityUseCase
-    
-    enum Flow: String {
-        case idle
-        case fetching
-        case success
-        case failure = "업로드에 실패했습니다"
-        case empty = "내용을 입력해 주세요"
-    }
-    
     @Published var content = ""
-    @Published var flow: Flow = .idle
+    @Published var createForumFlow: FetchFlow<Bool> = .fetching
+    @Published var showNoContentDialog = false
     
     public init(
         createCommunityUseCase: any CreateCommunityUseCase
@@ -24,19 +17,16 @@ public final class CommunityCreateViewModel: ObservableObject {
     
     @MainActor
     func createCommunity() async {
-        
         guard !content.isEmpty else {
-            flow = .empty
+            showNoContentDialog = true
             return
         }
-        
-        flow = .fetching
-        
         do {
+            createForumFlow = .fetching
             try await createCommunityUseCase(.init(content: content))
-            flow = .success
+            createForumFlow = .success(true)
         } catch {
-            flow = .failure
+            createForumFlow = .failure
         }
     }
 }

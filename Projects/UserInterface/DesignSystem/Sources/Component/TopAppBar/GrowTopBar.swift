@@ -64,6 +64,7 @@ public struct GrowTopAppBar<C>: View where C: View {
             }
             .toTop()
             .navigationBarBackButtonHidden()
+            .ignoresSafeArea(edges: .bottom)
         }
     }
 }
