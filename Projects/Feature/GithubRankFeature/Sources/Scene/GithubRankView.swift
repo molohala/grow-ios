@@ -25,10 +25,12 @@ public struct GithubRankView: View {
             indicator
             switch viewModel.githubRanks {
             case .fetching:
-                VStack(spacing: 0) {
-                    GrowRankCellShimmer()
+                VStack(spacing: 12) {
+                    ForEach(0..<3, id: \.self) { _ in
+                        GrowRankCellShimmer()
+                    }
                 }
-                .padding(.horizontal, 20)
+                .padding(12)
             case .success(let data):
                 LazyVStack(spacing: 12) {
                     ForEach(data, id: \.memberId) { rank in
@@ -36,7 +38,7 @@ public struct GithubRankView: View {
                             name: rank.memberName,
                             socialId: rank.socialId,
                             rank: rank.rank,
-                            label: "\(rank.count) 문제",
+                            label: "\(rank.count) 커밋",
                             action: {
                                 router.navigate(to: GithubRankDestination.profileDetail(memberId: rank.memberId))
                             }

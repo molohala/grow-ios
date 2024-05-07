@@ -23,24 +23,7 @@ public struct ProfileDetailView: View {
         }
         ScrollView {
             VStack(spacing: 24) {
-                VStack(spacing: 8) {
-                    switch viewModel.profile {
-                    case .fetching:
-                        GrowAvatarShimmer(type: .extraLarge)
-                        RowShimmer(width: 40)
-                        RowShimmer(width: 100)
-                    case .success(let data):
-                        GrowAvatar(type: .extraLarge)
-                        Text(data.name)
-                            .growFont(.bodyB)
-                            .growColor(.textNormal)
-                        Text("\"응아잇 안드로이드\"")
-                            .growFont(.labelM)
-                            .growColor(.textAlt)
-                    case .failure:
-                        Text("불러오기 실패")
-                    }
-                }
+                info
                 VStack(spacing: 12) {
                     stats
                     githubChart
@@ -55,6 +38,28 @@ public struct ProfileDetailView: View {
         }
         .task {
             await viewModel.fetchProfile()
+        }
+    }
+    
+    @ViewBuilder
+    private var info: some View {
+        VStack(spacing: 8) {
+            switch viewModel.profile {
+            case .fetching:
+                GrowAvatarShimmer(type: .extraLarge)
+                RowShimmer(width: 40)
+                RowShimmer(width: 100)
+            case .success(let data):
+                GrowAvatar(type: .extraLarge)
+                Text(data.name)
+                    .growFont(.bodyB)
+                    .growColor(.textNormal)
+                Text("\"응아잇 안드로이드\"")
+                    .growFont(.labelM)
+                    .growColor(.textAlt)
+            case .failure:
+                Text("불러오기 실패")
+            }
         }
     }
     

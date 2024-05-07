@@ -25,10 +25,12 @@ public struct BaekjoonRankView: View {
             indicator
             switch viewModel.baekjoonRanks {
             case .fetching:
-                VStack(spacing: 0) {
-                    GrowRankCellShimmer()
+                VStack(spacing: 12) {
+                    ForEach(0..<3, id: \.self) { _ in
+                        GrowRankCellShimmer()
+                    }
                 }
-                .padding(.horizontal, 20)
+                .padding(12)
             case .success(let data):
                 LazyVStack(spacing: 12) {
                     ForEach(data, id: \.memberId) { rank in

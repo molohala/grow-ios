@@ -17,11 +17,13 @@ public struct ProfileView: View {
     
     public var body: some View {
         ScrollView {
-            LazyVStack(spacing: 12) {
+            VStack(spacing: 24) {
                 info
-                stats
-                githubChart
-                baekjoonChart
+                VStack(spacing: 12) {
+                    stats
+                    githubChart
+                    baekjoonChart
+                }
                 Spacer().frame(height: 92)
             }
             .padding(.horizontal, 16)
@@ -37,22 +39,25 @@ public struct ProfileView: View {
     
     @ViewBuilder
     private var info: some View {
-        HStack(spacing: 0) {
-            HStack(spacing: 8) {
+        ZStack {
+            VStack(spacing: 8) {
                 switch appState.profile {
                 case .fetching:
-                    GrowAvatarShimmer(type: .large)
+                    GrowAvatarShimmer(type: .extraLarge)
                     RowShimmer(width: 40)
+                    RowShimmer(width: 100)
                 case .success(let data):
-                    GrowAvatar(type: .large)
+                    GrowAvatar(type: .extraLarge)
                     Text(data.name)
                         .growFont(.bodyB)
                         .growColor(.textNormal)
+                    Text("\"응아잇 안드로이드\"")
+                        .growFont(.labelM)
+                        .growColor(.textAlt)
                 case .failure:
                     Text("불러오기 실패")
                 }
             }
-            Spacer()
             Button {
                 router.navigate(to: ProfileDestination.setting)
             } label: {
@@ -62,9 +67,9 @@ public struct ProfileView: View {
                     .frame(size: 32)
             }
             .applyAnimation()
+            .toTop()
+            .toTrailing()
         }
-        .padding(12)
-        .applyCardView()
     }
     
     @ViewBuilder
