@@ -44,5 +44,8 @@ public struct CommunityEditView: View {
         })) {
             Button("확인", role: .cancel) {}
         }
+        .task {
+            await viewModel.fetchForum()
+        }
     }
 }

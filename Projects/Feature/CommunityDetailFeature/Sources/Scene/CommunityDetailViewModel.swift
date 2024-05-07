@@ -15,24 +15,16 @@ public final class CommunityDetailViewModel: ObservableObject {
     private let removeCommentUseCase: any RemoveCommentUseCase
     
     // MARK: - Properties
-    // init community
-    @Published var community: FetchFlow<CommunityContent> = .fetching
     private let communityId: Int
     
-    // comment
+    // MARK: - States
+    @Published var community: FetchFlow<CommunityContent> = .fetching
     @Published var comments: FetchFlow<[Comment]> = .fetching
     @Published var currentComment = ""
-    
-    // create comment
     @Published var createCommentFlow: FetchFlow<Bool> = .fetching
-    
-    // remove community
     @Published var removeCommunityFlow: FetchFlow<Bool> = .fetching
-    
-    // remove comment
     @Published var removeCommentFlow: FetchFlow<Bool> = .fetching
-    @Published var showRemovingComment = false
-    @Published var selectedRemovingComment: Comment?
+    @Published var selectedRemoveComment: Comment?
     
     public init(
         getCommunityUseCase: any GetCommunityUseCase,
@@ -112,12 +104,12 @@ public final class CommunityDetailViewModel: ObservableObject {
     
     @MainActor
     func removeComment() async {
-        guard let selectedRemovingComment else {
+        guard let selectedRemoveComment else {
             removeCommentFlow = .failure
             return
         }
         do {
-            try await removeCommentUseCase(id: selectedRemovingComment.commentId)
+            try await removeCommentUseCase(id: selectedRemoveComment.commentId)
             await fetchComments()
             removeCommentFlow = .success(true)
         } catch {

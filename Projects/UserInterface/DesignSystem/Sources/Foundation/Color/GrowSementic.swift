@@ -57,7 +57,7 @@ public extension GrowColorScheme {
         case .github: GrowPallete.shared.Neutral10
         case .baekjoon: GrowPallete.shared.Neutral10
         case .dividerNormal: GrowPallete.shared.Neutral70
-        case .textFieldIcon: GrowPallete.shared.Neutral60
+        case .textFieldIcon: GrowPallete.shared.Primary60
         case .textFieldPrimary: GrowPallete.shared.Primary80
         case .textFieldSecondary: GrowPallete.shared.Neutral70
         case .textFieldSecondaryDisabled: GrowPallete.shared.Neutral70

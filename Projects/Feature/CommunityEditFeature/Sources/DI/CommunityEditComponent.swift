@@ -21,6 +21,7 @@ public final class CommunityEditComponent: Component<CommunityEditDependency>, C
         CommunityEditView(
             viewModel: CommunityEditViewModel(
                 patchCommunityUseCase: dependency.communityDomainBuildable.patchCommunityUseCase,
+                getCommunityUseCase: dependency.communityDomainBuildable.getCommunityUseCase,
                 forumId: forumId
             )
         )

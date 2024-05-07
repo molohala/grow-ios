@@ -7,12 +7,16 @@ import CommentServiceInterface
 
 public struct CommunityDetailView: View {
     
-    @StateObject private var viewModel: CommunityDetailViewModel
+    @EnvironmentObject private var colorProvider: ColorProvider
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     @State private var proxy: ScrollViewProxy?
-    @State private var showRemovingCommunity = false
+    @StateObject private var viewModel: CommunityDetailViewModel
+    @State private var showRemoveCommunityDialog = false
+    @State private var showRemoveCommentDialog = false
+    @State private var isCreateCommentFetch = false
     
     public init(
         viewModel: CommunityDetailViewModel
@@ -44,6 +48,37 @@ public struct CommunityDetailView: View {
                     }
                 }
             }
+            .ignoresSafeArea(edges: .bottom)
+            let isDisabled = viewModel.currentComment.isEmpty
+            HStack(spacing: 8) {
+                GrowTextEditor(text: $viewModel.currentComment, isRounded: true)
+                    .frame(height: 52)
+                    .growBackground(.backgroundAlt)
+                    .cornerRadius(26, corners: .allCorners)
+                Button {
+                    isCreateCommentFetch = true
+                    Task {
+                        await viewModel.createComment()
+                        isCreateCommentFetch = false
+                    }
+                } label: {
+                    Image(icon: .send)
+                        .resizable()
+                        .growIconColor(isDisabled ? .buttonPrimaryDisabled : .textFieldIcon)
+                        .frame(size: 28)
+                        .padding(4)
+                        .opacity(isCreateCommentFetch ? 0 : 1)
+                        .overlay {
+                            if isCreateCommentFetch {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle(tint: colorProvider.color(.textFieldIcon)))
+                            }
+                        }
+                }
+                .disabled(isDisabled)
+            }
+            .padding(.horizontal, 12)
+            .toBottom()
         }
         .hideKeyboardWhenTap()
         .growTopBar("", background: .backgroundAlt, backButtonAction: {
@@ -78,11 +113,24 @@ public struct CommunityDetailView: View {
             }
         }
         .eraseToAnyView()
-        .alert("댓글을 삭제하시겠습니까?",
-               isPresented: .init(get: { viewModel.showRemovingComment },
-                                  set: { _ in
-            viewModel.showRemovingComment = false
-        })) {
+        .alert("게시글을 삭제하시겠습니까?", isPresented: $showRemoveCommunityDialog) {
+            Button("삭제", role: .destructive) {
+                Task {
+                    await viewModel.removeCommuntiy()
+                }
+            }
+            Button("아니요", role: .cancel) {}
+        }
+        .eraseToAnyView()
+        .alert("게시글이 삭제되었습니다", isPresented: .init(get: {
+            viewModel.removeCommunityFlow == .success(true)
+        }, set: { _ in })) {
+            Button("닫기", role: .cancel) {
+                dismiss()
+            }
+        }
+        .eraseToAnyView()
+        .alert("댓글을 삭제하시겠습니까?", isPresented: $showRemoveCommentDialog) {
             Button("삭제", role: .destructive) {
                 Task {
                     await viewModel.removeComment()
@@ -91,14 +139,12 @@ public struct CommunityDetailView: View {
             Button("아니요", role: .cancel) {}
         }
         .eraseToAnyView()
-        .alert("게시글을 삭제하시겠습니까?",
-               isPresented: $showRemovingCommunity) {
-            Button("삭제", role: .destructive) {
-                Task {
-                    await viewModel.removeCommuntiy()
-                }
-            }
-            Button("아니요", role: .cancel) {}
+        .alert("댓글이 삭제되었습니다", isPresented: .init(get: {
+            viewModel.removeCommentFlow == .success(true)
+        }, set: { _ in
+            viewModel.removeCommentFlow = .fetching
+        })) {
+            Button("닫기", role: .cancel) {}
         }
     }
     
@@ -116,18 +162,23 @@ public struct CommunityDetailView: View {
                         .growColor(.textAlt)
                 }
                 Spacer()
-                Menu {
-                    Button("수정하기", role: .cancel) {
-                        // action
+                if case .success(let profile) = appState.profile,
+                   profile.id == forum.writerId {
+                    Menu {
+                        Button("수정하기", role: .cancel) {
+                            router.navigate(to: CommunityDetailDestination.communityEdit(forumId: forum.communityId))
+                        }
+                        Button("삭제하기", role: .destructive) {
+                            Task {
+                                showRemoveCommunityDialog = true
+                            }
+                        }
+                    } label: {
+                        Image(icon: .detailVertical)
+                            .resizable()
+                            .growIconColor(.textAlt)
+                            .frame(size: 24)
                     }
-                    Button("삭제하기", role: .destructive) {
-                        // action
-                    }
-                } label: {
-                    Image(icon: .detailVertical)
-                        .resizable()
-                        .growIconColor(.textAlt)
-                        .frame(size: 24)
                 }
             }
             Text(forum.content)
@@ -135,9 +186,11 @@ public struct CommunityDetailView: View {
                 .growColor(.textNormal)
             GrowLikeButton(
                 like: forum.like,
-                isLiked: forum.liked) {
-                    // action
+                isLiked: forum.liked,
+                action: {
+                    await viewModel.patchLike()
                 }
+            )
         }
         .padding(12)
     }
@@ -148,11 +201,12 @@ public struct CommunityDetailView: View {
         case .fetching:
             GrowCommentCellShimmer()
         case .success(let data):
-            VStack(spacing: 4) {
-                if case .success(let profile) = appState.profile {
+            if case .success(let profile) = appState.profile {
+                VStack(spacing: 4) {
                     ForEach(data, id: \.commentId) { comment in
                         GrowCommentCell(comment: comment, profileId: profile.id) {
-                            // remove action
+                            showRemoveCommentDialog = true
+                            viewModel.selectedRemoveComment = comment
                         }
                     }
                 }
