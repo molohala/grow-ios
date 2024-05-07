@@ -6,6 +6,7 @@ public struct GithubSettingView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: GithubSettingViewModel
     
     public init(
@@ -19,7 +20,7 @@ public struct GithubSettingView: View {
             GrowTextField("Github ID", text: $viewModel.githubId)
                 .padding(.top, 20)
             Spacer()
-            GrowButton("완료하기", type: .CTA, isEnabled: viewModel.githubId.isEmpty) {
+            GrowButton("완료", type: .CTA, leadingIcon: .check, isEnabled: !viewModel.githubId.isEmpty) {
                 await viewModel.completeSetting()
             }
             .padding(.bottom, 8)
@@ -51,7 +52,16 @@ public struct GithubSettingView: View {
             get: { viewModel.completeFlow == .success(true) },
             set: { _ in })
         ) {
-            Button("닫기") { viewModel.completeFlow = .fetching }
+            Button("닫기") { 
+                viewModel.completeFlow = .fetching
+                dismiss()
+            }
+        }
+        .onAppear {
+            if case .success(let profile) = appState.profile,
+                let githubId = profile.githubId {
+                viewModel.githubId = githubId
+            }
         }
     }
 }

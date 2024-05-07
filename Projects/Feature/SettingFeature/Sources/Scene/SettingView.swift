@@ -10,6 +10,7 @@ public struct SettingView: View {
     @StateObject private var viewModel: SettingViewModel
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var colorProvider: ColorProvider
     
     public init(
         viewModel: SettingViewModel
@@ -28,11 +29,10 @@ public struct SettingView: View {
                     ) {
                         router.navigate(to: SettingDestination.profileEdit)
                     }
-                    let github = profile.socialAccounts.first(where: { $0.socialType == .GITHUB })
                     GrowSettingCell(
                         label: "Github 설정",
                         leftIcon: .github,
-                        description: github?.socialId ?? ""
+                        description: profile.githubId
                     ) {
                         router.navigate(to: SettingDestination.githubSetting)
                     }
@@ -40,7 +40,7 @@ public struct SettingView: View {
                     GrowSettingCell(
                         label: "백준 설정",
                         leftIcon: .baekjoon,
-                        description: baekjoon?.socialId ?? ""
+                        description: profile.baekjoonId
                     ) {
                         router.navigate(to: SettingDestination.baekjoonSetting)
                     }
@@ -59,7 +59,11 @@ public struct SettingView: View {
                     label: "다크모드",
                     leftIcon: .moon,
                     content: {
-                        GrowToggle(isOn: .constant(true))
+                        GrowToggle(isOn: .init(get: {
+                            colorProvider.isDarkTheme
+                        }, set: { bool in
+                            colorProvider.isDarkTheme = bool
+                        }))
                     }
                 )
             }

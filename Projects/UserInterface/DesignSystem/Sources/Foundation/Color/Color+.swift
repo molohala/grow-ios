@@ -87,7 +87,11 @@ public extension View {
 
 public class ColorProvider: ObservableObject {
     
-    @Published private(set) var isDarkTheme: Bool
+    @Published public var isDarkTheme: Bool {
+        didSet {
+            UserDefaults.standard.setValue(isDarkTheme, forKey: "isDarkTheme")
+        }
+    }
     
     public init(isDarkTheme: Bool) {
         self.isDarkTheme = isDarkTheme

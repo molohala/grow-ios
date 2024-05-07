@@ -10,7 +10,7 @@ public struct RootView: View {
     
     @StateObject private var router = Router()
     @StateObject private var appState: AppState
-    @StateObject private var colorProvider = ColorProvider(isDarkTheme: true)
+    @StateObject private var colorProvider = ColorProvider(isDarkTheme: UserDefaults.standard.bool(forKey: "isDarkTheme"))
     
     private let mainBuildable: any MainBuildable
     private let signInBuildable: any SignInBuildable

@@ -83,7 +83,7 @@ public struct CommunityView: View {
                 router.navigate(to: CommunityDestination.communityCreate)
             }
             .padding(.trailing, 16)
-            .padding(.bottom, 96)
+            .padding(.bottom, 72)
             .toBottom()
             .toTrailing()
         }

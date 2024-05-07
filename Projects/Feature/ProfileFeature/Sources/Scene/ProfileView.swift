@@ -20,6 +20,7 @@ public struct ProfileView: View {
             LazyVStack(spacing: 12) {
                 info
                 stats
+                chart
             }
             .padding(.horizontal, 12)
         }
@@ -96,14 +97,13 @@ public struct ProfileView: View {
     
     @ViewBuilder
     private var chart: some View {
-//        switch appState.profile {
-//        case .fetching:
-//            <#code#>
-//        case .success(let data):
-//            <#code#>
-//        case .failure:
-//            <#code#>
-//        }
-        EmptyView() // todo add
+        switch appState.chartInfo {
+        case .fetching:
+            EmptyView()
+        case .success(let data):
+            GrowChartCell(chartInfo: data)
+        case .failure:
+            Text("불러오기 실패")
+        }
     }
 }

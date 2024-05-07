@@ -6,6 +6,7 @@ public struct BaekjoonSettingView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: BaekjoonSettingViewModel
     
     public init(
@@ -19,11 +20,11 @@ public struct BaekjoonSettingView: View {
             GrowTextField("백준 ID", text: $viewModel.baekjoonId, isEnabled: !viewModel.baekjoonId.isEmpty)
                 .padding(.bottom, 20)
             Spacer()
-            GrowButton("완료하기", type: .CTA, isEnabled: !viewModel.baekjoonId.isEmpty) {
+            GrowButton("완료", type: .CTA, leadingIcon: .check, isEnabled: !viewModel.baekjoonId.isEmpty) {
                 await viewModel.completeSetting()
             }
-            .padding(.horizontal, 12)
         }
+        .padding(.horizontal, 12)
         .growTopBar("백준 설정", background: .backgroundAlt) {
             router.popToStack()
         }
@@ -50,8 +51,15 @@ public struct BaekjoonSettingView: View {
             get: { viewModel.completeFlow == .success(true) },
             set: { _ in })
         ) {
-            Button("닫기") {
+            Button("확인") {
                 viewModel.completeFlow = .fetching
+                dismiss()
+            }
+        }
+        .onAppear {
+            if case .success(let profile) = appState.profile,
+                let baekjoonId = profile.baekjoonId {
+                viewModel.baekjoonId = baekjoonId
             }
         }
     }

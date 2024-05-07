@@ -89,6 +89,7 @@ public final class AppState: ObservableObject {
             github = .fetching
             let github = try await getGithubUseCase(name: githubId.socialId)
             self.github = .success(github)
+            self.chartInfo = .success(github.weekCommits.githubWeekChartInfo)
         } catch {
             github = .failure
         }

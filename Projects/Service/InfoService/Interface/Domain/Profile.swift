@@ -20,6 +20,20 @@ public struct Profile: Equatable {
     }
 }
 
+public extension Profile {
+    var githubId: String? {
+        self.socialAccounts.first { social in
+            social.socialType == .GITHUB
+        }?.socialId
+    }
+    
+    var baekjoonId: String? {
+        self.socialAccounts.first { social in
+            social.socialType == .SOLVED_AC
+        }?.socialId
+    }
+}
+
 public struct Social {
     public let socialId: String
     public let socialType: SocialType

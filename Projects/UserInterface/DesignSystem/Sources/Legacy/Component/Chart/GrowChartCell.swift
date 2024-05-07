@@ -75,32 +75,32 @@ public struct GrowChartCell: View {
         .applyCardView()
     }
 }
-//
-//public extension [Commit] {
-//    var githubWeekChartInfo: ChartInfo {
-//        .init(
-//            title: "\(self.map { $0.contributionCount }.reduce(0, +))",
-//            subtitle: "이번주에 한 커밋",
-//            subject: ChartType.github.rawValue,
-//            chartData: .init(
-//                data: self.map { ($0.date.monthPerDay ?? "", y: $0.contributionCount) },
-//                color: .blue
-//            )
-//        )
-//    }
-//}
-//
-//public extension [Solve] {
-//    var baekjoonWeekChartInfo: ChartInfo {
-//        .init(
-//            title: "\(self.map { $0.solvedCount }.reduce(0, +))",
-//            subtitle: "이번주에 푼 문제",
-//            subject: ChartType.github.rawValue,
-//            chartData: .init(
-//                data: self.map { ($0.date.monthPerDay ?? "", y: $0.solvedCount) },
-//                color: .blue
-//            )
-//        )
-//    }
-//}
+
+public extension [Commit] {
+    var githubWeekChartInfo: ChartInfo {
+        .init(
+            label: "\(self.map { $0.contributionCount }.reduce(0, +))",
+            description: "이번주에 한 커밋",
+            type: .github,
+            chartData: .init(
+                data: self.map { ($0.date.monthPerDay ?? "", $0.contributionCount) },
+                color: .blue
+            )
+        )
+    }
+}
+
+public extension [Solve] {
+    var baekjoonWeekChartInfo: ChartInfo {
+        .init(
+            label: "\(self.map { $0.solvedCount }.reduce(0, +))",
+            description: "이번주에 푼 문제",
+            type: .baekjoon,
+            chartData: .init(
+                data: self.map { ($0.date.monthPerDay ?? "", $0.solvedCount) },
+                color: .green
+            )
+        )
+    }
+}
 
