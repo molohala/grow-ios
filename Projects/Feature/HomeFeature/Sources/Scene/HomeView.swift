@@ -24,6 +24,8 @@ public struct HomeView: View {
                 stat
                 todayGithub
                 todayBaekjoon
+                weekBestForum
+                Spacer().frame(height: 92)
             }
             .padding(.horizontal, 16)
         }
@@ -163,6 +165,7 @@ public struct HomeView: View {
     private var weekBestForum: some View {
         VStack(spacing: 0) {
             GrowHeadline("이번주 인기글")
+                .toLeading()
             VStack(spacing: 8) {
                 switch viewModel.weekCommunities {
                 case .fetching:
@@ -175,11 +178,15 @@ public struct HomeView: View {
                             let forumId = forum.community.communityId
                             GrowForumCell(
                                 forum: forum,
-                                profileId: profile.id,
-                                likeAction: {},
+                                profileId: -1,
+                                likeAction: {
+                                    await viewModel.patchLike(communityId: forum.community.communityId)
+                                },
                                 removeAction: {},
                                 editAction: {},
-                                action: {}
+                                action: {
+                                    router.navigate(to: HomeDestination.communityDetail(forumId: forum.community.communityId))
+                                }
                             )
                         }
                     }

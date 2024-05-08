@@ -3,6 +3,6 @@ import CommunityServiceInterface
 
 public enum HomeDestination: Hashable {
     case profileDetail(memberId: Int)
-    case communityDetail
+    case communityDetail(forumId: Int)
     case communityEdit(forumId: Int)
 }

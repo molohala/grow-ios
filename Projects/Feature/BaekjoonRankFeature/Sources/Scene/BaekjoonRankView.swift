@@ -32,20 +32,23 @@ public struct BaekjoonRankView: View {
                 }
                 .padding(12)
             case .success(let data):
-                LazyVStack(spacing: 12) {
-                    ForEach(data, id: \.memberId) { rank in
-                        GrowRankCell(
-                            name: rank.memberName,
-                            socialId: rank.socialId,
-                            rank: rank.rank,
-                            label: "\(rank.count) 문제",
-                            action: {
-                                router.navigate(to: BaekjoonRankDestination.profileDetail(memberId: rank.memberId))
-                            }
-                        )
+                ScrollView {
+                    LazyVStack(spacing: 12) {
+                        ForEach(data, id: \.memberId) { rank in
+                            GrowRankCell(
+                                name: rank.memberName,
+                                socialId: rank.socialId,
+                                rank: rank.rank,
+                                label: "\(rank.count) 문제",
+                                action: {
+                                    router.navigate(to: BaekjoonRankDestination.profileDetail(memberId: rank.memberId))
+                                }
+                            )
+                        }
+                        Spacer().frame(height: 92)
                     }
+                    .padding(12)
                 }
-                .padding(12)
             case .failure:
                 Text("불러오기 실패")
             }
