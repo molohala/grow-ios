@@ -10,7 +10,8 @@ let project = Project.makeUserInterface(
             .shared(target: .SwiftUtil),
             .SPM.Pow,
             .SPM.Nuke,
-            .SPM.NukeUI
+            .SPM.NukeUI,
+            .SPM.Flow
         ] + ModulePaths.Service.allCases.map { TargetDependency.serviceInterface(target: $0) }),
         .userInterfaceExample(target: .DesignSystem, dependencies: [
             .userInterface(target: .DesignSystem)

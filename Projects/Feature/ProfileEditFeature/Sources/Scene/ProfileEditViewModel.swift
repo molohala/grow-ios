@@ -9,6 +9,14 @@
 import Foundation
 import DesignSystem
 
-final class ProfileEditViewModel: ObservableObject {
-//    @Published var jobs: [GrowJobType] = [.Android, .Designer]
+public final class ProfileEditViewModel: ObservableObject {
+    
+    @Published var bio = ""
+    @Published var jobs = ["Server", "Web", "Android", "iOS", "Game", "Designer", "Developer"]
+    @Published var languages = ["Python", "HTML", "CSS", "JavaScript", "TypeScript", "Swift", "Java", "Kotlin"]
+    
+    @MainActor
+    func completeSetting() async {
+        //
+    }
 }

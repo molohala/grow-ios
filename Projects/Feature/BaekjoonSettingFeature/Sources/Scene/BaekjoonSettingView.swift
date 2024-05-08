@@ -16,15 +16,21 @@ public struct BaekjoonSettingView: View {
     }
     
     public var body: some View {
-        VStack {
-            GrowTextField("백준 ID", text: $viewModel.baekjoonId, isEnabled: !viewModel.baekjoonId.isEmpty)
-                .padding(.bottom, 20)
+        VStack(spacing: 0) {
+            VStack(spacing: 8) {
+                GrowHeadline("백준 ID")
+                    .toLeading()
+                    .padding(.horizontal, 4)
+                GrowTextField("", text: $viewModel.baekjoonId, isEnabled: !viewModel.baekjoonId.isEmpty)
+            }
+            .padding(.top, 20)
             Spacer()
             GrowButton("완료", type: .CTA, leadingIcon: .check, isEnabled: !viewModel.baekjoonId.isEmpty) {
                 await viewModel.completeSetting()
             }
+            .padding(.horizontal, 4)
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 16)
         .growTopBar("백준 설정", background: .backgroundAlt) {
             router.popToStack()
         }
