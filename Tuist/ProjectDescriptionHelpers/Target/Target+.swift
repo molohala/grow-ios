@@ -17,7 +17,7 @@ public extension Target {
     ) -> Self {
         .makeTarget(name: target.rawValue,
                     product: .app,
-                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
+                    bundleId: "us.growapp",
                     infoPlist: infoPlist,
                     sources: ["Sources/**"],
                     resources: ["Resources/**"],

@@ -32,6 +32,7 @@ public enum GrowIconography {
     case notification
     case person
     case ping
+    case radio
     case send
     case setting
     case show
@@ -71,6 +72,7 @@ public enum GrowIconography {
         case .notification: DesignSystemAsset.notification.swiftUIImage
         case .person: DesignSystemAsset.person.swiftUIImage
         case .ping: DesignSystemAsset.ping.swiftUIImage
+        case .radio: DesignSystemAsset.radio.swiftUIImage
         case .send: DesignSystemAsset.send.swiftUIImage
         case .setting: DesignSystemAsset.setting.swiftUIImage
         case .show: DesignSystemAsset.show.swiftUIImage

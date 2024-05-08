@@ -28,6 +28,11 @@ struct ButtonPreview: View {
                 GrowToggle(isOn: .constant(false))
                 GrowLikeButton(like: 312, isLiked: true) {}
                 GrowLikeButton(like: 311, isLiked: false) {}
+                
+                GrowRadioButton("Server", isSelected: true) {}
+                GrowRadioButton("Web", isSelected: false) {}
+                GrowRadioButton("Python", icon: .check, isSelected: true) {}
+                GrowRadioButton("HTML", icon: .check, isSelected: false) {}
             }
         }
         .growTopBar("") {}
