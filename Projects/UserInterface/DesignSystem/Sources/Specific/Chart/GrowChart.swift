@@ -3,6 +3,7 @@ import Charts
 
 public struct GrowChart: View {
     
+    @EnvironmentObject private var colorProvider: ColorProvider
     private let data: GrowChartData.Data
     private let color: Color
     private let backgroundColor: LinearGradient
@@ -50,19 +51,23 @@ public struct GrowChart: View {
                     if axis.index % 3 == 0 {
                         let x = data[axis.index].x
                         AxisValueLabel("\(x)")
-                            .foregroundStyle(.gray)
-                            .font(.caption2)
+                            .foregroundStyle(colorProvider.color(.textDarken))
+                            .font(GrowFont.captionR.font)
                     }
                 }
             }
             .chartYAxis {
                 AxisMarks(
-                    format: .number,
                     position: .leading,
                     values: [Int(balancedMax / 3), Int(balancedMax / 3 * 2), balancedMax]
-                )
+                ) { axis in
+                    let y = data[axis.index].y
+                    AxisValueLabel("\(y)")
+                        .foregroundStyle(colorProvider.color(.textDarken))
+                        .font(GrowFont.captionR.font)
+                    AxisGridLine()
+                }
             }
         }
     }
 }
-

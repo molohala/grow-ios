@@ -71,6 +71,7 @@ public struct GrowChartCell: View {
                     GrowChart(chartData: chartInfo.chartData, type: chartInfo.type)
                         .frame(height: 200)
                         .growBackground(.background)
+                        .padding(.top, 8)
                 } else {
                     GrowMotivationCell()
                 }
