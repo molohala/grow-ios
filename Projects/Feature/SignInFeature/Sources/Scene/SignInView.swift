@@ -30,7 +30,7 @@ public struct SignInView: View {
             }
             .padding(.bottom, 8)
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 16)
         .growTopBar("로그인")
         .hideKeyboardWhenTap()
         .alert("로그인에 실패했습니다", isPresented: $viewModel.showErrorDialog) {

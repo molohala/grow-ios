@@ -28,7 +28,7 @@ public struct GrowTabButton: View {
     
     public var body: some View {
         
-        let color: GrowColorScheme = isSelected ? .buttonPrimary : .buttonTextDisabled
+        let color: GrowColorScheme = isSelected ? .tabButtonPrimary : .buttonTextDisabled
         
         Button {
             Task {
@@ -58,7 +58,7 @@ public struct GrowTabButton: View {
         .overlay {
             Rectangle()
                 .frame(height: 1)
-                .growColor(.buttonPrimary)
+                .growColor(color)
                 .opacity(isSelected ? 1 : 0)
                 .frame(maxWidth: .infinity)
                 .toBottom()

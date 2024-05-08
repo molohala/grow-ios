@@ -55,7 +55,7 @@ public struct ProfileView: View {
                         .growFont(.labelM)
                         .growColor(.textAlt)
                 case .failure:
-                    Text("불러오기 실패")
+                    EmptyView()
                 }
             }
             Button {

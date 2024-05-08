@@ -12,6 +12,7 @@ public enum GrowColorScheme {
     case buttonPrimaryDisabled
     case buttonText
     case buttonTextDisabled
+    case tabButtonPrimary
     case background
     case backgroundAlt
     case backgroundInverse
