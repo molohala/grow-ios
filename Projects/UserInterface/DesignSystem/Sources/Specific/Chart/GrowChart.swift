@@ -27,8 +27,7 @@ public struct GrowChart: View {
     }
     
     public var body: some View {
-        
-        let balancedMax = max(data.max { $0.y < $1.y }?.y ?? 0, 0) + 10
+        let balancedMax = max(data.max { $0.y < $1.y }?.y ?? 0, 0)
         ZStack {
             Chart(data, id: \.x) { i in
                 LineMark(
