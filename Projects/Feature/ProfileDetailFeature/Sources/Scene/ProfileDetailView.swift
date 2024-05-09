@@ -1,6 +1,7 @@
 import SwiftUI
 import BaseFeature
 import DesignSystem
+import Flow
 
 public struct ProfileDetailView: View {
     
@@ -22,19 +23,24 @@ public struct ProfileDetailView: View {
             ""
         }
         ScrollView {
-            VStack(spacing: 24) {
+            VStack(spacing: 28) {
                 info
-                VStack(spacing: 12) {
-                    stats
-                    githubChart
-                    baekjoonChart
-                }
+                bio
+                language
+                statics
+                Spacer().frame(height: 92)
             }
             .padding(.horizontal, 16)
             .padding(.top, 12)
         }
+        .scrollIndicators(.hidden)
         .growTopBar("\(name)님의 프로필", background: .backgroundAlt) {
             router.popToStack()
+        }
+        .refreshable {
+            Task {
+                await viewModel.fetchProfile()
+            }
         }
         .task {
             await viewModel.fetchProfile()
@@ -43,37 +49,74 @@ public struct ProfileDetailView: View {
     
     @ViewBuilder
     private var info: some View {
-        VStack(spacing: 20) {
+        HStack(spacing: 8) {
             switch viewModel.profile {
             case .fetching:
-                VStack(spacing: 12) {
-                    GrowAvatarShimmer(type: .extraLarge)
-                    VStack(spacing: 0) {
-                        RowShimmer(width: 60)
-                        RowShimmer(width: 40)
-                    }
+                GrowAvatarShimmer(type: .extraLarge)
+                VStack(alignment: .leading, spacing: 2) {
+                    RowShimmer(width: 60)
+                    RowShimmer(width: 40)
                 }
-                RowShimmer(width: 100)
             case .success(let data):
-                VStack(spacing: 12) {
-                    GrowAvatar(type: .extraLarge)
-                    VStack(spacing: 0) {
-                        Text("\(data.job) 개발자")
-                            .growFont(.labelR)
-                            .growColor(.textDarken)
-                        Text(data.name)
-                            .growFont(.bodyB)
-                            .growColor(.textNormal)
-                    }
-                }
-                if !data.bio.isEmpty {
-                    Text("\"\(data.bio)\"")
-                        .growFont(.labelM)
-                        .growColor(.textAlt)
+                GrowAvatar(type: .extraLarge)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("\(data.job) 개발자")
+                        .growFont(.labelR)
+                        .growColor(.textDarken)
+                    Text(data.name)
+                        .growFont(.bodyB)
+                        .growColor(.textNormal)
                 }
             case .failure:
                 EmptyView()
             }
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    private var bio: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            GrowHeadline("소개글")
+            if case .success(let profile) = viewModel.profile {
+                Text(LocalizedStringKey(profile.bio))
+                    .applyOpenURL()
+                    .growFont(.bodyM)
+                    .growColor(.textDarken)
+            }
+        }
+        .toLeading()
+    }
+    
+    @ViewBuilder
+    private var language: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            GrowHeadline("사용 언어")
+//            HFlow(itemSpacing: 8, rowSpacing: 8) {
+//                switch viewModel.myLanguages {
+//                case .fetching:
+//                    ForEach(0..<4, id: \.self) { _ in
+//                        GrowLanguageShimmer()
+//                    }
+//                case .success(let data):
+//                    ForEach(data, id: \.id) {
+//                        GrowLanguage(text: $0.name)
+//                    }
+//                case .failure:
+//                    EmptyView()
+//                }
+//            }
+        }
+        .toLeading()
+    }
+    
+    @ViewBuilder
+    private var statics: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            GrowHeadline("통계")
+            stats
+            githubChart
+            baekjoonChart
         }
     }
     
