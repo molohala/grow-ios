@@ -2,6 +2,7 @@ import Foundation
 import InfoServiceInterface
 import DesignSystem
 import BaseFeature
+import LanguageServiceInterface
 
 public final class ProfileDetailViewModel: ObservableObject {
     
@@ -9,6 +10,7 @@ public final class ProfileDetailViewModel: ObservableObject {
     private let getGithubUseCase: any GetGithubUseCase
     private let getProfileByIdUseCase: any GetProfileByIdUseCase
     private let getSolvedacUseCase: any GetSolvedacUseCase
+    private let getLanguagesByMemberIdUseCase: any GetLanguagesByMemberIdUseCase
     
     // MARK: - Properties
     private let memberId: Int
@@ -17,6 +19,7 @@ public final class ProfileDetailViewModel: ObservableObject {
     @Published var profile: FetchFlow<Profile> = .fetching
     @Published var github: FetchFlow<Github?> = .fetching
     @Published var baekjoon: FetchFlow<Solvedav?> = .fetching
+    @Published var languages: FetchFlow<[Language]> = .fetching
     @Published var githubChartInfo: FetchFlow<ChartInfo?> = .fetching
     @Published var baekjoonChartInfo: FetchFlow<ChartInfo?> = .fetching
     
@@ -24,11 +27,13 @@ public final class ProfileDetailViewModel: ObservableObject {
         getGithubUseCase: any GetGithubUseCase,
         getProfileByIdUseCase: any GetProfileByIdUseCase,
         getSolvedacUseCase: any GetSolvedacUseCase,
+        getLanguagesByMemberIdUseCase: any GetLanguagesByMemberIdUseCase,
         memberId: Int
     ) {
         self.getGithubUseCase = getGithubUseCase
         self.getProfileByIdUseCase = getProfileByIdUseCase
         self.getSolvedacUseCase = getSolvedacUseCase
+        self.getLanguagesByMemberIdUseCase = getLanguagesByMemberIdUseCase
         self.memberId = memberId
     }
     
@@ -40,7 +45,8 @@ public final class ProfileDetailViewModel: ObservableObject {
             self.profile = .success(profile)
             async let fetchProfile: () = await fetchGithub()
             async let fetchBaekjoon: () = await fetchBaekjoon()
-            _ = await [fetchProfile, fetchBaekjoon]
+            async let fetchLanguages: () = await fetchLanguage()
+            _ = await [fetchProfile, fetchBaekjoon, fetchLanguages]
         } catch {
             profile = .failure
         }
@@ -89,6 +95,17 @@ public final class ProfileDetailViewModel: ObservableObject {
             githubChartInfo = .success(github.weekCommits.githubWeekChartInfo)
         } catch {
             self.github = .failure
+        }
+    }
+    
+    @MainActor
+    func fetchLanguage() async {
+        do {
+            languages = .fetching
+            let languages = try await getLanguagesByMemberIdUseCase(memberId: memberId)
+            self.languages = .success(languages)
+        } catch {
+            languages = .failure
         }
     }
 }

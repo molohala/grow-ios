@@ -8,6 +8,7 @@ let project = Project.makeFeature(
             .feature(target: .Base),
             .featureInterface(target: .ProfileDetail),
             .serviceInterface(target: .Info),
+            .serviceInterface(target: .Language)
         ]),
         .featureInterface(target: .ProfileDetail, dependencies: [])
     ]

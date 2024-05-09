@@ -92,20 +92,20 @@ public struct ProfileDetailView: View {
     private var language: some View {
         VStack(alignment: .leading, spacing: 12) {
             GrowHeadline("사용 언어")
-//            HFlow(itemSpacing: 8, rowSpacing: 8) {
-//                switch viewModel.myLanguages {
-//                case .fetching:
-//                    ForEach(0..<4, id: \.self) { _ in
-//                        GrowLanguageShimmer()
-//                    }
-//                case .success(let data):
-//                    ForEach(data, id: \.id) {
-//                        GrowLanguage(text: $0.name)
-//                    }
-//                case .failure:
-//                    EmptyView()
-//                }
-//            }
+            HFlow(itemSpacing: 8, rowSpacing: 8) {
+                switch viewModel.languages {
+                case .fetching:
+                    ForEach(0..<4, id: \.self) { _ in
+                        GrowLanguageShimmer()
+                    }
+                case .success(let data):
+                    ForEach(data, id: \.id) {
+                        GrowLanguage(text: $0.name)
+                    }
+                case .failure:
+                    EmptyView()
+                }
+            }
         }
         .toLeading()
     }

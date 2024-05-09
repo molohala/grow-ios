@@ -16,4 +16,8 @@ class LanguageDataSourceImpl: BaseRemoteDataSource<LanguageDataSourceImpl>, Lang
     func patchMyLanguages(_ req: PatchMyLanguagesRequest) async throws {
         try await requestPatch(url: "\(Grow.baseUrl)/\(path)/me", req: req, res: BaseVoidResponse.self)
     }
+    
+    func getLanguagesByMemberId(memberId: Int) async throws -> [Language] {
+        try await requestGet(url: "\(Grow.baseUrl)/\(path)/\(memberId)", res: BaseResponse<[LanguageResponse]>.self).data.map { $0.toDomain() }
+    }
 }

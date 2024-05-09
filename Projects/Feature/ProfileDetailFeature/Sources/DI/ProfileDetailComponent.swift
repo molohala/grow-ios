@@ -3,9 +3,11 @@ import SwiftUI
 import NeedleFoundation
 import ProfileDetailFeatureInterface
 import InfoServiceInterface
+import LanguageServiceInterface
 
 public protocol ProfileDetailDependency: Dependency {
     var infoDomainBuildable: any InfoDomainBuildable { get }
+    var languageDomainBuildable: any LanguageDomainBuildable { get }
 }
 
 public final class ProfileDetailComponent: Component<ProfileDetailDependency>, ProfileDetailBuildable {
@@ -15,6 +17,7 @@ public final class ProfileDetailComponent: Component<ProfileDetailDependency>, P
                 getGithubUseCase: dependency.infoDomainBuildable.getGithubUseCase,
                 getProfileByIdUseCase: dependency.infoDomainBuildable.getProfileByIdUseCase,
                 getSolvedacUseCase: dependency.infoDomainBuildable.getSolvedacUseCase,
+                getLanguagesByMemberIdUseCase: dependency.languageDomainBuildable.getLanguagesByMemberIdUseCase,
                 memberId: memberId
             )
         )

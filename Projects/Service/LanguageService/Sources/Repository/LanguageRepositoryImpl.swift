@@ -21,4 +21,8 @@ class LanguageRepositoryImpl: LanguageRepository {
     func patchMyLanguages(_ req: PatchMyLanguagesRequest) async throws {
         try await languageDataSource.patchMyLanguages(req)
     }
+    
+    func getLanguagesByMemberId(memberId: Int) async throws -> [Language] {
+        try await languageDataSource.getLanguagesByMemberId(memberId: memberId)
+    }
 }

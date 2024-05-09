@@ -67,6 +67,9 @@ private class ProfileDetailDependencyac839c257b41fa6ce526Provider: ProfileDetail
     var infoDomainBuildable: any InfoDomainBuildable {
         return appComponent.infoDomainBuildable
     }
+    var languageDomainBuildable: any LanguageDomainBuildable {
+        return appComponent.languageDomainBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -467,6 +470,7 @@ extension AppComponent: Registration {
 extension ProfileDetailComponent: Registration {
     public func registerItems() {
         keyPathToName[\ProfileDetailDependency.infoDomainBuildable] = "infoDomainBuildable-any InfoDomainBuildable"
+        keyPathToName[\ProfileDetailDependency.languageDomainBuildable] = "languageDomainBuildable-any LanguageDomainBuildable"
     }
 }
 extension SettingComponent: Registration {
