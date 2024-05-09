@@ -24,7 +24,8 @@ public struct ProfileEditView: View {
                         GrowHeadline("소개글")
                             .toLeading()
                             .padding(.horizontal, 4)
-                        GrowTextField(text: $viewModel.bio)
+                        GrowTextEditor(text: $viewModel.bio)
+                            .frame(minHeight: 100, maxHeight: 300)
                     }
                     VStack(spacing: 8) {
                         GrowHeadline("직군")
