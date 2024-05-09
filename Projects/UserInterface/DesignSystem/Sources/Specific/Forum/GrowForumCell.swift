@@ -50,7 +50,7 @@ public struct GrowForumCell: View {
                         }
                         Spacer()
                     }
-                    Text(content.content)
+                    Text(LocalizedStringKey(content.content))
                         .lineLimit(5)
                         .growFont(.bodyR)
                         .truncationMode(.tail)

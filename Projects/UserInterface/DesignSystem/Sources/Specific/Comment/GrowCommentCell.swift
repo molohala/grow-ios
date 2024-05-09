@@ -31,7 +31,7 @@ public struct GrowCommentCell: View {
                             .growFont(.labelM)
                             .growColor(.textAlt)
                     }
-                    Text(comment.content)
+                    Text(LocalizedStringKey(comment.content))
                         .applyOpenURL()
                         .growFont(.bodyR)
                         .growColor(.textNormal)

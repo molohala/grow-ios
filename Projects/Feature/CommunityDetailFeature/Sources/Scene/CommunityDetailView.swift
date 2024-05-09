@@ -181,7 +181,8 @@ public struct CommunityDetailView: View {
                     }
                 }
             }
-            Text(forum.content)
+            Text(LocalizedStringKey(forum.content))
+                .applyOpenURL()
                 .growFont(.bodyR)
                 .growColor(.textNormal)
             GrowLikeButton(
