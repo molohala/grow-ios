@@ -8,13 +8,25 @@ public struct Profile: Equatable {
     public let id: Int
     public let email: String
     public let name: String
+    public let bio: String
+    public let job: String
     public let createdAt: Date
     public let socialAccounts: [Social]
     
-    public init(id: Int, email: String, name: String, createdAt: Date, socialAccounts: [Social]) {
+    public init(
+        id: Int,
+        email: String,
+        name: String,
+        bio: String,
+        job: String,
+        createdAt: Date,
+        socialAccounts: [Social]
+    ) {
         self.id = id
         self.email = email
         self.name = name
+        self.bio = bio
+        self.job = job
         self.createdAt = createdAt
         self.socialAccounts = socialAccounts
     }

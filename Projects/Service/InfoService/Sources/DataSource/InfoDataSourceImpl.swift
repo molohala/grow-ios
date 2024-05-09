@@ -2,7 +2,6 @@ import BaseService
 import InfoServiceInterface
 
 class InfoDataSourceImpl: BaseRemoteDataSource<InfoDataSourceImpl>, InfoDataSource {
-
     private let path = "info"
     
     func getSolvedav(name: String) async throws -> Solvedav {
@@ -27,5 +26,12 @@ class InfoDataSourceImpl: BaseRemoteDataSource<InfoDataSourceImpl>, InfoDataSour
     
     func getProfile(memberId: Int) async throws -> Profile {
         try await requestGet(url: "\(Grow.baseUrl)/\(path)/user/\(memberId)", res: BaseResponse<ProfileResponse>.self).data.toDomain()
+    }
+    func patchMyProfile(_ req: PatchMyProfileRequest) async throws {
+        try await requestPatch(url: "\(Grow.baseUrl)/\(path)/me", res: BaseVoidResponse.self)
+    }
+    
+    func getJobs() async throws -> [String] {
+        try await requestGet(url: "\(Grow.baseUrl)/\(path)/jobs", res: BaseResponse<[String]>.self).data
     }
 }

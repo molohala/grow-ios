@@ -30,4 +30,12 @@ class InfoRepositoryImpl: InfoRepository {
     func getProfile(memberId: Int) async throws -> Profile {
         try await infoDataSource.getProfile(memberId: memberId)
     }
+    
+    func patchMyProfile(_ req: PatchMyProfileRequest) async throws {
+        try await infoDataSource.patchMyProfile(req)
+    }
+    
+    func getJobs() async throws -> [String] {
+        try await infoDataSource.getJobs()
+    }
 }

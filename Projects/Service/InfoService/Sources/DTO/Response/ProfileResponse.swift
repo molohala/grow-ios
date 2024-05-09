@@ -5,6 +5,8 @@ struct ProfileResponse: Decodable {
     let id: Int
     let email: String
     let name: String
+    let bio: String
+    let job: String
     let createdAt: String
     let socialAccounts: [SocialResponse]
 }

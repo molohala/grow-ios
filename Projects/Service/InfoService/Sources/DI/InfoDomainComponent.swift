@@ -41,6 +41,18 @@ public final class InfoDomainComponent: Component<InfoDomainDependency>, InfoDom
         }
     }
     
+    public var patchMyProfileUseCase: PatchMyProfileUseCase {
+        shared {
+            PatchMyProfileUseCaseImpl(infoRepository: infoRepository)
+        }
+    }
+    
+    public var getJobsUseCase: GetJobsUseCase {
+        shared {
+            GetJobsUseCaseImpl(infoRepository: infoRepository)
+        }
+    }
+    
     public var infoRepository: InfoRepository {
         shared {
             InfoRepositoryImpl(infoDataSource: infoDataSource)
