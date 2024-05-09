@@ -13,12 +13,14 @@ import MainFeatureInterface
 import SignInFeatureInterface
 import AuthServiceInterface
 import InfoServiceInterface
+import LanguageServiceInterface
 
 public protocol RootDependency: Dependency {
     var mainBuildable: any MainBuildable { get }
     var signInBuildable: any SignInBuildable { get }
     var authDomainBuildable: any AuthDomainBuildable { get }
     var infoDomainBuildable: any InfoDomainBuildable { get }
+    var languageDomainBuildable: any LanguageDomainBuildable { get }
 }
 
 public final class RootComponent: Component<RootDependency> {
@@ -28,7 +30,8 @@ public final class RootComponent: Component<RootDependency> {
             signInBuildable: dependency.signInBuildable,
             setTokenUseCase: dependency.authDomainBuildable.setTokenUseCase,
             getTokenUseCase: dependency.authDomainBuildable.getTokenUseCase,
-            infoDomainBuilable: dependency.infoDomainBuildable
+            infoDomainBuilable: dependency.infoDomainBuildable,
+            languageDomainBuildable: dependency.languageDomainBuildable
         )
     }
 }

@@ -43,24 +43,36 @@ public struct ProfileDetailView: View {
     
     @ViewBuilder
     private var info: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 20) {
             switch viewModel.profile {
             case .fetching:
-                GrowAvatarShimmer(type: .extraLarge)
-                RowShimmer(width: 40)
+                VStack(spacing: 12) {
+                    GrowAvatarShimmer(type: .extraLarge)
+                    VStack(spacing: 0) {
+                        RowShimmer(width: 60)
+                        RowShimmer(width: 40)
+                    }
+                }
                 RowShimmer(width: 100)
             case .success(let data):
-                GrowAvatar(type: .extraLarge)
-                Text(data.name)
-                    .growFont(.bodyB)
-                    .growColor(.textNormal)
+                VStack(spacing: 12) {
+                    GrowAvatar(type: .extraLarge)
+                    VStack(spacing: 0) {
+                        Text("\(data.job) 개발자")
+                            .growFont(.labelR)
+                            .growColor(.textDarken)
+                        Text(data.name)
+                            .growFont(.bodyB)
+                            .growColor(.textNormal)
+                    }
+                }
                 if !data.bio.isEmpty {
                     Text("\"\(data.bio)\"")
                         .growFont(.labelM)
                         .growColor(.textAlt)
                 }
             case .failure:
-                Text("불러오기 실패")
+                EmptyView()
             }
         }
     }

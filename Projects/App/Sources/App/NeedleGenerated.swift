@@ -168,6 +168,9 @@ private class RootDependency3944cc797a4a88956fb5Provider: RootDependency {
     var infoDomainBuildable: any InfoDomainBuildable {
         return appComponent.infoDomainBuildable
     }
+    var languageDomainBuildable: any LanguageDomainBuildable {
+        return appComponent.languageDomainBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -498,6 +501,7 @@ extension RootComponent: Registration {
         keyPathToName[\RootDependency.signInBuildable] = "signInBuildable-any SignInBuildable"
         keyPathToName[\RootDependency.authDomainBuildable] = "authDomainBuildable-any AuthDomainBuildable"
         keyPathToName[\RootDependency.infoDomainBuildable] = "infoDomainBuildable-any InfoDomainBuildable"
+        keyPathToName[\RootDependency.languageDomainBuildable] = "languageDomainBuildable-any LanguageDomainBuildable"
     }
 }
 extension CommunityCreateComponent: Registration {

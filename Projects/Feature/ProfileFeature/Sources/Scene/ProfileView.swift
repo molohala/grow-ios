@@ -2,6 +2,7 @@ import SwiftUI
 import DesignSystem
 import BaseFeature
 import ProfileFeatureInterface
+import Flow
 
 public struct ProfileView: View {
     
@@ -17,16 +18,15 @@ public struct ProfileView: View {
     
     public var body: some View {
         ScrollView {
-            VStack(spacing: 24) {
+            VStack(spacing: 28) {
                 info
-                VStack(spacing: 12) {
-                    stats
-                    githubChart
-                    baekjoonChart
-                }
+                bio
+                language
+                statics
                 Spacer().frame(height: 92)
             }
             .padding(.horizontal, 16)
+            .padding(.top, 12)
         }
         .scrollIndicators(.hidden)
         .growTopBar("프로필", background: .backgroundAlt)
@@ -39,27 +39,28 @@ public struct ProfileView: View {
     
     @ViewBuilder
     private var info: some View {
-        ZStack {
-            VStack(spacing: 8) {
-                switch appState.profile {
-                case .fetching:
-                    GrowAvatarShimmer(type: .extraLarge)
+        HStack(spacing: 8) {
+            switch appState.profile {
+            case .fetching:
+                GrowAvatarShimmer(type: .extraLarge)
+                VStack(alignment: .leading, spacing: 2) {
+                    RowShimmer(width: 60)
                     RowShimmer(width: 40)
-                    RowShimmer(width: 100)
-                case .success(let data):
-                    GrowAvatar(type: .extraLarge)
+                }
+            case .success(let data):
+                GrowAvatar(type: .extraLarge)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("\(data.job) 개발자")
+                        .growFont(.labelR)
+                        .growColor(.textDarken)
                     Text(data.name)
                         .growFont(.bodyB)
                         .growColor(.textNormal)
-                    if !data.bio.isEmpty {
-                        Text("\"\(data.bio)\"")
-                            .growFont(.labelM)
-                            .growColor(.textAlt)
-                    }
-                case .failure:
-                    EmptyView()
                 }
+            case .failure:
+                EmptyView()
             }
+            Spacer()
             Button {
                 router.navigate(to: ProfileDestination.setting)
             } label: {
@@ -69,8 +70,52 @@ public struct ProfileView: View {
                     .frame(size: 32)
             }
             .applyAnimation()
-            .toTop()
-            .toTrailing()
+        }
+    }
+    
+    @ViewBuilder
+    private var bio: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            GrowHeadline("소개글")
+            if case .success(let profile) = appState.profile {
+                Text(LocalizedStringKey(profile.bio))
+                    .applyOpenURL()
+                    .growFont(.bodyM)
+                    .growColor(.textDarken)
+            }
+        }
+        .toLeading()
+    }
+    
+    @ViewBuilder
+    private var language: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            GrowHeadline("사용 언어")
+            HFlow(itemSpacing: 8, rowSpacing: 8) {
+                switch appState.myLanguages {
+                case .fetching:
+                    ForEach(0..<4, id: \.self) { _ in
+                        GrowLanguageShimmer()
+                    }
+                case .success(let data):
+                    ForEach(data, id: \.id) {
+                        GrowLanguage(text: $0.name)
+                    }
+                case .failure:
+                    EmptyView()
+                }
+            }
+        }
+        .toLeading()
+    }
+    
+    @ViewBuilder
+    private var statics: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            GrowHeadline("통계")
+            stats
+            githubChart
+            baekjoonChart
         }
     }
     

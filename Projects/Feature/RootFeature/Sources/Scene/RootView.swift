@@ -4,6 +4,7 @@ import MainFeatureInterface
 import SignInFeatureInterface
 import AuthServiceInterface
 import InfoServiceInterface
+import LanguageServiceInterface
 import DesignSystem
 
 public struct RootView: View {
@@ -15,26 +16,30 @@ public struct RootView: View {
     private let mainBuildable: any MainBuildable
     private let signInBuildable: any SignInBuildable
     private let infoDomainBuildable: any InfoDomainBuildable
+    private let languageDomainBuildable: any LanguageDomainBuildable
     
     public init(
         mainBuildable: any MainBuildable,
         signInBuildable: any SignInBuildable,
         setTokenUseCase: any SetTokenUseCase,
         getTokenUseCase: any GetTokenUseCase,
-        infoDomainBuilable: any InfoDomainBuildable
+        infoDomainBuilable: any InfoDomainBuildable,
+        languageDomainBuildable: any LanguageDomainBuildable
     ) {
         self.mainBuildable = mainBuildable
         self.signInBuildable = signInBuildable
+        self.infoDomainBuildable = infoDomainBuilable
+        self.languageDomainBuildable = languageDomainBuildable
         self._appState = StateObject(
             wrappedValue: AppState(
                 setTokenUseCase: setTokenUseCase,
                 getTokenUseCase: getTokenUseCase,
                 getProfileUseCase: infoDomainBuilable.getProfileUseCase,
                 getSolvedacUseCase: infoDomainBuilable.getSolvedacUseCase,
-                getGithubUseCase: infoDomainBuilable.getGithubUseCase
+                getGithubUseCase: infoDomainBuilable.getGithubUseCase,
+                getMyLanguagesUseCase: languageDomainBuildable.getMyLanguagesUseCase
             )
         )
-        self.infoDomainBuildable = infoDomainBuilable
     }
     
     public var body: some View {

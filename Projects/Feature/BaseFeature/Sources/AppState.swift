@@ -1,4 +1,5 @@
 import SwiftUI
+import LanguageServiceInterface
 import DesignSystem
 import AuthServiceInterface
 import InfoServiceInterface
@@ -20,6 +21,7 @@ public final class AppState: ObservableObject {
     @Published public var profile: FetchFlow<Profile> = .fetching
     @Published public var baekjoon: FetchFlow<Solvedav?> = .fetching
     @Published public var github: FetchFlow<Github?> = .fetching
+    @Published public var myLanguages: FetchFlow<[Language]> = .fetching
     @Published public var githubChartInfo: FetchFlow<ChartInfo?> = .fetching
     @Published public var baekjoonChartInfo: FetchFlow<ChartInfo?> = .fetching
     
@@ -28,13 +30,15 @@ public final class AppState: ObservableObject {
     private let getProfileUseCase: any GetProfileUseCase
     private let getSolvedacUseCase: any GetSolvedacUseCase
     private let getGithubUseCase: any GetGithubUseCase
+    private let getMyLanguagesUseCase: any GetMyLanguagesUseCase
     
     public init(
         setTokenUseCase: any SetTokenUseCase,
         getTokenUseCase: any GetTokenUseCase,
         getProfileUseCase: any GetProfileUseCase,
         getSolvedacUseCase: any GetSolvedacUseCase,
-        getGithubUseCase: any GetGithubUseCase
+        getGithubUseCase: any GetGithubUseCase,
+        getMyLanguagesUseCase: any GetMyLanguagesUseCase
     ) {
         self.setTokenUseCase = setTokenUseCase
         self.getTokenUseCase = getTokenUseCase
@@ -43,6 +47,7 @@ public final class AppState: ObservableObject {
         self.getProfileUseCase = getProfileUseCase
         self.getSolvedacUseCase = getSolvedacUseCase
         self.getGithubUseCase = getGithubUseCase
+        self.getMyLanguagesUseCase = getMyLanguagesUseCase
     }
     
     public func fetchProfile() async {
@@ -53,8 +58,10 @@ public final class AppState: ObservableObject {
         } catch {
             profile = .failure
         }
-        await fetchBaekjoon()
-        await fetchGithub()
+        async let fetchBaekjoon: () = fetchBaekjoon()
+        async let fetchGithub: () = fetchGithub()
+        async let fetchMyLanguages: () = fetchMyLanguages()
+        _ = await [fetchBaekjoon, fetchGithub, fetchMyLanguages]
     }
     
     private func fetchBaekjoon() async {
@@ -98,6 +105,16 @@ public final class AppState: ObservableObject {
             self.githubChartInfo = .success(github.weekCommits.githubWeekChartInfo)
         } catch {
             github = .failure
+        }
+    }
+    
+    private func fetchMyLanguages() async {
+        do {
+            myLanguages = .fetching
+            let myLangs = try await getMyLanguagesUseCase()
+            myLanguages = .success(myLangs)
+        } catch {
+            myLanguages = .failure
         }
     }
 }
