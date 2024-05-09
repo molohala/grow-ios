@@ -76,7 +76,20 @@ public struct ProfileView: View {
     @ViewBuilder
     private var bio: some View {
         VStack(alignment: .leading, spacing: 12) {
-            GrowHeadline("소개글")
+            HStack(spacing: 4) {
+                GrowHeadline("소개글")
+                    .padding(.leading, 4)
+                Button {
+                    router.navigate(to: ProfileDestination.profileEdit)
+                } label: {
+                    Image(icon: .write)
+                        .resizable()
+                        .growIconColor(.textAlt)
+                        .frame(size: 20)
+                }
+                .applyAnimation()
+                Spacer()
+            }
             if case .success(let profile) = appState.profile {
                 Text(LocalizedStringKey(profile.bio))
                     .applyOpenURL()
@@ -91,6 +104,7 @@ public struct ProfileView: View {
     private var language: some View {
         VStack(alignment: .leading, spacing: 12) {
             GrowHeadline("사용 언어")
+                .padding(.leading, 4)
             HFlow(itemSpacing: 8, rowSpacing: 8) {
                 switch appState.myLanguages {
                 case .fetching:
@@ -113,6 +127,7 @@ public struct ProfileView: View {
     private var statics: some View {
         VStack(alignment: .leading, spacing: 12) {
             GrowHeadline("통계")
+                .padding(.leading, 4)
             stats
             githubChart
             baekjoonChart

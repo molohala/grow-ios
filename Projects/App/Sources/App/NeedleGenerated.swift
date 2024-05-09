@@ -102,6 +102,9 @@ private class ProfileDependencydc1f16da12774bc5c202Provider: ProfileDependency {
     var infoDomainBuildable: any InfoDomainBuildable {
         return appComponent.infoDomainBuildable
     }
+    var profileEditBuildable: any ProfileEditBuildable {
+        return appComponent.profileEditBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -477,6 +480,7 @@ extension ProfileComponent: Registration {
     public func registerItems() {
         keyPathToName[\ProfileDependency.settingBuildable] = "settingBuildable-any SettingBuildable"
         keyPathToName[\ProfileDependency.infoDomainBuildable] = "infoDomainBuildable-any InfoDomainBuildable"
+        keyPathToName[\ProfileDependency.profileEditBuildable] = "profileEditBuildable-any ProfileEditBuildable"
     }
 }
 extension MainComponent: Registration {

@@ -10,4 +10,5 @@ import Foundation
 
 public enum ProfileDestination {
     case setting
+    case profileEdit
 }

@@ -42,7 +42,7 @@ public struct ProfileEditView: View {
                         }
                     }
                     VStack(spacing: 8) {
-                        GrowHeadline("언어")
+                        GrowHeadline("사용 언어")
                             .toLeading()
                             .padding(.horizontal, 4)
                         if case .success(let languages) = viewModel.languages,

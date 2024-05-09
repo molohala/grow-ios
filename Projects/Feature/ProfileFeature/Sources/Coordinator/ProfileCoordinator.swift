@@ -1,25 +1,21 @@
-//
-//  ProfileCoordinator.swift
-//  ProfileFeature
-//
-//  Created by dgsw8th71 on 4/9/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
 import SettingFeatureInterface
 import ProfileFeatureInterface
+import ProfileEditFeatureInterface
 
 public struct ProfileCoordinator: View {
     
     private let settingBuildable: any SettingBuildable
+    private let profileEditBuildable: any ProfileEditBuildable
     private let viewModel: ProfileViewModel
     
     public init(
         settingBuildable: any SettingBuildable,
+        profileEditBuildable: any ProfileEditBuildable,
         viewModel: ProfileViewModel
     ) {
         self.settingBuildable = settingBuildable
+        self.profileEditBuildable = profileEditBuildable
         self.viewModel = viewModel
     }
     
@@ -30,6 +26,7 @@ public struct ProfileCoordinator: View {
         .navigationDestination(for: ProfileDestination.self) {
             switch $0 {
             case .setting: settingBuildable.makeView().eraseToAnyView()
+            case .profileEdit: profileEditBuildable.makeView().eraseToAnyView()
             }
         }
     }
