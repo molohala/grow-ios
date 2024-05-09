@@ -28,6 +28,8 @@ import HomeFeature
 import HomeFeatureInterface
 import InfoService
 import InfoServiceInterface
+import LanguageService
+import LanguageServiceInterface
 import LikeService
 import LikeServiceInterface
 import MainFeature
@@ -406,6 +408,17 @@ private class AuthDomainDependency4518b8977185a5c9ff71Provider: AuthDomainDepend
 private func factoryc9b20c320bb79402d4c1e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return AuthDomainDependency4518b8977185a5c9ff71Provider()
 }
+private class LanguageDomainDependency2117022cb16304f0d8b8Provider: LanguageDomainDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->LanguageDomainComponent
+private func factoryd36933c5fb1cc27144cbe3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return LanguageDomainDependency2117022cb16304f0d8b8Provider()
+}
 private class CommunityDomainDependency65d739140d7d8d39012bProvider: CommunityDomainDependency {
 
 
@@ -573,6 +586,11 @@ extension AuthDomainComponent: Registration {
 
     }
 }
+extension LanguageDomainComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension CommunityDomainComponent: Registration {
     public func registerItems() {
 
@@ -616,6 +634,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->CommentDomainComponent", factory9d07e84c0c1fdd02736fe3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RankDomainComponent", factoryb45149ba1cc02c58ddc7e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->LanguageDomainComponent", factoryd36933c5fb1cc27144cbe3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityDomainComponent", factoryb1f366c0bb811d91cf77e3b0c44298fc1c149afb)
 }
 #endif

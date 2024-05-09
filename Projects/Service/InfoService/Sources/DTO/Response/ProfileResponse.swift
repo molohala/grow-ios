@@ -22,6 +22,8 @@ extension ProfileResponse {
             id: id,
             email: email,
             name: name,
+            bio: bio,
+            job: job,
             createdAt: createdAt.localDateTime ?? .now,
             socialAccounts: socialAccounts.map { $0.toDomain() }
         )

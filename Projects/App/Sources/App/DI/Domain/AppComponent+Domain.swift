@@ -10,6 +10,8 @@ import InfoService
 import InfoServiceInterface
 import RankService
 import RankServiceInterface
+import LanguageService
+import LanguageServiceInterface
 
 extension AppComponent {
     var authDomainBuildable: any AuthDomainBuildable {
@@ -45,6 +47,12 @@ extension AppComponent {
     var rankDomainBuildable: any RankDomainBuildable {
         shared {
             RankDomainComponent(parent: self)
+        }
+    }
+    
+    var languageDomainBuildable: any LanguageDomainBuildable {
+        shared {
+            LanguageDomainComponent(parent: self)
         }
     }
 }
