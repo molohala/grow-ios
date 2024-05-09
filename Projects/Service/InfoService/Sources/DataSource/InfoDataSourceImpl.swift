@@ -28,7 +28,7 @@ class InfoDataSourceImpl: BaseRemoteDataSource<InfoDataSourceImpl>, InfoDataSour
         try await requestGet(url: "\(Grow.baseUrl)/\(path)/user/\(memberId)", res: BaseResponse<ProfileResponse>.self).data.toDomain()
     }
     func patchMyProfile(_ req: PatchMyProfileRequest) async throws {
-        try await requestPatch(url: "\(Grow.baseUrl)/\(path)/me", res: BaseVoidResponse.self)
+        try await requestPatch(url: "\(Grow.baseUrl)/\(path)/me", req: req, res: BaseVoidResponse.self)
     }
     
     func getJobs() async throws -> [String] {

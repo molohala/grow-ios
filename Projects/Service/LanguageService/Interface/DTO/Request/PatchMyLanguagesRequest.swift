@@ -1,3 +1,7 @@
 public struct PatchMyLanguagesRequest: Encodable {
-    let langs: [String]
+    let langs: [Int]
+    
+    public init(langs: [Int]) {
+        self.langs = langs
+    }
 }

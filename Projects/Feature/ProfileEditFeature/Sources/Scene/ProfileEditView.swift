@@ -5,57 +5,107 @@ import Flow
 
 public struct ProfileEditView: View {
     
-    @ObservedObject private var viewModel = ProfileEditViewModel()
+    @StateObject private var viewModel: ProfileEditViewModel
+    @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     @Environment(\.dismiss) private var dismiss
-    @State private var text = ""
-    public init() {}
+    
+    public init(
+        viewModel: ProfileEditViewModel
+    ) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     public var body: some View {
-        VStack(spacing: 28) {
-            VStack(spacing: 8) {
-                GrowHeadline("소개글")
-                    .toLeading()
-                    .padding(.horizontal, 4)
-                GrowTextField(text: $viewModel.bio)
-            }
-            VStack(spacing: 8) {
-                GrowHeadline("직군")
-                    .toLeading()
-                    .padding(.horizontal, 4)
-                HFlow(itemSpacing: 8, rowSpacing: 8) {
-                    ForEach(viewModel.jobs, id: \.self) {
-                        GrowRadioButton($0, isSelected: $0 == "Server") {
-                            //
+        ZStack {
+            ScrollView {
+                LazyVStack(spacing: 28) {
+                    VStack(spacing: 8) {
+                        GrowHeadline("소개글")
+                            .toLeading()
+                            .padding(.horizontal, 4)
+                        GrowTextField(text: $viewModel.bio)
+                    }
+                    VStack(spacing: 8) {
+                        GrowHeadline("직군")
+                            .toLeading()
+                            .padding(.horizontal, 4)
+                        if case .success(let jobs) = viewModel.jobs {
+                            HFlow(itemSpacing: 8, rowSpacing: 8) {
+                                ForEach(jobs, id: \.self) { job in
+                                    GrowRadioButton(job.isEmpty ? "Developer" : job, isSelected: job == viewModel.selectedJob) {
+                                        viewModel.selectedJob = job
+                                    }
+                                }
+                            }
+                            .toLeading()
                         }
                     }
-                }
-                .toLeading()
-            }
-            VStack(spacing: 8) {
-                GrowHeadline("언어")
-                    .toLeading()
-                    .padding(.horizontal, 4)
-                HFlow(itemSpacing: 8, rowSpacing: 8) {
-                    ForEach(viewModel.languages, id: \.self) {
-                        GrowRadioButton($0, icon: .check, isSelected: $0 == "Python" || $0 == "HTML") {
-                            //
+                    VStack(spacing: 8) {
+                        GrowHeadline("언어")
+                            .toLeading()
+                            .padding(.horizontal, 4)
+                        if case .success(let languages) = viewModel.languages,
+                           case .success(let myLanguages) = viewModel.myLanguages {
+                            HFlow(itemSpacing: 8, rowSpacing: 8) {
+                                ForEach(languages, id: \.id) { lang in
+                                    GrowRadioButton(lang.name, icon: .check, isSelected: myLanguages.contains(lang)) {
+                                        viewModel.updateMyLanguages(lang: lang)
+                                    }
+                                }
+                            }
+                            .toLeading()
                         }
                     }
+                    Spacer()
                 }
-                .toLeading()
+                .padding(.top, 20)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 92)
             }
-            Spacer()
+            .scrollIndicators(.hidden)
             GrowButton("완료", type: .CTA, leadingIcon: .check) {
                 await viewModel.completeSetting()
             }
-            .padding(.horizontal, 4)
+            .toBottom()
+            .padding(.horizontal, 20)
+            .padding(.bottom, 8)
         }
-        .padding(.top, 20)
-        .padding(.horizontal, 16)
         .growTopBar("프로필 설정", background: .backgroundAlt) {
             router.popToStack()
         }
         .hideKeyboardWhenTap()
+        .onAppear {
+            if case .success(let profile) = appState.profile {
+                viewModel.bio = profile.bio
+                viewModel.selectedJob = profile.job
+            }
+        }
+        .task {
+            async let fetchJobs: () = viewModel.fetchJobs()
+            async let fetchLanguages: () = viewModel.fetchLanguages()
+            async let fetchMyLanguages: () = viewModel.fetchMyLanguages()
+            _ = await [fetchJobs, fetchLanguages, fetchMyLanguages]
+        }
+        .alert("프로필 정보 불러오기 실패", isPresented: $viewModel.showFetchFailureDialog) {
+            Button("닫기", role: .cancel) {
+                dismiss()
+            }
+        }
+        .eraseToAnyView()
+        .alert("프로필 정보 수정 실패", isPresented: $viewModel.showPatchFailureDialog) {
+            Button("닫기", role: .cancel) {}
+        }
+        .eraseToAnyView()
+        .alert("프로필 정보 수정 성공", isPresented: $viewModel.showPatchSuccessDialog) {
+            Button("닫기", role: .cancel) {
+                dismiss()
+            }
+        }
+        .task(id: viewModel.showPatchSuccessDialog) {
+            if viewModel.showPatchSuccessDialog {
+                await appState.fetchProfile()
+            }
+        }
     }
 }

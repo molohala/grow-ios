@@ -51,9 +51,11 @@ public struct ProfileView: View {
                     Text(data.name)
                         .growFont(.bodyB)
                         .growColor(.textNormal)
-                    Text("\"응아잇 안드로이드\"")
-                        .growFont(.labelM)
-                        .growColor(.textAlt)
+                    if !data.bio.isEmpty {
+                        Text("\"\(data.bio)\"")
+                            .growFont(.labelM)
+                            .growColor(.textAlt)
+                    }
                 case .failure:
                     EmptyView()
                 }

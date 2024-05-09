@@ -1,4 +1,4 @@
-public struct Language {
+public struct Language: Equatable {
     public let id: Int
     public let name: String
     
