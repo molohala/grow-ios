@@ -35,14 +35,14 @@ public struct GrowChart: View {
                     y: .value("", i.y)
                 )
                 .lineStyle(.init(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                .interpolationMethod(.cardinal(tension: 0.3))
+                .interpolationMethod(.cardinal(tension: 0.5))
                 .foregroundStyle(color)
                 AreaMark(
                     x: .value("", i.x),
                     y: .value("", i.y)
                 )
                 .lineStyle(.init(lineWidth: 5, lineCap: .round, lineJoin: .round))
-                .interpolationMethod(.cardinal(tension: 0.3))
+                .interpolationMethod(.cardinal(tension: 0.5))
                 .foregroundStyle(backgroundColor)
             }
             .chartXAxis {
