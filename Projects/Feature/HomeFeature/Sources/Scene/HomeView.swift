@@ -8,8 +8,8 @@ public struct HomeView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
-    
     @StateObject private var viewModel: HomeViewModel
+    @State private var showRemoveDialog = false
     
     public init(
         viewModel: HomeViewModel
@@ -36,6 +36,30 @@ public struct HomeView: View {
             async let fetchTodayBaekjoonRank: () = viewModel.fetchTodayBaekjoonRank()
             async let fetchBestCommunities: () = viewModel.fetchBestCommunities()
             _ = await [fetchTodayGithubRank, fetchTodayBaekjoonRank, fetchBestCommunities]
+        }
+        .alert("게시글 삭제에 실패했습니다", isPresented: .init(
+            get: { viewModel.removedCommunityFlow == .failure },
+            set: { _ in viewModel.removedCommunityFlow = .fetching }
+        )) {
+            Button("확인", role: .cancel) {}
+        }
+        .eraseToAnyView()
+        .alert("게시글 삭제 성공", isPresented: .init {
+            viewModel.removedCommunityFlow == .success(true)
+        } set: { _ in
+            viewModel.removedCommunityFlow = .fetching
+        }) {
+            Button("닫기", role: .cancel) {}
+        }
+        .eraseToAnyView()
+        .alert("정말 게시글을 삭제 하시겠습니까?", isPresented: $showRemoveDialog) {
+            Button("아니요", role: .cancel) {}
+            Button("삭제", role: .destructive) {
+                Task {
+                    await viewModel.removeCommunity()
+                    await viewModel.fetchBestCommunities()
+                }
+            }
         }
     }
     
@@ -178,12 +202,17 @@ public struct HomeView: View {
                             let forumId = forum.community.communityId
                             GrowForumCell(
                                 forum: forum,
-                                profileId: -1,
+                                profileId: profile.id,
                                 likeAction: {
                                     await viewModel.patchLike(communityId: forum.community.communityId)
                                 },
-                                removeAction: {},
-                                editAction: {},
+                                removeAction: {
+                                    viewModel.selectedRemoveCommunity = forum
+                                    showRemoveDialog = true
+                                },
+                                editAction: {
+                                    router.navigate(to: HomeDestination.communityEdit(forumId: forum.community.communityId))
+                                },
                                 action: {
                                     router.navigate(to: HomeDestination.communityDetail(forumId: forum.community.communityId))
                                 }

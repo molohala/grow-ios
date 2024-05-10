@@ -17,6 +17,8 @@ public final class HomeViewModel: ObservableObject {
     @Published var weekCommunities: FetchFlow<[Community]> = .fetching
     @Published var todayGithubRanks: FetchFlow<[Rank]> = .fetching
     @Published var todayBaekjoonRanks: FetchFlow<[Rank]> = .fetching
+    @Published var removedCommunityFlow: FetchFlow<Bool> = .fetching
+    @Published var selectedRemoveCommunity: Community?
     
     public init(
         getTodayGithubRankUseCase: any GetTodayGithubRankUseCase,
@@ -81,5 +83,20 @@ public final class HomeViewModel: ObservableObject {
             }
             self.weekCommunities = .success(data)
         } catch {}
+    }
+    
+    @MainActor
+    public func removeCommunity() async {
+        guard let selectedRemoveCommunity else {
+            removedCommunityFlow = .failure
+            return
+        }
+        do {
+            removedCommunityFlow = .fetching
+            try await removeCommunityUseCase(id: selectedRemoveCommunity.community.communityId)
+            removedCommunityFlow = .success(true)
+        } catch {
+            removedCommunityFlow = .failure
+        }
     }
 }
