@@ -10,7 +10,7 @@ import AuthServiceInterface
 
 public struct DAuthSignInResponse: Decodable {
     let name: String
-    let profileImage: String
+    let profileImage: String?
     let location: String
 }
 

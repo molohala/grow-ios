@@ -10,10 +10,10 @@ import Foundation
 
 public struct DAuthSignInDomain {
     public let name: String
-    public let profileImage: String
+    public let profileImage: String?
     public let location: String
     
-    public init(name: String, profileImage: String, location: String) {
+    public init(name: String, profileImage: String?, location: String) {
         self.name = name
         self.profileImage = profileImage
         self.location = location
