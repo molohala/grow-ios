@@ -79,7 +79,7 @@ public struct HomeView: View {
                     GrowHeadline("\(data.name)님 환영합니다")
                 }
             case .failure:
-                Text("불러오기 실패")
+                EmptyView()
             }
         }
         .toLeading()
@@ -99,7 +99,7 @@ public struct HomeView: View {
                         socialId: profile.githubId
                     ) {}
                 case .failure:
-                    Text("불러오기 실패")
+                    EmptyView()
                 }
                 switch appState.baekjoon {
                 case .fetching:
@@ -111,7 +111,7 @@ public struct HomeView: View {
                         socialId: profile.baekjoonId
                     ) {}
                 case .failure:
-                    Text("불러오기 실패")
+                    EmptyView()
                 }
             }
             .padding(.vertical, 20)
@@ -141,7 +141,7 @@ public struct HomeView: View {
                         }
                     }
                 case .failure:
-                    Text("불러오기 실패")
+                    EmptyView()
                 }
             }
             .padding(.vertical, 12)
@@ -175,7 +175,7 @@ public struct HomeView: View {
                         }
                     }
                 case .failure:
-                    Text("불러오기 실패")
+                    EmptyView()
                 }
             }
             .padding(.vertical, 12)
@@ -221,7 +221,7 @@ public struct HomeView: View {
                         }
                     }
                 case .failure:
-                    Text("불러오기 실패")
+                    EmptyView()
                 }
             }
             .padding(.vertical, 8)

@@ -136,7 +136,7 @@ public struct ProfileDetailView: View {
                         // action
                     }
                 case .failure:
-                    Text("불러오기 실패")
+                    EmptyView()
                 }
                 switch viewModel.baekjoon {
                 case .fetching:
@@ -150,7 +150,7 @@ public struct ProfileDetailView: View {
                         // action
                     }
                 case .failure:
-                    Text("불러오기 실패")
+                    EmptyView()
                 }
             }
         }
@@ -166,7 +166,7 @@ public struct ProfileDetailView: View {
                 GrowChartCell(chartInfo: chartInfo)
             }
         case .failure:
-            Text("불러오기 실패")
+            EmptyView()
         }
     }
     
@@ -180,7 +180,7 @@ public struct ProfileDetailView: View {
                 GrowChartCell(chartInfo: chartInfo)
             }
         case .failure:
-            Text("불러오기 실패")
+            EmptyView()
         }
     }
 }

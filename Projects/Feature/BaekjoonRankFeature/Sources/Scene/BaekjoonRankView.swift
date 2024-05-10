@@ -50,7 +50,7 @@ public struct BaekjoonRankView: View {
                     .padding(12)
                 }
             case .failure:
-                Text("불러오기 실패")
+                EmptyView()
             }
         }
         .growTopBar("백준 랭킹")

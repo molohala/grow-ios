@@ -50,7 +50,7 @@ public struct GithubRankView: View {
                     .padding(12)
                 }
             case .failure:
-                Text("불러오기 실패")
+                EmptyView()
             }
         }
         .growTopBar("Github 랭킹")

@@ -40,7 +40,7 @@ public struct CommunityDetailView: View {
                                 Spacer().frame(height: 64)
                             }
                         case .failure:
-                            Text("불러오기 실패")
+                            EmptyView()
                         }
                     }
                     .onAppear {
@@ -213,7 +213,7 @@ public struct CommunityDetailView: View {
                 }
             }
         case .failure:
-            Text("불러오기 실패")
+            EmptyView()
         }
     }
 }

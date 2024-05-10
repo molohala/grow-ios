@@ -24,6 +24,7 @@ public struct GrowChart: View {
             endPoint: .bottom
         )
         self.type = type
+        print(data)
     }
     
     public var body: some View {
@@ -56,14 +57,13 @@ public struct GrowChart: View {
                 }
             }
             .chartYAxis {
-                AxisMarks(
-                    position: .leading,
-                    values: [Int(balancedMax / 3), Int(balancedMax / 3 * 2), balancedMax]
-                ) { axis in
-                    let y = data[axis.index].y
-                    AxisValueLabel("\(y)")
-                        .foregroundStyle(colorProvider.color(.textDarken))
-                        .font(GrowFont.captionR.font)
+                AxisMarks(position: .leading) { axis in
+                    let value = axis.as(Int.self)!
+                    AxisValueLabel {
+                        Text("\(value)")
+                            .foregroundStyle(colorProvider.color(.textDarken))
+                            .font(GrowFont.captionR.font)
+                    }
                     AxisGridLine()
                 }
             }

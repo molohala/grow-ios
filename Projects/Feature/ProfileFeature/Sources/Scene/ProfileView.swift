@@ -150,7 +150,7 @@ public struct ProfileView: View {
                         // action
                     }
                 case .failure:
-                    Text("불러오기 실패")
+                    EmptyView()
                 }
                 switch appState.baekjoon {
                 case .fetching:
@@ -164,7 +164,7 @@ public struct ProfileView: View {
                         // action
                     }
                 case .failure:
-                    Text("불러오기 실패")
+                    EmptyView()
                 }
             }
         }
@@ -180,7 +180,7 @@ public struct ProfileView: View {
                 GrowChartCell(chartInfo: chartInfo)
             }
         case .failure:
-            Text("불러오기 실패")
+            EmptyView()
         }
     }
     
@@ -194,7 +194,7 @@ public struct ProfileView: View {
                 GrowChartCell(chartInfo: chartInfo)
             }
         case .failure:
-            Text("불러오기 실패")
+            EmptyView()
         }
     }
 }

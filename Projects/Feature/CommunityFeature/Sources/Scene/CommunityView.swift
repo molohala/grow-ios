@@ -59,7 +59,7 @@ public struct CommunityView: View {
                                 Spacer().frame(height: 92)
                             }
                         case .failure:
-                            Text("불러오기 실패")
+                            EmptyView()
                         }
                     }
                     .padding(.horizontal, 16)
