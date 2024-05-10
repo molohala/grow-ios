@@ -38,5 +38,7 @@ public enum GrowColorScheme {
     case bottomTabPrimaryDisabled
     case bottomTabSecondary
     case likePrimary
+    case likePrimaryDisabled
     case likeSecondary
+    case likeSecondaryDisabled
 }

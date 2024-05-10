@@ -40,7 +40,9 @@ public extension GrowColorScheme {
         case .bottomTabPrimaryDisabled: GrowPallete.shared.Neutral40
         case .bottomTabSecondary: GrowPallete.shared.Neutral30
         case .likePrimary: GrowPallete.shared.Red60
+        case .likePrimaryDisabled: GrowPallete.shared.Neutral40
         case .likeSecondary: GrowPallete.shared.Red10
+        case .likeSecondaryDisabled: GrowPallete.shared.Neutral20
         }
     }
     
@@ -83,7 +85,9 @@ public extension GrowColorScheme {
         case .bottomTabPrimaryDisabled: GrowPallete.shared.Neutral60
         case .bottomTabSecondary: GrowPallete.shared.Neutral70
         case .likePrimary: GrowPallete.shared.Red60
+        case .likePrimaryDisabled: GrowPallete.shared.Neutral40
         case .likeSecondary: GrowPallete.shared.Transparent
+        case .likeSecondaryDisabled: GrowPallete.shared.Neutral80
         }
     }
 }

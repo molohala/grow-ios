@@ -22,15 +22,15 @@ public struct GrowLikeButton: View {
     
     public var body: some View {
         
-        let color: GrowColorScheme = isLiked ? .likePrimary : .textDisabled
-        let background: GrowColorScheme = isLiked ? .likeSecondary : .buttonPrimaryDisabled
+        let color: GrowColorScheme = isLiked ? .likePrimary : .likePrimaryDisabled
+        let background: GrowColorScheme = isLiked ? .likeSecondary : .likeSecondaryDisabled
         
         Button {
             Task {
                 await action()
             }
         } label: {
-            HStack(spacing: 2) {
+            HStack(spacing: 4) {
                 Image(icon: .heart)
                     .resizable()
                     .growIconColor(color)
