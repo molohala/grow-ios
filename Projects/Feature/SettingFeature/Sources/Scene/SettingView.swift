@@ -73,7 +73,8 @@ public struct SettingView: View {
                 GrowSettingCell(
                     label: "로그아웃",
                     action: {
-                        // action
+                        appState.accessToken = ""
+                        appState.refreshToken = ""
                     }
                 )
                 GrowSettingCell(
