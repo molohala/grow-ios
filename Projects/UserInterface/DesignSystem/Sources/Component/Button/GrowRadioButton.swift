@@ -25,24 +25,24 @@ public struct GrowRadioButton: View {
         let primary: GrowColorScheme = isSelected ? .radioButtonPrimary : .radioButtonPrimaryDisabled
         let secondary: GrowColorScheme = isSelected ? .radioButtonSecondary : .radioButtonSecondaryDisabled
         
-        Button {
-            action()
-        } label: {
-            HStack(spacing: 6) {
-                if isSelected {
-                    Image(icon: icon)
-                        .resizable()
-                        .growIconColor(primary)
-                        .frame(size: 24)
-                }
-                Text(text)
-                    .growFont(.bodyM)
-                    .growColor(secondary)
+        HStack(spacing: 6) {
+            if isSelected {
+                Image(icon: icon)
+                    .resizable()
+                    .growIconColor(primary)
+                    .frame(size: 24)
             }
-            .padding(.horizontal, 14)
-            .frame(height: 44)
-            .stroke(12, content: colorProvider.color(primary), lineWidth: 1.5)
+            Text(text)
+                .growFont(.bodyM)
+                .growColor(secondary)
         }
-        .applyAnimation()
+        .padding(.horizontal, 14)
+        .frame(height: 44)
+        .stroke(12, content: colorProvider.color(primary), lineWidth: 1.5)
+        .onTapGesture {
+            action()
+            let impactMed = UIImpactFeedbackGenerator(style: .rigid)
+            impactMed.impactOccurred()
+        }
     }
 }
