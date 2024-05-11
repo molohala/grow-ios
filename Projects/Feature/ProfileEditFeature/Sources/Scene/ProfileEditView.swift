@@ -50,7 +50,7 @@ public struct ProfileEditView: View {
                            case .success(let myLanguages) = viewModel.myLanguages {
                             HFlow(itemSpacing: 8, rowSpacing: 8) {
                                 ForEach(languages, id: \.id) { lang in
-                                    GrowRadioButton(lang.name, icon: .check, isSelected: myLanguages.contains(lang)) {
+                                    GrowRadioButton(lang.name, selectedIcon: .check, unselectedIcon: .add, isSelected: myLanguages.contains(lang)) {
                                         viewModel.updateMyLanguages(lang: lang)
                                     }
                                 }
