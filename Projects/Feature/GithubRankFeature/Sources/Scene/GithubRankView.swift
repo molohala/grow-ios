@@ -67,7 +67,7 @@ public struct GithubRankView: View {
     @ViewBuilder
     private var recommendingSettingGithub: some View {
         VStack(spacing: 16) {
-            Text("아직 백준 ID를 설정하지 않았어요")
+            Text("아직 Github ID를 설정하지 않았어요")
                 .growFont(.bodyM)
                 .growColor(.textNormal)
             GrowButton("설정하기", type: .Small) {
