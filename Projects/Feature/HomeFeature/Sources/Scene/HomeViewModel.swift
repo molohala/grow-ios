@@ -37,7 +37,7 @@ public final class HomeViewModel: ObservableObject {
     @MainActor
     func fetchTodayGithubRank() async {
         do {
-            todayBaekjoonRanks = .fetching
+            todayGithubRanks = .fetching
             let ranks = try await getTodayGithubRankUseCase()
             todayGithubRanks = .success(ranks)
         } catch {
