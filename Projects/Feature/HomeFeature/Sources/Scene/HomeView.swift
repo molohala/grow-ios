@@ -61,6 +61,14 @@ public struct HomeView: View {
                 }
             }
         }
+        .refreshable {
+            Task {
+                async let fetchTodayGithubRank: () = viewModel.fetchTodayGithubRank()
+                async let fetchTodayBaekjoonRank: () = viewModel.fetchTodayBaekjoonRank()
+                async let fetchBestCommunities: () = viewModel.fetchBestCommunities()
+                _ = await [fetchTodayGithubRank, fetchTodayBaekjoonRank, fetchBestCommunities]
+            }
+        }
     }
     
     @ViewBuilder
