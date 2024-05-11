@@ -75,7 +75,8 @@ public struct HomeView: View {
             case .success(let data):
                 VStack(alignment: .leading, spacing: 0) {
                     let isDeveloper = data.job.isEmpty
-                    GrowHeadline("\(data.job)\(isDeveloper ? "" : " ")개발자")
+                    let isDesigner = data.job == "Designer"
+                    GrowHeadline("\(data.job)\(isDeveloper ? "" : " ")\(isDesigner ? "" : "개발자")")
                     GrowHeadline("\(data.name)님 환영합니다")
                 }
             case .failure:

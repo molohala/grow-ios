@@ -50,7 +50,8 @@ public struct ProfileView: View {
             case .success(let data):
                 GrowAvatar(type: .extraLarge)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("\(data.job) 개발자")
+                    let isDesigner = data.job == "Designer"
+                    Text("\(data.job) \(isDesigner ? "" : "개발자")")
                         .growFont(.labelR)
                         .growColor(.textDarken)
                     Text(data.name)
