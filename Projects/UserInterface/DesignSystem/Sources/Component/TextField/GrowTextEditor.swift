@@ -38,7 +38,7 @@ public struct GrowTextEditor: View {
         .focused($isFocused)
         .growFont(.bodyM)
         .cornerRadius(radius, corners: .allCorners)
-        .padding(.top, 8)
+        .padding(.vertical, 8)
         .padding(.horizontal, 12) // for inner padding
         .accentColor(colorProvider.color(.textFieldPrimary)) // for indicator color
         .growColor(textColor) // for text color
