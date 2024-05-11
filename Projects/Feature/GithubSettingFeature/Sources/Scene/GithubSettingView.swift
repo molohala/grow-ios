@@ -21,7 +21,7 @@ public struct GithubSettingView: View {
                 GrowHeadline("Github ID")
                     .toLeading()
                     .padding(.horizontal, 4)
-                GrowTextField("", text: $viewModel.githubId, isEnabled: !viewModel.githubId.isEmpty)
+                GrowTextField("", text: $viewModel.githubId)
             }
             .padding(.top, 20)
             Spacer()

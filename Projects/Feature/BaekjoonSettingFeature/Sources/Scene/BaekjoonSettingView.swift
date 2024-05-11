@@ -21,7 +21,7 @@ public struct BaekjoonSettingView: View {
                 GrowHeadline("백준 ID")
                     .toLeading()
                     .padding(.horizontal, 4)
-                GrowTextField("", text: $viewModel.baekjoonId, isEnabled: !viewModel.baekjoonId.isEmpty)
+                GrowTextField("", text: $viewModel.baekjoonId)
             }
             .padding(.top, 20)
             Spacer()
