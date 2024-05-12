@@ -26,6 +26,10 @@ extension Project {
         return Project(
             name: name,
             organizationName: env.organizationName,
+            options: .options(
+                defaultKnownRegions: ["en", "ko"],
+                developmentRegion: "ko"
+            ),
             packages: packages,
             settings: settings,
             targets: targets,
