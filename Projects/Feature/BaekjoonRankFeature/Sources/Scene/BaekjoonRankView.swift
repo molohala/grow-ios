@@ -21,36 +21,37 @@ public struct BaekjoonRankView: View {
             if case .success(let data) = appState.baekjoon,
                data == nil {
                 recommendingSettingBaekjoon
-            }
-            indicator
-            switch viewModel.baekjoonRanks {
-            case .fetching:
-                VStack(spacing: 12) {
-                    ForEach(0..<3, id: \.self) { _ in
-                        GrowRankCellShimmer()
-                    }
-                }
-                .padding(12)
-            case .success(let data):
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        ForEach(data, id: \.memberId) { rank in
-                            GrowRankCell(
-                                name: rank.memberName,
-                                socialId: rank.socialId,
-                                rank: rank.rank,
-                                label: "\(rank.count) 문제",
-                                action: {
-                                    router.navigate(to: BaekjoonRankDestination.profileDetail(memberId: rank.memberId))
-                                }
-                            )
+            } else {
+                indicator
+                switch viewModel.baekjoonRanks {
+                case .fetching:
+                    VStack(spacing: 12) {
+                        ForEach(0..<3, id: \.self) { _ in
+                            GrowRankCellShimmer()
                         }
-                        Spacer().frame(height: 92)
                     }
                     .padding(12)
+                case .success(let data):
+                    ScrollView {
+                        LazyVStack(spacing: 12) {
+                            ForEach(data, id: \.memberId) { rank in
+                                GrowRankCell(
+                                    name: rank.memberName,
+                                    socialId: rank.socialId,
+                                    rank: rank.rank,
+                                    label: "\(rank.count) 문제",
+                                    action: {
+                                        router.navigate(to: BaekjoonRankDestination.profileDetail(memberId: rank.memberId))
+                                    }
+                                )
+                            }
+                            Spacer().frame(height: 92)
+                        }
+                        .padding(12)
+                    }
+                case .failure:
+                    EmptyView()
                 }
-            case .failure:
-                EmptyView()
             }
         }
         .growTopBar("백준 랭킹")
@@ -74,11 +75,7 @@ public struct BaekjoonRankView: View {
                 router.navigate(to: BaekjoonRankDestination.baekjoonSetting)
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 16)
         .toCenter()
-        .stroke(12, content: colorProvider.color(.textAlt))
-        .padding(16)
     }
     
     @ViewBuilder
