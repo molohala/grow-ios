@@ -48,6 +48,12 @@ public final class AuthDomainComponent: Component<AuthDomainDependency>, AuthDom
         }
     }
     
+    public var removeUseCase: any RemoveUseCase {
+        shared {
+            RemoveUseCaseImpl(authRepository: authRepository)
+        }
+    }
+    
     public var authRepository: any AuthRepository {
         shared {
             AuthRepositoryImpl(

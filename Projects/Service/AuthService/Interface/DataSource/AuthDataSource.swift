@@ -9,4 +9,5 @@
 public protocol AuthDataSource {
     func signIn(code: String) async throws -> TokenDomain
     func ressiue(refreshToken: String) async throws -> RessiueDomain
+    func remove() async throws
 }

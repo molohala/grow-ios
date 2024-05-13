@@ -21,4 +21,8 @@ final class AuthDataSourceImpl: BaseRemoteDataSource<AuthDataSourceImpl>, AuthDa
     func ressiue(refreshToken: String) async throws -> RessiueDomain {
         try await requestPost(url: "\(Grow.baseUrl)/\(url)", req: ReissueRequest(refreshToken: refreshToken), res: BaseResponse<ReissueResponse>.self).data.toDomain()
     }
+    
+    func remove() async throws {
+        try await requestDelete(url: "\(Grow.baseUrl)/\(url)", res: BaseVoidResponse.self)
+    }
 }

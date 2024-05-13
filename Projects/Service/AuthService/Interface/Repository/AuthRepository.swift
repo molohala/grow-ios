@@ -16,4 +16,5 @@ public protocol AuthRepository {
     func getToken(type: TokenType) -> String
     func setToken(_ token: String, type: TokenType)
     func removeToken(type: TokenType)
+    func remove() async throws
 }

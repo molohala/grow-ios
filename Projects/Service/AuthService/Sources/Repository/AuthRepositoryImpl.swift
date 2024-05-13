@@ -55,4 +55,8 @@ struct AuthRepositoryImpl: AuthRepository {
     func removeToken(type: TokenType) {
         tokenDataSource.setToken("", type: type)
     }
+    
+    func remove() async throws {
+        try await authDataSource.remove()
+    }
 }

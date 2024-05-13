@@ -89,6 +89,9 @@ private class SettingDependency792c9caceb5cb097fbecProvider: SettingDependency {
     var baekjoonSettingBuildable: any BaekjoonSettingBuildable {
         return appComponent.baekjoonSettingBuildable
     }
+    var authDomainBuildable: any AuthDomainBuildable {
+        return appComponent.authDomainBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -478,6 +481,7 @@ extension SettingComponent: Registration {
         keyPathToName[\SettingDependency.profileEditBuildable] = "profileEditBuildable-any ProfileEditBuildable"
         keyPathToName[\SettingDependency.githubSettingBuildable] = "githubSettingBuildable-any GithubSettingBuildable"
         keyPathToName[\SettingDependency.baekjoonSettingBuildable] = "baekjoonSettingBuildable-any BaekjoonSettingBuildable"
+        keyPathToName[\SettingDependency.authDomainBuildable] = "authDomainBuildable-any AuthDomainBuildable"
     }
 }
 extension ProfileComponent: Registration {

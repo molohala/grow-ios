@@ -15,4 +15,5 @@ public protocol AuthDomainBuildable {
     var getTokenUseCase: any GetTokenUseCase { get }
     var setTokenUseCase: any SetTokenUseCase { get }
     var removeTokenUseCase: any RemoveTokenUseCase { get }
+    var removeUseCase: any RemoveUseCase { get }
 }

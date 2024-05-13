@@ -118,8 +118,17 @@ public struct SettingView: View {
         .alert("정말 회원을 탈퇴하시겠습니까?", isPresented: $showRemoveMemberDialog) {
             Button("아니요", role: .cancel) {}
             Button("탈퇴", role: .destructive) {
-                // handle
+                Task {
+                    await viewModel.removeMember {
+                        appState.accessToken = ""
+                        appState.refreshToken = ""
+                    }
+                }
             }
+        }
+        .eraseToAnyView()
+        .alert("회원 탈퇴를 실패 했습니다", isPresented: $viewModel.showRemoveMemberFailureDialog) {
+            Button("닫기", role: .cancel) {}
         }
     }
 }
