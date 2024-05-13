@@ -92,10 +92,14 @@ public struct ProfileView: View {
                 Spacer()
             }
             if case .success(let profile) = appState.profile {
-                Text(LocalizedStringKey(profile.bio))
-                    .applyOpenURL()
-                    .growFont(.bodyM)
-                    .growColor(.textDarken)
+                if profile.bio.isEmpty {
+                    Text("🔥")
+                } else {
+                    Text(LocalizedStringKey(profile.bio))
+                        .applyOpenURL()
+                        .growFont(.bodyM)
+                        .growColor(.textDarken)
+                }
             }
         }
         .toLeading()
@@ -113,8 +117,12 @@ public struct ProfileView: View {
                         GrowLanguageShimmer()
                     }
                 case .success(let data):
-                    ForEach(data, id: \.id) {
-                        GrowLanguage(text: $0.name)
+                    if data.isEmpty {
+                        Text("🔥")
+                    } else {
+                        ForEach(data, id: \.id) {
+                            GrowLanguage(text: $0.name)
+                        }
                     }
                 case .failure:
                     EmptyView()
@@ -128,6 +136,7 @@ public struct ProfileView: View {
     private var statics: some View {
         VStack(alignment: .leading, spacing: 12) {
             GrowHeadline("통계")
+                .toLeading()
                 .padding(.leading, 4)
             stats
             githubChart

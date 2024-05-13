@@ -80,10 +80,14 @@ public struct ProfileDetailView: View {
         VStack(alignment: .leading, spacing: 12) {
             GrowHeadline("소개글")
             if case .success(let profile) = viewModel.profile {
-                Text(LocalizedStringKey(profile.bio))
-                    .applyOpenURL()
-                    .growFont(.bodyM)
-                    .growColor(.textDarken)
+                if profile.bio.isEmpty {
+                    Text("🔥")
+                } else {
+                    Text(LocalizedStringKey(profile.bio))
+                        .applyOpenURL()
+                        .growFont(.bodyM)
+                        .growColor(.textDarken)
+                }
             }
         }
         .toLeading()
@@ -100,8 +104,12 @@ public struct ProfileDetailView: View {
                         GrowLanguageShimmer()
                     }
                 case .success(let data):
-                    ForEach(data, id: \.id) {
-                        GrowLanguage(text: $0.name)
+                    if data.isEmpty {
+                        Text("🔥")
+                    } else {
+                        ForEach(data, id: \.id) {
+                            GrowLanguage(text: $0.name)
+                        }
                     }
                 case .failure:
                     EmptyView()
