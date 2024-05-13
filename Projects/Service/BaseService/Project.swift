@@ -9,6 +9,12 @@ let project = Project.makeService(
             .shared(target: .DateUtil),
             .shared(target: .SwiftUtil)
         ]),
-        .serviceInterface(target: .Base, dependencies: [])
+        .serviceInterface(target: .Base, dependencies: []),
+        .serviceTesting(target: .Base, dependencies: [
+            .service(target: .Base)
+        ]),
+        .serviceTests(target: .Base, dependencies: [
+            .serviceTesting(target: .Base)
+        ])
     ]
 )
