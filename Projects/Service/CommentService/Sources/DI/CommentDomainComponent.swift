@@ -28,6 +28,12 @@ public class CommentDomainComponent: Component<CommentDomainDependency>, Comment
         }
     }
     
+    public var reportCommentUseCase: ReportCommentUseCase {
+        shared {
+            ReportCommentUseCaseImpl(commentRepository: commentRepository)
+        }
+    }
+    
     public var commentRepository: CommentRepository {
         shared {
             CommentRepositoryImpl(commentDataSource: commentDataSource)

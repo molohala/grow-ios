@@ -7,12 +7,12 @@ import CommunityServiceTesting
 struct CommunityDetailViewExample: App {
     var body: some Scene {
         WindowGroup {
-            CommunityDetailView(
-                viewModel: .init(
-                    getCommunityUseCase: GetCommunityUseCaseSpy()
-                ),
-                id: -1
-            )
+//            CommunityDetailView(
+//                viewModel: .init(
+//                    getCommunityUseCase: GetCommunityUseCaseSpy()
+//                ),
+//                id: -1
+//            )
         }
     }
 }

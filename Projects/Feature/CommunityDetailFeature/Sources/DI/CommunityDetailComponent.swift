@@ -32,6 +32,8 @@ public final class CommunityDetailComponent: Component<CommunityDetailDependency
                 patchLikeUseCase: dependency.likeDomainBuildable.patchLikeUseCase,
                 removeCommunityUseCase: dependency.communityDomainBuildable.removeCommunityUseCase,
                 removeCommentUseCase: dependency.commentDomainBuildable.removeCommentUseCase,
+                reportCommentUseCase: dependency.commentDomainBuildable.reportCommentUseCase,
+                reportCommunityUseCase: dependency.communityDomainBuildable.reportCommunityUseCase,
                 communityId: id
             ),
             communityEditBuildable: dependency.communityEditBuildable

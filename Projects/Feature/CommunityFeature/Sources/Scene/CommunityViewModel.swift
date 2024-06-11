@@ -12,6 +12,7 @@ public final class CommunityViewModel: ObservableObject {
     private let getCommunitesUseCase: any GetCommunitiesUseCase
     private let patchLikeUseCase: any PatchLikeUseCase
     private let removeCommunityUseCase: any RemoveCommunityUseCase
+    private let reportCommunityUseCase: any ReportCommunityUseCase
     
     // MARK: - State
     @Published var communities: FetchFlow<[Community]> = .fetching
@@ -19,15 +20,20 @@ public final class CommunityViewModel: ObservableObject {
     @Published var selectedCommunity: Community?
     @Published var removedCommunityFlow: FetchFlow<Bool> = .fetching
     @Published var selectedRemoveCommunity: Community?
+    @Published var selectedReportCommunity: Community?
+    @Published var reportCommunityReason = ""
+    @Published var reportCommentFlow: FetchFlow<Bool> = .fetching
     
     public init(
         getCommunitesUseCase: any GetCommunitiesUseCase,
         patchLikeUseCase: any PatchLikeUseCase,
-        removeCommunityUseCase: any RemoveCommunityUseCase
+        removeCommunityUseCase: any RemoveCommunityUseCase,
+        reportCommunityUseCase: any ReportCommunityUseCase
     ) {
         self.getCommunitesUseCase = getCommunitesUseCase
         self.patchLikeUseCase = patchLikeUseCase
         self.removeCommunityUseCase = removeCommunityUseCase
+        self.reportCommunityUseCase = reportCommunityUseCase
     }
     
     @MainActor
@@ -99,6 +105,22 @@ public final class CommunityViewModel: ObservableObject {
             removedCommunityFlow = .success(true)
         } catch {
             removedCommunityFlow = .failure
+        }
+    }
+    
+    @MainActor
+    func reportCommunity() async {
+        
+        guard let selectedReportCommunity else {
+            return
+        }
+        
+        do {
+            let request = ReportCommunityRequest(reason: reportCommunityReason)
+            try await reportCommunityUseCase(id: selectedReportCommunity.community.communityId, request)
+            reportCommentFlow = .success(true)
+        } catch {
+            reportCommentFlow = .failure
         }
     }
 }

@@ -10,6 +10,7 @@ public struct HomeView: View {
     @EnvironmentObject private var router: Router
     @StateObject private var viewModel: HomeViewModel
     @State private var showRemoveDialog = false
+    @State private var showReportCommunityDialog = false
     
     public init(
         viewModel: HomeViewModel
@@ -58,6 +59,16 @@ public struct HomeView: View {
                 Task {
                     await viewModel.removeCommunity()
                     await viewModel.fetchBestCommunities()
+                }
+            }
+        }
+        .eraseToAnyView()
+        .alert("신고 내용을 작성해주세요", isPresented: $showReportCommunityDialog) {
+            TextField("", text: $viewModel.reportCommunityReason)
+            Button("취소", role: .cancel) {}
+            Button("신고", role: .destructive) {
+                Task {
+                    await viewModel.reportCommunity()
                 }
             }
         }
@@ -222,6 +233,10 @@ public struct HomeView: View {
                                 },
                                 editAction: {
                                     router.navigate(to: HomeDestination.communityEdit(forumId: forum.community.communityId))
+                                },
+                                reportAction: {
+                                    viewModel.selectedReportCommunity = forum
+                                    showReportCommunityDialog = true
                                 },
                                 action: {
                                     router.navigate(to: HomeDestination.communityDetail(forumId: forum.community.communityId))

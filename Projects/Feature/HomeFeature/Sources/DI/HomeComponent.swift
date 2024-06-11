@@ -19,7 +19,7 @@ public protocol HomeDependency: Dependency {
     var rankDomainBuildable: any RankDomainBuildable { get }
     var communityDomainBuildable: any CommunityDomainBuildable { get }
     var likeDomainBuildable: any LikeDomainBuildable { get }
-    var communityEditBuildable: any CommunityEditBuildable { get}
+    var communityEditBuildable: any CommunityEditBuildable { get }
 }
 
 public final class HomeComponent: Component<HomeDependency>, HomeBuildable {    
@@ -33,7 +33,8 @@ public final class HomeComponent: Component<HomeDependency>, HomeBuildable {
                 getTodaySolvedacRankUseCase: dependency.rankDomainBuildable.getTodaySolvedacRankUseCase,
                 getBestCommunitiesUseCase: dependency.communityDomainBuildable.getBestCommunitiesUseCase,
                 patchLikeUseCase: dependency.likeDomainBuildable.patchLikeUseCase,
-                removeCommunityUseCase: dependency.communityDomainBuildable.removeCommunityUseCase
+                removeCommunityUseCase: dependency.communityDomainBuildable.removeCommunityUseCase,
+                reportCommunityUseCase: dependency.communityDomainBuildable.reportCommunityUseCase
             )
         )
     }

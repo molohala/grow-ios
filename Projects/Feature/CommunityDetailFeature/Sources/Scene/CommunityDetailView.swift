@@ -17,6 +17,8 @@ public struct CommunityDetailView: View {
     @State private var showRemoveCommunityDialog = false
     @State private var showRemoveCommentDialog = false
     @State private var isCreateCommentFetch = false
+    @State private var showReportCommunityDialog = false
+    @State private var showReportCommentDialog = false
     
     public init(
         viewModel: CommunityDetailViewModel
@@ -146,6 +148,26 @@ public struct CommunityDetailView: View {
         })) {
             Button("닫기", role: .cancel) {}
         }
+        .eraseToAnyView()
+        .alert("신고 내용을 작성해주세요", isPresented: $showReportCommentDialog) {
+            TextField("", text: $viewModel.reportCommentReason)
+            Button("취소", role: .cancel) {}
+            Button("신고", role: .destructive) {
+                Task {
+                    await viewModel.reportComment()
+                }
+            }
+        }
+        .eraseToAnyView()
+        .alert("신고 내용을 작성해주세요", isPresented: $showReportCommunityDialog) {
+            TextField("", text: $viewModel.reportCommunityReason)
+            Button("취소", role: .cancel) {}
+            Button("신고", role: .destructive) {
+                Task {
+                    await viewModel.reportCommunity()
+                }
+            }
+        }
     }
     
     @ViewBuilder
@@ -162,23 +184,28 @@ public struct CommunityDetailView: View {
                         .growColor(.textAlt)
                 }
                 Spacer()
-                if case .success(let profile) = appState.profile,
-                   profile.id == forum.writerId {
-                    Menu {
+                Menu {
+                    if case .success(let profile) = appState.profile,
+                       profile.id == forum.writerId {
                         Button("수정하기", role: .cancel) {
                             router.navigate(to: CommunityDetailDestination.communityEdit(forumId: forum.communityId))
                         }
-                        Button("삭제하기", role: .destructive) {
-                            Task {
-                                showRemoveCommunityDialog = true
-                            }
+                        Button("신고하기", role: .destructive) {
+                            showReportCommunityDialog = true
                         }
-                    } label: {
-                        Image(icon: .detailVertical)
-                            .resizable()
-                            .growIconColor(.textAlt)
-                            .frame(size: 24)
+                        Button("삭제하기", role: .destructive) {
+                            showRemoveCommunityDialog = true
+                        }
+                    } else {
+                        Button("신고하기", role: .destructive) {
+                            showReportCommunityDialog = true
+                        }
                     }
+                } label: {
+                    Image(icon: .detailVertical)
+                        .resizable()
+                        .growIconColor(.textAlt)
+                        .frame(size: 24)
                 }
             }
             Text(LocalizedStringKey(forum.content))
@@ -206,6 +233,9 @@ public struct CommunityDetailView: View {
                 VStack(spacing: 4) {
                     ForEach(data, id: \.commentId) { comment in
                         GrowCommentCell(comment: comment, profileId: profile.id) {
+                            showReportCommentDialog = true
+                            viewModel.selectedReportComment = comment
+                        } removeAction: {
                             showRemoveCommentDialog = true
                             viewModel.selectedRemoveComment = comment
                         }

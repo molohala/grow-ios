@@ -31,4 +31,8 @@ class CommunityRepositoryImpl: CommunityRepository {
     func getBestCommunity(count: Int) async throws -> [Community] {
         try await dataSource.getBestCommunities(count: count)
     }
+    
+    func reportCommunity(id: Int, _ req: ReportCommunityRequest) async throws {
+        try await dataSource.reportCommunity(id: id, req)
+    }
 }

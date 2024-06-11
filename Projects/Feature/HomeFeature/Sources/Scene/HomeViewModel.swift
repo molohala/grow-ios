@@ -12,6 +12,7 @@ public final class HomeViewModel: ObservableObject {
     private let getBestCommunitiesUseCase: any GetBestCommuntiesUseCase
     private let patchLikeUseCase: any PatchLikeUseCase
     private let removeCommunityUseCase: any RemoveCommunityUseCase
+    private let reportCommunityUseCase: any ReportCommunityUseCase
     
     // MARK: - Properties
     @Published var weekCommunities: FetchFlow<[Community]> = .fetching
@@ -19,19 +20,24 @@ public final class HomeViewModel: ObservableObject {
     @Published var todayBaekjoonRanks: FetchFlow<[Rank]> = .fetching
     @Published var removedCommunityFlow: FetchFlow<Bool> = .fetching
     @Published var selectedRemoveCommunity: Community?
+    @Published var selectedReportCommunity: Community?
+    @Published var reportCommunityReason = ""
+    @Published var reportCommentFlow: FetchFlow<Bool> = .fetching
     
     public init(
         getTodayGithubRankUseCase: any GetTodayGithubRankUseCase,
         getTodaySolvedacRankUseCase: any GetTodaySolvedacRankUseCase,
         getBestCommunitiesUseCase: any GetBestCommuntiesUseCase,
         patchLikeUseCase: any PatchLikeUseCase,
-        removeCommunityUseCase: any RemoveCommunityUseCase
+        removeCommunityUseCase: any RemoveCommunityUseCase,
+        reportCommunityUseCase: any ReportCommunityUseCase
     ) {
         self.getTodayGithubRankUseCase = getTodayGithubRankUseCase
         self.getTodaySolvedacRankUseCase = getTodaySolvedacRankUseCase
         self.getBestCommunitiesUseCase = getBestCommunitiesUseCase
         self.patchLikeUseCase = patchLikeUseCase
         self.removeCommunityUseCase = removeCommunityUseCase
+        self.reportCommunityUseCase = reportCommunityUseCase
     }
     
     @MainActor
@@ -97,6 +103,22 @@ public final class HomeViewModel: ObservableObject {
             removedCommunityFlow = .success(true)
         } catch {
             removedCommunityFlow = .failure
+        }
+    }
+    
+    @MainActor
+    func reportCommunity() async {
+        
+        guard let selectedReportCommunity else {
+            return
+        }
+        
+        do {
+            let request = ReportCommunityRequest(reason: reportCommunityReason)
+            try await reportCommunityUseCase(id: selectedReportCommunity.community.communityId, request)
+            reportCommentFlow = .success(true)
+        } catch {
+            reportCommentFlow = .failure
         }
     }
 }

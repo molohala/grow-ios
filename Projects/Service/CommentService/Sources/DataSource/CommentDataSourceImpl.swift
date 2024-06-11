@@ -20,4 +20,8 @@ class CommentDataSourceImpl: BaseRemoteDataSource<CommentDataSourceImpl>, Commen
     func removeComment(id: Int) async throws {
         try await requestDelete(url: "\(Grow.baseUrl)/\(path)/\(id)", res: BaseVoidResponse.self)
     }
+    
+    func reportComment(id: Int, _ req: ReportCommentRequest) async throws {
+        try await requestPost(url: "\(Grow.baseUrl)/\(path)/\(id)/report", req: req, res: BaseVoidResponse.self)
+    }
 }

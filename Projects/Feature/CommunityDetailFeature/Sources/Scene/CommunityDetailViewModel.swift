@@ -13,6 +13,8 @@ public final class CommunityDetailViewModel: ObservableObject {
     private let patchLikeUseCase: any PatchLikeUseCase
     private let removeCommunityUseCase: any RemoveCommunityUseCase
     private let removeCommentUseCase: any RemoveCommentUseCase
+    private let reportCommentUseCase: any ReportCommentUseCase
+    private let reportCommunityUseCase: any ReportCommunityUseCase
     
     // MARK: - Properties
     private let communityId: Int
@@ -25,6 +27,10 @@ public final class CommunityDetailViewModel: ObservableObject {
     @Published var removeCommunityFlow: FetchFlow<Bool> = .fetching
     @Published var removeCommentFlow: FetchFlow<Bool> = .fetching
     @Published var selectedRemoveComment: Comment?
+    @Published var selectedReportComment: Comment?
+    @Published var reportCommentReason = ""
+    @Published var reportCommunityReason = ""
+    @Published var reportCommentFlow: FetchFlow<Bool> = .fetching
     
     public init(
         getCommunityUseCase: any GetCommunityUseCase,
@@ -33,6 +39,8 @@ public final class CommunityDetailViewModel: ObservableObject {
         patchLikeUseCase: any PatchLikeUseCase,
         removeCommunityUseCase: any RemoveCommunityUseCase,
         removeCommentUseCase: any RemoveCommentUseCase,
+        reportCommentUseCase: any ReportCommentUseCase,
+        reportCommunityUseCase: any ReportCommunityUseCase,
         communityId: Int
     ) {
         self.getCommunityUseCase = getCommunityUseCase
@@ -41,6 +49,8 @@ public final class CommunityDetailViewModel: ObservableObject {
         self.patchLikeUseCase = patchLikeUseCase
         self.removeCommunityUseCase = removeCommunityUseCase
         self.removeCommentUseCase = removeCommentUseCase
+        self.reportCommentUseCase = reportCommentUseCase
+        self.reportCommunityUseCase = reportCommunityUseCase
         self.communityId = communityId
     }
     
@@ -114,6 +124,34 @@ public final class CommunityDetailViewModel: ObservableObject {
             removeCommentFlow = .success(true)
         } catch {
             removeCommentFlow = .failure
+        }
+    }
+    
+    @MainActor
+    func reportComment() async {
+        guard let selectedReportComment else {
+            reportCommentFlow = .failure
+            return
+        }
+        
+        do {
+            let request = ReportCommentRequest(reason: reportCommentReason)
+            try await reportCommentUseCase(id: selectedReportComment.commentId, request)
+            reportCommentFlow = .success(true)
+        } catch {
+            reportCommentFlow = .failure
+        }
+    }
+    
+    @MainActor
+    func reportCommunity() async {
+        
+        do {
+            let request = ReportCommunityRequest(reason: reportCommunityReason)
+            try await reportCommunityUseCase(id: communityId, request)
+            reportCommentFlow = .success(true)
+        } catch {
+            reportCommentFlow = .failure
         }
     }
 }

@@ -6,13 +6,11 @@ public struct ProjectEnvironment {
     public let organizationName: String
     public let destinations: Destinations
     public let deploymentTargets: DeploymentTargets
-    public let baseSetting: SettingsDictionary
 }
 
 public let env = ProjectEnvironment(
     name: "grow",
     organizationName: "molohala",
     destinations: [.iPhone],
-    deploymentTargets: .iOS("16.4"),
-    baseSetting: ["DEVELOPMENT_TEAM": "\(teamId)"]
+    deploymentTargets: .iOS("16.4")
 )

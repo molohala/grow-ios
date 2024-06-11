@@ -34,7 +34,8 @@ public final class CommunityComponent: Component<CommunityDependency>, Community
             viewModel: .init(
                 getCommunitesUseCase: dependency.communityDomainBuildable.getCommunitiesUseCase,
                 patchLikeUseCase: dependency.likeDomainBuildable.patchLikeUseCase,
-                removeCommunityUseCase: dependency.communityDomainBuildable.removeCommunityUseCase
+                removeCommunityUseCase: dependency.communityDomainBuildable.removeCommunityUseCase,
+                reportCommunityUseCase: dependency.communityDomainBuildable.reportCommunityUseCase
             )
         )
     }

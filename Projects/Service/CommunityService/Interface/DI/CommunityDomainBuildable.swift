@@ -5,4 +5,5 @@ public protocol CommunityDomainBuildable {
     var getCommunityUseCase: any GetCommunityUseCase { get }
     var removeCommunityUseCase: any RemoveCommunityUseCase { get }
     var getBestCommunitiesUseCase: any GetBestCommuntiesUseCase { get }
+    var reportCommunityUseCase: any ReportCommunityUseCase { get }
 }

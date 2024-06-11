@@ -6,15 +6,18 @@ public struct GrowCommentCell: View {
     
     private let comment: Comment
     private let profileId: Int
+    private let reportAction: () -> Void
     private let removeAction: () -> Void
     
     public init(
         comment: Comment,
         profileId: Int,
+        reportAction: @escaping () -> Void,
         removeAction: @escaping () -> Void
     ) {
         self.comment = comment
         self.profileId = profileId
+        self.reportAction = reportAction
         self.removeAction = removeAction
     }
     
@@ -39,19 +42,26 @@ public struct GrowCommentCell: View {
                 }
             }
             Spacer()
-            if profileId == comment.memberId {
-                Menu {
+            Menu {
+                if profileId == comment.memberId {
+                    Button("신고하기", role: .destructive) {
+                        reportAction()
+                    }
                     Button("삭제하기", role: .destructive) {
                         removeAction()
                     }
-                } label: {
-                    Image(icon: .detailVertical)
-                        .resizable()
-                        .growIconColor(.textAlt)
-                        .frame(size: 24)
+                } else {
+                    Button("신고하기", role: .destructive) {
+                        reportAction()
+                    }
                 }
-                .applyAnimation()
+            } label: {
+                Image(icon: .detailVertical)
+                    .resizable()
+                    .growIconColor(.textAlt)
+                    .frame(size: 24)
             }
+            .applyAnimation()
         }
         .padding(12)
     }

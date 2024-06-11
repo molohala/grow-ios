@@ -3,4 +3,5 @@ public protocol CommentRepository {
     func createComment(_ req: CreateCommentRequest) async throws
     func patchComment(_ req: PatchCommentRequest) async throws
     func removeComment(id: Int) async throws
+    func reportComment(id: Int, _ req: ReportCommentRequest) async throws
 }

@@ -35,6 +35,12 @@ public final class CommunityDomainComponent: Component<CommunityDomainDependency
         }
     }
     
+    public var reportCommunityUseCase: ReportCommunityUseCase {
+        shared {
+            ReportCommunityUseCaseImpl(repository: communityRepository)
+        }
+    }
+    
     public var getBestCommunitiesUseCase: GetBestCommuntiesUseCase {
         shared {
             GetBestCommunitiesUseCaseImpl(repository: communityRepository)

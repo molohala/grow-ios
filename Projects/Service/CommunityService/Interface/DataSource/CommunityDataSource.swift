@@ -7,4 +7,5 @@ public protocol CommunityDataSource {
     func getCommunity(id: Int) async throws -> CommunityContent
     func removeCommunity(id: Int) async throws
     func getBestCommunities(count: Int) async throws -> [Community]
+    func reportCommunity(id: Int, _ req: ReportCommunityRequest) async throws
 }

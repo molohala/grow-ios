@@ -23,4 +23,8 @@ class CommentRepositoryImpl: CommentRepository {
     func removeComment(id: Int) async throws {
         try await commentDataSource.removeComment(id: id)
     }
+    
+    func reportComment(id: Int, _ req: ReportCommentRequest) async throws {
+        try await commentDataSource.reportComment(id: id, req)
+    }
 }

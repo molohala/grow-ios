@@ -8,7 +8,12 @@ public struct GrowForumCell: View {
     private let likeAction: () async -> Void
     private let removeAction: () async -> Void
     private let editAction: () async -> Void
+    private let reportAction: () async -> Void
     private let action: () async -> Void
+    
+    private var me: Bool {
+        profileId == forum.community.writerId
+    }
     
     public init(
         forum: Community,
@@ -16,6 +21,7 @@ public struct GrowForumCell: View {
         likeAction: @escaping () async -> Void,
         removeAction: @escaping () async -> Void,
         editAction: @escaping () async -> Void,
+        reportAction: @escaping () async -> Void,
         action: @escaping () async -> Void
     ) {
         self.forum = forum
@@ -23,6 +29,7 @@ public struct GrowForumCell: View {
         self.likeAction = likeAction
         self.removeAction = removeAction
         self.editAction = editAction
+        self.reportAction = reportAction
         self.action = action
     }
     
@@ -87,24 +94,35 @@ public struct GrowForumCell: View {
                 HStack(spacing: 8) {
                     Spacer()
                     Menu {
-                        Button("수정하기") {
-                            Task {
-                                await editAction()
+                        if me {
+                            Button("수정하기") {
+                                Task {
+                                    await editAction()
+                                }
                             }
-                        }
-                        Button("삭제하기", role: .destructive) {
-                            Task {
-                                await removeAction()
+                            Button("신고하기", role: .destructive) {
+                                Task {
+                                    await reportAction()
+                                }
+                            }
+                            Button("삭제하기", role: .destructive) {
+                                Task {
+                                    await removeAction()
+                                }
+                            }
+                        } else {
+                            Button("신고하기", role: .destructive) {
+                                Task {
+                                    await reportAction()
+                                }
                             }
                         }
                     } label: {
-                        if profileId == content.writerId {
-                            Image(icon: .detailVertical)
-                                .resizable()
-                                .growIconColor(.textAlt)
-                                .frame(size: 28)
-                                .growBackground(.background)
-                        }
+                        Image(icon: .detailVertical)
+                            .resizable()
+                            .growIconColor(.textAlt)
+                            .frame(size: 28)
+                            .growBackground(.background)
                     }
                 }
             }

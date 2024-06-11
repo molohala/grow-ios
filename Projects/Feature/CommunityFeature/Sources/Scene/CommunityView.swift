@@ -11,6 +11,7 @@ public struct CommunityView: View {
     @StateObject private var viewModel: CommunityViewModel
     @State private var reader: ScrollViewProxy?
     @State private var showRemoveDialog = false
+    @State private var showReportCommunityDialog = false
     
     public init(
         viewModel: CommunityViewModel
@@ -44,6 +45,10 @@ public struct CommunityView: View {
                                         },
                                         editAction: {
                                             router.navigate(to: CommunityDestination.communityEdit(forumId: community.community.communityId))
+                                        },
+                                        reportAction: {
+                                            showReportCommunityDialog = true
+                                            viewModel.selectedReportCommunity = community
                                         },
                                         action: {
                                             router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))
@@ -112,6 +117,16 @@ public struct CommunityView: View {
                 Task {
                     await viewModel.removeCommunity()
                     await viewModel.fetchCommunities()
+                }
+            }
+        }
+        .eraseToAnyView()
+        .alert("신고 내용을 작성해주세요", isPresented: $showReportCommunityDialog) {
+            TextField("", text: $viewModel.reportCommunityReason)
+            Button("취소", role: .cancel) {}
+            Button("신고", role: .destructive) {
+                Task {
+                    await viewModel.reportCommunity()
                 }
             }
         }

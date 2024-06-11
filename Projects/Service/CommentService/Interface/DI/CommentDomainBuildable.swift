@@ -3,4 +3,5 @@ public protocol CommentDomainBuildable {
     var createCommentUseCase: any CreateCommentUseCase { get }
     var patchCommentUseCase: any PatchCommentUseCase { get }
     var removeCommentUseCase: any RemoveCommentUseCase { get }
+    var reportCommentUseCase: any ReportCommentUseCase { get }
 }

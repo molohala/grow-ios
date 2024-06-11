@@ -28,4 +28,8 @@ class CommunityDataSourceImpl: BaseRemoteDataSource<CommunityDataSourceImpl>, Co
     func getBestCommunities(count: Int) async throws -> [Community] {
         try await requestGet(url: "\(Grow.baseUrl)/\(path)/best?count=\(count)", res: BaseResponse<[CommunityResponse]>.self).data.map { $0.toDomain() }
     }
+    
+    func reportCommunity(id: Int, _ req: ReportCommunityRequest) async throws {
+        try await requestPost(url: "\(Grow.baseUrl)/\(path)/\(id)/report", req: req, res: BaseVoidResponse.self)
+    }
 }
