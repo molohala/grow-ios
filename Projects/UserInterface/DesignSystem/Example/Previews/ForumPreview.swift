@@ -13,6 +13,6 @@ struct ForumPreview: View {
             }
             .padding(8)
         }
-        .growBackground(.backgroundAlt)
+        .myBackground(.backgroundAlt)
     }
 }

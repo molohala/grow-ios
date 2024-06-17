@@ -8,6 +8,6 @@ struct SettingCellPreview: View {
             GrowSettingCell(label: "정말 반갑습니다", description: "", action:  {})
         }
         .padding(12)
-        .growBackground(.backgroundAlt)
+        .myBackground(.backgroundAlt)
     }
 }

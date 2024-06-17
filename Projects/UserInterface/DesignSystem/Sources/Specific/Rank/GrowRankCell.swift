@@ -1,4 +1,5 @@
 import SwiftUI
+import MyDesignSystem
 
 public struct GrowRankCell: View {
     
@@ -29,15 +30,15 @@ public struct GrowRankCell: View {
             HStack {
                 HStack(spacing: 8) {
                     Text("\(rank)")
-                        .growFont(.bodyR)
-                        .growColor(.textNormal)
-                    GrowAvatar(type: .large)
+                        .myFont(.bodyR)
+                        .myColor(.textNormal)
+                    MyAvatar(type: .large)
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 2) {
                             Text(name)
-                                .growFont(.bodyM)
-                                .growColor(.textNormal)
-                            let medal: GrowImage? = switch rank {
+                                .myFont(.bodyM)
+                                .myColor(.textNormal)
+                            let medal: MyImage? = switch rank {
                             case 1: .firstMedal
                             case 2: .secondMedal
                             case 3: .thirdMedal
@@ -51,14 +52,14 @@ public struct GrowRankCell: View {
                             }
                         }
                         Text(socialId)
-                            .growFont(.bodyM)
-                            .growColor(.textAlt)
+                            .myFont(.bodyM)
+                            .myColor(.textAlt)
                     }
                 }
                 Spacer()
                 Text(label)
-                    .growFont(.bodyB)
-                    .growColor(.textNormal)
+                    .myFont(.bodyB)
+                    .myColor(.textNormal)
             }
             .padding(4)
             .contentShape(Rectangle())

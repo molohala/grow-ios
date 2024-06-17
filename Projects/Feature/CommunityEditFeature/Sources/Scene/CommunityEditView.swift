@@ -1,6 +1,7 @@
 import BaseFeature
 import SwiftUI
 import DesignSystem
+import MyDesignSystem
 
 public struct CommunityEditView: View {
     
@@ -15,13 +16,13 @@ public struct CommunityEditView: View {
     
     public var body: some View {
         ScrollView {
-            GrowTextEditor(text: $viewModel.content)
+            MyTextEditor(text: $viewModel.content)
                 .frame(minHeight: 300)
                 .padding(12)
         }
         .hideKeyboardWhenTap()
-        .growTopBar("글 수정", trailingContent: {
-            GrowTextButton("수정", type: .Small) {
+        .myTopBar("글 수정", trailingContent: {
+            MyTextButton("수정", type: .Small) {
                 await viewModel.patchCommunity()
             }
             .padding(.horizontal, 4)

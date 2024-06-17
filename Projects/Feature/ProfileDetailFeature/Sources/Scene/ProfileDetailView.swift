@@ -2,6 +2,7 @@ import SwiftUI
 import BaseFeature
 import DesignSystem
 import Flow
+import MyDesignSystem
 
 public struct ProfileDetailView: View {
     
@@ -34,7 +35,7 @@ public struct ProfileDetailView: View {
             .padding(.top, 12)
         }
         .scrollIndicators(.hidden)
-        .growTopBar("\(name)님의 프로필", background: .backgroundAlt) {
+        .myTopBar("\(name)님의 프로필", background: .backgroundAlt) {
             router.popToStack()
         }
         .refreshable {
@@ -52,21 +53,21 @@ public struct ProfileDetailView: View {
         HStack(spacing: 8) {
             switch viewModel.profile {
             case .fetching:
-                GrowAvatarShimmer(type: .extraLarge)
+                MyAvatarShimmer(type: .extraLarge)
                 VStack(alignment: .leading, spacing: 2) {
                     RowShimmer(width: 60)
                     RowShimmer(width: 40)
                 }
             case .success(let data):
-                GrowAvatar(type: .extraLarge)
+                MyAvatar(type: .extraLarge)
                 VStack(alignment: .leading, spacing: 2) {
                     let isDesigner = data.job == "Designer"
                     Text("\(data.job) \(isDesigner ? "" : "개발자")")
-                        .growFont(.labelR)
-                        .growColor(.textDarken)
+                        .myFont(.labelR)
+                        .myColor(.textDarken)
                     Text(data.name)
-                        .growFont(.bodyB)
-                        .growColor(.textNormal)
+                        .myFont(.bodyB)
+                        .myColor(.textNormal)
                 }
             case .failure:
                 EmptyView()
@@ -85,8 +86,8 @@ public struct ProfileDetailView: View {
                 } else {
                     Text(LocalizedStringKey(profile.bio))
                         .applyOpenURL()
-                        .growFont(.bodyM)
-                        .growColor(.textDarken)
+                        .myFont(.bodyM)
+                        .myColor(.textDarken)
                 }
             }
         }
@@ -101,14 +102,14 @@ public struct ProfileDetailView: View {
                 switch viewModel.languages {
                 case .fetching:
                     ForEach(0..<4, id: \.self) { _ in
-                        GrowLanguageShimmer()
+                        MyLanguageShimmer()
                     }
                 case .success(let data):
                     if data.isEmpty {
                         Text("🔥")
                     } else {
                         ForEach(data, id: \.id) {
-                            GrowLanguage(text: $0.name)
+                            MyLanguage(text: $0.name)
                         }
                     }
                 case .failure:

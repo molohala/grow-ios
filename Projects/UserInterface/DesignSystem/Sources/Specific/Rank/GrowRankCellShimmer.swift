@@ -1,4 +1,5 @@
 import SwiftUI
+import MyDesignSystem
 
 public struct GrowRankCellShimmer: View {
     public init() {}
@@ -6,7 +7,7 @@ public struct GrowRankCellShimmer: View {
     public var body: some View {
         HStack {
             HStack(spacing: 8) {
-                GrowAvatarShimmer(type: .large)
+                MyAvatarShimmer(type: .large)
                 RowShimmer(width: 100)
             }
             Spacer()

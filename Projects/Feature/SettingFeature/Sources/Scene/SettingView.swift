@@ -1,7 +1,7 @@
 import SwiftUI
 import SettingFeatureInterface
 import SwiftUtil
-
+import MyDesignSystem
 import BaseFeature
 
 import DesignSystem
@@ -49,7 +49,7 @@ public struct SettingView: View {
                         }
                     }
                 }
-                GrowDivider()
+                MyDivider()
                 VStack(spacing: 12) {
 //                    GrowSettingCell(
 //                        label: "알림 허용",
@@ -62,7 +62,7 @@ public struct SettingView: View {
                         label: "다크모드",
                         leftIcon: .moon,
                         content: {
-                            GrowToggle(
+                            MyToggle(
                                 isOn: .init {
                                     colorProvider.isDarkTheme
                                 } set: { bool in
@@ -72,7 +72,7 @@ public struct SettingView: View {
                         }
                     )
                 }
-                GrowDivider()
+                MyDivider()
                 VStack(spacing: 12) {
                     GrowSettingCell(
                         label: "로그아웃",
@@ -90,19 +90,22 @@ public struct SettingView: View {
                     )
                 }
                 VStack(spacing: 16) {
+                    Text("문의 - hhhello0507@gmail.com")
+                        .myFont(.labelM)
+                        .myColor(.textAlt)
                     Text("버전 - \(version ?? "")")
-                        .growFont(.labelM)
-                        .growColor(.textAlt)
+                        .myFont(.labelM)
+                        .myColor(.textAlt)
                     Link(destination: URL(string: "https://ssseqew.notion.site/f7614db9bb7e489ab209f891e28633cc?pvs=4")!) {
                         Text("개인정보 이용 약관")
-                            .growFont(.labelM)
-                            .growColor(.textAlt)
+                            .myFont(.labelM)
+                            .myColor(.textAlt)
                             .underline()
                     }
                     Link(destination: URL(string:  "https://ssseqew.notion.site/10ad68a929c44d45bae4ea40535876a2?pvs=4")!) {
                         Text("서비스 정책")
-                            .growFont(.labelM)
-                            .growColor(.textAlt)
+                            .myFont(.labelM)
+                            .myColor(.textAlt)
                             .underline()
                     }
                 }
@@ -112,7 +115,7 @@ public struct SettingView: View {
             .padding(.top, 12)
             .padding(.horizontal, 16)
         }
-        .growTopBar("설정", background: .backgroundAlt) {
+        .myTopBar("설정", background: .backgroundAlt) {
             router.popToStack()
         }
         .alert("정말 회원을 탈퇴하시겠습니까?", isPresented: $showRemoveMemberDialog) {

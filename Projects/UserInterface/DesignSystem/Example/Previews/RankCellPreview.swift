@@ -12,6 +12,6 @@ struct RankCellPreview: View {
                 GrowRankCellShimmer()
             }
         }
-        .growBackground(.background)
+        .myBackground(.background)
     }
 }

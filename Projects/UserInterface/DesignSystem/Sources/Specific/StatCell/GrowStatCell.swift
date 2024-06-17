@@ -31,22 +31,22 @@ public struct GrowStatCell: View {
             HStack {
                 if let number {
                     Text("\(number)")
-                        .growFont(.title1B)
-                        .growColor(.textNormal)
+                        .myFont(.title1B)
+                        .myColor(.textNormal)
                 } else {
                     Text("??")
-                        .growFont(.title1B)
-                        .growColor(.textNormal)
+                        .myFont(.title1B)
+                        .myColor(.textNormal)
                 }
                 Spacer()
                 Image(icon: type.icon)
                     .resizable()
-                    .growIconColor(type.color)
+                    .myIconColor(type.color)
                     .frame(size: 32)
             }
             Text(label)
-                .growFont(.labelM)
-                .growColor(.textDarken)
+                .myFont(.labelM)
+                .myColor(.textDarken)
         }
         .padding(16)
         .applyCardView()

@@ -2,6 +2,7 @@ import SwiftUI
 import DesignSystem
 import BaseFeature
 import GithubRankFeatureInterface
+import MyDesignSystem
 
 public struct GithubRankView: View {
     
@@ -54,7 +55,7 @@ public struct GithubRankView: View {
                 }
             }
         }
-        .growTopBar("Github 랭킹")
+        .myTopBar("Github 랭킹")
         .task {
             Task {
                 await viewModel.fetchGithubRank()
@@ -69,9 +70,9 @@ public struct GithubRankView: View {
     private var recommendingSettingGithub: some View {
         VStack(spacing: 16) {
             Text("아직 Github ID를 설정하지 않았어요")
-                .growFont(.bodyM)
-                .growColor(.textNormal)
-            GrowButton("설정하기", type: .Small) {
+                .myFont(.bodyM)
+                .myColor(.textNormal)
+            MyButton("설정하기", type: .Small) {
                 router.navigate(to: GithubRankDestination.githubSetting)
             }
         }
@@ -82,7 +83,7 @@ public struct GithubRankView: View {
     private var indicator: some View {
         HStack(spacing: 12) {
             ForEach(GithubTab.allCases, id: \.self) { tab in
-                GrowTabButton(
+                MyTabButton(
                     tab.rawValue,
                     isSelected: tab == viewModel.selectedTab
                 ) {

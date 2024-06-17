@@ -2,6 +2,7 @@ import SwiftUI
 import BaseFeature
 import DesignSystem
 import Flow
+import MyDesignSystem
 
 public struct ProfileEditView: View {
     
@@ -24,7 +25,7 @@ public struct ProfileEditView: View {
                         GrowHeadline("소개글")
                             .toLeading()
                             .padding(.horizontal, 4)
-                        GrowTextEditor(text: $viewModel.bio)
+                        MyTextEditor(text: $viewModel.bio)
                             .frame(minHeight: 100, maxHeight: 300)
                     }
                     VStack(spacing: 8) {
@@ -34,7 +35,7 @@ public struct ProfileEditView: View {
                         if case .success(let jobs) = viewModel.jobs {
                             HFlow(itemSpacing: 8, rowSpacing: 8) {
                                 ForEach(jobs, id: \.self) { job in
-                                    GrowRadioButton(job.isEmpty ? "Developer" : job, isSelected: job == viewModel.selectedJob) {
+                                    MyRadioButton(job.isEmpty ? "Developer" : job, isSelected: job == viewModel.selectedJob) {
                                         viewModel.selectedJob = job
                                     }
                                 }
@@ -50,7 +51,7 @@ public struct ProfileEditView: View {
                            case .success(let myLanguages) = viewModel.myLanguages {
                             HFlow(itemSpacing: 8, rowSpacing: 8) {
                                 ForEach(languages, id: \.id) { lang in
-                                    GrowRadioButton(lang.name, selectedIcon: .check, unselectedIcon: .add, isSelected: myLanguages.contains(lang)) {
+                                    MyRadioButton(lang.name, selectedIcon: .check, unselectedIcon: .add, isSelected: myLanguages.contains(lang)) {
                                         viewModel.updateMyLanguages(lang: lang)
                                     }
                                 }
@@ -65,14 +66,14 @@ public struct ProfileEditView: View {
                 .padding(.bottom, 92)
             }
             .scrollIndicators(.hidden)
-            GrowButton("완료", type: .CTA, leadingIcon: .check) {
+            MyButton("완료", type: .CTA, leadingIcon: .check) {
                 await viewModel.completeSetting()
             }
             .toBottom()
             .padding(.horizontal, 20)
             .padding(.bottom, 8)
         }
-        .growTopBar("프로필 설정", background: .backgroundAlt) {
+        .myTopBar("프로필 설정", background: .backgroundAlt) {
             router.popToStack()
         }
         .hideKeyboardWhenTap()

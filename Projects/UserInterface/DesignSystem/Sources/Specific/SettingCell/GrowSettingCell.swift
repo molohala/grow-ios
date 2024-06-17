@@ -1,20 +1,21 @@
 import SwiftUI
+import MyDesignSystem
 
 public struct GrowSettingCell<C>: View where C: View {
     
     public let label: String
-    public let labelColor: GrowColorScheme
-    public let leftIcon: GrowIconography?
-    public let leftIconColor: GrowColorScheme
+    public let labelColor: MyColorScheme
+    public let leftIcon: MyIconography?
+    public let leftIconColor: MyColorScheme
     public let description: String?
     public let content: () -> C
     public let action: (() -> Void)?
     
     public init(
         label: String,
-        labelColor: GrowColorScheme = .textNormal,
-        leftIcon: GrowIconography? = nil,
-        leftIconColor: GrowColorScheme = .textAlt,
+        labelColor: MyColorScheme = .textNormal,
+        leftIcon: MyIconography? = nil,
+        leftIconColor: MyColorScheme = .textAlt,
         content: @escaping () -> C = { EmptyView() },
         description: String? = nil,
         action: (() -> Void)? = nil
@@ -35,22 +36,22 @@ public struct GrowSettingCell<C>: View where C: View {
                 if let leftIcon {
                     Image(icon: leftIcon)
                         .resizable()
-                        .growIconColor(leftIconColor)
+                        .myIconColor(leftIconColor)
                         .frame(size: 24)
                 }
                 Text(label)
-                    .growFont(.bodyB)
-                    .growColor(labelColor)
+                    .myFont(.bodyB)
+                    .myColor(labelColor)
             }
             Spacer()
             if let description {
                 HStack(spacing: 8) {
                     Text(description)
-                        .growFont(.labelM)
-                        .growColor(.textAlt)
+                        .myFont(.labelM)
+                        .myColor(.textAlt)
                     Image(icon: .expandRight)
                         .resizable()
-                        .growIconColor(.textAlt)
+                        .myIconColor(.textAlt)
                         .frame(size: 24)
                 }
             }

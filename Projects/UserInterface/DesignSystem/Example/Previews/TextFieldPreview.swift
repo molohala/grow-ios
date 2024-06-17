@@ -10,15 +10,15 @@ struct TextFieldPreview: View {
     var body: some View {
         ScrollView {
             VStack {
-                GrowTextField("아이디", text: $id)
-                GrowTextField("비밀번호", text: $pw, isSecured: true)
-                GrowTextField("비밀번호", text: $pw, isEnabled: false, isRounded: true)
-                GrowTextEditor(text: $content)
+                MyTextField("아이디", text: $id)
+                MyTextField("비밀번호", text: $pw, isSecured: true)
+                MyTextField("비밀번호", text: $pw, isEnabled: false, isRounded: true)
+                MyTextEditor(text: $content)
                     .frame(height: 300)
-                GrowTextEditor(text: $content, isEnabled: false)
+                MyTextEditor(text: $content, isEnabled: false)
                     .frame(height: 300)
             }
         }
-        .growBackground(.background)
+        .myBackground(.background)
     }
 }

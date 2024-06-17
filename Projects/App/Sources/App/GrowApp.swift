@@ -1,6 +1,7 @@
 import SwiftUI
 import DesignSystem
 import BaseService
+import MyDesignSystem
 
 @main
 struct GrowApp: App {
@@ -9,6 +10,7 @@ struct GrowApp: App {
     
     init() {
         registerProviderFactories()
+        Wanted.register()
     }
     
     var body: some Scene {

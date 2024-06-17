@@ -6,6 +6,7 @@ import GithubRankFeatureInterface
 import BaekjoonRankFeatureInterface
 import ProfileFeatureInterface
 import CommunityFeatureInterface
+import MyDesignSystem
 
 public struct MainView: View {
     
@@ -34,7 +35,7 @@ public struct MainView: View {
     
     public var body: some View {
         NavigationStack(path: $router.navPath) {
-            GrowBottomTabBar(selectedTab: appState.selectedView, onTap: { tab in
+            MyBottomTabBar(selectedTab: appState.selectedView, onTap: { tab in
                 appState.selectedView = tab
             }) {
                 switch appState.selectedView {

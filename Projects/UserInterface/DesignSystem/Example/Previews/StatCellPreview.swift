@@ -17,6 +17,6 @@ struct StatCellPreview: View {
                 GrowStatCellShimmer()
             }
         }
-        .growBackground(.backgroundAlt)
+        .myBackground(.backgroundAlt)
     }
 }

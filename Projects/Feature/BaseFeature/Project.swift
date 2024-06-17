@@ -1,5 +1,6 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
 let project = Project.makeFeature(
     target: .Base,
@@ -10,7 +11,7 @@ let project = Project.makeFeature(
             .shared(target: .DateUtil),
             .serviceInterface(target: .Auth),
             .serviceInterface(target: .Info),
-            .shared(target: .SwiftUtil),
+            .shared(target: .SwiftUtil)
         ]),
         .featureInterface(target: .Base, dependencies: [])
     ]

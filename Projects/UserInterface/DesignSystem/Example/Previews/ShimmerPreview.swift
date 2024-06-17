@@ -8,10 +8,10 @@ struct ShimmerPreview: View {
     var body: some View {
         VStack {
             RowShimmer(width: 100)
-            GrowAvatarShimmer(type: .large)
+            MyAvatarShimmer(type: .large)
             Spacer()
         }
         .toCenter()
-        .growBackground(.background)
+        .myBackground(.background)
     }
 }

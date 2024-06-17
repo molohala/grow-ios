@@ -6,35 +6,35 @@ struct ButtonPreview: View {
         ScrollView {
             VStack {
                 ForEach(ButtonType.allCases, id: \.self) {
-                    GrowButton("완료", type: $0, leadingIcon: .check) {}
-                    GrowButton("시작하기", type: $0) {
+                    MyButton("완료", type: $0, leadingIcon: .check) {}
+                    MyButton("시작하기", type: $0) {
                         try? await Task.sleep(for: .seconds(1))
                     }
-                    GrowButton("시작하기", type: $0, isEnabled: false) {}
+                    MyButton("시작하기", type: $0, isEnabled: false) {}
                     
-                    GrowTextButton("완료", type: $0, leadingIcon: .check) {}
-                    GrowTextButton("시작하기", type: $0) {
+                    MyTextButton("완료", type: $0, leadingIcon: .check) {}
+                    MyTextButton("시작하기", type: $0) {
                         try? await Task.sleep(for: .seconds(1))
                     }
-                    GrowTextButton("시작하기", type: $0, isEnabled: false) {}
+                    MyTextButton("시작하기", type: $0, isEnabled: false) {}
                 }
-                GrowTabButton("완료", leadingIcon: .check, isSelected: true) {}
-                GrowTabButton("시작하기", isSelected: true) {
+                MyTabButton("완료", leadingIcon: .check, isSelected: true) {}
+                MyTabButton("시작하기", isSelected: true) {
                     try? await Task.sleep(for: .seconds(1))
                 }
-                GrowTabButton("시작하기", isSelected: false) {}
+                MyTabButton("시작하기", isSelected: false) {}
                 
                 GrowToggle(isOn: .constant(true))
                 GrowToggle(isOn: .constant(false))
-                GrowLikeButton(like: 312, isLiked: true) {}
-                GrowLikeButton(like: 311, isLiked: false) {}
+                MyLikeButton(like: 312, isLiked: true) {}
+                MyLikeButton(like: 311, isLiked: false) {}
                 
-                GrowRadioButton("Server", isSelected: true) {}
-                GrowRadioButton("Web", isSelected: false) {}
-                GrowRadioButton("Python", icon: .check, isSelected: true) {}
-                GrowRadioButton("HTML", icon: .check, isSelected: false) {}
+                MyRadioButton("Server", isSelected: true) {}
+                MyRadioButton("Web", isSelected: false) {}
+                MyRadioButton("Python", icon: .check, isSelected: true) {}
+                MyRadioButton("HTML", icon: .check, isSelected: false) {}
             }
         }
-        .growTopBar("") {}
+        .myTopBar("") {}
     }
 }

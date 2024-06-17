@@ -1,19 +1,20 @@
 import SwiftUI
 import InfoServiceInterface
 import DateUtil
+import MyDesignSystem
 
 public enum ChartType: Equatable {
     case github
     case baekjoon
     
-    var icon: GrowIconography {
+    var icon: MyIconography {
         switch self {
         case .github: .github
         case .baekjoon: .baekjoon
         }
     }
     
-    var iconColor: GrowColorScheme {
+    var iconColor: MyColorScheme {
         switch self {
         case .github: .github
         case .baekjoon: .baekjoon
@@ -55,22 +56,22 @@ public struct GrowChartCell: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(chartInfo.label)
-                            .growFont(.title1B)
-                            .growColor(.textNormal)
+                            .myFont(.title1B)
+                            .myColor(.textNormal)
                         Text(chartInfo.description)
-                            .growFont(.labelM)
-                            .growColor(.textDarken)
+                            .myFont(.labelM)
+                            .myColor(.textDarken)
                     }
                     Spacer()
                     Image(icon: chartInfo.type.icon)
                         .resizable()
-                        .growIconColor(chartInfo.type.iconColor)
+                        .myIconColor(chartInfo.type.iconColor)
                         .frame(size: 28)
                 }
                 if chartInfo.chartData.sum > 0 {
                     GrowChart(chartData: chartInfo.chartData, type: chartInfo.type)
                         .frame(height: 200)
-                        .growBackground(.background)
+                        .myBackground(.background)
                         .padding(.top, 8)
                 } else {
                     GrowMotivationCell()

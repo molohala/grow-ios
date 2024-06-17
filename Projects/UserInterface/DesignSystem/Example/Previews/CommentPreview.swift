@@ -11,6 +11,6 @@ struct CommentPreview: View {
 //                GrowCommentCellShimmer()
             }
         }
-        .growBackground(.background)
+        .myBackground(.background)
     }
 }

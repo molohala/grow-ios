@@ -1,6 +1,7 @@
 import SwiftUI
 import DesignSystem
 import BaseFeature
+import MyDesignSystem
 
 public struct GithubSettingView: View {
     
@@ -21,17 +22,17 @@ public struct GithubSettingView: View {
                 GrowHeadline("Github ID")
                     .toLeading()
                     .padding(.horizontal, 4)
-                GrowTextField("", text: $viewModel.githubId)
+                MyTextField("", text: $viewModel.githubId)
             }
             .padding(.top, 20)
             Spacer()
-            GrowButton("완료", type: .CTA, leadingIcon: .check, isEnabled: !viewModel.githubId.isEmpty) {
+            MyButton("완료", type: .CTA, leadingIcon: .check, isEnabled: !viewModel.githubId.isEmpty) {
                 await viewModel.completeSetting()
             }
             .padding(.horizontal, 4)
         }
         .padding(.horizontal, 16)
-        .growTopBar("Github 설정", background: .backgroundAlt) {
+        .myTopBar("Github 설정", background: .backgroundAlt) {
             router.popToStack()
         }
         .onChange(of: viewModel.completeFlow) {

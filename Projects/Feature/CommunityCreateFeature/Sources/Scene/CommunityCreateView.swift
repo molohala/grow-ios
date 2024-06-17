@@ -1,6 +1,7 @@
 import BaseFeature
 import SwiftUI
 import DesignSystem
+import MyDesignSystem
 
 public struct CommunityCreateView: View {
     
@@ -15,13 +16,19 @@ public struct CommunityCreateView: View {
     
     public var body: some View {
         ScrollView {
-            GrowTextEditor(text: $viewModel.content)
-                .frame(minHeight: 300)
-                .padding(12)
+            VStack(alignment: .leading, spacing: 4) {
+                MyTextEditor(text: $viewModel.content)
+                    .frame(minHeight: 300)
+                Text("* 부적절하거나 불쾌감을 줄 수 있는 컨텐츠는 글 작성 불가, 계정 정지 등의 제재를 받을 수 있습니다")
+                    .myColor(.textWarning)
+                    .myFont(.labelR)
+                    .multilineTextAlignment(.leading)
+            }
+            .padding(12)
         }
         .hideKeyboardWhenTap()
-        .growTopBar("글쓰기", trailingContent: {
-            GrowTextButton("완료", type: .Small) {
+        .myTopBar("글쓰기", trailingContent: {
+            MyTextButton("완료", type: .Small) {
                 await viewModel.createCommunity()
             }
             .padding(.horizontal, 4)

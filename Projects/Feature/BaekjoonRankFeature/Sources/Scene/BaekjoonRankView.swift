@@ -2,6 +2,7 @@ import SwiftUI
 import DesignSystem
 import BaseFeature
 import BaekjoonRankFeatureInterface
+import MyDesignSystem
 
 public struct BaekjoonRankView: View {
     
@@ -54,7 +55,7 @@ public struct BaekjoonRankView: View {
                 }
             }
         }
-        .growTopBar("백준 랭킹")
+        .myTopBar("백준 랭킹")
         .task {
             Task {
                 await viewModel.fetchBaekjoonRank()
@@ -69,9 +70,9 @@ public struct BaekjoonRankView: View {
     private var recommendingSettingBaekjoon: some View {
         VStack(spacing: 16) {
             Text("아직 백준 ID를 설정하지 않았어요")
-                .growFont(.bodyM)
-                .growColor(.textNormal)
-            GrowButton("설정하기", type: .Small) {
+                .myFont(.bodyM)
+                .myColor(.textNormal)
+            MyButton("설정하기", type: .Small) {
                 router.navigate(to: BaekjoonRankDestination.baekjoonSetting)
             }
         }
@@ -82,7 +83,7 @@ public struct BaekjoonRankView: View {
     private var indicator: some View {
         HStack(spacing: 12) {
             ForEach(BaekjoonTab.allCases, id: \.self) { tab in
-                GrowTabButton(
+                MyTabButton(
                     tab.rawValue,
                     isSelected: tab == viewModel.selectedTab
                 ) {

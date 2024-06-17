@@ -6,13 +6,13 @@ struct AvatarPreview: View {
         ScrollView {
             VStack {
                 ForEach(AvatarType.allCases, id: \.self) {
-                    GrowAvatar(type: $0)
+                    MyAvatar(type: $0)
                 }
                 ForEach(AvatarType.allCases, id: \.self) {
-                    GrowAvatar("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXmP3sgy4ULmNQgAajfnDXomXm3EQBocUfH_D7avoJRw&s", type: $0)
+                    MyAvatar("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXmP3sgy4ULmNQgAajfnDXomXm3EQBocUfH_D7avoJRw&s", type: $0)
                 }
             }
         }
-        .growBackground(.background)
+        .myBackground(.background)
     }
 }

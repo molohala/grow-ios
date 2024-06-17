@@ -3,6 +3,7 @@ import LanguageServiceInterface
 import DesignSystem
 import AuthServiceInterface
 import InfoServiceInterface
+import MyDesignSystem
 
 @MainActor
 public final class AppState: ObservableObject {

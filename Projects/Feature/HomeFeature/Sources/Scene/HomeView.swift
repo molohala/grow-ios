@@ -3,6 +3,7 @@ import HomeFeatureInterface
 import DesignSystem
 import BaseFeature
 import CommunityFeatureInterface
+import MyDesignSystem
 
 public struct HomeView: View {
     
@@ -31,7 +32,7 @@ public struct HomeView: View {
             .padding(.horizontal, 16)
         }
         .scrollIndicators(.hidden)
-        .growTopBar("홈", background: .backgroundAlt, backButtonAction: nil)
+        .myTopBar("홈", background: .backgroundAlt, backButtonAction: nil)
         .task {
             async let fetchTodayGithubRank: () = viewModel.fetchTodayGithubRank()
             async let fetchTodayBaekjoonRank: () = viewModel.fetchTodayBaekjoonRank()
@@ -71,6 +72,8 @@ public struct HomeView: View {
                     await viewModel.reportCommunity()
                 }
             }
+        } message: {
+            Text("검토까지는 최대 24시간이 소요됩니다")
         }
         .refreshable {
             Task {

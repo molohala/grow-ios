@@ -4,10 +4,10 @@ import DesignSystem
 struct DividerPreview: View {
     var body: some View {
         VStack {
-            GrowDivider()
-            GrowDivider(type: .thick)
+            MyDivider()
+            MyDivider(type: .thick)
             Spacer()
         }
-        .growBackground(.background)
+        .myBackground(.background)
     }
 }

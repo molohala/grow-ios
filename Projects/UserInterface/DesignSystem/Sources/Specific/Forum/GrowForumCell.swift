@@ -1,5 +1,6 @@
 import SwiftUI
 import CommunityServiceInterface
+import MyDesignSystem
 
 public struct GrowForumCell: View {
     
@@ -46,41 +47,41 @@ public struct GrowForumCell: View {
             } label: {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(spacing: 8) {
-                        GrowAvatar(type: .medium)
+                        MyAvatar(type: .medium)
                         VStack(alignment: .leading) {
                             Text(content.writerName)
-                                .growFont(.bodyB)
-                                .growColor(.textNormal)
+                                .myFont(.bodyB)
+                                .myColor(.textNormal)
                             Text(content.createdAt.timeAgo)
-                                .growFont(.labelM)
-                                .growColor(.textAlt)
+                                .myFont(.labelM)
+                                .myColor(.textAlt)
                         }
                         Spacer()
                     }
                     Text(LocalizedStringKey(content.content))
                         .lineLimit(5)
-                        .growFont(.bodyR)
+                        .myFont(.bodyR)
                         .truncationMode(.tail)
-                        .growColor(.textNormal)
+                        .myColor(.textNormal)
                         .lineSpacing(5)
-                    GrowLikeButton(like: content.like, isLiked: content.liked) {
+                    MyLikeButton(like: content.like, isLiked: content.liked) {
                         await likeAction()
                     }
                     if let recentComment {
-                        GrowDivider()
+                        MyDivider()
                         HStack(spacing: 4) {
                             Text(recentComment.name)
-                                .growFont(.labelB)
-                                .growColor(.textNormal)
+                                .myFont(.labelB)
+                                .myColor(.textNormal)
                             Text(recentComment.content)
                                 .applyOpenURL()
-                                .growColor(.textNormal)
-                                .growFont(.labelR)
+                                .myColor(.textNormal)
+                                .myFont(.labelR)
                                 .lineLimit(1)
                                 .truncationMode(.tail)
                             Text(recentComment.createdAt.timeAgo)
-                                .growFont(.labelM)
-                                .growColor(.textAlt)
+                                .myFont(.labelM)
+                                .myColor(.textAlt)
                             Spacer()
                         }
                     }
@@ -120,9 +121,9 @@ public struct GrowForumCell: View {
                     } label: {
                         Image(icon: .detailVertical)
                             .resizable()
-                            .growIconColor(.textAlt)
+                            .myIconColor(.textAlt)
                             .frame(size: 28)
-                            .growBackground(.background)
+                            .myBackground(.background)
                     }
                 }
             }

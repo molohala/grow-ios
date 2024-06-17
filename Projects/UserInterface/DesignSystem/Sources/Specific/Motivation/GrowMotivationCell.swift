@@ -1,4 +1,6 @@
 import SwiftUI
+import SwiftUtil
+import MyDesignSystem
 
 public struct GrowMotivationCell: View {
     public init() {}
@@ -6,8 +8,8 @@ public struct GrowMotivationCell: View {
     public var body: some View {
         if let motivation = motivations.randomElement() {
             Text(motivation)
-                .growColor(.textNormal)
-                .growFont(.headline2R)
+                .myColor(.textNormal)
+                .myFont(.headline2R)
                 .multilineTextAlignment(.center)
                 .toCenter()
                 .padding(16)

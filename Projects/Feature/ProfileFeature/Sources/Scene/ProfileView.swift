@@ -3,6 +3,7 @@ import DesignSystem
 import BaseFeature
 import ProfileFeatureInterface
 import Flow
+import MyDesignSystem
 
 public struct ProfileView: View {
     
@@ -29,7 +30,7 @@ public struct ProfileView: View {
             .padding(.top, 12)
         }
         .scrollIndicators(.hidden)
-        .growTopBar("프로필", background: .backgroundAlt)
+        .myTopBar("프로필", background: .backgroundAlt)
         .refreshable {
             Task {
                 await appState.fetchProfile()
@@ -42,21 +43,21 @@ public struct ProfileView: View {
         HStack(spacing: 8) {
             switch appState.profile {
             case .fetching:
-                GrowAvatarShimmer(type: .extraLarge)
+                MyAvatarShimmer(type: .extraLarge)
                 VStack(alignment: .leading, spacing: 2) {
                     RowShimmer(width: 60)
                     RowShimmer(width: 40)
                 }
             case .success(let data):
-                GrowAvatar(type: .extraLarge)
+                MyAvatar(type: .extraLarge)
                 VStack(alignment: .leading, spacing: 2) {
                     let isDesigner = data.job == "Designer"
                     Text("\(data.job) \(isDesigner ? "" : "개발자")")
-                        .growFont(.labelR)
-                        .growColor(.textDarken)
+                        .myFont(.labelR)
+                        .myColor(.textDarken)
                     Text(data.name)
-                        .growFont(.bodyB)
-                        .growColor(.textNormal)
+                        .myFont(.bodyB)
+                        .myColor(.textNormal)
                 }
             case .failure:
                 EmptyView()
@@ -67,7 +68,7 @@ public struct ProfileView: View {
             } label: {
                 Image(icon: .setting)
                     .resizable()
-                    .growIconColor(.textAlt)
+                    .myIconColor(.textAlt)
                     .frame(size: 32)
             }
             .applyAnimation()
@@ -85,7 +86,7 @@ public struct ProfileView: View {
                 } label: {
                     Image(icon: .write)
                         .resizable()
-                        .growIconColor(.textAlt)
+                        .myIconColor(.textAlt)
                         .frame(size: 20)
                 }
                 .applyAnimation()
@@ -97,8 +98,8 @@ public struct ProfileView: View {
                 } else {
                     Text(LocalizedStringKey(profile.bio))
                         .applyOpenURL()
-                        .growFont(.bodyM)
-                        .growColor(.textDarken)
+                        .myFont(.bodyM)
+                        .myColor(.textDarken)
                 }
             }
         }
@@ -114,14 +115,14 @@ public struct ProfileView: View {
                 switch appState.myLanguages {
                 case .fetching:
                     ForEach(0..<4, id: \.self) { _ in
-                        GrowLanguageShimmer()
+                        MyLanguageShimmer()
                     }
                 case .success(let data):
                     if data.isEmpty {
                         Text("🔥")
                     } else {
                         ForEach(data, id: \.id) {
-                            GrowLanguage(text: $0.name)
+                            MyLanguage(text: $0.name)
                         }
                     }
                 case .failure:

@@ -1,5 +1,6 @@
 import SwiftUI
 import Charts
+import MyDesignSystem
 
 public struct GrowChart: View {
     
@@ -52,7 +53,7 @@ public struct GrowChart: View {
                         let x = data[axis.index].x
                         AxisValueLabel("\(x)")
                             .foregroundStyle(colorProvider.color(.textDarken))
-                            .font(GrowFont.captionR.font)
+                            .font(MyFont.captionR.font)
                     }
                 }
             }
@@ -62,7 +63,7 @@ public struct GrowChart: View {
                     AxisValueLabel {
                         Text("\(value)")
                             .foregroundStyle(colorProvider.color(.textDarken))
-                            .font(GrowFont.captionR.font)
+                            .font(MyFont.captionR.font)
                     }
                     AxisGridLine()
                 }

@@ -4,6 +4,7 @@ import CommunityDetailFeatureInterface
 import DesignSystem
 import CommunityServiceInterface
 import CommentServiceInterface
+import MyDesignSystem
 
 public struct CommunityDetailView: View {
     
@@ -37,7 +38,7 @@ public struct CommunityDetailView: View {
                         case .success(let data):
                             VStack(spacing: 8) {
                                 makeForum(data)
-                                GrowDivider()
+                                MyDivider()
                                 comments
                                 Spacer().frame(height: 64)
                             }
@@ -53,9 +54,9 @@ public struct CommunityDetailView: View {
             .ignoresSafeArea(edges: .bottom)
             let isDisabled = viewModel.currentComment.isEmpty
             HStack(spacing: 8) {
-                GrowTextEditor(text: $viewModel.currentComment, isRounded: true)
+                MyTextEditor(text: $viewModel.currentComment, isRounded: true)
                     .frame(height: 52)
-                    .growBackground(.backgroundAlt)
+                    .myBackground(.backgroundAlt)
                     .cornerRadius(26, corners: .allCorners)
                 Button {
                     isCreateCommentFetch = true
@@ -66,7 +67,7 @@ public struct CommunityDetailView: View {
                 } label: {
                     Image(icon: .send)
                         .resizable()
-                        .growIconColor(isDisabled ? .textFieldIconDisabled : .textFieldIcon)
+                        .myIconColor(isDisabled ? .textFieldIconDisabled : .textFieldIcon)
                         .frame(size: 28)
                         .padding(4)
                         .opacity(isCreateCommentFetch ? 0 : 1)
@@ -83,7 +84,7 @@ public struct CommunityDetailView: View {
             .toBottom()
         }
         .hideKeyboardWhenTap()
-        .growTopBar("", background: .backgroundAlt, backButtonAction: {
+        .myTopBar("", background: .backgroundAlt, backButtonAction: {
             dismiss()
         })
         .task {
@@ -167,6 +168,8 @@ public struct CommunityDetailView: View {
                     await viewModel.reportCommunity()
                 }
             }
+        } message: {
+            Text("검토까지는 최대 24시간이 소요됩니다")
         }
     }
     
@@ -174,14 +177,14 @@ public struct CommunityDetailView: View {
     private func makeForum(_ forum: CommunityContent) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
-                GrowAvatar(type: .medium)
+                MyAvatar(type: .medium)
                 VStack(alignment: .leading, spacing: 0) {
                     Text(forum.writerName)
-                        .growFont(.bodyB)
-                        .growColor(.textNormal)
+                        .myFont(.bodyB)
+                        .myColor(.textNormal)
                     Text(forum.createdAt.timeAgo)
-                        .growFont(.labelM)
-                        .growColor(.textAlt)
+                        .myFont(.labelM)
+                        .myColor(.textAlt)
                 }
                 Spacer()
                 Menu {
@@ -204,15 +207,15 @@ public struct CommunityDetailView: View {
                 } label: {
                     Image(icon: .detailVertical)
                         .resizable()
-                        .growIconColor(.textAlt)
+                        .myIconColor(.textAlt)
                         .frame(size: 24)
                 }
             }
             Text(LocalizedStringKey(forum.content))
                 .applyOpenURL()
-                .growFont(.bodyR)
-                .growColor(.textNormal)
-            GrowLikeButton(
+                .myFont(.bodyR)
+                .myColor(.textNormal)
+            MyLikeButton(
                 like: forum.like,
                 isLiked: forum.liked,
                 action: {

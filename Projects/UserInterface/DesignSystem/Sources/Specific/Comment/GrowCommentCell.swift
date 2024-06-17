@@ -1,6 +1,7 @@
 import SwiftUI
 import CommentServiceInterface
 import DateUtil
+import MyDesignSystem
 
 public struct GrowCommentCell: View {
     
@@ -24,20 +25,20 @@ public struct GrowCommentCell: View {
     public var body: some View {
         HStack(alignment: .top) {
             HStack(alignment: .top, spacing: 8) {
-                GrowAvatar(type: .large)
+                MyAvatar(type: .large)
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 4) {
                         Text(comment.name)
-                            .growFont(.bodyB)
-                            .growColor(.textNormal)
+                            .myFont(.bodyB)
+                            .myColor(.textNormal)
                         Text(comment.createdAt.timeAgo)
-                            .growFont(.labelM)
-                            .growColor(.textAlt)
+                            .myFont(.labelM)
+                            .myColor(.textAlt)
                     }
                     Text(LocalizedStringKey(comment.content))
                         .applyOpenURL()
-                        .growFont(.bodyR)
-                        .growColor(.textNormal)
+                        .myFont(.bodyR)
+                        .myColor(.textNormal)
                         .lineSpacing(5)
                 }
             }
@@ -58,7 +59,7 @@ public struct GrowCommentCell: View {
             } label: {
                 Image(icon: .detailVertical)
                     .resizable()
-                    .growIconColor(.textAlt)
+                    .myIconColor(.textAlt)
                     .frame(size: 24)
             }
             .applyAnimation()

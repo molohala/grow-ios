@@ -3,6 +3,7 @@ import BaseFeature
 import DesignSystem
 import CommunityFeatureInterface
 import CommunityServiceInterface
+import MyDesignSystem
 
 public struct CommunityView: View {
     
@@ -79,7 +80,7 @@ public struct CommunityView: View {
                     }
                 }
             }
-            GrowButton(
+            MyButton(
                 "글쓰기",
                 type: .Large,
                 leadingIcon: .write,
@@ -92,7 +93,7 @@ public struct CommunityView: View {
             .toBottom()
             .toTrailing()
         }
-        .growTopBar("포럼", background: .backgroundAlt)
+        .myTopBar("포럼", background: .backgroundAlt)
         .task {
             await viewModel.fetchCommunities()
         }
@@ -129,6 +130,8 @@ public struct CommunityView: View {
                     await viewModel.reportCommunity()
                 }
             }
+        } message: {
+            Text("검토까지는 최대 24시간이 소요됩니다")
         }
     }
 }

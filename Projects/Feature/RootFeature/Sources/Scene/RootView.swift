@@ -6,6 +6,7 @@ import AuthServiceInterface
 import InfoServiceInterface
 import LanguageServiceInterface
 import DesignSystem
+import MyDesignSystem
 
 public struct RootView: View {
     

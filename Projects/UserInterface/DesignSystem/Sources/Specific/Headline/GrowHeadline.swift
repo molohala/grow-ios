@@ -12,7 +12,7 @@ public struct GrowHeadline: View {
     
     public var body: some View {
         Text(text)
-            .growFont(.headline1B)
-            .growColor(.textNormal)
+            .myFont(.headline1B)
+            .myColor(.textNormal)
     }
 }
