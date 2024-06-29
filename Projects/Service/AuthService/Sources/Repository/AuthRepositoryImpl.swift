@@ -36,10 +36,12 @@ struct AuthRepositoryImpl: AuthRepository {
     }
     
     func dAuthSignIn(id: String, pw: String) async throws -> DAuthSignInDomain {
-        let req = DAuthSignInRequest(id: id,
-                                     pw: pw,
-                                     clientId: DAuth.clientId,
-                                     redirectUrl: DAuth.redirectUrl)
+        let req = DAuthSignInRequest(
+            id: id,
+            pw: pw,
+            clientId: Grow.clientId,
+            redirectUrl: Grow.redirectUrl
+        )
         print(req)
         return try await dAuthDataSource.dAuthSignIn(req)
     }

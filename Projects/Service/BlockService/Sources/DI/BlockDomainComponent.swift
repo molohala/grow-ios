@@ -34,4 +34,3 @@ public class BlockDomainComponent: Component<BlockDomainDependency>, BlockDomain
         }
     }
 }
-
