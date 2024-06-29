@@ -12,6 +12,7 @@ public struct MainView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
+    @StateObject private var blockManager: BlockManager
     
     private let homeBuildable: any HomeBuildable
     private let communityBuildable: any CommunityBuildable
@@ -24,13 +25,15 @@ public struct MainView: View {
         communityBuildable: any CommunityBuildable,
         githubRankBuildable: any GithubRankBuildable,
         baekjoonRankBuildable: any BaekjoonRankBuildable,
-        profileBuildable: any ProfileBuildable
+        profileBuildable: any ProfileBuildable,
+        blockManager: BlockManager
     ) {
         self.homeBuildable = homeBuildable
         self.communityBuildable = communityBuildable
         self.githubRankBuildable = githubRankBuildable
         self.baekjoonRankBuildable = baekjoonRankBuildable
         self.profileBuildable = profileBuildable
+        self._blockManager = StateObject(wrappedValue: blockManager)
     }
     
     public var body: some View {
@@ -49,6 +52,21 @@ public struct MainView: View {
         }
         .task {
             await appState.fetchProfile()
+        }
+        .alert("차단 해제 실패", isPresented: $blockManager.allowFailure) {
+            Button("확인", role: .cancel) {}
+        }
+        .eraseToAnyView()
+        .alert("차단 해제 성공", isPresented: $blockManager.allowSuccess) {
+            Button("닫기", role: .cancel) {}
+        }
+        .eraseToAnyView()
+        .alert("유저 차단 실패", isPresented: $blockManager.blockFailure) {
+            Button("확인", role: .cancel) {}
+        }
+        .eraseToAnyView()
+        .alert("유저 차단 성공", isPresented: $blockManager.blockSuccess) {
+            Button("닫기", role: .cancel) {}
         }
     }
 }

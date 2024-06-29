@@ -9,6 +9,7 @@ public struct CommunityView: View {
     
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var blockManager: BlockManager
     @StateObject private var viewModel: CommunityViewModel
     @State private var reader: ScrollViewProxy?
     @State private var showRemoveDialog = false
@@ -50,6 +51,9 @@ public struct CommunityView: View {
                                         reportAction: {
                                             showReportCommunityDialog = true
                                             viewModel.selectedReportCommunity = community
+                                        },
+                                        blockAction: {
+                                            await blockManager.block(blockUserId: community.community.writerId)
                                         },
                                         action: {
                                             router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))

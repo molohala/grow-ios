@@ -10,6 +10,7 @@ public struct GrowForumCell: View {
     private let removeAction: () async -> Void
     private let editAction: () async -> Void
     private let reportAction: () async -> Void
+    private let blockAction: () async -> Void
     private let action: () async -> Void
     
     private var me: Bool {
@@ -23,6 +24,7 @@ public struct GrowForumCell: View {
         removeAction: @escaping () async -> Void,
         editAction: @escaping () async -> Void,
         reportAction: @escaping () async -> Void,
+        blockAction: @escaping() async -> Void,
         action: @escaping () async -> Void
     ) {
         self.forum = forum
@@ -31,6 +33,7 @@ public struct GrowForumCell: View {
         self.removeAction = removeAction
         self.editAction = editAction
         self.reportAction = reportAction
+        self.blockAction = blockAction
         self.action = action
     }
     
@@ -101,11 +104,6 @@ public struct GrowForumCell: View {
                                     await editAction()
                                 }
                             }
-                            Button("신고하기", role: .destructive) {
-                                Task {
-                                    await reportAction()
-                                }
-                            }
                             Button("삭제하기", role: .destructive) {
                                 Task {
                                     await removeAction()
@@ -115,6 +113,11 @@ public struct GrowForumCell: View {
                             Button("신고하기", role: .destructive) {
                                 Task {
                                     await reportAction()
+                                }
+                            }
+                            Button("유저차단", role: .destructive) {
+                                Task {
+                                    await blockAction()
                                 }
                             }
                         }

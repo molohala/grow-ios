@@ -30,6 +30,7 @@ public extension ModulePaths {
         case Community
         case GithubRank
         case BaekjoonRank
+        case Block
         case BaekjoonSetting
         case GithubSetting
         case Profile

@@ -12,4 +12,5 @@ public enum SettingDestination {
     case profileEdit
     case githubSetting
     case baekjoonSetting
+    case block
 }

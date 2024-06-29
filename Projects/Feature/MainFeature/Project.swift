@@ -14,7 +14,8 @@ let project = Project.makeFeature(
             .featureInterface(target: .Profile),
             .featureInterface(target: .Community),
             // itself interface
-            .featureInterface(target: .Main)
+            .featureInterface(target: .Main),
+            .serviceInterface(target: .Block)
         ]),
         .featureInterface(target: .Main, dependencies: []),
         .featureExample(target: .Main, dependencies: [

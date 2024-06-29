@@ -75,6 +75,12 @@ public struct SettingView: View {
                 MyDivider()
                 VStack(spacing: 12) {
                     GrowSettingCell(
+                        label: "차단한 유저",
+                        action:  {
+                            router.navigate(to: SettingDestination.block)
+                        }
+                    )
+                    GrowSettingCell(
                         label: "로그아웃",
                         action: {
                             appState.accessToken = ""

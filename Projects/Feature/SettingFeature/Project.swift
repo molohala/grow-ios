@@ -10,6 +10,7 @@ let project = Project.makeFeature(
             .featureInterface(target: .ProfileEdit),
             .featureInterface(target: .BaekjoonSetting),
             .featureInterface(target: .GithubSetting),
+            .featureInterface(target: .Block),
             .serviceInterface(target: .Auth)
         ]),
         .featureInterface(target: .Setting, dependencies: [])

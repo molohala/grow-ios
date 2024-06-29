@@ -1,6 +1,6 @@
 import Foundation
 
-public struct BlockedUser {
+public struct BlockedUser: Equatable {
     public let createdAt: Date
     public let id: Int
     public let name: String

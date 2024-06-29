@@ -9,6 +9,7 @@ public struct HomeView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var blockManager: BlockManager
     @StateObject private var viewModel: HomeViewModel
     @State private var showRemoveDialog = false
     @State private var showReportCommunityDialog = false
@@ -240,6 +241,9 @@ public struct HomeView: View {
                                 reportAction: {
                                     viewModel.selectedReportCommunity = forum
                                     showReportCommunityDialog = true
+                                },
+                                blockAction: {
+                                    await blockManager.block(blockUserId: forum.community.writerId)
                                 },
                                 action: {
                                     router.navigate(to: HomeDestination.communityDetail(forumId: forum.community.communityId))
