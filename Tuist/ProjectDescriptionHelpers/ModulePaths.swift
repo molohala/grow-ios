@@ -50,6 +50,7 @@ public extension ModulePaths {
         case Like
         case Info
         case Rank
+        case Block
     }
     
     enum Shared: String, CaseIterable {

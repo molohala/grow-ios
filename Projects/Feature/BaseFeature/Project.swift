@@ -11,7 +11,8 @@ let project = Project.makeFeature(
             .shared(target: .DateUtil),
             .serviceInterface(target: .Auth),
             .serviceInterface(target: .Info),
-            .shared(target: .SwiftUtil)
+            .shared(target: .SwiftUtil),
+            .serviceInterface(target: .Block)
         ]),
         .featureInterface(target: .Base, dependencies: [])
     ]
