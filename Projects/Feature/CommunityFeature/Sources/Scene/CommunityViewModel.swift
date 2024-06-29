@@ -2,6 +2,7 @@ import Foundation
 import LikeServiceInterface
 import CommunityServiceInterface
 import BaseFeature
+import BaseService
 import SwiftUI
 
 public let pagingInterval = 10
@@ -23,6 +24,7 @@ public final class CommunityViewModel: ObservableObject {
     @Published var selectedReportCommunity: Community?
     @Published var reportCommunityReason = ""
     @Published var reportCommentFlow: FetchFlow<Bool> = .fetching
+    @Published var refreshFailure = false
     
     public init(
         getCommunitesUseCase: any GetCommunitiesUseCase,
@@ -45,11 +47,13 @@ public final class CommunityViewModel: ObservableObject {
         do {
             let pagedCommunities = try await getCommunitesUseCase(request)
             communities = .success(pagedCommunities)
-
+            
             if case .success(let communities) = communities,
-                !communities.isEmpty {
+               !communities.isEmpty {
                 page = nextPage
             }
+        } catch AuthError.refreshFailure {
+            refreshFailure = true
         } catch {
             communities = .failure
             page = 1
@@ -69,6 +73,8 @@ public final class CommunityViewModel: ObservableObject {
             let pagedCommunities = try await getCommunitesUseCase(request)
             communities.append(contentsOf: pagedCommunities)
             self.communities = .success(communities)
+        } catch AuthError.refreshFailure {
+            refreshFailure = true
         } catch {
             self.communities = .failure
             page = 1

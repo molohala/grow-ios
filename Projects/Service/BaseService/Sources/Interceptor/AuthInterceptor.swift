@@ -4,6 +4,10 @@ import Foundation
 import NeedleFoundation
 import SwiftUI
 
+public enum AuthError: Error {
+    case refreshFailure
+}
+
 public struct AuthInterceptor: RequestInterceptor {
     
     public init() {}
@@ -33,8 +37,7 @@ public struct AuthInterceptor: RequestInterceptor {
         
         let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
         guard !refreshToken.isEmpty else {
-            failureReissue()
-            completion(.doNotRetryWithError(error))
+            completion(.doNotRetryWithError(AuthError.refreshFailure))
             return
         }
         
@@ -65,13 +68,8 @@ public struct AuthInterceptor: RequestInterceptor {
             case .failure(let error):
                 print("❌ \(error.localizedDescription)")
                 print("❌ refresh 실패")
-                failureReissue()
-                completion(.doNotRetryWithError(error))
+                completion(.doNotRetryWithError(AuthError.refreshFailure))
             }
         }
-    }
-    
-    private func failureReissue() {
-        //
     }
 }

@@ -92,6 +92,12 @@ public struct HomeView: View {
         .refreshable {
             fetch()
         }
+        .onChange(of: viewModel.refreshFailure) {
+            if $0 {
+                appState.accessToken = ""
+                appState.refreshToken = ""
+            }
+        }
     }
     
     @ViewBuilder

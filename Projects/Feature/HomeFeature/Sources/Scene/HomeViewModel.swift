@@ -3,6 +3,7 @@ import CommunityServiceInterface
 import RankServiceInterface
 import LikeServiceInterface
 import BaseFeature
+import BaseService
 
 public final class HomeViewModel: ObservableObject {
     
@@ -23,6 +24,7 @@ public final class HomeViewModel: ObservableObject {
     @Published var selectedReportCommunity: Community?
     @Published var reportCommunityReason = ""
     @Published var reportCommentFlow: FetchFlow<Bool> = .fetching
+    @Published var refreshFailure = false
     
     public init(
         getTodayGithubRankUseCase: any GetTodayGithubRankUseCase,
@@ -46,6 +48,8 @@ public final class HomeViewModel: ObservableObject {
             todayGithubRanks = .fetching
             let ranks = try await getTodayGithubRankUseCase()
             todayGithubRanks = .success(ranks)
+        } catch AuthError.refreshFailure {
+            refreshFailure = true
         } catch {
             todayGithubRanks = .failure
         }
@@ -57,6 +61,8 @@ public final class HomeViewModel: ObservableObject {
             todayBaekjoonRanks = .fetching
             let rank = try await getTodaySolvedacRankUseCase()
             todayBaekjoonRanks = .success(rank)
+        } catch AuthError.refreshFailure {
+            refreshFailure = true
         } catch {
             todayBaekjoonRanks = .failure
         }
@@ -68,6 +74,8 @@ public final class HomeViewModel: ObservableObject {
             weekCommunities = .fetching
             let communities = try await getBestCommunitiesUseCase(count: 3)
             weekCommunities = .success(communities)
+        } catch AuthError.refreshFailure {
+            refreshFailure = true
         } catch {
             weekCommunities = .failure
         }

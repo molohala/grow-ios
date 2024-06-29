@@ -151,5 +151,11 @@ public struct CommunityView: View {
             }
             Button("아니요", role: .cancel) {}
         }
+        .onChange(of: viewModel.refreshFailure) {
+            if $0 {
+                appState.accessToken = ""
+                appState.refreshToken = ""
+            }
+        }
     }
 }
