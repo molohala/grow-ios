@@ -7,6 +7,10 @@ import BaekjoonRankFeatureInterface
 import BaekjoonSettingFeature
 import BaekjoonSettingFeatureInterface
 import BaseFeature
+import BlockFeature
+import BlockFeatureInterface
+import BlockService
+import BlockServiceInterface
 import CommentService
 import CommentServiceInterface
 import CommunityCreateFeature
@@ -92,6 +96,9 @@ private class SettingDependency792c9caceb5cb097fbecProvider: SettingDependency {
     var authDomainBuildable: any AuthDomainBuildable {
         return appComponent.authDomainBuildable
     }
+    var blockBuildable: any BlockBuildable {
+        return appComponent.blockBuildable
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -135,6 +142,9 @@ private class MainDependency7c6a5b4738b211b8e155Provider: MainDependency {
     }
     var profileBuildable: any ProfileBuildable {
         return appComponent.profileBuildable
+    }
+    var blockDomainBuildable: any BlockDomainBuildable {
+        return appComponent.blockDomainBuildable
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -370,6 +380,17 @@ private class BaekjoonSettingDependencyce5bee460baf327a3c82Provider: BaekjoonSet
 private func factorycbb61afc845cf58732dbf47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return BaekjoonSettingDependencyce5bee460baf327a3c82Provider(appComponent: parent1(component) as! AppComponent)
 }
+private class BlockDependency4fa760b2a0e2df0b01baProvider: BlockDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->BlockComponent
+private func factoryd53d03d081f2f9aa7416e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return BlockDependency4fa760b2a0e2df0b01baProvider()
+}
 private class LikeDomainDependencyf63c0c1617be7448fbeeProvider: LikeDomainDependency {
 
 
@@ -447,6 +468,17 @@ private class CommunityDomainDependency65d739140d7d8d39012bProvider: CommunityDo
 private func factoryb1f366c0bb811d91cf77e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return CommunityDomainDependency65d739140d7d8d39012bProvider()
 }
+private class BlockDomainDependency12216bca3e6ccf4ac267Provider: BlockDomainDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->BlockDomainComponent
+private func factoryc2e9b38c4cc307dbb636e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return BlockDomainDependency12216bca3e6ccf4ac267Provider()
+}
 
 #else
 extension AppComponent: Registration {
@@ -468,6 +500,7 @@ extension AppComponent: Registration {
         localTable["profileEditBuildable-any ProfileEditBuildable"] = { [unowned self] in self.profileEditBuildable as Any }
         localTable["profileBuildable-any ProfileBuildable"] = { [unowned self] in self.profileBuildable as Any }
         localTable["settingBuildable-any SettingBuildable"] = { [unowned self] in self.settingBuildable as Any }
+        localTable["blockBuildable-any BlockBuildable"] = { [unowned self] in self.blockBuildable as Any }
     }
 }
 extension ProfileDetailComponent: Registration {
@@ -482,6 +515,7 @@ extension SettingComponent: Registration {
         keyPathToName[\SettingDependency.githubSettingBuildable] = "githubSettingBuildable-any GithubSettingBuildable"
         keyPathToName[\SettingDependency.baekjoonSettingBuildable] = "baekjoonSettingBuildable-any BaekjoonSettingBuildable"
         keyPathToName[\SettingDependency.authDomainBuildable] = "authDomainBuildable-any AuthDomainBuildable"
+        keyPathToName[\SettingDependency.blockBuildable] = "blockBuildable-any BlockBuildable"
     }
 }
 extension ProfileComponent: Registration {
@@ -498,6 +532,7 @@ extension MainComponent: Registration {
         keyPathToName[\MainDependency.githubRankBuildable] = "githubRankBuildable-any GithubRankBuildable"
         keyPathToName[\MainDependency.baekjoonRankBuildable] = "baekjoonRankBuildable-any BaekjoonRankBuildable"
         keyPathToName[\MainDependency.profileBuildable] = "profileBuildable-any ProfileBuildable"
+        keyPathToName[\MainDependency.blockDomainBuildable] = "blockDomainBuildable-any BlockDomainBuildable"
     }
 }
 extension GithubRankComponent: Registration {
@@ -583,6 +618,11 @@ extension BaekjoonSettingComponent: Registration {
         keyPathToName[\BaekjoonSettingDependency.infoDomainBuildable] = "infoDomainBuildable-any InfoDomainBuildable"
     }
 }
+extension BlockComponent: Registration {
+    public func registerItems() {
+
+    }
+}
 extension LikeDomainComponent: Registration {
     public func registerItems() {
 
@@ -614,6 +654,11 @@ extension LanguageDomainComponent: Registration {
     }
 }
 extension CommunityDomainComponent: Registration {
+    public func registerItems() {
+
+    }
+}
+extension BlockDomainComponent: Registration {
     public func registerItems() {
 
     }
@@ -651,6 +696,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->CommunityEditComponent", factory6ebc832ed4bcf9ae0afff47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BaekjoonRankComponent", factoryf8ddad049da0deefda19f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->BaekjoonSettingComponent", factorycbb61afc845cf58732dbf47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->BlockComponent", factoryd53d03d081f2f9aa7416e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->LikeDomainComponent", factory9270861c93e2286ee142e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->InfoDomainComponent", factoryce0a1bbfc08c2337f426e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommentDomainComponent", factory9d07e84c0c1fdd02736fe3b0c44298fc1c149afb)
@@ -658,6 +704,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->AuthDomainComponent", factoryc9b20c320bb79402d4c1e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->LanguageDomainComponent", factoryd36933c5fb1cc27144cbe3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->CommunityDomainComponent", factoryb1f366c0bb811d91cf77e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->BlockDomainComponent", factoryc2e9b38c4cc307dbb636e3b0c44298fc1c149afb)
 }
 #endif
 

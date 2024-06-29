@@ -1,5 +1,7 @@
 import AuthService
 import AuthServiceInterface
+import BlockService
+import BlockServiceInterface
 import CommunityService
 import CommunityServiceInterface
 import LikeService
@@ -53,6 +55,12 @@ extension AppComponent {
     var languageDomainBuildable: any LanguageDomainBuildable {
         shared {
             LanguageDomainComponent(parent: self)
+        }
+    }
+    
+    var blockDomainBuildable: any BlockDomainBuildable {
+        shared {
+            BlockDomainComponent(parent: self)
         }
     }
 }

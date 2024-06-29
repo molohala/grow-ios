@@ -1,4 +1,6 @@
 import Foundation
+import BlockFeature
+import BlockFeatureInterface
 import BaekjoonRankFeature
 import BaekjoonRankFeatureInterface
 import BaekjoonSettingFeature
@@ -84,5 +86,9 @@ public extension AppComponent {
     
     var settingBuildable: any SettingBuildable {
         SettingComponent(parent: self)
+    }
+    
+    var blockBuildable: any BlockBuildable {
+        BlockComponent(parent: self)
     }
 }
