@@ -13,6 +13,8 @@ public struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
     @State private var showRemoveDialog = false
     @State private var showReportCommunityDialog = false
+    @State private var showBlockDialog = false
+    @State private var selectedBlockUserId: Int?
     
     public init(
         viewModel: HomeViewModel
@@ -76,13 +78,19 @@ public struct HomeView: View {
         } message: {
             Text("검토까지는 최대 24시간이 소요됩니다")
         }
-        .refreshable {
-            Task {
-                async let fetchTodayGithubRank: () = viewModel.fetchTodayGithubRank()
-                async let fetchTodayBaekjoonRank: () = viewModel.fetchTodayBaekjoonRank()
-                async let fetchBestCommunities: () = viewModel.fetchBestCommunities()
-                _ = await [fetchTodayGithubRank, fetchTodayBaekjoonRank, fetchBestCommunities]
+        .eraseToAnyView()
+        .alert("해당 유저를 차단하시겠습니까?", isPresented: $showBlockDialog) {
+            Button("차단", role: .destructive) {
+                guard let selectedBlockUserId else { return }
+                Task {
+                    await blockManager.block(blockUserId: selectedBlockUserId)
+                    fetch()
+                }
             }
+            Button("아니요", role: .cancel) {}
+        }
+        .refreshable {
+            fetch()
         }
     }
     
@@ -243,7 +251,8 @@ public struct HomeView: View {
                                     showReportCommunityDialog = true
                                 },
                                 blockAction: {
-                                    await blockManager.block(blockUserId: forum.community.writerId)
+                                    showBlockDialog = true
+                                    selectedBlockUserId = forum.community.writerId
                                 },
                                 action: {
                                     router.navigate(to: HomeDestination.communityDetail(forumId: forum.community.communityId))
@@ -258,5 +267,14 @@ public struct HomeView: View {
             .padding(.vertical, 8)
         }
         .padding(.vertical, 8)
+    }
+    
+    private func fetch() {
+        Task {
+            async let fetchTodayGithubRank: () = viewModel.fetchTodayGithubRank()
+            async let fetchTodayBaekjoonRank: () = viewModel.fetchTodayBaekjoonRank()
+            async let fetchBestCommunities: () = viewModel.fetchBestCommunities()
+            _ = await [fetchTodayGithubRank, fetchTodayBaekjoonRank, fetchBestCommunities]
+        }
     }
 }

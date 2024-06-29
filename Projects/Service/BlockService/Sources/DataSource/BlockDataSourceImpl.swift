@@ -12,7 +12,7 @@ final class BlockDataSourceImpl: BaseRemoteDataSource<BlockDataSourceImpl>, Bloc
     }
     
     func getAll() async throws -> [BlockServiceInterface.BlockedUser] {
-        try await requestGet(url: "\(Grow.baseUrl)/\(path)/", res: BaseResponse<[BlockedUserResponse]>.self)
+        try await requestGet(url: "\(Grow.baseUrl)/\(path)", res: BaseResponse<[BlockedUserResponse]>.self)
             .data.map { $0.toDomain() }
     }
 }

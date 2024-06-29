@@ -37,15 +37,17 @@ public final class BlockManager: ObservableObject {
     @MainActor
     public func allow(blockUserId: Int) async {
         do {
-            try await blockUseCase(blockUserId: blockUserId)
-            blockSuccess = true
+            try await allowUseCase(blockUserId: blockUserId)
+            allowSuccess = true
+            await fetchBlockedUsers()
         } catch {
-            blockFailure = true
+            allowFailure = true
         }
     }
     
     @MainActor
     public func fetchBlockedUsers() async {
+        blockedUser = .fetching
         do {
             let users = try await getAllBlockedUserUseCase()
             blockedUser = .success(users)

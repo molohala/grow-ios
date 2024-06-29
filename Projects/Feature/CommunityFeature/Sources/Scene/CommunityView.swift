@@ -14,6 +14,8 @@ public struct CommunityView: View {
     @State private var reader: ScrollViewProxy?
     @State private var showRemoveDialog = false
     @State private var showReportCommunityDialog = false
+    @State private var showBlockDialog = false
+    @State private var selectedBlockUserId: Int?
     
     public init(
         viewModel: CommunityViewModel
@@ -53,7 +55,8 @@ public struct CommunityView: View {
                                             viewModel.selectedReportCommunity = community
                                         },
                                         blockAction: {
-                                            await blockManager.block(blockUserId: community.community.writerId)
+                                            showBlockDialog = true
+                                            selectedBlockUserId = community.community.writerId
                                         },
                                         action: {
                                             router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))
@@ -136,6 +139,17 @@ public struct CommunityView: View {
             }
         } message: {
             Text("검토까지는 최대 24시간이 소요됩니다")
+        }
+        .eraseToAnyView()
+        .alert("해당 유저를 차단하시겠습니까?", isPresented: $showBlockDialog) {
+            Button("차단", role: .destructive) {
+                guard let selectedBlockUserId else { return }
+                Task {
+                    await blockManager.block(blockUserId: selectedBlockUserId)
+                    await viewModel.fetchCommunities()
+                }
+            }
+            Button("아니요", role: .cancel) {}
         }
     }
 }

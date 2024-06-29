@@ -50,6 +50,7 @@ public struct MainView: View {
                 }
             }
         }
+        .environmentObject(blockManager)
         .task {
             await appState.fetchProfile()
         }
