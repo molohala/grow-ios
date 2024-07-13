@@ -27,6 +27,14 @@ public struct CommunityDetailView: View {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
+    private var links: [String] {
+        if case .success(let data) = viewModel.community {
+            data.content.links
+        } else {
+            []
+        }
+    }
+    
     public var body: some View {
         ZStack {
             ScrollViewReader { proxy in
@@ -215,13 +223,16 @@ public struct CommunityDetailView: View {
                 .applyOpenURL()
                 .myFont(.bodyR)
                 .myColor(.textNormal)
+            if let link = links.first,
+               let url = URL(string: link) {
+                GrowLinkPreview(url: url)
+            }
             MyLikeButton(
                 like: forum.like,
-                isLiked: forum.liked,
-                action: {
-                    await viewModel.patchLike()
-                }
-            )
+                isLiked: forum.liked
+            ) {
+                await viewModel.patchLike()
+            }
         }
         .padding(12)
     }

@@ -21,6 +21,10 @@ public struct GrowForumCell: View {
         profileId == forum.community.writerId
     }
     
+    private var links: [String] {
+        forum.community.content.links
+    }
+    
     public init(
         forum: Community,
         profileId: Int,
@@ -61,6 +65,10 @@ public struct GrowForumCell: View {
                         .truncationMode(.tail)
                         .myColor(.textNormal)
                         .lineSpacing(5)
+                    if let link = links.first,
+                       let url = URL(string: link) {
+                        GrowLinkPreview(url: url)
+                    }
                     MyLikeButton(like: content.like, isLiked: content.liked) {
                         await action(.like)
                     }

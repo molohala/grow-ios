@@ -74,7 +74,7 @@ public struct GrowLinkPreview: View {
                     .myBackground(.background)
                 }
                 .myBackground(.backgroundAlt)
-                .stroke(8, content: colorProvider.color(.textDisabled))
+                .stroke(8, content: colorProvider.color(.textAlt))
             }
         }
         .applyAnimation()
