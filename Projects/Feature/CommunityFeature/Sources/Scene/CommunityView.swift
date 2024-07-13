@@ -39,28 +39,26 @@ public struct CommunityView: View {
                                 ForEach(data, id: \.community.communityId) { community in
                                     GrowForumCell(
                                         forum: community,
-                                        profileId: profile.id,
-                                        likeAction: {
+                                        profileId: profile.id
+                                    ) { action in
+                                        switch action {
+                                        case .like:
                                             await viewModel.patchLike(communityId: community.community.communityId)
-                                        },
-                                        removeAction: {
+                                        case .remove:
                                             viewModel.selectedRemoveCommunity = community
                                             showRemoveDialog = true
-                                        },
-                                        editAction: {
+                                        case .edit:
                                             router.navigate(to: CommunityDestination.communityEdit(forumId: community.community.communityId))
-                                        },
-                                        reportAction: {
+                                        case .report:
                                             showReportCommunityDialog = true
                                             viewModel.selectedReportCommunity = community
-                                        },
-                                        blockAction: {
+                                        case .block:
                                             showBlockDialog = true
                                             selectedBlockUserId = community.community.writerId
-                                        },
-                                        action: {
+                                        case .click:
                                             router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))
-                                        })
+                                        }
+                                    }
                                     .task {
                                         guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
                                         

@@ -4,14 +4,18 @@ import MyDesignSystem
 
 public struct GrowForumCell: View {
     
+    public enum Action {
+        case like
+        case remove
+        case edit
+        case report
+        case block
+        case click
+    }
+    
     private let forum: Community
     private let profileId: Int
-    private let likeAction: () async -> Void
-    private let removeAction: () async -> Void
-    private let editAction: () async -> Void
-    private let reportAction: () async -> Void
-    private let blockAction: () async -> Void
-    private let action: () async -> Void
+    private let action: (Action) async -> Void
     
     private var me: Bool {
         profileId == forum.community.writerId
@@ -20,20 +24,10 @@ public struct GrowForumCell: View {
     public init(
         forum: Community,
         profileId: Int,
-        likeAction: @escaping () async -> Void,
-        removeAction: @escaping () async -> Void,
-        editAction: @escaping () async -> Void,
-        reportAction: @escaping () async -> Void,
-        blockAction: @escaping() async -> Void,
-        action: @escaping () async -> Void
+        action: @escaping (Action) async -> Void
     ) {
         self.forum = forum
         self.profileId = profileId
-        self.likeAction = likeAction
-        self.removeAction = removeAction
-        self.editAction = editAction
-        self.reportAction = reportAction
-        self.blockAction = blockAction
         self.action = action
     }
     
@@ -45,7 +39,7 @@ public struct GrowForumCell: View {
         ZStack(alignment: .top) {
             Button {
                 Task {
-                    await action()
+                    await action(.click)
                 }
             } label: {
                 VStack(alignment: .leading, spacing: 12) {
@@ -68,7 +62,7 @@ public struct GrowForumCell: View {
                         .myColor(.textNormal)
                         .lineSpacing(5)
                     MyLikeButton(like: content.like, isLiked: content.liked) {
-                        await likeAction()
+                        await action(.like)
                     }
                     if let recentComment {
                         MyDivider()
@@ -101,23 +95,23 @@ public struct GrowForumCell: View {
                         if me {
                             Button("수정하기") {
                                 Task {
-                                    await editAction()
+                                    await action(.edit)
                                 }
                             }
                             Button("삭제하기", role: .destructive) {
                                 Task {
-                                    await removeAction()
+                                    await action(.remove)
                                 }
                             }
                         } else {
                             Button("신고하기", role: .destructive) {
                                 Task {
-                                    await reportAction()
+                                    await action(.report)
                                 }
                             }
                             Button("유저차단", role: .destructive) {
                                 Task {
-                                    await blockAction()
+                                    await action(.block)
                                 }
                             }
                         }

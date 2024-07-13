@@ -241,29 +241,26 @@ public struct HomeView: View {
                             let forumId = forum.community.communityId
                             GrowForumCell(
                                 forum: forum,
-                                profileId: profile.id,
-                                likeAction: {
+                                profileId: profile.id
+                            ) { action in
+                                switch action {
+                                case .like:
                                     await viewModel.patchLike(communityId: forum.community.communityId)
-                                },
-                                removeAction: {
+                                case .remove:
                                     viewModel.selectedRemoveCommunity = forum
                                     showRemoveDialog = true
-                                },
-                                editAction: {
+                                case .edit:
                                     router.navigate(to: HomeDestination.communityEdit(forumId: forum.community.communityId))
-                                },
-                                reportAction: {
+                                case .report:
                                     viewModel.selectedReportCommunity = forum
                                     showReportCommunityDialog = true
-                                },
-                                blockAction: {
+                                case .block:
                                     showBlockDialog = true
                                     selectedBlockUserId = forum.community.writerId
-                                },
-                                action: {
+                                case .click:
                                     router.navigate(to: HomeDestination.communityDetail(forumId: forum.community.communityId))
                                 }
-                            )
+                            }
                         }
                     }
                 case .failure:

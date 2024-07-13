@@ -23,16 +23,10 @@ struct ForumPreview: View {
             VStack {
                 GrowForumCell(
                     forum: forum,
-                    profileId: 1,
-                    likeAction: {},
-                    removeAction: {},
-                    editAction: {}, 
-                    reportAction: {},
-                    blockAction: {},
-                    action: {
-                        print("Hello")
-                    }
-                )
+                    profileId: 1
+                ) { _ in
+                    //
+                }
                 GrowForumCellShimmer()
             }
             .padding(8)
