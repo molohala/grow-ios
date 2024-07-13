@@ -7,6 +7,7 @@
 //
 import SwiftUI
 import DesignSystem
+import MyDesignSystem
 
 @main
 struct DesignSystemExample: App {

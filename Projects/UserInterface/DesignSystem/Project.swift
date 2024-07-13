@@ -12,7 +12,8 @@ let project = Project.makeUserInterface(
 //            .SPM.Nuke,
 //            .SPM.NukeUI,
             .SPM.Flow,
-            .SPM.MyDesignSystem
+            .SPM.MyDesignSystem,
+            .SPM.OpenGraph
         ] + ModulePaths.Service.allCases.map { TargetDependency.serviceInterface(target: $0) }),
         .userInterfaceExample(target: .DesignSystem, dependencies: [
             .userInterface(target: .DesignSystem)

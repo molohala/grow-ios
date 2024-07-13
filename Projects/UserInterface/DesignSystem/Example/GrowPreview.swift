@@ -13,6 +13,7 @@ enum GrowPreview: String, CaseIterable {
     case SettingCell
     case Shimmer
     case StatCell
+    case LinkPreview
     
     var view: some View {
         Group {
@@ -28,22 +29,22 @@ enum GrowPreview: String, CaseIterable {
             case .SettingCell: SettingCellPreview()
             case .Shimmer: ShimmerPreview()
             case .StatCell: StatCellPreview()
+            case .LinkPreview: LinkPreviewPreview()
             }
         }
     }
     
     static var preview: some View {
         NavigationStack {
-            ScrollView {
-                ForEach(Self.allCases, id: \.self) { preview in
-                    NavigationLink {
-                        preview.view
-                    } label: {
-                        Text("\(preview.rawValue) Preview")
-                            .padding()
-                    }
-                }
-            }
+//            List(Self.allCases.sorted { $0.rawValue < $1.rawValue }, id: \.self) { preview in
+//                NavigationLink {
+//                    preview.view
+//                } label: {
+//                    Text("\(preview.rawValue) Preview")
+//                }
+//            }
+//            .navigationTitle("Previews")
+            GrowPreview.LinkPreview.view
         }
     }
 }

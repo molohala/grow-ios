@@ -1,5 +1,6 @@
 import SwiftUI
 import DesignSystem
+import MyDesignSystem
 
 struct AvatarPreview: View {
     var body: some View {

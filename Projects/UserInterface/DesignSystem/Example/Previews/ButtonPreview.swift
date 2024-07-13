@@ -1,5 +1,6 @@
 import SwiftUI
 import DesignSystem
+import MyDesignSystem
 
 struct ButtonPreview: View {
     var body: some View {
@@ -24,15 +25,15 @@ struct ButtonPreview: View {
                 }
                 MyTabButton("시작하기", isSelected: false) {}
                 
-                GrowToggle(isOn: .constant(true))
-                GrowToggle(isOn: .constant(false))
+                MyToggle(isOn: .constant(true))
+                MyToggle(isOn: .constant(false))
                 MyLikeButton(like: 312, isLiked: true) {}
                 MyLikeButton(like: 311, isLiked: false) {}
                 
                 MyRadioButton("Server", isSelected: true) {}
                 MyRadioButton("Web", isSelected: false) {}
-                MyRadioButton("Python", icon: .check, isSelected: true) {}
-                MyRadioButton("HTML", icon: .check, isSelected: false) {}
+                MyRadioButton("Python", isSelected: true) {}
+                MyRadioButton("HTML", isSelected: false) {}
             }
         }
         .myTopBar("") {}
