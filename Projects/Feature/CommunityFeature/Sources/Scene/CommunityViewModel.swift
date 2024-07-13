@@ -4,6 +4,7 @@ import CommunityServiceInterface
 import BaseFeature
 import BaseService
 import SwiftUI
+import OpenGraph
 
 public let pagingInterval = 10
 
@@ -40,6 +41,7 @@ public final class CommunityViewModel: ObservableObject {
     
     @MainActor
     public func fetchCommunities() async {
+        communities = .fetching
         let nextPage = 1
         print("\(#function) - fetching ... nextPage: \(nextPage)")
         let request = PageRequest(page: nextPage, size: pagingInterval)
@@ -127,6 +129,18 @@ public final class CommunityViewModel: ObservableObject {
             reportCommentFlow = .success(true)
         } catch {
             reportCommentFlow = .failure
+        }
+    }
+    
+    @MainActor
+    func updateImageOpenGraph(forumId: Int, openGraph: OpenGraph?) {
+        if var data = communities.data {
+            Array(data.enumerated()).forEach { idx, forum in
+                if forum.community.communityId == forumId {
+                    data[idx].community.openGrpah = openGraph
+                }
+            }
+            communities = .success(data)
         }
     }
 }

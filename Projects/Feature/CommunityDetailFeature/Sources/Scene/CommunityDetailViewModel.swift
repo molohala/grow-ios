@@ -3,6 +3,7 @@ import LikeServiceInterface
 import CommentServiceInterface
 import CommunityServiceInterface
 import BaseFeature
+import OpenGraph
 
 public final class CommunityDetailViewModel: ObservableObject {
     
@@ -152,6 +153,14 @@ public final class CommunityDetailViewModel: ObservableObject {
             reportCommentFlow = .success(true)
         } catch {
             reportCommentFlow = .failure
+        }
+    }
+    
+    @MainActor
+    func updateImageOpenGraph(_ openGraph: OpenGraph?) {
+        if var data = community.data {
+            data.openGrpah = openGraph
+            community = .success(data)
         }
     }
 }

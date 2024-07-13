@@ -1,6 +1,13 @@
 import Foundation
+import OpenGraph
 
-public struct CommunityContent: Hashable {
+extension OpenGraph: Equatable {
+    public static func == (lhs: OpenGraph, rhs: OpenGraph) -> Bool {
+        lhs.source == rhs.source
+    }
+}
+
+public struct CommunityContent: Equatable {
     public let communityId: Int
     public let content: String
     public let createdAt: Date
@@ -8,6 +15,7 @@ public struct CommunityContent: Hashable {
     public let writerId: Int
     public let writerName: String
     public var liked: Bool
+    public var openGrpah: OpenGraph?
     
     public init(
         communityId: Int,

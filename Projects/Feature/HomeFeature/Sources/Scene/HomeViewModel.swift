@@ -4,6 +4,7 @@ import RankServiceInterface
 import LikeServiceInterface
 import BaseFeature
 import BaseService
+import OpenGraph
 
 public final class HomeViewModel: ObservableObject {
     
@@ -40,6 +41,14 @@ public final class HomeViewModel: ObservableObject {
         self.patchLikeUseCase = patchLikeUseCase
         self.removeCommunityUseCase = removeCommunityUseCase
         self.reportCommunityUseCase = reportCommunityUseCase
+    }
+    
+    @MainActor
+    func fetchAll() async {
+        async let fetchTodayGithubRank: () = fetchTodayGithubRank()
+        async let fetchTodayBaekjoonRank: () = fetchTodayBaekjoonRank()
+        async let fetchBestCommunities: () = fetchBestCommunities()
+        _ = await [fetchTodayGithubRank, fetchTodayBaekjoonRank, fetchBestCommunities]
     }
     
     @MainActor
@@ -127,6 +136,18 @@ public final class HomeViewModel: ObservableObject {
             reportCommentFlow = .success(true)
         } catch {
             reportCommentFlow = .failure
+        }
+    }
+    
+    @MainActor
+    func updateImageOpenGraph(forumId: Int, openGraph: OpenGraph?) {
+        if var data = weekCommunities.data {
+            Array(data.enumerated()).forEach { idx, forum in
+                if forum.community.communityId == forumId {
+                    data[idx].community.openGrpah = openGraph
+                }
+            }
+            weekCommunities = .success(data)
         }
     }
 }

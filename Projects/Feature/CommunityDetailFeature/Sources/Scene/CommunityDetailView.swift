@@ -5,6 +5,7 @@ import DesignSystem
 import CommunityServiceInterface
 import CommentServiceInterface
 import MyDesignSystem
+import OpenGraph
 
 public struct CommunityDetailView: View {
     
@@ -225,7 +226,14 @@ public struct CommunityDetailView: View {
                 .myColor(.textNormal)
             if let link = links.first,
                let url = URL(string: link) {
-                GrowLinkPreview(url: url)
+                GrowLinkPreview(
+                    url: url, 
+                    openGraph: .init {
+                        viewModel.community.data?.openGrpah
+                    } set: {
+                        viewModel.updateImageOpenGraph($0)
+                    }
+                )
             }
             MyLikeButton(
                 like: forum.like,

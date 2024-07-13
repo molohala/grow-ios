@@ -37,10 +37,7 @@ public struct HomeView: View {
         .scrollIndicators(.hidden)
         .myTopBar("홈", background: .backgroundAlt, backButtonAction: nil)
         .task {
-            async let fetchTodayGithubRank: () = viewModel.fetchTodayGithubRank()
-            async let fetchTodayBaekjoonRank: () = viewModel.fetchTodayBaekjoonRank()
-            async let fetchBestCommunities: () = viewModel.fetchBestCommunities()
-            _ = await [fetchTodayGithubRank, fetchTodayBaekjoonRank, fetchBestCommunities]
+            await viewModel.fetchAll()
         }
         .alert("게시글 삭제에 실패했습니다", isPresented: .init(
             get: { viewModel.removedCommunityFlow == .failure },
@@ -84,13 +81,13 @@ public struct HomeView: View {
                 guard let selectedBlockUserId else { return }
                 Task {
                     await blockManager.block(blockUserId: selectedBlockUserId)
-                    fetch()
+                    await viewModel.fetchAll()
                 }
             }
             Button("아니요", role: .cancel) {}
         }
         .refreshable {
-            fetch()
+            await viewModel.fetchAll()
         }
         .onChange(of: viewModel.refreshFailure) {
             if $0 {
@@ -245,12 +242,12 @@ public struct HomeView: View {
                             ) { action in
                                 switch action {
                                 case .like:
-                                    await viewModel.patchLike(communityId: forum.community.communityId)
+                                    await viewModel.patchLike(communityId: forumId)
                                 case .remove:
                                     viewModel.selectedRemoveCommunity = forum
                                     showRemoveDialog = true
                                 case .edit:
-                                    router.navigate(to: HomeDestination.communityEdit(forumId: forum.community.communityId))
+                                    router.navigate(to: HomeDestination.communityEdit(forumId: forumId))
                                 case .report:
                                     viewModel.selectedReportCommunity = forum
                                     showReportCommunityDialog = true
@@ -258,7 +255,9 @@ public struct HomeView: View {
                                     showBlockDialog = true
                                     selectedBlockUserId = forum.community.writerId
                                 case .click:
-                                    router.navigate(to: HomeDestination.communityDetail(forumId: forum.community.communityId))
+                                    router.navigate(to: HomeDestination.communityDetail(forumId: forumId))
+                                case .updateImageOpenGraph(let openGraph):
+                                    viewModel.updateImageOpenGraph(forumId: forumId, openGraph: openGraph)
                                 }
                             }
                         }
@@ -270,14 +269,5 @@ public struct HomeView: View {
             .padding(.vertical, 8)
         }
         .padding(.vertical, 8)
-    }
-    
-    private func fetch() {
-        Task {
-            async let fetchTodayGithubRank: () = viewModel.fetchTodayGithubRank()
-            async let fetchTodayBaekjoonRank: () = viewModel.fetchTodayBaekjoonRank()
-            async let fetchBestCommunities: () = viewModel.fetchBestCommunities()
-            _ = await [fetchTodayGithubRank, fetchTodayBaekjoonRank, fetchBestCommunities]
-        }
     }
 }

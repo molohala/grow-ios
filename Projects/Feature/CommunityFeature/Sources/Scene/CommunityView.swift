@@ -37,18 +37,19 @@ public struct CommunityView: View {
                         case .success(let data):
                             if case .success(let profile) = appState.profile {
                                 ForEach(data, id: \.community.communityId) { community in
+                                    let forumId = community.community.communityId
                                     GrowForumCell(
                                         forum: community,
                                         profileId: profile.id
                                     ) { action in
                                         switch action {
                                         case .like:
-                                            await viewModel.patchLike(communityId: community.community.communityId)
+                                            await viewModel.patchLike(communityId: forumId)
                                         case .remove:
                                             viewModel.selectedRemoveCommunity = community
                                             showRemoveDialog = true
                                         case .edit:
-                                            router.navigate(to: CommunityDestination.communityEdit(forumId: community.community.communityId))
+                                            router.navigate(to: CommunityDestination.communityEdit(forumId: forumId))
                                         case .report:
                                             showReportCommunityDialog = true
                                             viewModel.selectedReportCommunity = community
@@ -56,12 +57,13 @@ public struct CommunityView: View {
                                             showBlockDialog = true
                                             selectedBlockUserId = community.community.writerId
                                         case .click:
-                                            router.navigate(to: CommunityDestination.communityDetail(id: community.community.communityId))
+                                            router.navigate(to: CommunityDestination.communityDetail(id: forumId))
+                                        case .updateImageOpenGraph(let openGraph):
+                                            viewModel.updateImageOpenGraph(forumId: forumId, openGraph: openGraph)
                                         }
                                     }
                                     .task {
                                         guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
-                                        
                                         if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (data.count - 1) / pagingInterval {
                                             await viewModel.fetchNextCommunities()
                                         }

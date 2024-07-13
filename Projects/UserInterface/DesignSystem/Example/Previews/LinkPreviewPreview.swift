@@ -17,8 +17,13 @@ https://www.youtube.com/watch?v=DXUL2iYIZsY&t=15s
         ScrollView {
             VStack {
                 if let link = links.first {
-                    GrowLinkPreview(url: URL(string: link)!)
-                        .padding(12)
+                    GrowLinkPreview(
+                        url: URL(string: link)!,
+                        openGraph: .init {
+                            nil
+                        } set: { _ in }
+                    )
+                    .padding(12)
                 }
             }
         }

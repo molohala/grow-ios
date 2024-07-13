@@ -1,7 +1,7 @@
 import Foundation
 import DateUtil
 
-public struct Community: Hashable {
+public struct Community: Equatable {
     public static func == (lhs: Community, rhs: Community) -> Bool {
         lhs.community.communityId == rhs.community.communityId
     }

@@ -9,7 +9,8 @@ let project = Project.makeService(
             .shared(target: .GlobalThirdPartyLibrary),
             .shared(target: .DateUtil),
             .shared(target: .SwiftUtil),
-            .SPM.Alamofire
+            .SPM.Alamofire,
+            .SPM.OpenGraph
         ]),
         .serviceInterface(target: .Base, dependencies: []),
         .serviceTesting(target: .Base, dependencies: [
