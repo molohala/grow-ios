@@ -11,7 +11,7 @@ let dependencies = Dependencies(
             .remote(url: "https://github.com/EmergeTools/Pow.git", requirement: .exact("1.0.3")),
 //            .remote(url: "https://github.com/kean/Nuke.git", requirement: .exact("12.5")),
             .remote(url: "https://github.com/tevelee/SwiftUI-Flow.git", requirement: .exact("1.1.0")),
-            .remote(url: "https://github.com/bestswlkh0310/my-ios-designsystem.git", requirement: .exact("0.1.1")),
+            .remote(url: "https://github.com/bestswlkh0310/my-ios-designsystem.git", requirement: .exact("0.1.2")),
             .remote(url: "https://github.com/satoshi-takano/OpenGraph.git", requirement: .exact("1.4.1"))
         ]
     ),
