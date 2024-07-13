@@ -13,4 +13,5 @@ public extension TargetDependency.SPM {
 //    static let NukeUI = TargetDependency.external(name: "NukeUI")
     static let Flow = TargetDependency.external(name: "Flow")
     static let MyDesignSystem = TargetDependency.external(name: "MyDesignSystem")
+    static let OpenGraph = TargetDependency.external(name: "OpenGraph")
 }

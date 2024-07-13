@@ -12,7 +12,8 @@ let project = Project.makeFeature(
             .serviceInterface(target: .Auth),
             .serviceInterface(target: .Info),
             .shared(target: .SwiftUtil),
-            .serviceInterface(target: .Block)
+            .serviceInterface(target: .Block),
+            .SPM.OpenGraph
         ]),
         .featureInterface(target: .Base, dependencies: [])
     ]

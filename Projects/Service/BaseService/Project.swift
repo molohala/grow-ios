@@ -1,5 +1,6 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
 let project = Project.makeService(
     target: .Base,
@@ -7,7 +8,8 @@ let project = Project.makeService(
         .service(target: .Base, product: .framework, dependencies: [
             .shared(target: .GlobalThirdPartyLibrary),
             .shared(target: .DateUtil),
-            .shared(target: .SwiftUtil)
+            .shared(target: .SwiftUtil),
+            .SPM.Alamofire
         ]),
         .serviceInterface(target: .Base, dependencies: []),
         .serviceTesting(target: .Base, dependencies: [

@@ -1,5 +1,6 @@
 import SignInFeature
 import SignInFeatureInterface
+import SwiftUI
 
 public extension AppComponent {
     
