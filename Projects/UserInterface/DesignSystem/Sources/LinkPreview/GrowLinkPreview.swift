@@ -8,6 +8,7 @@ public struct GrowLinkPreview: View {
     @EnvironmentObject private var colorProvider: ColorProvider
     private let url: URL
     @State private var openGraph: OpenGraph?
+    @State private var imageSize: CGSize = .zero
     
     public init(url: URL) {
         self.url = url
@@ -27,16 +28,19 @@ public struct GrowLinkPreview: View {
                                 GeometryReader { geo in
                                     image
                                         .resizable()
-                                        .aspectRatio(contentMode: .fill)
+                                        .scaledToFill()
                                         .frame(width: geo.size.width, height: geo.size.width * 9 / 16)
                                         .clipped()
+                                        .onAppear {
+                                            imageSize = geo.size
+                                        }
                                 }
-                                .frame(height: UIScreen.main.bounds.width * 9 / 16)
+                                .frame(height: imageSize.width * 9 / 16)
                             } else if state.error != nil {
                                 emptyImage
                             } else {
                                 GeometryReader { geo in
-                                    RowShimmer(width: geo.size.width, height: geo.size.width / 16 * 9) // 16:9
+                                    RowShimmer(width: geo.size.width, height: geo.size.width * 9 / 16) // 16:9
                                 }
                             }
                         }
