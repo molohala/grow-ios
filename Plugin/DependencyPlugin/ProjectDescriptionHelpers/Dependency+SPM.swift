@@ -14,4 +14,7 @@ public extension TargetDependency.SPM {
     static let Flow = TargetDependency.external(name: "Flow")
     static let MyDesignSystem = TargetDependency.external(name: "MyDesignSystem")
     static let OpenGraph = TargetDependency.external(name: "OpenGraph")
+    static let FirebaseAnalytics = TargetDependency.external(name: "FirebaseAnalytics")
+    static let FirebaseCrashlytics = TargetDependency.external(name: "FirebaseCrashlytics")
+    static let FirebaseMessaging = TargetDependency.external(name: "FirebaseMessaging")
 }
