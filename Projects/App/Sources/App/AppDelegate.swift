@@ -2,6 +2,7 @@ import UIKit
 import BaseService
 import FirebaseCore
 import FirebaseMessaging
+import NotificationServiceInterface
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
     
@@ -20,7 +21,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     ) -> Bool {
         // remove Constraint warning
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-
+        
         // 파이어베이스 설정
         FirebaseApp.configure()
         
@@ -63,7 +64,14 @@ extension AppDelegate: MessagingDelegate {
         
         let dataDict: [String: String] = ["token": fcmToken ?? ""]
         print("✅ AppDelegate.messaging - token \(fcmToken)")
-//        fcmCache.saveToken(dataDict["token"] ?? "", to: .fcmToken)
+        Task {
+            do {
+                _ = try await NotificationApi.shared.postFcmToken(req: .init(fcmToken: fcmToken ?? ""))
+            } catch {
+                print("❌ AppDelegate.messaging - post fcm token failure")
+                print(error)
+            }
+        }
     }
 }
 
@@ -93,6 +101,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
+        print("✅ AppDelegate.userNotificationCenter - \(response)")
         completionHandler()
     }
 }

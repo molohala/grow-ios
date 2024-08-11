@@ -4,6 +4,7 @@ import DesignSystem
 import AuthServiceInterface
 import InfoServiceInterface
 import MyDesignSystem
+import Alamofire
 
 @MainActor
 public final class AppState: ObservableObject {

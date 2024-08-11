@@ -52,6 +52,7 @@ public extension ModulePaths {
         case Info
         case Rank
         case Block
+        case Notification
     }
     
     enum Shared: String, CaseIterable {
