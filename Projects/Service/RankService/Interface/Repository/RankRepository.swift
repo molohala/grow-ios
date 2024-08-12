@@ -1,9 +1,9 @@
 public protocol RankRepository {
-    func getWeekGithubRank() async throws -> [Rank]
-    func getTotalGithubRank() async throws -> [Rank]
-    func getTodayGithubRank() async throws -> [Rank]
+    func getWeekGithubRank() async throws -> UpdateRank
+    func getTotalGithubRank() async throws -> UpdateRank
+    func getTodayGithubRank() async throws -> UpdateRank
     
-    func getWeekSolvedacRank() async throws -> [Rank]
-    func getTotalSolvedacRank() async throws -> [Rank]
-    func getTodaySolvedacRank() async throws -> [Rank]
+    func getWeekSolvedacRank() async throws -> UpdateRank
+    func getTotalSolvedacRank() async throws -> UpdateRank
+    func getTodaySolvedacRank() async throws -> UpdateRank
 }

@@ -5,27 +5,27 @@ class RankDataSourceImpl: BaseRemoteDataSource<RankDataSourceImpl>, RankDataSour
     private let githubPath = "rank/github"
     private let solvedacPath = "rank/solvedac"
     
-    func getWeekGithubRank() async throws -> [Rank] {
-        try await requestGet(url: "\(Grow.baseUrl)/\(githubPath)/week", res: BaseResponse<[RankResponse]>.self).data.map { $0.toDomain() }
+    func getWeekGithubRank() async throws -> UpdateRank {
+        try await requestGet(url: "\(Grow.baseUrl)/\(githubPath)/week", res: BaseResponse<UpdateRankResponse>.self).data.toDomain()
     }
     
-    func getTotalGithubRank() async throws -> [Rank] {
-        try await requestGet(url: "\(Grow.baseUrl)/\(githubPath)/total", res: BaseResponse<[RankResponse]>.self).data.map { $0.toDomain() }
+    func getTotalGithubRank() async throws -> UpdateRank {
+        try await requestGet(url: "\(Grow.baseUrl)/\(githubPath)/total", res: BaseResponse<UpdateRankResponse>.self).data.toDomain()
     }
     
-    func getTodayGithubRank() async throws -> [Rank] {
-        try await requestGet(url: "\(Grow.baseUrl)/\(githubPath)/today", res: BaseResponse<[RankResponse]>.self).data.map { $0.toDomain() }
+    func getTodayGithubRank() async throws -> UpdateRank {
+        try await requestGet(url: "\(Grow.baseUrl)/\(githubPath)/today", res: BaseResponse<UpdateRankResponse>.self).data.toDomain()
     }
     
-    func getWeekSolvedacRank() async throws -> [Rank] {
-        try await requestGet(url: "\(Grow.baseUrl)/\(solvedacPath)/week", res: BaseResponse<[RankResponse]>.self).data.map { $0.toDomain() }
+    func getWeekSolvedacRank() async throws -> UpdateRank {
+        try await requestGet(url: "\(Grow.baseUrl)/\(solvedacPath)/week", res: BaseResponse<UpdateRankResponse>.self).data.toDomain()
     }
     
-    func getTotalSolvedacRank() async throws -> [Rank] {
-        try await requestGet(url: "\(Grow.baseUrl)/\(solvedacPath)/total", res: BaseResponse<[RankResponse]>.self).data.map { $0.toDomain() }
+    func getTotalSolvedacRank() async throws -> UpdateRank {
+        try await requestGet(url: "\(Grow.baseUrl)/\(solvedacPath)/total", res: BaseResponse<UpdateRankResponse>.self).data.toDomain()
     }
     
-    func getTodaySolvedacRank() async throws -> [Rank] {
-        try await requestGet(url: "\(Grow.baseUrl)/\(solvedacPath)/today", res: BaseResponse<[RankResponse]>.self).data.map { $0.toDomain() }
+    func getTodaySolvedacRank() async throws -> UpdateRank {
+        try await requestGet(url: "\(Grow.baseUrl)/\(solvedacPath)/today", res: BaseResponse<UpdateRankResponse>.self).data.toDomain()
     }
 }

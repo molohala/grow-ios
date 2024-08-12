@@ -1,3 +1,3 @@
 public protocol GetWeekSolvedacRankUseCase {
-    func callAsFunction() async throws -> [Rank]
+    func callAsFunction() async throws -> UpdateRank
 }

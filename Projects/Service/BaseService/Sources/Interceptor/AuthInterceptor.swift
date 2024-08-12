@@ -13,7 +13,7 @@ public struct AuthInterceptor: RequestInterceptor {
     public init() {}
     
     public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        print("✅ 토큰 장착")
+        print("✅ AuthInterceptor - 토큰 장착")
         var modifiedRequest = urlRequest
         let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
         modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
@@ -22,13 +22,18 @@ public struct AuthInterceptor: RequestInterceptor {
     }
     
     public func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        print("✅ refresh 시작")
+        print("✅ AuthInterceptor - refresh 시작")
         guard let url = request.request?.url else {
             completion(.doNotRetryWithError(error))
             return
         }
-        print("✅ URL String: \(url.absoluteString)")
-        print("✅ StatusCode = \((request.task?.response as? HTTPURLResponse)?.statusCode ?? 999)")
+        guard request.retryCount <= 3 else {
+            print("❌ AuthInterceptor - RetryCount가 3보다 큽니다")
+            completion(.doNotRetryWithError(error))
+            return
+        }
+        print("✅ AuthInterceptor - URL String: \(url.absoluteString)")
+        print("✅ AuthInterceptor - StatusCode = \((request.task?.response as? HTTPURLResponse)?.statusCode ?? 999)")
         let refreshStatusCode = 401
         guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == refreshStatusCode, !url.absoluteString.contains("reissue") else {
             completion(.doNotRetryWithError(error))
@@ -41,7 +46,7 @@ public struct AuthInterceptor: RequestInterceptor {
             return
         }
         
-        print("✅ refresh 시도")
+        print("✅ AuthInterceptor - refresh 시도")
         
         AF.request(
             "\(Grow.baseUrl)/auth/reissue",
@@ -62,12 +67,12 @@ public struct AuthInterceptor: RequestInterceptor {
                     completion(.doNotRetryWithError(error))
                     return
                 }
-                print("✅ refresh 성공")
+                print("✅ AuthInterceptor - refresh 성공")
                 UserDefaults.standard.setValue(accessToken, forKey: "accessToken")
                 completion(.retry)
             case .failure(let error):
-                print("❌ \(error.localizedDescription)")
-                print("❌ refresh 실패")
+                print("❌ AuthInterceptor - \(error.localizedDescription)")
+                print("❌ AuthInterceptor - refresh 실패")
                 completion(.doNotRetryWithError(AuthError.refreshFailure))
             }
         }

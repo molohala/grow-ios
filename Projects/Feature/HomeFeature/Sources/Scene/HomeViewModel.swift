@@ -18,8 +18,8 @@ public final class HomeViewModel: ObservableObject {
     
     // MARK: - Properties
     @Published var weekCommunities: FetchFlow<[Community]> = .fetching
-    @Published var todayGithubRanks: FetchFlow<[Rank]> = .fetching
-    @Published var todayBaekjoonRanks: FetchFlow<[Rank]> = .fetching
+    @Published var todayGithubRanks: FetchFlow<UpdateRank> = .fetching
+    @Published var todayBaekjoonRanks: FetchFlow<UpdateRank> = .fetching
     @Published var removedCommunityFlow: FetchFlow<Bool> = .fetching
     @Published var selectedRemoveCommunity: Community?
     @Published var selectedReportCommunity: Community?

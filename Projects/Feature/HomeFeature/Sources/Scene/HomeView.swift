@@ -165,7 +165,7 @@ public struct HomeView: View {
                         GrowRankCellShimmer()
                     }
                 case .success(let data):
-                    ForEach(data, id: \.memberId) { rank in
+                    ForEach(data.ranks, id: \.memberId) { rank in
                         GrowRankCell(
                             name: rank.memberName,
                             socialId: rank.socialId,
@@ -199,7 +199,7 @@ public struct HomeView: View {
                         GrowRankCellShimmer()
                     }
                 case .success(let data):
-                    ForEach(data, id: \.memberId) { rank in
+                    ForEach(data.ranks, id: \.memberId) { rank in
                         GrowRankCell(
                             name: rank.memberName,
                             socialId: rank.socialId,
