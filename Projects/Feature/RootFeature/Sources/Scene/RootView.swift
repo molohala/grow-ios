@@ -45,10 +45,11 @@ public struct RootView: View {
     
     public var body: some View {
         Group {
-            if appState.accessToken.isEmpty {
-                signInBuildable.makeView().eraseToAnyView()
-            } else {
+            if let accessToken = appState.accessToken,
+                !accessToken.isEmpty {
                 mainBuildable.makeView().eraseToAnyView()
+            } else {
+                signInBuildable.makeView().eraseToAnyView()
             }
         }
         .environmentObject(router)

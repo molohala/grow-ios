@@ -14,7 +14,7 @@ public final class GithubRankViewModel: ObservableObject {
     private let getWeekGithubRankUseCase: any GetWeekGithubRankUseCase
     
     // MARK: - Properties
-    @Published var githubRanks: FetchFlow<[Rank]> = .fetching
+    @Published var githubRanks: FetchFlow<UpdateRank> = .fetching
     @Published var selectedTab: GithubTab = .week
     
     public init(

@@ -153,8 +153,8 @@ public struct CommunityView: View {
         }
         .onChange(of: viewModel.refreshFailure) {
             if $0 {
-                appState.accessToken = ""
-                appState.refreshToken = ""
+                appState.accessToken = nil
+                appState.refreshToken = nil
             }
         }
     }

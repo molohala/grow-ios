@@ -15,8 +15,10 @@ public struct AuthInterceptor: RequestInterceptor {
     public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         print("✅ AuthInterceptor - 토큰 장착")
         var modifiedRequest = urlRequest
-        let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
-        modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        if let accessToken = UserDefaults.standard.string(forKey: "accessToken") {
+            print("accessToken - \(accessToken)")
+            modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        }
         
         completion(.success(modifiedRequest))
     }

@@ -46,11 +46,11 @@ struct AuthRepositoryImpl: AuthRepository {
         return try await dAuthDataSource.dAuthSignIn(req)
     }
     
-    func getToken(type: TokenType) -> String {
+    func getToken(type: TokenType) -> String? {
         tokenDataSource.getToken(type: type)
     }
     
-    func setToken(_ token: String, type: TokenType) {
+    func setToken(_ token: String?, type: TokenType) {
         tokenDataSource.setToken(token, type: type)
     }
     

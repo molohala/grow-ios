@@ -35,7 +35,7 @@ public struct GithubRankView: View {
                 case .success(let data):
                     ScrollView {
                         LazyVStack(spacing: 12) {
-                            ForEach(data, id: \.memberId) { rank in
+                            ForEach(data.ranks, id: \.memberId) { rank in
                                 GrowRankCell(
                                     name: rank.memberName,
                                     socialId: rank.socialId,
@@ -91,7 +91,12 @@ public struct GithubRankView: View {
                 }
             }
             Spacer()
+            if let updatedAt = viewModel.githubRanks.data?.updatedAt?.updatedAt {
+                Text(updatedAt)
+                    .myFont(.labelR)
+                    .myColor(MyColorScheme.textAlt)
+            }
         }
-        .padding(.leading, 12)
+        .padding(.horizontal, 12)
     }
 }

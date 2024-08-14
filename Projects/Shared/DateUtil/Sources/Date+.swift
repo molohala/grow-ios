@@ -27,6 +27,12 @@ public extension Date {
         return dateFormatter.string(from: self)
     }
     
+    var updatedAt: String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd HH:mm 기준"
+        return dateFormatter.string(from: self)
+    }
+    
     static var datesForWeek: [Date] {
         var datesInWeek: [Date] = []
         let currentDate = Date()

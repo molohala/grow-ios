@@ -83,8 +83,8 @@ public struct SettingView: View {
                     GrowSettingCell(
                         label: "로그아웃",
                         action: {
-                            appState.accessToken = ""
-                            appState.refreshToken = ""
+                            appState.accessToken = nil
+                            appState.refreshToken = nil
                         }
                     )
                     GrowSettingCell(
@@ -129,8 +129,8 @@ public struct SettingView: View {
             Button("탈퇴", role: .destructive) {
                 Task {
                     await viewModel.removeMember {
-                        appState.accessToken = ""
-                        appState.refreshToken = ""
+                        appState.accessToken = nil
+                        appState.refreshToken = nil
                     }
                 }
             }

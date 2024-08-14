@@ -10,12 +10,12 @@ import Alamofire
 public final class AppState: ObservableObject {
     
     @Published public var selectedView: BottomTabType = .Home
-    @Published public var accessToken: String {
+    @Published public var accessToken: String? {
         didSet {
             setTokenUseCase(accessToken, type: .accessToken)
         }
     }
-    @Published public var refreshToken: String {
+    @Published public var refreshToken: String? {
         didSet {
             setTokenUseCase(refreshToken, type: .refreshToken)
         }

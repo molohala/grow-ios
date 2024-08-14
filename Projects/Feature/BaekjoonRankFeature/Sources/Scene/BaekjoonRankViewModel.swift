@@ -14,7 +14,7 @@ public final class BaekjoonRankViewModel: ObservableObject {
     private let getWeekSolvedacRankUseCase: any GetWeekSolvedacRankUseCase
     
     // MARK: - Properties
-    @Published var baekjoonRanks: FetchFlow<[Rank]> = .fetching
+    @Published var baekjoonRanks: FetchFlow<UpdateRank> = .fetching
     @Published var selectedTab: BaekjoonTab = .week
     
     public init(

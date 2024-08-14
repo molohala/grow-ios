@@ -91,8 +91,8 @@ public struct HomeView: View {
         }
         .onChange(of: viewModel.refreshFailure) {
             if $0 {
-                appState.accessToken = ""
-                appState.refreshToken = ""
+                appState.accessToken = nil
+                appState.refreshToken = nil
             }
         }
     }
@@ -156,8 +156,16 @@ public struct HomeView: View {
     @ViewBuilder
     private var todayGithub: some View {
         VStack(spacing: 0) {
-            GrowHeadline("오늘의 Github Top 3")
-                .toLeading()
+            HStack {
+                GrowHeadline("오늘의 Github Top 3")
+                Spacer()
+                if let updatedAt = viewModel.todayGithubRanks.data?.updatedAt?.updatedAt {
+                    Text(updatedAt)
+                        .myFont(.labelR)
+                        .myColor(MyColorScheme.textAlt)
+                }
+            }
+            .padding(.horizontal, 4)
             VStack(spacing: 4) {
                 switch viewModel.todayGithubRanks {
                 case .fetching:
@@ -190,8 +198,16 @@ public struct HomeView: View {
     @ViewBuilder
     private var todayBaekjoon: some View {
         VStack(spacing: 0) {
-            GrowHeadline("오늘의 백준 Top 3")
-                .toLeading()
+            HStack {
+                GrowHeadline("오늘의 백준 Top 3")
+                Spacer()
+                if let updatedAt = viewModel.todayBaekjoonRanks.data?.updatedAt?.updatedAt {
+                    Text(updatedAt)
+                        .myFont(.labelR)
+                        .myColor(MyColorScheme.textAlt)
+                }
+            }
+            .padding(.horizontal, 4)
             VStack(spacing: 4) {
                 switch viewModel.todayBaekjoonRanks {
                 case .fetching:
