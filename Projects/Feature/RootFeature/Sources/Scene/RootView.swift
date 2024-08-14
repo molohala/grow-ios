@@ -58,16 +58,20 @@ public struct RootView: View {
         .task {
             await appState.fetchProfile()
         }
+#if canImport(UIKit)
         .onAppear {
             handleRefreshControl()
         }
         .onChange(of: colorProvider.isDarkTheme) { _ in
             handleRefreshControl()
         }
+#endif
     }
     
+#if canImport(UIKit)
     func handleRefreshControl() {
         let tintColor: UIColor = colorProvider.isDarkTheme ? .green : .black
         UIRefreshControl.appearance().tintColor = tintColor
     }
+#endif
 }

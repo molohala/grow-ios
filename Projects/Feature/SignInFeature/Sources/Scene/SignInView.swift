@@ -33,7 +33,9 @@ public struct SignInView: View {
         }
         .padding(.horizontal, 16)
         .myTopBar("로그인")
+#if canImport(UIKit)
         .hideKeyboardWhenTap()
+#endif
         .alert("로그인에 실패했습니다", isPresented: $viewModel.showErrorDialog) {
             Button("확인", role: .none) {}
         }

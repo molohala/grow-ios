@@ -23,6 +23,7 @@ import CommunityFeature
 import CommunityFeatureInterface
 import CommunityService
 import CommunityServiceInterface
+import DI
 import Foundation
 import GithubRankFeature
 import GithubRankFeatureInterface
@@ -501,6 +502,14 @@ extension AppComponent: Registration {
         localTable["profileBuildable-any ProfileBuildable"] = { [unowned self] in self.profileBuildable as Any }
         localTable["settingBuildable-any SettingBuildable"] = { [unowned self] in self.settingBuildable as Any }
         localTable["blockBuildable-any BlockBuildable"] = { [unowned self] in self.blockBuildable as Any }
+        localTable["authDomainBuildable-any AuthDomainBuildable"] = { [unowned self] in self.authDomainBuildable as Any }
+        localTable["communityDomainBuildable-any CommunityDomainBuildable"] = { [unowned self] in self.communityDomainBuildable as Any }
+        localTable["likeDomainBuildable-any LikeDomainBuildable"] = { [unowned self] in self.likeDomainBuildable as Any }
+        localTable["commentDomainBuildable-any CommentDomainBuildable"] = { [unowned self] in self.commentDomainBuildable as Any }
+        localTable["infoDomainBuildable-any InfoDomainBuildable"] = { [unowned self] in self.infoDomainBuildable as Any }
+        localTable["rankDomainBuildable-any RankDomainBuildable"] = { [unowned self] in self.rankDomainBuildable as Any }
+        localTable["languageDomainBuildable-any LanguageDomainBuildable"] = { [unowned self] in self.languageDomainBuildable as Any }
+        localTable["blockDomainBuildable-any BlockDomainBuildable"] = { [unowned self] in self.blockDomainBuildable as Any }
     }
 }
 extension ProfileDetailComponent: Registration {

@@ -12,6 +12,7 @@ public extension Target {
     
     static func app(
         target: ModulePaths.App,
+        deploymentTargets: DeploymentTargets,
         dependenceis: [TargetDependency] = [],
         infoPlist: InfoPlist,
         entitlements: Entitlements? = nil
@@ -19,11 +20,12 @@ public extension Target {
         .makeTarget(name: target.rawValue,
                     product: .app,
                     bundleId: "us.growapp",
+                    deploymentTargets: deploymentTargets,
                     infoPlist: infoPlist,
-                    sources: ["Sources/**"],
-                    resources: ["Resources/**"],
+                    sources: ["\(env.name)-\(target.rawValue)/Sources/**"],
+                    resources: ["\(env.name)-\(target.rawValue)/Resources/**"],
                     entitlements: entitlements,
-                    scripts: [.swiftLint, .needle],
+                    scripts: [.swiftLint, .makeNeedle(app: target)],
                     dependencies: dependenceis)
     }
     

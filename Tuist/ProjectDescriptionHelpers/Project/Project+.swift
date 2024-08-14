@@ -6,16 +6,15 @@
 //
 
 import ProjectDescription
+import EnvironmentPlugin
 
 public extension Project {
     static func makeApp(
-        target: ModulePaths.App,
         packages: [Package] = [],
         targets: [Target] = []
     ) -> Self {
         .makeProject(
-            name: target.rawValue,
-            product: .app,
+            name: env.name,
             packages: packages,
             targets: targets
         )
@@ -27,7 +26,6 @@ public extension Project {
         targets: [Target] = []
     ) -> Self {
         .makeProject(name: "\(target.rawValue)Feature",
-                    product: .staticLibrary,
                     targets: targets)
     }
     
@@ -37,7 +35,6 @@ public extension Project {
         targets: [Target] = []
     ) -> Self {
         .makeProject(name: "\(target.rawValue)Service",
-                    product: .staticLibrary,
                     targets: targets)
     }
     
@@ -47,7 +44,6 @@ public extension Project {
         targets: [Target]
     ) -> Self {
         .makeProject(name: target.rawValue,
-                    product: .staticLibrary,
                     targets: targets)
     }
     
@@ -57,7 +53,6 @@ public extension Project {
         targets: [Target] = []
     ) -> Self {
         .makeProject(name: target.rawValue,
-                    product: .staticFramework,
                     targets: targets)
     }
 }

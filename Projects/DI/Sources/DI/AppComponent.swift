@@ -1,6 +1,7 @@
 import NeedleFoundation
 import RootFeature
 import SwiftUI
+import DI
 
 public final class AppComponent: BootstrapComponent {
     

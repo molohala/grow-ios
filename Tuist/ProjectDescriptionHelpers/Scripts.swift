@@ -7,6 +7,7 @@
 
 import Foundation
 import ProjectDescription
+import EnvironmentPlugin
 
 public extension TargetScript {
     
@@ -18,7 +19,8 @@ ${ROOT_DIR}/swiftlint --config ${ROOT_DIR}/.swiftlint.yml
 
 """
     
-    static let needleScript = """
+    static func makeNeedleScript(app: ModulePaths.App) -> String {
+        """
 if test -d "/opt/homebrew/bin/"; then
     PATH="/opt/homebrew/bin/:${PATH}"
 fi
@@ -26,11 +28,12 @@ fi
 export PATH
 
 if which needle > /dev/null; then
-    needle generate Sources/App/NeedleGenerated.swift ../
+    needle generate \(env.name)-\(app.rawValue)/Sources/App/NeedleGenerated.swift ../
 else
     echo "warning: Needle not installed, plz run 'brew install needle'"
 fi
 """
+    }
     
     static let swiftLint = TargetScript.pre(
         script: swiftLintScript,
@@ -38,8 +41,10 @@ fi
         basedOnDependencyAnalysis: false
     )
     
-    static let needle = TargetScript.pre(
-        script: needleScript,
-        name: "Needle"
-    )
+    static func makeNeedle(app: ModulePaths.App) -> TargetScript {
+        TargetScript.pre(
+            script: makeNeedleScript(app: app),
+            name: "Needle"
+        )
+    }
 }

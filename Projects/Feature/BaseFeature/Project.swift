@@ -7,13 +7,14 @@ let project = Project.makeFeature(
     targets: [
         .feature(target: .Base, product: .framework, dependencies: [
             .userInterface(target: .DesignSystem),
-            .shared(target: .GlobalThirdPartyLibrary),
+//            .shared(target: .GlobalThirdPartyLibrary),
             .shared(target: .DateUtil),
             .serviceInterface(target: .Auth),
             .serviceInterface(target: .Info),
             .shared(target: .SwiftUtil),
             .serviceInterface(target: .Block),
-            .SPM.OpenGraph
+            .SPM.OpenGraph,
+            .SPM.Needle
         ]),
         .featureInterface(target: .Base, dependencies: [])
     ]

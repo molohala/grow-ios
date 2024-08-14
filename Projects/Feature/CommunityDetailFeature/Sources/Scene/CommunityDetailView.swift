@@ -11,7 +11,9 @@ public struct CommunityDetailView: View {
     
     @EnvironmentObject private var colorProvider: ColorProvider
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.safeAreaInsets) private var safeAreaInsets
+//    #if canImport(UIKit)
+//    @Environment(\.safeAreaInsets) private var safeAreaInsets
+//    #endif
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     @State private var proxy: ScrollViewProxy?

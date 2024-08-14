@@ -1,5 +1,4 @@
 import Alamofire
-import UIKit
 import Foundation
 import NeedleFoundation
 import SwiftUI

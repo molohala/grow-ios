@@ -18,7 +18,8 @@ public enum ModulePaths {
 public extension ModulePaths {
     
     enum App: String, CaseIterable {
-        case App
+        case iOS
+        case macOS
     }
     
     enum Feature: String, CaseIterable {

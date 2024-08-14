@@ -3,10 +3,9 @@ import EnvironmentPlugin
 
 
 
-extension Project {
+public extension Project {
     static func makeProject(
         name: String,
-        product: Product,
         packages: [Package] = [],
         targets: [Target] = []
     ) -> Project {

@@ -15,7 +15,7 @@ import RankServiceInterface
 import LanguageService
 import LanguageServiceInterface
 
-extension AppComponent {
+public extension AppComponent {
     var authDomainBuildable: any AuthDomainBuildable {
         shared {
             AuthDomainComponent(parent: self)

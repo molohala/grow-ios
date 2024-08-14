@@ -21,7 +21,11 @@ public struct GrowLinkPreview: View {
     
     public var body: some View {
         Button {
+#if canImport(UIKit)
             UIApplication.shared.open(url)
+#elseif canImport(AppKit)
+            NSWorkspace.shared.open(url)
+#endif
         } label: {
             if let openGraph, !openGraph.source.isEmpty {
                 VStack(alignment: .leading, spacing: 0) {
