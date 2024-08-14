@@ -11,11 +11,13 @@ import EnvironmentPlugin
 public extension Project {
     static func makeApp(
         packages: [Package] = [],
+        baseSetting: SettingsDictionary = [:],
         targets: [Target] = []
     ) -> Self {
         .makeProject(
             name: env.name,
             packages: packages,
+            baseSetting: baseSetting,
             targets: targets
         )
     }

@@ -11,6 +11,7 @@ import DependencyPlugin
 import EnvironmentPlugin
 
 let project = Project.makeApp(
+    baseSetting: ["ENABLE_APP_SANDBOX": .string("YES")],
     targets: [
         .app(
             target: .iOS,

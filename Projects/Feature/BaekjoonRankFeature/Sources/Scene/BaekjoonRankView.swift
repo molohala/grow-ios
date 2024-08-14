@@ -40,11 +40,10 @@ public struct BaekjoonRankView: View {
                                     name: rank.memberName,
                                     socialId: rank.socialId,
                                     rank: rank.rank,
-                                    label: "\(rank.count) 문제",
-                                    action: {
-                                        router.navigate(to: BaekjoonRankDestination.profileDetail(memberId: rank.memberId))
-                                    }
-                                )
+                                    label: "\(rank.count) 문제"
+                                ) {
+                                    router.navigate(to: BaekjoonRankDestination.profileDetail(memberId: rank.memberId))
+                                }
                             }
                             Spacer().frame(height: 92)
                         }
@@ -57,9 +56,7 @@ public struct BaekjoonRankView: View {
         }
         .myTopBar("백준 랭킹")
         .task {
-            Task {
-                await viewModel.fetchBaekjoonRank()
-            }
+            await viewModel.fetchBaekjoonRank()
         }
         .task(id: viewModel.selectedTab) {
             await viewModel.fetchBaekjoonRank()
